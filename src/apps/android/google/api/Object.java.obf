@@ -1,0 +1,77 @@
+package b.e.a.a;
+
+import android.view.View;
+import android.view.animation.Interpolator;
+import b.h.a.a.a;
+import b.h.a.c;
+
+public abstract class a
+{
+  private c a = new c();
+  private long b = 1000L;
+  
+  public a() {}
+  
+  public a a(long paramLong)
+  {
+    b = paramLong;
+    return this;
+  }
+  
+  public a a(Interpolator paramInterpolator)
+  {
+    a.a(paramInterpolator);
+    return this;
+  }
+  
+  public a a(a.a paramA)
+  {
+    a.a(paramA);
+    return this;
+  }
+  
+  public c a()
+  {
+    return a;
+  }
+  
+  public void a(View paramView)
+  {
+    c(paramView);
+    b(paramView);
+    c();
+  }
+  
+  public long b()
+  {
+    return b;
+  }
+  
+  public a b(long paramLong)
+  {
+    a().b(paramLong);
+    return this;
+  }
+  
+  protected abstract void b(View paramView);
+  
+  public void c()
+  {
+    a.a(b);
+    a.b();
+  }
+  
+  public void c(View paramView)
+  {
+    b.h.c.a.a(paramView, 1.0F);
+    b.h.c.a.g(paramView, 1.0F);
+    b.h.c.a.h(paramView, 1.0F);
+    b.h.c.a.i(paramView, 0.0F);
+    b.h.c.a.j(paramView, 0.0F);
+    b.h.c.a.d(paramView, 0.0F);
+    b.h.c.a.f(paramView, 0.0F);
+    b.h.c.a.e(paramView, 0.0F);
+    b.h.c.a.b(paramView, paramView.getMeasuredWidth() / 2.0F);
+    b.h.c.a.c(paramView, paramView.getMeasuredHeight() / 2.0F);
+  }
+}

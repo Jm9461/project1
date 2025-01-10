@@ -1,0 +1,27 @@
+package b.e.a.a;
+
+import b.e.a.a.d.i;
+import b.e.a.a.d.j;
+
+public enum b
+{
+  private Class c;
+  
+  private b(Class paramClass)
+  {
+    c = paramClass;
+  }
+  
+  public a a()
+  {
+    try
+    {
+      a localA = (a)c.newInstance();
+      return localA;
+    }
+    catch (Exception localException)
+    {
+      throw new Error("Can not init animatorClazz instance");
+    }
+  }
+}

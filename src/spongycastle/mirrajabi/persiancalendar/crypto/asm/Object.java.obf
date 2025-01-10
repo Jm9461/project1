@@ -1,0 +1,144 @@
+package ir.mirrajabi.persiancalendar.f.g;
+
+import ir.mirrajabi.persiancalendar.f.d.b;
+import ir.mirrajabi.persiancalendar.f.d.c;
+import java.util.Calendar;
+
+public class f
+  extends a
+{
+  private int a;
+  private int b;
+  private int c;
+  
+  public f(int paramInt1, int paramInt2, int paramInt3)
+  {
+    c(paramInt1);
+    c = 1;
+    b(paramInt2);
+    a(paramInt3);
+  }
+  
+  public int a()
+  {
+    Calendar localCalendar = Calendar.getInstance();
+    localCalendar.set(1, a);
+    localCalendar.set(2, b - 1);
+    localCalendar.set(5, c);
+    return localCalendar.get(7);
+  }
+  
+  public void a(int paramInt)
+  {
+    if (paramInt >= 1)
+    {
+      if ((b <= 6) && (paramInt > 31))
+      {
+        localStringBuilder = new StringBuilder();
+        localStringBuilder.append("day ");
+        localStringBuilder.append(paramInt);
+        localStringBuilder.append(" ");
+        localStringBuilder.append("is out of range!");
+        throw new ir.mirrajabi.persiancalendar.f.d.a(localStringBuilder.toString());
+      }
+      int i = b;
+      if ((i > 6) && (i <= 12) && (paramInt > 30))
+      {
+        localStringBuilder = new StringBuilder();
+        localStringBuilder.append("day ");
+        localStringBuilder.append(paramInt);
+        localStringBuilder.append(" ");
+        localStringBuilder.append("is out of range!");
+        throw new ir.mirrajabi.persiancalendar.f.d.a(localStringBuilder.toString());
+      }
+      if ((e()) && (b == 12) && (paramInt > 30))
+      {
+        localStringBuilder = new StringBuilder();
+        localStringBuilder.append("day ");
+        localStringBuilder.append(paramInt);
+        localStringBuilder.append(" ");
+        localStringBuilder.append("is out of range!");
+        throw new ir.mirrajabi.persiancalendar.f.d.a(localStringBuilder.toString());
+      }
+      if ((!e()) && (b == 12) && (paramInt > 29))
+      {
+        localStringBuilder = new StringBuilder();
+        localStringBuilder.append("day ");
+        localStringBuilder.append(paramInt);
+        localStringBuilder.append(" ");
+        localStringBuilder.append("is out of range!");
+        throw new ir.mirrajabi.persiancalendar.f.d.a(localStringBuilder.toString());
+      }
+      c = paramInt;
+      return;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("day ");
+    localStringBuilder.append(paramInt);
+    localStringBuilder.append(" ");
+    localStringBuilder.append("is out of range!");
+    throw new ir.mirrajabi.persiancalendar.f.d.a(localStringBuilder.toString());
+  }
+  
+  public boolean a(f paramF)
+  {
+    return (c() == paramF.c()) && (b() == paramF.b()) && ((d() == paramF.d()) || (d() == -1));
+  }
+  
+  public int b()
+  {
+    return b;
+  }
+  
+  public void b(int paramInt)
+  {
+    if ((paramInt >= 1) && (paramInt <= 12))
+    {
+      a(c);
+      b = paramInt;
+      return;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("month ");
+    localStringBuilder.append(paramInt);
+    localStringBuilder.append(" ");
+    localStringBuilder.append("is out of range!");
+    throw new b(localStringBuilder.toString());
+  }
+  
+  public int c()
+  {
+    return c;
+  }
+  
+  public void c(int paramInt)
+  {
+    if (paramInt != 0)
+    {
+      a = paramInt;
+      return;
+    }
+    throw new c("Year 0 is invalid!");
+  }
+  
+  public f clone()
+  {
+    return new f(d(), b(), c());
+  }
+  
+  public int d()
+  {
+    return a;
+  }
+  
+  public boolean e()
+  {
+    int i = a;
+    if (i > 0) {
+      i -= 474;
+    } else {
+      i = 473;
+    }
+    return (i % 2820 + 474 + 38) * 682 % 2816 < 682;
+  }
+}

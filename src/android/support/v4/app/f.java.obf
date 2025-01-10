@@ -1,0 +1,1045 @@
+package android.support.v4.app;
+
+import a.b.g.g.a;
+import a.b.g.g.n;
+import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.support.v4.view.u;
+import android.util.SparseArray;
+import android.view.View;
+import android.view.ViewGroup;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+class r
+{
+  private static final int[] a = { 0, 3, 0, 1, 5, 4, 7, 6, 9, 8 };
+  private static final t b;
+  private static final t c = a();
+  
+  static
+  {
+    s localS;
+    if (Build.VERSION.SDK_INT >= 21) {
+      localS = new s();
+    } else {
+      localS = null;
+    }
+    b = localS;
+  }
+  
+  private static a<String, String> a(int paramInt1, ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1, int paramInt2, int paramInt3)
+  {
+    a localA = new a();
+    paramInt3 -= 1;
+    while (paramInt3 >= paramInt2)
+    {
+      Object localObject = (c)paramArrayList.get(paramInt3);
+      if (((c)localObject).b(paramInt1))
+      {
+        boolean bool = ((Boolean)paramArrayList1.get(paramInt3)).booleanValue();
+        ArrayList localArrayList1 = q;
+        if (localArrayList1 != null)
+        {
+          int j = localArrayList1.size();
+          ArrayList localArrayList2;
+          if (bool)
+          {
+            localArrayList1 = q;
+            localArrayList2 = r;
+          }
+          else
+          {
+            localArrayList2 = q;
+            localArrayList1 = r;
+          }
+          int i = 0;
+          while (i < j)
+          {
+            localObject = (String)localArrayList2.get(i);
+            String str1 = (String)localArrayList1.get(i);
+            String str2 = (String)localA.remove(str1);
+            if (str2 != null) {
+              localA.put(localObject, str2);
+            } else {
+              localA.put(localObject, str1);
+            }
+            i += 1;
+          }
+        }
+      }
+      paramInt3 -= 1;
+    }
+    return localA;
+  }
+  
+  static a<String, View> a(t paramT, a<String, String> paramA, Object paramObject, e paramE)
+  {
+    f localF = a;
+    View localView = localF.A();
+    if ((!paramA.isEmpty()) && (paramObject != null) && (localView != null))
+    {
+      a localA = new a();
+      paramT.a(localA, localView);
+      paramT = c;
+      if (b)
+      {
+        paramObject = localF.o();
+        paramT = q;
+      }
+      else
+      {
+        paramObject = localF.m();
+        paramT = r;
+      }
+      if (paramT != null)
+      {
+        localA.a(paramT);
+        localA.a(paramA.values());
+      }
+      if (paramObject != null)
+      {
+        paramObject.a(paramT, localA);
+        int i = paramT.size() - 1;
+        while (i >= 0)
+        {
+          paramE = (String)paramT.get(i);
+          paramObject = (View)localA.get(paramE);
+          if (paramObject == null)
+          {
+            paramObject = a(paramA, paramE);
+            if (paramObject != null) {
+              paramA.remove(paramObject);
+            }
+          }
+          else if (!paramE.equals(u.q(paramObject)))
+          {
+            paramE = a(paramA, paramE);
+            if (paramE != null) {
+              paramA.put(paramE, u.q(paramObject));
+            }
+          }
+          i -= 1;
+        }
+        return localA;
+      }
+      a(paramA, localA);
+      return localA;
+    }
+    paramA.clear();
+    return null;
+  }
+  
+  private static e a(e paramE, SparseArray<e> paramSparseArray, int paramInt)
+  {
+    e localE = paramE;
+    if (paramE == null)
+    {
+      localE = new e();
+      paramSparseArray.put(paramInt, localE);
+    }
+    return localE;
+  }
+  
+  private static t a()
+  {
+    try
+    {
+      t localT = (t)Class.forName("a.b.f.e").getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
+      return localT;
+    }
+    catch (Exception localException) {}
+    return null;
+  }
+  
+  private static t a(f paramF1, f paramF2)
+  {
+    ArrayList localArrayList = new ArrayList();
+    if (paramF1 != null)
+    {
+      Object localObject = paramF1.n();
+      if (localObject != null) {
+        localArrayList.add(localObject);
+      }
+      localObject = paramF1.w();
+      if (localObject != null) {
+        localArrayList.add(localObject);
+      }
+      paramF1 = paramF1.y();
+      if (paramF1 != null) {
+        localArrayList.add(paramF1);
+      }
+    }
+    if (paramF2 != null)
+    {
+      paramF1 = paramF2.l();
+      if (paramF1 != null) {
+        localArrayList.add(paramF1);
+      }
+      paramF1 = paramF2.u();
+      if (paramF1 != null) {
+        localArrayList.add(paramF1);
+      }
+      paramF1 = paramF2.x();
+      if (paramF1 != null) {
+        localArrayList.add(paramF1);
+      }
+    }
+    if (localArrayList.isEmpty()) {
+      return null;
+    }
+    paramF1 = b;
+    if ((paramF1 != null) && (a(paramF1, localArrayList))) {
+      return b;
+    }
+    paramF1 = c;
+    if ((paramF1 != null) && (a(paramF1, localArrayList))) {
+      return c;
+    }
+    if ((b == null) && (c == null)) {
+      return null;
+    }
+    throw new IllegalArgumentException("Invalid Transition types");
+  }
+  
+  static View a(a<String, View> paramA, e paramE, Object paramObject, boolean paramBoolean)
+  {
+    paramE = c;
+    if ((paramObject != null) && (paramA != null))
+    {
+      paramObject = q;
+      if ((paramObject != null) && (!paramObject.isEmpty()))
+      {
+        if (paramBoolean) {
+          paramE = (String)q.get(0);
+        } else {
+          paramE = (String)r.get(0);
+        }
+        return (View)paramA.get(paramE);
+      }
+    }
+    return null;
+  }
+  
+  private static Object a(t paramT, f paramF1, f paramF2, boolean paramBoolean)
+  {
+    if ((paramF1 != null) && (paramF2 != null))
+    {
+      if (paramBoolean) {
+        paramF1 = paramF2.y();
+      } else {
+        paramF1 = paramF1.x();
+      }
+      return paramT.c(paramT.b(paramF1));
+    }
+    return null;
+  }
+  
+  private static Object a(t paramT, f paramF, boolean paramBoolean)
+  {
+    if (paramF == null) {
+      return null;
+    }
+    if (paramBoolean) {
+      paramF = paramF.u();
+    } else {
+      paramF = paramF.l();
+    }
+    return paramT.b(paramF);
+  }
+  
+  private static Object a(t paramT, ViewGroup paramViewGroup, final View paramView, final a<String, String> paramA, final e paramE, final ArrayList<View> paramArrayList1, final ArrayList<View> paramArrayList2, final Object paramObject1, final Object paramObject2)
+  {
+    final f localF1 = a;
+    final f localF2 = d;
+    if (localF1 != null)
+    {
+      if (localF2 == null) {
+        return null;
+      }
+      final boolean bool = b;
+      final Object localObject;
+      if (paramA.isEmpty()) {
+        localObject = null;
+      } else {
+        localObject = a(paramT, localF1, localF2, bool);
+      }
+      a localA = b(paramT, paramA, localObject, paramE);
+      if (paramA.isEmpty()) {
+        localObject = null;
+      } else {
+        paramArrayList1.addAll(localA.values());
+      }
+      if ((paramObject1 == null) && (paramObject2 == null) && (localObject == null)) {
+        return null;
+      }
+      a(localF1, localF2, bool, localA, true);
+      if (localObject != null)
+      {
+        Rect localRect = new Rect();
+        paramT.b(localObject, paramView, paramArrayList1);
+        a(paramT, localObject, paramObject2, localA, e, f);
+        if (paramObject1 != null) {
+          paramT.a(paramObject1, localRect);
+        }
+        paramObject2 = localRect;
+      }
+      else
+      {
+        paramObject2 = null;
+      }
+      a0.a(paramViewGroup, new d(paramT, paramA, localObject, paramE, paramArrayList2, paramView, localF1, localF2, bool, paramArrayList1, paramObject1, paramObject2));
+      return localObject;
+    }
+    return null;
+  }
+  
+  private static Object a(t paramT, Object paramObject1, Object paramObject2, Object paramObject3, f paramF, boolean paramBoolean)
+  {
+    boolean bool2 = true;
+    boolean bool1 = bool2;
+    if (paramObject1 != null)
+    {
+      bool1 = bool2;
+      if (paramObject2 != null)
+      {
+        bool1 = bool2;
+        if (paramF != null)
+        {
+          if (paramBoolean) {
+            paramBoolean = paramF.f();
+          } else {
+            paramBoolean = paramF.e();
+          }
+          bool1 = paramBoolean;
+        }
+      }
+    }
+    if (bool1) {
+      return paramT.b(paramObject2, paramObject1, paramObject3);
+    }
+    return paramT.a(paramObject2, paramObject1, paramObject3);
+  }
+  
+  private static String a(a<String, String> paramA, String paramString)
+  {
+    int j = paramA.size();
+    int i = 0;
+    while (i < j)
+    {
+      if (paramString.equals(paramA.d(i))) {
+        return (String)paramA.b(i);
+      }
+      i += 1;
+    }
+    return null;
+  }
+  
+  static ArrayList<View> a(t paramT, Object paramObject, f paramF, ArrayList<View> paramArrayList, View paramView)
+  {
+    Object localObject = null;
+    if (paramObject != null)
+    {
+      ArrayList localArrayList = new ArrayList();
+      paramF = paramF.A();
+      if (paramF != null) {
+        paramT.a(localArrayList, paramF);
+      }
+      if (paramArrayList != null) {
+        localArrayList.removeAll(paramArrayList);
+      }
+      localObject = localArrayList;
+      if (!localArrayList.isEmpty())
+      {
+        localArrayList.add(paramView);
+        paramT.a(paramObject, localArrayList);
+        localObject = localArrayList;
+      }
+    }
+    return localObject;
+  }
+  
+  private static void a(a<String, String> paramA, a<String, View> paramA1)
+  {
+    int i = paramA.size() - 1;
+    while (i >= 0)
+    {
+      if (!paramA1.containsKey((String)paramA.d(i))) {
+        paramA.c(i);
+      }
+      i -= 1;
+    }
+  }
+  
+  private static void a(c paramC, c.a paramA, SparseArray<e> paramSparseArray, boolean paramBoolean1, boolean paramBoolean2)
+  {
+    f localF = b;
+    if (localF == null) {
+      return;
+    }
+    int i1 = A;
+    if (i1 == 0) {
+      return;
+    }
+    if (paramBoolean1) {
+      i = a[a];
+    } else {
+      i = a;
+    }
+    int j = 0;
+    int k = 0;
+    int n = 0;
+    int m = 0;
+    boolean bool3 = false;
+    boolean bool2 = false;
+    boolean bool1;
+    if (i != 1)
+    {
+      if (i != 3) {
+        if (i != 4)
+        {
+          if (i != 5)
+          {
+            if (i != 6)
+            {
+              if (i == 7) {
+                break label371;
+              }
+              bool1 = false;
+              j = 0;
+              k = 0;
+              i = 0;
+              break label422;
+            }
+          }
+          else
+          {
+            if (paramBoolean2)
+            {
+              bool1 = bool2;
+              if (Q)
+              {
+                bool1 = bool2;
+                if (!C)
+                {
+                  bool1 = bool2;
+                  if (m) {
+                    bool1 = true;
+                  }
+                }
+              }
+            }
+            else
+            {
+              bool1 = C;
+            }
+            j = 0;
+            k = 0;
+            i = 1;
+            break label422;
+          }
+        }
+        else
+        {
+          if (paramBoolean2)
+          {
+            i = j;
+            if (Q)
+            {
+              i = j;
+              if (m)
+              {
+                i = j;
+                if (C) {
+                  i = 1;
+                }
+              }
+            }
+          }
+          else
+          {
+            i = k;
+            if (m)
+            {
+              i = k;
+              if (!C) {
+                i = 1;
+              }
+            }
+          }
+          bool1 = false;
+          j = 1;
+          k = i;
+          i = 0;
+          break label422;
+        }
+      }
+      if (paramBoolean2)
+      {
+        if (!m)
+        {
+          paramA = K;
+          if ((paramA != null) && (paramA.getVisibility() == 0) && (R >= 0.0F))
+          {
+            i = 1;
+            break label325;
+          }
+        }
+        i = n;
+      }
+      else
+      {
+        label325:
+        i = m;
+        if (m)
+        {
+          i = m;
+          if (!C) {
+            i = 1;
+          }
+        }
+      }
+      bool1 = false;
+      j = 1;
+      k = i;
+      i = 0;
+      break label422;
+    }
+    label371:
+    if (paramBoolean2)
+    {
+      bool1 = P;
+    }
+    else
+    {
+      bool1 = bool3;
+      if (!m)
+      {
+        bool1 = bool3;
+        if (!C) {
+          bool1 = true;
+        }
+      }
+    }
+    j = 0;
+    k = 0;
+    int i = 1;
+    label422:
+    paramA = (e)paramSparseArray.get(i1);
+    if (bool1)
+    {
+      paramA = a(paramA, paramSparseArray, i1);
+      a = localF;
+      b = paramBoolean1;
+      c = paramC;
+    }
+    Object localObject;
+    if ((!paramBoolean2) && (i != 0))
+    {
+      if ((paramA != null) && (d == localF)) {
+        d = null;
+      }
+      localObject = a;
+      if ((c < 1) && (n >= 1) && (!s))
+      {
+        ((l)localObject).g(localF);
+        ((l)localObject).a(localF, 1, 0, 0, false);
+      }
+      else {}
+    }
+    if (k != 0)
+    {
+      localObject = paramA;
+      if (localObject != null)
+      {
+        paramA = (c.a)localObject;
+        if (d != null) {}
+      }
+      else
+      {
+        paramA = a((e)localObject, paramSparseArray, i1);
+        d = localF;
+        e = paramBoolean1;
+        f = paramC;
+      }
+    }
+    if ((!paramBoolean2) && (j != 0) && (paramA != null) && (a == localF)) {
+      a = null;
+    }
+  }
+  
+  public static void a(c paramC, SparseArray<e> paramSparseArray, boolean paramBoolean)
+  {
+    int j = b.size();
+    int i = 0;
+    while (i < j)
+    {
+      a(paramC, (c.a)b.get(i), paramSparseArray, false, paramBoolean);
+      i += 1;
+    }
+  }
+  
+  static void a(f paramF1, f paramF2, boolean paramBoolean1, a<String, View> paramA, boolean paramBoolean2)
+  {
+    if (paramBoolean1) {
+      paramF1 = paramF2.m();
+    } else {
+      paramF1 = paramF1.m();
+    }
+    if (paramF1 != null)
+    {
+      paramF2 = new ArrayList();
+      ArrayList localArrayList = new ArrayList();
+      int i;
+      if (paramA == null) {
+        i = 0;
+      } else {
+        i = paramA.size();
+      }
+      int j = 0;
+      while (j < i)
+      {
+        localArrayList.add(paramA.b(j));
+        paramF2.add(paramA.d(j));
+        j += 1;
+      }
+      if (paramBoolean2)
+      {
+        paramF1.b(localArrayList, paramF2, null);
+        return;
+      }
+      paramF1.a(localArrayList, paramF2, null);
+    }
+  }
+  
+  private static void a(l paramL, int paramInt, e paramE, View paramView, a<String, String> paramA)
+  {
+    if (p.a()) {
+      paramL = (ViewGroup)p.a(paramInt);
+    } else {
+      paramL = null;
+    }
+    if (paramL == null) {
+      return;
+    }
+    f localF = a;
+    Object localObject4 = d;
+    t localT = a((f)localObject4, localF);
+    if (localT == null) {
+      return;
+    }
+    boolean bool1 = b;
+    boolean bool2 = e;
+    Object localObject2 = a(localT, localF, bool1);
+    Object localObject1 = b(localT, (f)localObject4, bool2);
+    ArrayList localArrayList2 = new ArrayList();
+    ArrayList localArrayList1 = new ArrayList();
+    Object localObject3 = a(localT, paramL, paramView, paramA, paramE, localArrayList2, localArrayList1, localObject2, localObject1);
+    if ((localObject2 == null) && (localObject3 == null) && (localObject1 == null)) {
+      return;
+    }
+    localObject4 = a(localT, localObject1, (f)localObject4, localArrayList2, paramView);
+    if ((localObject4 != null) && (!((ArrayList)localObject4).isEmpty())) {
+      break label183;
+    }
+    localObject1 = null;
+    label183:
+    localT.a(localObject2, paramView);
+    paramE = a(localT, localObject2, localObject1, localObject3, localF, b);
+    if (paramE != null)
+    {
+      localArrayList2 = new ArrayList();
+      localT.a(paramE, localObject2, localArrayList2, localObject1, (ArrayList)localObject4, localObject3, localArrayList1);
+      a(localT, paramL, localF, paramView, localArrayList1, localObject2, localArrayList2, localObject1, (ArrayList)localObject4);
+      localT.a(paramL, localArrayList1, paramA);
+      localT.a(paramL, paramE);
+      localT.a(paramL, localArrayList1, paramA);
+      return;
+    }
+  }
+  
+  static void a(l paramL, ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1, int paramInt1, int paramInt2, boolean paramBoolean)
+  {
+    if (n < 1) {
+      return;
+    }
+    SparseArray localSparseArray = new SparseArray();
+    int i = paramInt1;
+    Object localObject;
+    while (i < paramInt2)
+    {
+      localObject = (c)paramArrayList.get(i);
+      if (((Boolean)paramArrayList1.get(i)).booleanValue()) {
+        b((c)localObject, localSparseArray, paramBoolean);
+      } else {
+        a((c)localObject, localSparseArray, paramBoolean);
+      }
+      i += 1;
+    }
+    if (localSparseArray.size() != 0)
+    {
+      localObject = new View(o.c());
+      int j = localSparseArray.size();
+      i = 0;
+      while (i < j)
+      {
+        int k = localSparseArray.keyAt(i);
+        a localA = a(k, paramArrayList, paramArrayList1, paramInt1, paramInt2);
+        e localE = (e)localSparseArray.valueAt(i);
+        if (paramBoolean) {
+          b(paramL, k, localE, (View)localObject, localA);
+        } else {
+          a(paramL, k, localE, (View)localObject, localA);
+        }
+        i += 1;
+      }
+    }
+  }
+  
+  private static void a(final t paramT, ViewGroup paramViewGroup, final f paramF, final View paramView, final ArrayList<View> paramArrayList1, Object paramObject1, final ArrayList<View> paramArrayList2, final Object paramObject2, final ArrayList<View> paramArrayList3)
+  {
+    a0.a(paramViewGroup, new b(paramObject1, paramT, paramView, paramF, paramArrayList1, paramArrayList2, paramArrayList3, paramObject2));
+  }
+  
+  private static void a(t paramT, Object paramObject, f paramF, ArrayList<View> paramArrayList)
+  {
+    if ((paramF != null) && (paramObject != null) && (m) && (C) && (Q))
+    {
+      paramF.f(true);
+      paramT.a(paramObject, paramF.A(), paramArrayList);
+      a0.a(J, new a(paramArrayList));
+    }
+  }
+  
+  private static void a(t paramT, Object paramObject1, Object paramObject2, a<String, View> paramA, boolean paramBoolean, c paramC)
+  {
+    ArrayList localArrayList = q;
+    if ((localArrayList != null) && (!localArrayList.isEmpty()))
+    {
+      if (paramBoolean) {
+        paramC = (String)r.get(0);
+      } else {
+        paramC = (String)q.get(0);
+      }
+      paramA = (View)paramA.get(paramC);
+      paramT.c(paramObject1, paramA);
+      if (paramObject2 != null) {
+        paramT.c(paramObject2, paramA);
+      }
+    }
+  }
+  
+  static void a(ArrayList<View> paramArrayList, int paramInt)
+  {
+    if (paramArrayList == null) {
+      return;
+    }
+    int i = paramArrayList.size() - 1;
+    while (i >= 0)
+    {
+      ((View)paramArrayList.get(i)).setVisibility(paramInt);
+      i -= 1;
+    }
+  }
+  
+  private static void a(ArrayList<View> paramArrayList, a<String, View> paramA, Collection<String> paramCollection)
+  {
+    int i = paramA.size() - 1;
+    while (i >= 0)
+    {
+      View localView = (View)paramA.d(i);
+      if (paramCollection.contains(u.q(localView))) {
+        paramArrayList.add(localView);
+      }
+      i -= 1;
+    }
+  }
+  
+  private static boolean a(t paramT, List<Object> paramList)
+  {
+    int i = 0;
+    int j = paramList.size();
+    while (i < j)
+    {
+      if (!paramT.a(paramList.get(i))) {
+        return false;
+      }
+      i += 1;
+    }
+    return true;
+  }
+  
+  private static a<String, View> b(t paramT, a<String, String> paramA, Object paramObject, e paramE)
+  {
+    if ((!paramA.isEmpty()) && (paramObject != null))
+    {
+      paramObject = d;
+      a localA = new a();
+      paramT.a(localA, paramObject.A());
+      paramT = f;
+      if (e)
+      {
+        paramObject = paramObject.m();
+        paramT = r;
+      }
+      else
+      {
+        paramObject = paramObject.o();
+        paramT = q;
+      }
+      localA.a(paramT);
+      if (paramObject != null)
+      {
+        paramObject.a(paramT, localA);
+        int i = paramT.size() - 1;
+        while (i >= 0)
+        {
+          paramE = (String)paramT.get(i);
+          paramObject = (View)localA.get(paramE);
+          if (paramObject == null)
+          {
+            paramA.remove(paramE);
+          }
+          else if (!paramE.equals(u.q(paramObject)))
+          {
+            paramE = (String)paramA.remove(paramE);
+            paramA.put(u.q(paramObject), paramE);
+          }
+          i -= 1;
+        }
+        return localA;
+      }
+      paramA.a(localA.keySet());
+      return localA;
+    }
+    paramA.clear();
+    return null;
+  }
+  
+  private static Object b(t paramT, f paramF, boolean paramBoolean)
+  {
+    if (paramF == null) {
+      return null;
+    }
+    if (paramBoolean) {
+      paramF = paramF.w();
+    } else {
+      paramF = paramF.n();
+    }
+    return paramT.b(paramF);
+  }
+  
+  private static Object b(final t paramT, ViewGroup paramViewGroup, final View paramView, a<String, String> paramA, final e paramE, ArrayList<View> paramArrayList1, ArrayList<View> paramArrayList2, Object paramObject1, Object paramObject2)
+  {
+    f localF1 = a;
+    final f localF2 = d;
+    if (localF1 != null) {
+      localF1.A().setVisibility(0);
+    }
+    if (localF1 != null)
+    {
+      if (localF2 == null) {
+        return null;
+      }
+      final boolean bool = b;
+      Object localObject;
+      if (paramA.isEmpty()) {
+        localObject = null;
+      } else {
+        localObject = a(paramT, localF1, localF2, bool);
+      }
+      a localA2 = b(paramT, paramA, localObject, paramE);
+      final a localA1 = a(paramT, paramA, localObject, paramE);
+      if (paramA.isEmpty())
+      {
+        if (localA2 != null) {
+          localA2.clear();
+        }
+        if (localA1 != null) {
+          localA1.clear();
+        }
+        paramA = null;
+      }
+      else
+      {
+        a(paramArrayList1, localA2, paramA.keySet());
+        a(paramArrayList2, localA1, paramA.values());
+        paramA = localObject;
+      }
+      if ((paramObject1 == null) && (paramObject2 == null) && (paramA == null)) {
+        return null;
+      }
+      a(localF1, localF2, bool, localA2, true);
+      if (paramA != null)
+      {
+        paramArrayList2.add(paramView);
+        paramT.b(paramA, paramView, paramArrayList1);
+        a(paramT, paramA, paramObject2, localA2, e, f);
+        paramView = new Rect();
+        paramE = a(localA1, paramE, paramObject1, bool);
+        if (paramE != null) {
+          paramT.a(paramObject1, paramView);
+        }
+      }
+      else
+      {
+        paramView = null;
+        paramE = null;
+      }
+      a0.a(paramViewGroup, new c(localF1, localF2, bool, localA1, paramE, paramT, paramView));
+      return paramA;
+    }
+    return null;
+  }
+  
+  public static void b(c paramC, SparseArray<e> paramSparseArray, boolean paramBoolean)
+  {
+    if (!a.p.a()) {
+      return;
+    }
+    int i = b.size() - 1;
+    while (i >= 0)
+    {
+      a(paramC, (c.a)b.get(i), paramSparseArray, true, paramBoolean);
+      i -= 1;
+    }
+  }
+  
+  private static void b(l paramL, int paramInt, e paramE, View paramView, a<String, String> paramA)
+  {
+    if (p.a()) {
+      paramL = (ViewGroup)p.a(paramInt);
+    } else {
+      paramL = null;
+    }
+    if (paramL == null) {
+      return;
+    }
+    Object localObject5 = a;
+    Object localObject3 = d;
+    t localT = a((f)localObject3, (f)localObject5);
+    if (localT == null) {
+      return;
+    }
+    boolean bool1 = b;
+    boolean bool2 = e;
+    ArrayList localArrayList1 = new ArrayList();
+    ArrayList localArrayList2 = new ArrayList();
+    Object localObject2 = a(localT, (f)localObject5, bool1);
+    Object localObject1 = b(localT, (f)localObject3, bool2);
+    Object localObject4 = b(localT, paramL, paramView, paramA, paramE, localArrayList2, localArrayList1, localObject2, localObject1);
+    if ((localObject2 == null) && (localObject4 == null) && (localObject1 == null)) {
+      return;
+    }
+    paramE = (e)localObject1;
+    localObject1 = a(localT, paramE, (f)localObject3, localArrayList2, paramView);
+    paramView = a(localT, localObject2, (f)localObject5, localArrayList1, paramView);
+    a(paramView, 4);
+    localObject5 = a(localT, localObject2, paramE, localObject4, (f)localObject5, bool1);
+    if (localObject5 != null)
+    {
+      a(localT, paramE, (f)localObject3, (ArrayList)localObject1);
+      localObject3 = localT.a(localArrayList1);
+      localT.a(localObject5, localObject2, paramView, paramE, (ArrayList)localObject1, localObject4, localArrayList1);
+      localT.a(paramL, localObject5);
+      localT.a(paramL, localArrayList2, localArrayList1, (ArrayList)localObject3, paramA);
+      a(paramView, 0);
+      localT.b(localObject4, localArrayList2, localArrayList1);
+      return;
+    }
+  }
+  
+  static final class a
+    implements Runnable
+  {
+    a(ArrayList paramArrayList) {}
+    
+    public void run()
+    {
+      r.a(c, 4);
+    }
+  }
+  
+  static final class b
+    implements Runnable
+  {
+    b(Object paramObject1, t paramT, View paramView, f paramF, ArrayList paramArrayList1, ArrayList paramArrayList2, ArrayList paramArrayList3, Object paramObject2) {}
+    
+    public void run()
+    {
+      Object localObject = c;
+      if (localObject != null)
+      {
+        paramT.b(localObject, paramView);
+        localObject = r.a(paramT, c, paramF, paramArrayList1, paramView);
+        paramArrayList2.addAll((Collection)localObject);
+      }
+      if (paramArrayList3 != null)
+      {
+        if (paramObject2 != null)
+        {
+          localObject = new ArrayList();
+          ((ArrayList)localObject).add(paramView);
+          paramT.a(paramObject2, paramArrayList3, (ArrayList)localObject);
+        }
+        paramArrayList3.clear();
+        paramArrayList3.add(paramView);
+      }
+    }
+  }
+  
+  static final class c
+    implements Runnable
+  {
+    c(f paramF1, f paramF2, boolean paramBoolean, a paramA, View paramView, t paramT, Rect paramRect) {}
+    
+    public void run()
+    {
+      r.a(c, localF2, bool, localA1, false);
+      View localView = paramE;
+      if (localView != null) {
+        paramT.a(localView, paramView);
+      }
+    }
+  }
+  
+  static final class d
+    implements Runnable
+  {
+    d(t paramT, a paramA, Object paramObject1, r.e paramE, ArrayList paramArrayList1, View paramView, f paramF1, f paramF2, boolean paramBoolean, ArrayList paramArrayList2, Object paramObject2, Rect paramRect) {}
+    
+    public void run()
+    {
+      Object localObject1 = r.a(c, paramA, localObject, paramE);
+      if (localObject1 != null)
+      {
+        paramArrayList2.addAll(((a)localObject1).values());
+        paramArrayList2.add(paramView);
+      }
+      r.a(localF1, localF2, bool, (a)localObject1, false);
+      Object localObject2 = localObject;
+      if (localObject2 != null)
+      {
+        c.b(localObject2, paramArrayList1, paramArrayList2);
+        localObject1 = r.a((a)localObject1, paramE, paramObject1, bool);
+        if (localObject1 != null) {
+          c.a((View)localObject1, paramObject2);
+        }
+      }
+    }
+  }
+  
+  static class e
+  {
+    public f a;
+    public boolean b;
+    public c c;
+    public f d;
+    public boolean e;
+    public c f;
+    
+    e() {}
+  }
+}

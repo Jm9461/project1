@@ -1,0 +1,140 @@
+package f;
+
+final class o
+{
+  final byte[] a;
+  int b;
+  int c;
+  boolean d;
+  boolean e;
+  o f;
+  o g;
+  
+  o()
+  {
+    a = new byte['?'];
+    e = true;
+    d = false;
+  }
+  
+  o(byte[] paramArrayOfByte, int paramInt1, int paramInt2, boolean paramBoolean1, boolean paramBoolean2)
+  {
+    a = paramArrayOfByte;
+    b = paramInt1;
+    c = paramInt2;
+    d = paramBoolean1;
+    e = paramBoolean2;
+  }
+  
+  public o a(int paramInt)
+  {
+    if ((paramInt > 0) && (paramInt <= c - b))
+    {
+      o localO;
+      if (paramInt >= 1024)
+      {
+        localO = c();
+      }
+      else
+      {
+        localO = p.a();
+        System.arraycopy(a, b, a, 0, paramInt);
+      }
+      c = (b + paramInt);
+      b += paramInt;
+      g.a(localO);
+      return localO;
+    }
+    throw new IllegalArgumentException();
+  }
+  
+  public o a(o paramO)
+  {
+    g = this;
+    f = f;
+    f.g = paramO;
+    f = paramO;
+    return paramO;
+  }
+  
+  public void a()
+  {
+    o localO = g;
+    if (localO != this)
+    {
+      if (!e) {
+        return;
+      }
+      int j = c - b;
+      int k = c;
+      int i;
+      if (d) {
+        i = 0;
+      } else {
+        i = b;
+      }
+      if (j > 8192 - k + i) {
+        return;
+      }
+      a(g, j);
+      b();
+      p.a(this);
+      return;
+    }
+    throw new IllegalStateException();
+  }
+  
+  public void a(o paramO, int paramInt)
+  {
+    if (e)
+    {
+      int i = c;
+      if (i + paramInt > 8192) {
+        if (!d)
+        {
+          int j = b;
+          if (i + paramInt - j <= 8192)
+          {
+            byte[] arrayOfByte = a;
+            System.arraycopy(arrayOfByte, j, arrayOfByte, 0, i - j);
+            c -= b;
+            b = 0;
+          }
+          else
+          {
+            throw new IllegalArgumentException();
+          }
+        }
+        else
+        {
+          throw new IllegalArgumentException();
+        }
+      }
+      System.arraycopy(a, b, a, c, paramInt);
+      c += paramInt;
+      b += paramInt;
+      return;
+    }
+    throw new IllegalArgumentException();
+  }
+  
+  public o b()
+  {
+    o localO1 = f;
+    if (localO1 == this) {
+      localO1 = null;
+    }
+    o localO2 = g;
+    f = f;
+    f.g = localO2;
+    f = null;
+    g = null;
+    return localO1;
+  }
+  
+  o c()
+  {
+    d = true;
+    return new o(a, b, c, true, false);
+  }
+}

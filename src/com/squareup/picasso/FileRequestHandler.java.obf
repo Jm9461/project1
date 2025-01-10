@@ -1,0 +1,30 @@
+package com.squareup.picasso;
+
+import a.b.e.a;
+import android.content.Context;
+import android.net.Uri;
+import f.l;
+
+class k
+  extends g
+{
+  k(Context paramContext)
+  {
+    super(paramContext);
+  }
+  
+  static int a(Uri paramUri)
+  {
+    return new a(paramUri.getPath()).a("Orientation", 1);
+  }
+  
+  public y.a a(w paramW, int paramInt)
+  {
+    return new y.a(null, l.a(c(paramW)), t.e.e, a(d));
+  }
+  
+  public boolean a(w paramW)
+  {
+    return "file".equals(d.getScheme());
+  }
+}

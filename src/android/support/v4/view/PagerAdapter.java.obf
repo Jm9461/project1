@@ -1,0 +1,81 @@
+package android.support.v4.view;
+
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
+import android.os.Parcelable;
+import android.view.View;
+import android.view.ViewGroup;
+
+public abstract class q
+{
+  private final DataSetObservable a = new DataSetObservable();
+  private DataSetObserver b;
+  
+  public q() {}
+  
+  public abstract int a();
+  
+  public int a(Object paramObject)
+  {
+    return -1;
+  }
+  
+  public CharSequence a(int paramInt)
+  {
+    return null;
+  }
+  
+  public abstract Object a(ViewGroup paramViewGroup, int paramInt);
+  
+  public void a(DataSetObserver paramDataSetObserver)
+  {
+    a.registerObserver(paramDataSetObserver);
+  }
+  
+  public abstract void a(Parcelable paramParcelable, ClassLoader paramClassLoader);
+  
+  public abstract void a(ViewGroup paramViewGroup);
+  
+  public abstract void a(ViewGroup paramViewGroup, int paramInt, Object paramObject);
+  
+  public abstract boolean a(View paramView, Object paramObject);
+  
+  public float b(int paramInt)
+  {
+    return 1.0F;
+  }
+  
+  public void b()
+  {
+    try
+    {
+      if (b != null) {
+        b.onChanged();
+      }
+      a.notifyChanged();
+      return;
+    }
+    finally {}
+  }
+  
+  void b(DataSetObserver paramDataSetObserver)
+  {
+    try
+    {
+      b = paramDataSetObserver;
+      return;
+    }
+    finally {}
+  }
+  
+  public abstract void b(ViewGroup paramViewGroup);
+  
+  public abstract void b(ViewGroup paramViewGroup, int paramInt, Object paramObject);
+  
+  public abstract Parcelable c();
+  
+  public void c(DataSetObserver paramDataSetObserver)
+  {
+    a.unregisterObserver(paramDataSetObserver);
+  }
+}

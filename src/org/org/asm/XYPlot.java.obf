@@ -1,0 +1,446 @@
+package a.b.f;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
+import java.util.Map;
+
+public abstract class i0
+  extends m
+{
+  private static final String[] M = { "android:visibility:visibility", "android:visibility:parent" };
+  private int L = 3;
+  
+  public i0() {}
+  
+  private c b(s paramS1, s paramS2)
+  {
+    c localC = new c();
+    a = false;
+    b = false;
+    if ((paramS1 != null) && (a.containsKey("android:visibility:visibility")))
+    {
+      c = ((Integer)a.get("android:visibility:visibility")).intValue();
+      e = ((ViewGroup)a.get("android:visibility:parent"));
+    }
+    else
+    {
+      c = -1;
+      e = null;
+    }
+    if ((paramS2 != null) && (a.containsKey("android:visibility:visibility")))
+    {
+      d = ((Integer)a.get("android:visibility:visibility")).intValue();
+      f = ((ViewGroup)a.get("android:visibility:parent"));
+    }
+    else
+    {
+      d = -1;
+      f = null;
+    }
+    if ((paramS1 != null) && (paramS2 != null))
+    {
+      if ((c == d) && (e == f)) {
+        return localC;
+      }
+      int i = c;
+      int j = d;
+      if (i != j)
+      {
+        if (i == 0)
+        {
+          b = false;
+          a = true;
+          return localC;
+        }
+        if (j == 0)
+        {
+          b = true;
+          a = true;
+          return localC;
+        }
+      }
+      else
+      {
+        if (f == null)
+        {
+          b = false;
+          a = true;
+          return localC;
+        }
+        if (e == null)
+        {
+          b = true;
+          a = true;
+          return localC;
+        }
+      }
+    }
+    else
+    {
+      if ((paramS1 == null) && (d == 0))
+      {
+        b = true;
+        a = true;
+        return localC;
+      }
+      if ((paramS2 == null) && (c == 0))
+      {
+        b = false;
+        a = true;
+      }
+    }
+    return localC;
+  }
+  
+  private void d(s paramS)
+  {
+    int i = b.getVisibility();
+    a.put("android:visibility:visibility", Integer.valueOf(i));
+    a.put("android:visibility:parent", b.getParent());
+    int[] arrayOfInt = new int[2];
+    b.getLocationOnScreen(arrayOfInt);
+    a.put("android:visibility:screenLocation", arrayOfInt);
+  }
+  
+  public Animator a(ViewGroup paramViewGroup, s paramS1, int paramInt1, s paramS2, int paramInt2)
+  {
+    if ((L & 0x1) == 1)
+    {
+      if (paramS2 == null) {
+        return null;
+      }
+      if (paramS1 == null)
+      {
+        View localView = (View)b.getParent();
+        if (baba) {
+          return null;
+        }
+      }
+      return a(paramViewGroup, b, paramS1, paramS2);
+    }
+    return null;
+  }
+  
+  public Animator a(ViewGroup paramViewGroup, s paramS1, s paramS2)
+  {
+    c localC = b(paramS1, paramS2);
+    if ((a) && ((e != null) || (f != null)))
+    {
+      if (b) {
+        return a(paramViewGroup, paramS1, c, paramS2, d);
+      }
+      return b(paramViewGroup, paramS1, c, paramS2, d);
+    }
+    return null;
+  }
+  
+  public abstract Animator a(ViewGroup paramViewGroup, View paramView, s paramS1, s paramS2);
+  
+  public void a(int paramInt)
+  {
+    if ((paramInt & 0xFFFFFFFC) == 0)
+    {
+      L = paramInt;
+      return;
+    }
+    throw new IllegalArgumentException("Only MODE_IN and MODE_OUT flags are allowed");
+  }
+  
+  public void a(s paramS)
+  {
+    d(paramS);
+  }
+  
+  public boolean a(s paramS1, s paramS2)
+  {
+    boolean bool2 = false;
+    if ((paramS1 == null) && (paramS2 == null)) {
+      return false;
+    }
+    if ((paramS1 != null) && (paramS2 != null) && (a.containsKey("android:visibility:visibility") != a.containsKey("android:visibility:visibility"))) {
+      return false;
+    }
+    paramS1 = b(paramS1, paramS2);
+    boolean bool1 = bool2;
+    if (a) {
+      if (c != 0)
+      {
+        bool1 = bool2;
+        if (d != 0) {}
+      }
+      else
+      {
+        bool1 = true;
+      }
+    }
+    return bool1;
+  }
+  
+  public Animator b(ViewGroup paramViewGroup, s paramS1, int paramInt1, s paramS2, int paramInt2)
+  {
+    if ((L & 0x2) != 2) {
+      return null;
+    }
+    Object localObject2;
+    if (paramS1 != null) {
+      localObject2 = b;
+    } else {
+      localObject2 = null;
+    }
+    Object localObject1;
+    if (paramS2 != null) {
+      localObject1 = b;
+    } else {
+      localObject1 = null;
+    }
+    Object localObject5 = null;
+    Object localObject4 = null;
+    Object localObject3;
+    if ((localObject1 != null) && (((View)localObject1).getParent() != null))
+    {
+      if (paramInt2 == 4)
+      {
+        localObject3 = localObject1;
+        localObject1 = localObject5;
+      }
+      else if (localObject2 == localObject1)
+      {
+        localObject3 = localObject1;
+        localObject1 = localObject5;
+      }
+      else if (x)
+      {
+        localObject1 = localObject2;
+        localObject3 = localObject4;
+      }
+      else
+      {
+        localObject1 = r.a(paramViewGroup, (View)localObject2, (View)((View)localObject2).getParent());
+        localObject3 = localObject4;
+      }
+    }
+    else if (localObject1 != null)
+    {
+      localObject3 = localObject4;
+    }
+    else
+    {
+      localObject1 = localObject5;
+      localObject3 = localObject4;
+      if (localObject2 != null) {
+        if (((View)localObject2).getParent() == null)
+        {
+          localObject1 = localObject2;
+          localObject3 = localObject4;
+        }
+        else
+        {
+          localObject1 = localObject5;
+          localObject3 = localObject4;
+          if ((((View)localObject2).getParent() instanceof View))
+          {
+            View localView = (View)((View)localObject2).getParent();
+            if (!bbaa)
+            {
+              localObject1 = r.a(paramViewGroup, (View)localObject2, localView);
+              localObject3 = localObject4;
+            }
+            else
+            {
+              localObject1 = localObject5;
+              localObject3 = localObject4;
+              if (localView.getParent() == null)
+              {
+                paramInt1 = localView.getId();
+                localObject1 = localObject5;
+                localObject3 = localObject4;
+                if (paramInt1 != -1)
+                {
+                  localObject1 = localObject5;
+                  localObject3 = localObject4;
+                  if (paramViewGroup.findViewById(paramInt1) != null)
+                  {
+                    localObject1 = localObject5;
+                    localObject3 = localObject4;
+                    if (x)
+                    {
+                      localObject1 = localObject2;
+                      localObject3 = localObject4;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    if ((localObject1 != null) && (paramS1 != null))
+    {
+      localObject2 = (int[])a.get("android:visibility:screenLocation");
+      paramInt1 = localObject2[0];
+      paramInt2 = localObject2[1];
+      localObject2 = new int[2];
+      paramViewGroup.getLocationOnScreen((int[])localObject2);
+      ((View)localObject1).offsetLeftAndRight(paramInt1 - localObject2[0] - ((View)localObject1).getLeft());
+      ((View)localObject1).offsetTopAndBottom(paramInt2 - localObject2[1] - ((View)localObject1).getTop());
+      localObject2 = x.a(paramViewGroup);
+      ((w)localObject2).a((View)localObject1);
+      paramViewGroup = b(paramViewGroup, (View)localObject1, paramS1, paramS2);
+      if (paramViewGroup == null)
+      {
+        ((w)localObject2).b((View)localObject1);
+        return paramViewGroup;
+      }
+      paramViewGroup.addListener(new a((w)localObject2, (View)localObject1));
+      return paramViewGroup;
+    }
+    if (localObject3 != null)
+    {
+      paramInt1 = localObject3.getVisibility();
+      d0.a(localObject3, 0);
+      paramViewGroup = b(paramViewGroup, localObject3, paramS1, paramS2);
+      if (paramViewGroup != null)
+      {
+        paramS1 = new b(localObject3, paramInt2, true);
+        paramViewGroup.addListener(paramS1);
+        a.a(paramViewGroup, paramS1);
+        a(paramS1);
+        return paramViewGroup;
+      }
+      d0.a(localObject3, paramInt1);
+      return paramViewGroup;
+    }
+    return null;
+  }
+  
+  public abstract Animator b(ViewGroup paramViewGroup, View paramView, s paramS1, s paramS2);
+  
+  public void c(s paramS)
+  {
+    d(paramS);
+  }
+  
+  public String[] n()
+  {
+    return M;
+  }
+  
+  class a
+    extends AnimatorListenerAdapter
+  {
+    a(w paramW, View paramView) {}
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      a.b(b);
+    }
+  }
+  
+  private static class b
+    extends AnimatorListenerAdapter
+    implements m.f, a.a
+  {
+    private final View a;
+    private final int b;
+    private final ViewGroup c;
+    private final boolean d;
+    private boolean e;
+    boolean f = false;
+    
+    b(View paramView, int paramInt, boolean paramBoolean)
+    {
+      a = paramView;
+      b = paramInt;
+      c = ((ViewGroup)paramView.getParent());
+      d = paramBoolean;
+      a(true);
+    }
+    
+    private void a()
+    {
+      if (!f)
+      {
+        d0.a(a, b);
+        ViewGroup localViewGroup = c;
+        if (localViewGroup != null) {
+          localViewGroup.invalidate();
+        }
+      }
+      a(false);
+    }
+    
+    private void a(boolean paramBoolean)
+    {
+      if ((d) && (e != paramBoolean))
+      {
+        ViewGroup localViewGroup = c;
+        if (localViewGroup != null)
+        {
+          e = paramBoolean;
+          x.a(localViewGroup, paramBoolean);
+        }
+      }
+    }
+    
+    public void a(m paramM)
+    {
+      a(false);
+    }
+    
+    public void b(m paramM)
+    {
+      a();
+      paramM.b(this);
+    }
+    
+    public void c(m paramM) {}
+    
+    public void d(m paramM)
+    {
+      a(true);
+    }
+    
+    public void onAnimationCancel(Animator paramAnimator)
+    {
+      f = true;
+    }
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      a();
+    }
+    
+    public void onAnimationPause(Animator paramAnimator)
+    {
+      if (!f) {
+        d0.a(a, b);
+      }
+    }
+    
+    public void onAnimationRepeat(Animator paramAnimator) {}
+    
+    public void onAnimationResume(Animator paramAnimator)
+    {
+      if (!f) {
+        d0.a(a, 0);
+      }
+    }
+    
+    public void onAnimationStart(Animator paramAnimator) {}
+  }
+  
+  private static class c
+  {
+    boolean a;
+    boolean b;
+    int c;
+    int d;
+    ViewGroup e;
+    ViewGroup f;
+    
+    c() {}
+  }
+}

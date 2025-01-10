@@ -1,0 +1,4275 @@
+package android.support.v4.app;
+
+import a.b.g.g.b;
+import a.b.g.g.e;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
+import android.arch.lifecycle.p;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
+import android.content.res.TypedArray;
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Parcelable;
+import android.support.v4.view.u;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.LayoutInflater.Factory2;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.Transformation;
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+final class l
+  extends k
+  implements LayoutInflater.Factory2
+{
+  static boolean G = false;
+  static Field H = null;
+  static final Interpolator I = new DecelerateInterpolator(2.5F);
+  static final Interpolator J = new DecelerateInterpolator(1.5F);
+  ArrayList<f> A;
+  Bundle B = null;
+  SparseArray<Parcelable> C = null;
+  ArrayList<n> D;
+  m E;
+  Runnable F = new a();
+  ArrayList<l> c;
+  boolean d;
+  int e = 0;
+  final ArrayList<f> f = new ArrayList();
+  SparseArray<f> g;
+  ArrayList<c> h;
+  ArrayList<f> i;
+  ArrayList<c> j;
+  ArrayList<Integer> k;
+  ArrayList<k.c> l;
+  private final CopyOnWriteArrayList<j> m = new CopyOnWriteArrayList();
+  int n = 0;
+  j o;
+  h p;
+  f q;
+  f r;
+  boolean s;
+  boolean t;
+  boolean u;
+  boolean v;
+  String w;
+  boolean x;
+  ArrayList<c> y;
+  ArrayList<Boolean> z;
+  
+  static
+  {
+    new AccelerateInterpolator(2.5F);
+    new AccelerateInterpolator(1.5F);
+  }
+  
+  l() {}
+  
+  private void A()
+  {
+    d = false;
+    z.clear();
+    y.clear();
+  }
+  
+  private void B()
+  {
+    Object localObject = g;
+    int i1;
+    if (localObject == null) {
+      i1 = 0;
+    } else {
+      i1 = ((SparseArray)localObject).size();
+    }
+    int i2 = 0;
+    while (i2 < i1)
+    {
+      localObject = (f)g.valueAt(i2);
+      if (localObject != null) {
+        if (((f)localObject).g() != null)
+        {
+          int i3 = ((f)localObject).z();
+          View localView = ((f)localObject).g();
+          Animation localAnimation = localView.getAnimation();
+          if (localAnimation != null)
+          {
+            localAnimation.cancel();
+            localView.clearAnimation();
+          }
+          ((f)localObject).a(null);
+          a((f)localObject, i3, 0, 0, false);
+        }
+        else if (((f)localObject).h() != null)
+        {
+          ((f)localObject).h().end();
+        }
+      }
+      i2 += 1;
+    }
+  }
+  
+  private void C()
+  {
+    if (D != null) {
+      while (!D.isEmpty()) {
+        ((n)D.remove(0)).d();
+      }
+    }
+  }
+  
+  private int a(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1, int paramInt1, int paramInt2, b<f> paramB)
+  {
+    int i2 = paramInt2;
+    int i1 = paramInt2 - 1;
+    while (i1 >= paramInt1)
+    {
+      c localC = (c)paramArrayList.get(i1);
+      boolean bool = ((Boolean)paramArrayList1.get(i1)).booleanValue();
+      int i4;
+      if ((localC.g()) && (!localC.a(paramArrayList, i1 + 1, paramInt2))) {
+        i4 = 1;
+      } else {
+        i4 = 0;
+      }
+      int i3 = i2;
+      if (i4 != 0)
+      {
+        if (D == null) {
+          D = new ArrayList();
+        }
+        n localN = new n(localC, bool);
+        D.add(localN);
+        localC.a(localN);
+        if (bool) {
+          localC.e();
+        } else {
+          localC.b(false);
+        }
+        i3 = i2 - 1;
+        if (i1 != i3)
+        {
+          paramArrayList.remove(i1);
+          paramArrayList.add(i3, localC);
+        }
+        a(paramB);
+      }
+      i1 -= 1;
+      i2 = i3;
+    }
+    return i2;
+  }
+  
+  static g a(Context paramContext, float paramFloat1, float paramFloat2)
+  {
+    paramContext = new AlphaAnimation(paramFloat1, paramFloat2);
+    paramContext.setInterpolator(J);
+    paramContext.setDuration(220L);
+    return new g(paramContext);
+  }
+  
+  static g a(Context paramContext, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4)
+  {
+    paramContext = new AnimationSet(false);
+    Object localObject = new ScaleAnimation(paramFloat1, paramFloat2, paramFloat1, paramFloat2, 1, 0.5F, 1, 0.5F);
+    ((ScaleAnimation)localObject).setInterpolator(I);
+    ((ScaleAnimation)localObject).setDuration(220L);
+    paramContext.addAnimation((Animation)localObject);
+    localObject = new AlphaAnimation(paramFloat3, paramFloat4);
+    ((AlphaAnimation)localObject).setInterpolator(J);
+    ((AlphaAnimation)localObject).setDuration(220L);
+    paramContext.addAnimation((Animation)localObject);
+    return new g(paramContext);
+  }
+  
+  private static Animation.AnimationListener a(Animation paramAnimation)
+  {
+    try
+    {
+      if (H == null)
+      {
+        H = Animation.class.getDeclaredField("mListener");
+        H.setAccessible(true);
+      }
+      paramAnimation = (Animation.AnimationListener)H.get(paramAnimation);
+      return paramAnimation;
+    }
+    catch (IllegalAccessException paramAnimation)
+    {
+      Log.e("FragmentManager", "Cannot access Animation's mListener field", paramAnimation);
+      return null;
+    }
+    catch (NoSuchFieldException paramAnimation)
+    {
+      Log.e("FragmentManager", "No field with the name mListener is found in Animation class", paramAnimation);
+    }
+    return null;
+  }
+  
+  private void a(b<f> paramB)
+  {
+    int i1 = n;
+    if (i1 < 1) {
+      return;
+    }
+    int i2 = Math.min(i1, 3);
+    int i3 = f.size();
+    i1 = 0;
+    while (i1 < i3)
+    {
+      f localF = (f)f.get(i1);
+      if (c < i2)
+      {
+        a(localF, i2, localF.q(), localF.r(), false);
+        if ((K != null) && (!C) && (P)) {
+          paramB.add(localF);
+        }
+      }
+      i1 += 1;
+    }
+  }
+  
+  private void a(final f paramF, g paramG, int paramInt)
+  {
+    final View localView = K;
+    final ViewGroup localViewGroup = J;
+    localViewGroup.startViewTransition(localView);
+    paramF.d(paramInt);
+    Object localObject = a;
+    if (localObject != null)
+    {
+      localObject = new i((Animation)localObject, localViewGroup, localView);
+      paramF.a(K);
+      ((Animation)localObject).setAnimationListener(new b(a((Animation)localObject), localViewGroup, paramF));
+      a(localView, paramG);
+      K.startAnimation((Animation)localObject);
+      return;
+    }
+    localObject = b;
+    paramF.a(b);
+    ((Animator)localObject).addListener(new c(localViewGroup, localView, paramF));
+    ((Animator)localObject).setTarget(K);
+    a(K, paramG);
+    ((Animator)localObject).start();
+  }
+  
+  private static void a(m paramM)
+  {
+    if (paramM == null) {
+      return;
+    }
+    Object localObject = paramM.b();
+    if (localObject != null)
+    {
+      localObject = ((List)localObject).iterator();
+      while (((Iterator)localObject).hasNext()) {
+        nextF = true;
+      }
+    }
+    paramM = paramM.a();
+    if (paramM != null)
+    {
+      paramM = paramM.iterator();
+      while (paramM.hasNext()) {
+        a((m)paramM.next());
+      }
+    }
+  }
+  
+  private static void a(View paramView, g paramG)
+  {
+    if (paramView != null)
+    {
+      if (paramG == null) {
+        return;
+      }
+      if (b(paramView, paramG))
+      {
+        Object localObject = b;
+        if (localObject != null)
+        {
+          ((Animator)localObject).addListener(new h(paramView));
+          return;
+        }
+        localObject = a(a);
+        paramView.setLayerType(2, null);
+        a.setAnimationListener(new e(paramView, (Animation.AnimationListener)localObject));
+      }
+      return;
+    }
+  }
+  
+  private void a(RuntimeException paramRuntimeException)
+  {
+    Log.e("FragmentManager", paramRuntimeException.getMessage());
+    Log.e("FragmentManager", "Activity state:");
+    PrintWriter localPrintWriter = new PrintWriter(new e("FragmentManager"));
+    j localJ = o;
+    if (localJ != null) {
+      try
+      {
+        localJ.a("  ", null, localPrintWriter, new String[0]);
+      }
+      catch (Exception localException1)
+      {
+        Log.e("FragmentManager", "Failed dumping state", localException1);
+      }
+    } else {
+      try
+      {
+        a("  ", null, localException1, new String[0]);
+      }
+      catch (Exception localException2)
+      {
+        Log.e("FragmentManager", "Failed dumping state", localException2);
+      }
+    }
+    throw paramRuntimeException;
+  }
+  
+  private void a(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1)
+  {
+    Object localObject = D;
+    int i2;
+    if (localObject == null) {
+      i2 = 0;
+    } else {
+      i2 = ((ArrayList)localObject).size();
+    }
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      localObject = (n)D.get(i1);
+      int i3;
+      int i4;
+      if ((paramArrayList != null) && (!a))
+      {
+        i3 = paramArrayList.indexOf(b);
+        if ((i3 != -1) && (((Boolean)paramArrayList1.get(i3)).booleanValue()))
+        {
+          ((n)localObject).c();
+          i3 = i2;
+          i4 = i1;
+          break label221;
+        }
+      }
+      if (!((n)localObject).e())
+      {
+        i3 = i2;
+        i4 = i1;
+        if (paramArrayList != null)
+        {
+          i3 = i2;
+          i4 = i1;
+          if (!b.a(paramArrayList, 0, paramArrayList.size())) {}
+        }
+      }
+      else
+      {
+        D.remove(i1);
+        i4 = i1 - 1;
+        i3 = i2 - 1;
+        if ((paramArrayList != null) && (!a))
+        {
+          i1 = paramArrayList.indexOf(b);
+          if ((i1 != -1) && (((Boolean)paramArrayList1.get(i1)).booleanValue()))
+          {
+            ((n)localObject).c();
+            break label221;
+          }
+        }
+        ((n)localObject).d();
+      }
+      label221:
+      i1 = i4 + 1;
+      i2 = i3;
+    }
+  }
+  
+  private static void a(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1, int paramInt1, int paramInt2)
+  {
+    while (paramInt1 < paramInt2)
+    {
+      c localC = (c)paramArrayList.get(paramInt1);
+      boolean bool2 = ((Boolean)paramArrayList1.get(paramInt1)).booleanValue();
+      boolean bool1 = true;
+      if (bool2)
+      {
+        localC.a(-1);
+        if (paramInt1 != paramInt2 - 1) {
+          bool1 = false;
+        }
+        localC.b(bool1);
+      }
+      else
+      {
+        localC.a(1);
+        localC.e();
+      }
+      paramInt1 += 1;
+    }
+  }
+  
+  static boolean a(Animator paramAnimator)
+  {
+    if (paramAnimator == null) {
+      return false;
+    }
+    int i1;
+    if ((paramAnimator instanceof ValueAnimator))
+    {
+      paramAnimator = ((ValueAnimator)paramAnimator).getValues();
+      i1 = 0;
+      while (i1 < paramAnimator.length)
+      {
+        if ("alpha".equals(paramAnimator[i1].getPropertyName())) {
+          return true;
+        }
+        i1 += 1;
+      }
+    }
+    else if ((paramAnimator instanceof AnimatorSet))
+    {
+      paramAnimator = ((AnimatorSet)paramAnimator).getChildAnimations();
+      i1 = 0;
+      while (i1 < paramAnimator.size())
+      {
+        if (a((Animator)paramAnimator.get(i1))) {
+          return true;
+        }
+        i1 += 1;
+      }
+    }
+    return false;
+  }
+  
+  static boolean a(g paramG)
+  {
+    Animation localAnimation = a;
+    if ((localAnimation instanceof AlphaAnimation)) {
+      return true;
+    }
+    if ((localAnimation instanceof AnimationSet))
+    {
+      paramG = ((AnimationSet)localAnimation).getAnimations();
+      int i1 = 0;
+      while (i1 < paramG.size())
+      {
+        if ((paramG.get(i1) instanceof AlphaAnimation)) {
+          return true;
+        }
+        i1 += 1;
+      }
+      return false;
+    }
+    return a(b);
+  }
+  
+  private boolean a(String paramString, int paramInt1, int paramInt2)
+  {
+    o();
+    c(true);
+    Object localObject = r;
+    if ((localObject != null) && (paramInt1 < 0) && (paramString == null))
+    {
+      localObject = ((f)localObject).S();
+      if ((localObject != null) && (((k)localObject).d())) {
+        return true;
+      }
+    }
+    boolean bool = a(y, z, paramString, paramInt1, paramInt2);
+    if (bool) {
+      d = true;
+    }
+    try
+    {
+      c(y, z);
+      A();
+    }
+    finally
+    {
+      A();
+    }
+    y();
+    return bool;
+  }
+  
+  public static int b(int paramInt, boolean paramBoolean)
+  {
+    if (paramInt != 4097)
+    {
+      if (paramInt != 4099)
+      {
+        if (paramInt != 8194) {
+          return -1;
+        }
+        if (paramBoolean) {
+          paramInt = 3;
+        } else {
+          paramInt = 4;
+        }
+        return paramInt;
+      }
+      if (paramBoolean) {
+        paramInt = 5;
+      } else {
+        paramInt = 6;
+      }
+      return paramInt;
+    }
+    if (paramBoolean) {
+      paramInt = 1;
+    } else {
+      paramInt = 2;
+    }
+    return paramInt;
+  }
+  
+  private void b(b<f> paramB)
+  {
+    int i2 = paramB.size();
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      f localF = (f)paramB.c(i1);
+      if (!m)
+      {
+        View localView = localF.A();
+        R = localView.getAlpha();
+        localView.setAlpha(0.0F);
+      }
+      i1 += 1;
+    }
+  }
+  
+  private void b(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1, int paramInt1, int paramInt2)
+  {
+    boolean bool = gets;
+    Object localObject = A;
+    if (localObject == null) {
+      A = new ArrayList();
+    } else {
+      ((ArrayList)localObject).clear();
+    }
+    A.addAll(f);
+    localObject = q();
+    int i3 = paramInt1;
+    for (int i2 = 0;; i2 = i1)
+    {
+      int i4 = 1;
+      if (i3 >= paramInt2) {
+        break;
+      }
+      c localC = (c)paramArrayList.get(i3);
+      if (!((Boolean)paramArrayList1.get(i3)).booleanValue()) {
+        localObject = localC.a(A, (f)localObject);
+      } else {
+        localObject = localC.b(A, (f)localObject);
+      }
+      i1 = i4;
+      if (i2 == 0) {
+        if (i) {
+          i1 = i4;
+        } else {
+          i1 = 0;
+        }
+      }
+      i3 += 1;
+    }
+    A.clear();
+    if (!bool) {
+      r.a(this, paramArrayList, paramArrayList1, paramInt1, paramInt2, false);
+    }
+    a(paramArrayList, paramArrayList1, paramInt1, paramInt2);
+    int i1 = paramInt2;
+    if (bool)
+    {
+      localObject = new b();
+      a((b)localObject);
+      i1 = a(paramArrayList, paramArrayList1, paramInt1, paramInt2, (b)localObject);
+      b((b)localObject);
+    }
+    if ((i1 != paramInt1) && (bool))
+    {
+      r.a(this, paramArrayList, paramArrayList1, paramInt1, i1, true);
+      a(n, true);
+    }
+    while (paramInt1 < paramInt2)
+    {
+      localObject = (c)paramArrayList.get(paramInt1);
+      if (((Boolean)paramArrayList1.get(paramInt1)).booleanValue())
+      {
+        i1 = l;
+        if (i1 >= 0)
+        {
+          b(i1);
+          l = -1;
+        }
+      }
+      ((c)localObject).h();
+      paramInt1 += 1;
+    }
+    if (i2 != 0) {
+      s();
+    }
+  }
+  
+  static boolean b(View paramView, g paramG)
+  {
+    if (paramView != null)
+    {
+      if (paramG == null) {
+        return false;
+      }
+      return (Build.VERSION.SDK_INT >= 19) && (paramView.getLayerType() == 0) && (u.v(paramView)) && (a(paramG));
+    }
+    return false;
+  }
+  
+  private boolean b(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1)
+  {
+    boolean bool = false;
+    try
+    {
+      if ((c != null) && (c.size() != 0))
+      {
+        int i2 = c.size();
+        int i1 = 0;
+        while (i1 < i2)
+        {
+          bool |= ((l)c.get(i1)).a(paramArrayList, paramArrayList1);
+          i1 += 1;
+        }
+        c.clear();
+        o.e().removeCallbacks(F);
+        return bool;
+      }
+      return false;
+    }
+    finally {}
+    for (;;)
+    {
+      throw paramArrayList;
+    }
+  }
+  
+  private void c(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1)
+  {
+    if (paramArrayList != null)
+    {
+      if (paramArrayList.isEmpty()) {
+        return;
+      }
+      if ((paramArrayList1 != null) && (paramArrayList.size() == paramArrayList1.size()))
+      {
+        a(paramArrayList, paramArrayList1);
+        int i5 = paramArrayList.size();
+        int i2 = 0;
+        int i1 = 0;
+        while (i1 < i5)
+        {
+          int i3 = i2;
+          int i4 = i1;
+          if (!gets)
+          {
+            if (i2 != i1) {
+              b(paramArrayList, paramArrayList1, i2, i1);
+            }
+            i3 = i1 + 1;
+            i2 = i3;
+            if (((Boolean)paramArrayList1.get(i1)).booleanValue()) {
+              for (;;)
+              {
+                i2 = i3;
+                if (i3 >= i5) {
+                  break;
+                }
+                i2 = i3;
+                if (!((Boolean)paramArrayList1.get(i3)).booleanValue()) {
+                  break;
+                }
+                i2 = i3;
+                if (gets) {
+                  break;
+                }
+                i3 += 1;
+              }
+            }
+            b(paramArrayList, paramArrayList1, i1, i2);
+            i3 = i2;
+            i4 = i2 - 1;
+          }
+          i1 = i4 + 1;
+          i2 = i3;
+        }
+        if (i2 != i5) {
+          b(paramArrayList, paramArrayList1, i2, i5);
+        }
+        return;
+      }
+      throw new IllegalStateException("Internal error with the back stack records");
+    }
+  }
+  
+  private void c(boolean paramBoolean)
+  {
+    if (!d)
+    {
+      if (o != null)
+      {
+        if (Looper.myLooper() == o.e().getLooper())
+        {
+          if (!paramBoolean) {
+            z();
+          }
+          if (y == null)
+          {
+            y = new ArrayList();
+            z = new ArrayList();
+          }
+          d = true;
+          try
+          {
+            a(null, null);
+            return;
+          }
+          finally
+          {
+            d = false;
+          }
+        }
+        throw new IllegalStateException("Must be called from main thread of fragment host");
+      }
+      throw new IllegalStateException("Fragment host has been destroyed");
+    }
+    throw new IllegalStateException("FragmentManager is already executing transactions");
+  }
+  
+  private void d(int paramInt)
+  {
+    try
+    {
+      d = true;
+      a(paramInt, false);
+      d = false;
+      o();
+      return;
+    }
+    finally
+    {
+      d = false;
+    }
+  }
+  
+  public static int e(int paramInt)
+  {
+    if (paramInt != 4097)
+    {
+      if (paramInt != 4099)
+      {
+        if (paramInt != 8194) {
+          return 0;
+        }
+        return 4097;
+      }
+      return 4099;
+    }
+    return 8194;
+  }
+  
+  private f q(f paramF)
+  {
+    ViewGroup localViewGroup = J;
+    View localView = K;
+    if (localViewGroup != null)
+    {
+      if (localView == null) {
+        return null;
+      }
+      int i1 = f.indexOf(paramF) - 1;
+      while (i1 >= 0)
+      {
+        paramF = (f)f.get(i1);
+        if ((J == localViewGroup) && (K != null)) {
+          return paramF;
+        }
+        i1 -= 1;
+      }
+      return null;
+    }
+    return null;
+  }
+  
+  private void y()
+  {
+    SparseArray localSparseArray = g;
+    if (localSparseArray != null)
+    {
+      int i1 = localSparseArray.size() - 1;
+      while (i1 >= 0)
+      {
+        if (g.valueAt(i1) == null)
+        {
+          localSparseArray = g;
+          localSparseArray.delete(localSparseArray.keyAt(i1));
+        }
+        i1 -= 1;
+      }
+    }
+  }
+  
+  private void z()
+  {
+    if (!c())
+    {
+      if (w == null) {
+        return;
+      }
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Can not perform this action inside of ");
+      localStringBuilder.append(w);
+      throw new IllegalStateException(localStringBuilder.toString());
+    }
+    throw new IllegalStateException("Can not perform this action after onSaveInstanceState");
+  }
+  
+  public f.g a(f paramF)
+  {
+    int i1 = g;
+    StringBuilder localStringBuilder = null;
+    if (i1 >= 0)
+    {
+      if (c > 0)
+      {
+        Bundle localBundle = m(paramF);
+        paramF = localStringBuilder;
+        if (localBundle != null) {
+          paramF = new f.g(localBundle);
+        }
+        return paramF;
+      }
+      return null;
+    }
+    localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Fragment ");
+    localStringBuilder.append(paramF);
+    localStringBuilder.append(" is not currently in the FragmentManager");
+    a(new IllegalStateException(localStringBuilder.toString()));
+    throw null;
+  }
+  
+  public f a(int paramInt)
+  {
+    int i1 = f.size() - 1;
+    while (i1 >= 0)
+    {
+      localObject = (f)f.get(i1);
+      if ((localObject != null) && (z == paramInt)) {
+        return localObject;
+      }
+      i1 -= 1;
+    }
+    Object localObject = g;
+    if (localObject != null)
+    {
+      i1 = ((SparseArray)localObject).size() - 1;
+      while (i1 >= 0)
+      {
+        localObject = (f)g.valueAt(i1);
+        if ((localObject != null) && (z == paramInt)) {
+          return localObject;
+        }
+        i1 -= 1;
+      }
+    }
+    return null;
+  }
+  
+  public f a(Bundle paramBundle, String paramString)
+  {
+    int i1 = paramBundle.getInt(paramString, -1);
+    if (i1 == -1) {
+      return null;
+    }
+    paramBundle = (f)g.get(i1);
+    if (paramBundle != null) {
+      return paramBundle;
+    }
+    paramBundle = new StringBuilder();
+    paramBundle.append("Fragment no longer exists for key ");
+    paramBundle.append(paramString);
+    paramBundle.append(": index ");
+    paramBundle.append(i1);
+    a(new IllegalStateException(paramBundle.toString()));
+    throw null;
+  }
+  
+  public f a(String paramString)
+  {
+    int i1;
+    if (paramString != null)
+    {
+      i1 = f.size() - 1;
+      while (i1 >= 0)
+      {
+        localObject = (f)f.get(i1);
+        if ((localObject != null) && (paramString.equals(B))) {
+          return localObject;
+        }
+        i1 -= 1;
+      }
+    }
+    Object localObject = g;
+    if ((localObject != null) && (paramString != null))
+    {
+      i1 = ((SparseArray)localObject).size() - 1;
+      while (i1 >= 0)
+      {
+        localObject = (f)g.valueAt(i1);
+        if ((localObject != null) && (paramString.equals(B))) {
+          return localObject;
+        }
+        i1 -= 1;
+      }
+    }
+    return null;
+  }
+  
+  g a(f paramF, int paramInt1, boolean paramBoolean, int paramInt2)
+  {
+    int i3 = paramF.q();
+    Animation localAnimation = paramF.a(paramInt1, paramBoolean, i3);
+    if (localAnimation != null) {
+      return new g(localAnimation);
+    }
+    paramF = paramF.b(paramInt1, paramBoolean, i3);
+    if (paramF != null) {
+      return new g(paramF);
+    }
+    if (i3 != 0)
+    {
+      boolean bool = "anim".equals(o.c().getResources().getResourceTypeName(i3));
+      int i2 = 0;
+      int i1 = i2;
+      if (bool) {
+        try
+        {
+          paramF = AnimationUtils.loadAnimation(o.c(), i3);
+          if (paramF != null)
+          {
+            paramF = new g(paramF);
+            return paramF;
+          }
+          i1 = 1;
+        }
+        catch (RuntimeException paramF)
+        {
+          i1 = i2;
+        }
+        catch (Resources.NotFoundException paramF)
+        {
+          throw paramF;
+        }
+      }
+      if (i1 == 0) {
+        try
+        {
+          paramF = AnimatorInflater.loadAnimator(o.c(), i3);
+          if (paramF != null)
+          {
+            paramF = new g(paramF);
+            return paramF;
+          }
+        }
+        catch (RuntimeException paramF)
+        {
+          if (!bool)
+          {
+            paramF = AnimationUtils.loadAnimation(o.c(), i3);
+            if (paramF != null) {
+              return new g(paramF);
+            }
+          }
+          else
+          {
+            throw paramF;
+          }
+        }
+      }
+    }
+    if (paramInt1 == 0) {
+      return null;
+    }
+    paramInt1 = b(paramInt1, paramBoolean);
+    if (paramInt1 < 0) {
+      return null;
+    }
+    switch (paramInt1)
+    {
+    default: 
+      paramInt1 = paramInt2;
+      if (paramInt2 == 0)
+      {
+        paramInt1 = paramInt2;
+        if (o.h()) {
+          paramInt1 = o.g();
+        }
+      }
+      break;
+    case 6: 
+      return a(o.c(), 1.0F, 0.0F);
+    case 5: 
+      return a(o.c(), 0.0F, 1.0F);
+    case 4: 
+      return a(o.c(), 1.0F, 1.075F, 1.0F, 0.0F);
+    case 3: 
+      return a(o.c(), 0.975F, 1.0F, 0.0F, 1.0F);
+    case 2: 
+      return a(o.c(), 1.0F, 0.975F, 1.0F, 0.0F);
+    case 1: 
+      return a(o.c(), 1.125F, 1.0F, 0.0F, 1.0F);
+    }
+    if (paramInt1 == 0) {
+      return null;
+    }
+    return null;
+  }
+  
+  public q a()
+  {
+    return new c(this);
+  }
+  
+  public void a(int paramInt1, int paramInt2)
+  {
+    if (paramInt1 >= 0)
+    {
+      a(new m(null, paramInt1, paramInt2), false);
+      return;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Bad id: ");
+    localStringBuilder.append(paramInt1);
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  public void a(int paramInt, c paramC)
+  {
+    try
+    {
+      if (j == null) {
+        j = new ArrayList();
+      }
+      int i2 = j.size();
+      int i1 = i2;
+      StringBuilder localStringBuilder;
+      if (paramInt < i2)
+      {
+        if (G)
+        {
+          localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Setting back stack index ");
+          localStringBuilder.append(paramInt);
+          localStringBuilder.append(" to ");
+          localStringBuilder.append(paramC);
+          Log.v("FragmentManager", localStringBuilder.toString());
+        }
+        j.set(paramInt, paramC);
+      }
+      else
+      {
+        while (i1 < paramInt)
+        {
+          j.add(null);
+          if (k == null) {
+            k = new ArrayList();
+          }
+          if (G)
+          {
+            localStringBuilder = new StringBuilder();
+            localStringBuilder.append("Adding available back stack index ");
+            localStringBuilder.append(i1);
+            Log.v("FragmentManager", localStringBuilder.toString());
+          }
+          k.add(Integer.valueOf(i1));
+          i1 += 1;
+        }
+        if (G)
+        {
+          localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Adding back stack index ");
+          localStringBuilder.append(paramInt);
+          localStringBuilder.append(" with ");
+          localStringBuilder.append(paramC);
+          Log.v("FragmentManager", localStringBuilder.toString());
+        }
+        j.add(paramC);
+      }
+      return;
+    }
+    finally {}
+    for (;;)
+    {
+      throw paramC;
+    }
+  }
+  
+  void a(int paramInt, boolean paramBoolean)
+  {
+    if ((o == null) && (paramInt != 0)) {
+      throw new IllegalStateException("No activity");
+    }
+    if ((!paramBoolean) && (paramInt == n)) {
+      return;
+    }
+    n = paramInt;
+    if (g != null)
+    {
+      int i1 = f.size();
+      paramInt = 0;
+      while (paramInt < i1)
+      {
+        i((f)f.get(paramInt));
+        paramInt += 1;
+      }
+      i1 = g.size();
+      paramInt = 0;
+      Object localObject;
+      while (paramInt < i1)
+      {
+        localObject = (f)g.valueAt(paramInt);
+        if ((localObject != null) && ((n) || (D)) && (!P)) {
+          i((f)localObject);
+        }
+        paramInt += 1;
+      }
+      x();
+      if (s)
+      {
+        localObject = o;
+        if ((localObject != null) && (n == 4))
+        {
+          ((j)localObject).i();
+          s = false;
+        }
+      }
+    }
+  }
+  
+  public void a(Configuration paramConfiguration)
+  {
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      if (localF != null) {
+        localF.a(paramConfiguration);
+      }
+      i1 += 1;
+    }
+  }
+  
+  public void a(Bundle paramBundle, String paramString, f paramF)
+  {
+    int i1 = g;
+    if (i1 >= 0)
+    {
+      paramBundle.putInt(paramString, i1);
+      return;
+    }
+    paramBundle = new StringBuilder();
+    paramBundle.append("Fragment ");
+    paramBundle.append(paramF);
+    paramBundle.append(" is not currently in the FragmentManager");
+    a(new IllegalStateException(paramBundle.toString()));
+    throw null;
+  }
+  
+  void a(Parcelable paramParcelable, m arg2)
+  {
+    if (paramParcelable == null) {
+      return;
+    }
+    n localN = (n)paramParcelable;
+    if (c == null) {
+      return;
+    }
+    Object localObject3;
+    Object localObject1;
+    int i2;
+    Object localObject2;
+    Object localObject4;
+    int i3;
+    if (??? != null)
+    {
+      localObject3 = ???.b();
+      paramParcelable = ???.a();
+      localObject1 = ???.c();
+      if (localObject3 != null) {
+        i1 = ((List)localObject3).size();
+      } else {
+        i1 = 0;
+      }
+      i2 = 0;
+      while (i2 < i1)
+      {
+        localObject2 = (f)((List)localObject3).get(i2);
+        if (G)
+        {
+          localObject4 = new StringBuilder();
+          ((StringBuilder)localObject4).append("restoreAllState: re-attaching retained ");
+          ((StringBuilder)localObject4).append(localObject2);
+          Log.v("FragmentManager", ((StringBuilder)localObject4).toString());
+        }
+        i3 = 0;
+        for (;;)
+        {
+          localObject4 = c;
+          if ((i3 >= localObject4.length) || (d == g)) {
+            break;
+          }
+          i3 += 1;
+        }
+        localObject4 = c;
+        if (i3 != localObject4.length)
+        {
+          localObject4 = localObject4[i3];
+          n = ((f)localObject2);
+          e = null;
+          s = 0;
+          p = false;
+          m = false;
+          j = null;
+          Bundle localBundle = m;
+          if (localBundle != null)
+          {
+            localBundle.setClassLoader(o.c().getClassLoader());
+            e = m.getSparseParcelableArray("android:view_state");
+            d = m;
+          }
+          i2 += 1;
+        }
+        else
+        {
+          paramParcelable = new StringBuilder();
+          paramParcelable.append("Could not find active fragment with index ");
+          paramParcelable.append(g);
+          a(new IllegalStateException(paramParcelable.toString()));
+          throw null;
+        }
+      }
+    }
+    else
+    {
+      localObject1 = null;
+      paramParcelable = null;
+    }
+    g = new SparseArray(c.length);
+    int i1 = 0;
+    for (;;)
+    {
+      localObject2 = c;
+      if (i1 >= localObject2.length) {
+        break;
+      }
+      localObject4 = localObject2[i1];
+      if (localObject4 != null)
+      {
+        localObject3 = null;
+        localObject2 = localObject3;
+        if (paramParcelable != null)
+        {
+          localObject2 = localObject3;
+          if (i1 < paramParcelable.size()) {
+            localObject2 = (m)paramParcelable.get(i1);
+          }
+        }
+        if ((localObject1 != null) && (i1 < ((List)localObject1).size())) {
+          localObject3 = (p)((List)localObject1).get(i1);
+        } else {
+          localObject3 = null;
+        }
+        localObject2 = ((o)localObject4).a(o, p, q, (m)localObject2, (p)localObject3);
+        if (G)
+        {
+          localObject3 = new StringBuilder();
+          ((StringBuilder)localObject3).append("restoreAllState: active #");
+          ((StringBuilder)localObject3).append(i1);
+          ((StringBuilder)localObject3).append(": ");
+          ((StringBuilder)localObject3).append(localObject2);
+          Log.v("FragmentManager", ((StringBuilder)localObject3).toString());
+        }
+        g.put(g, localObject2);
+        n = null;
+      }
+      i1 += 1;
+    }
+    if (??? != null)
+    {
+      paramParcelable = ???.b();
+      if (paramParcelable != null) {
+        i1 = paramParcelable.size();
+      } else {
+        i1 = 0;
+      }
+      i2 = 0;
+      while (i2 < i1)
+      {
+        ??? = (f)paramParcelable.get(i2);
+        i3 = k;
+        if (i3 >= 0)
+        {
+          j = ((f)g.get(i3));
+          if (j == null)
+          {
+            localObject1 = new StringBuilder();
+            ((StringBuilder)localObject1).append("Re-attaching retained fragment ");
+            ((StringBuilder)localObject1).append(???);
+            ((StringBuilder)localObject1).append(" target no longer exists: ");
+            ((StringBuilder)localObject1).append(k);
+            Log.w("FragmentManager", ((StringBuilder)localObject1).toString());
+          }
+        }
+        i2 += 1;
+      }
+    }
+    f.clear();
+    if (d != null)
+    {
+      i1 = 0;
+      for (;;)
+      {
+        paramParcelable = d;
+        if (i1 >= paramParcelable.length) {
+          break label914;
+        }
+        paramParcelable = (f)g.get(paramParcelable[i1]);
+        if (paramParcelable == null) {
+          break label869;
+        }
+        m = true;
+        if (G)
+        {
+          ??? = new StringBuilder();
+          ???.append("restoreAllState: added #");
+          ???.append(i1);
+          ???.append(": ");
+          ???.append(paramParcelable);
+          Log.v("FragmentManager", ???.toString());
+        }
+        if (!f.contains(paramParcelable)) {
+          synchronized (f)
+          {
+            f.add(paramParcelable);
+            i1 += 1;
+          }
+        }
+      }
+      throw new IllegalStateException("Already added!");
+      label869:
+      paramParcelable = new StringBuilder();
+      paramParcelable.append("No instantiated fragment for index #");
+      paramParcelable.append(d[i1]);
+      a(new IllegalStateException(paramParcelable.toString()));
+      throw null;
+    }
+    label914:
+    paramParcelable = e;
+    if (paramParcelable != null)
+    {
+      h = new ArrayList(paramParcelable.length);
+      i1 = 0;
+      for (;;)
+      {
+        paramParcelable = e;
+        if (i1 >= paramParcelable.length) {
+          break;
+        }
+        paramParcelable = paramParcelable[i1].a(this);
+        if (G)
+        {
+          ??? = new StringBuilder();
+          ???.append("restoreAllState: back stack #");
+          ???.append(i1);
+          ???.append(" (index ");
+          ???.append(l);
+          ???.append("): ");
+          ???.append(paramParcelable);
+          Log.v("FragmentManager", ???.toString());
+          ??? = new PrintWriter(new e("FragmentManager"));
+          paramParcelable.a("  ", ???, false);
+          ???.close();
+        }
+        h.add(paramParcelable);
+        i2 = l;
+        if (i2 >= 0) {
+          a(i2, paramParcelable);
+        }
+        i1 += 1;
+      }
+    }
+    else
+    {
+      h = null;
+    }
+    i1 = f;
+    if (i1 >= 0) {
+      r = ((f)g.get(i1));
+    }
+    e = g;
+  }
+  
+  void a(c paramC)
+  {
+    if (h == null) {
+      h = new ArrayList();
+    }
+    h.add(paramC);
+  }
+  
+  void a(c paramC, boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3)
+  {
+    if (paramBoolean1) {
+      paramC.b(paramBoolean3);
+    } else {
+      paramC.e();
+    }
+    Object localObject = new ArrayList(1);
+    ArrayList localArrayList = new ArrayList(1);
+    ((ArrayList)localObject).add(paramC);
+    localArrayList.add(Boolean.valueOf(paramBoolean1));
+    if (paramBoolean2) {
+      r.a(this, (ArrayList)localObject, localArrayList, 0, 1, true);
+    }
+    if (paramBoolean3) {
+      a(n, true);
+    }
+    localObject = g;
+    if (localObject != null)
+    {
+      int i2 = ((SparseArray)localObject).size();
+      int i1 = 0;
+      while (i1 < i2)
+      {
+        localObject = (f)g.valueAt(i1);
+        if ((localObject != null) && (K != null) && (P) && (paramC.b(A)))
+        {
+          float f1 = R;
+          if (f1 > 0.0F) {
+            K.setAlpha(f1);
+          }
+          if (paramBoolean3)
+          {
+            R = 0.0F;
+          }
+          else
+          {
+            R = -1.0F;
+            P = false;
+          }
+        }
+        i1 += 1;
+      }
+    }
+  }
+  
+  void a(f paramF, int paramInt1, int paramInt2, int paramInt3, boolean paramBoolean)
+  {
+    boolean bool2 = m;
+    boolean bool1 = true;
+    if ((bool2) && (!D)) {
+      break label41;
+    }
+    int i1 = paramInt1;
+    paramInt1 = i1;
+    if (i1 > 1) {
+      paramInt1 = 1;
+    }
+    label41:
+    i1 = paramInt1;
+    if (n)
+    {
+      int i2 = c;
+      i1 = paramInt1;
+      if (paramInt1 > i2) {
+        if ((i2 == 0) && (paramF.G())) {
+          i1 = 1;
+        } else {
+          i1 = c;
+        }
+      }
+    }
+    paramInt1 = i1;
+    if (M)
+    {
+      paramInt1 = i1;
+      if (c < 3)
+      {
+        paramInt1 = i1;
+        if (i1 > 2) {
+          paramInt1 = 2;
+        }
+      }
+    }
+    i1 = c;
+    Object localObject3;
+    Object localObject2;
+    if (i1 <= paramInt1)
+    {
+      if ((o) && (!p)) {
+        return;
+      }
+      if ((paramF.g() != null) || (paramF.h() != null))
+      {
+        paramF.a(null);
+        paramF.a(null);
+        a(paramF, paramF.z(), 0, 0, true);
+      }
+      i1 = c;
+      Object localObject1;
+      if (i1 != 0)
+      {
+        paramInt2 = paramInt1;
+        if (i1 != 1)
+        {
+          paramInt3 = paramInt1;
+          if (i1 == 2) {
+            break label1237;
+          }
+          paramInt2 = paramInt1;
+          if (i1 == 3) {
+            break label1302;
+          }
+          break label1374;
+        }
+      }
+      else
+      {
+        paramInt2 = paramInt1;
+        if (paramInt1 > 0)
+        {
+          if (G)
+          {
+            localObject1 = new StringBuilder();
+            ((StringBuilder)localObject1).append("moveto CREATED: ");
+            ((StringBuilder)localObject1).append(paramF);
+            Log.v("FragmentManager", ((StringBuilder)localObject1).toString());
+          }
+          localObject1 = d;
+          paramInt2 = paramInt1;
+          if (localObject1 != null)
+          {
+            ((Bundle)localObject1).setClassLoader(o.c().getClassLoader());
+            e = d.getSparseParcelableArray("android:view_state");
+            j = a(d, "android:target_state");
+            if (j != null) {
+              l = d.getInt("android:target_req_state", 0);
+            }
+            localObject1 = f;
+            if (localObject1 != null)
+            {
+              N = ((Boolean)localObject1).booleanValue();
+              f = null;
+            }
+            else
+            {
+              N = d.getBoolean("android:user_visible_hint", true);
+            }
+            paramInt2 = paramInt1;
+            if (!N)
+            {
+              M = true;
+              paramInt2 = paramInt1;
+              if (paramInt1 > 2) {
+                paramInt2 = 2;
+              }
+            }
+          }
+          localObject1 = o;
+          u = ((j)localObject1);
+          localObject3 = q;
+          y = ((f)localObject3);
+          if (localObject3 != null) {
+            localObject1 = v;
+          } else {
+            localObject1 = ((j)localObject1).d();
+          }
+          t = ((l)localObject1);
+          localObject1 = j;
+          if (localObject1 != null)
+          {
+            localObject1 = g.get(g);
+            localObject3 = j;
+            if (localObject1 == localObject3)
+            {
+              if (c < 1) {
+                a((f)localObject3, 1, 0, 0, true);
+              }
+            }
+            else
+            {
+              localObject1 = new StringBuilder();
+              ((StringBuilder)localObject1).append("Fragment ");
+              ((StringBuilder)localObject1).append(paramF);
+              ((StringBuilder)localObject1).append(" declared target fragment ");
+              ((StringBuilder)localObject1).append(j);
+              ((StringBuilder)localObject1).append(" that does not belong to this FragmentManager!");
+              throw new IllegalStateException(((StringBuilder)localObject1).toString());
+            }
+          }
+          b(paramF, o.c(), false);
+          I = false;
+          paramF.a(o.c());
+          if (I)
+          {
+            localObject1 = y;
+            if (localObject1 == null) {
+              o.a(paramF);
+            } else {
+              ((f)localObject1).a(paramF);
+            }
+            a(paramF, o.c(), false);
+            if (!T)
+            {
+              c(paramF, d, false);
+              paramF.h(d);
+              b(paramF, d, false);
+            }
+            else
+            {
+              paramF.k(d);
+              c = 1;
+            }
+            F = false;
+          }
+          else
+          {
+            localObject1 = new StringBuilder();
+            ((StringBuilder)localObject1).append("Fragment ");
+            ((StringBuilder)localObject1).append(paramF);
+            ((StringBuilder)localObject1).append(" did not call through to super.onAttach()");
+            throw new d0(((StringBuilder)localObject1).toString());
+          }
+        }
+      }
+      e(paramF);
+      paramInt3 = paramInt2;
+      if (paramInt2 > 1)
+      {
+        if (G)
+        {
+          localObject1 = new StringBuilder();
+          ((StringBuilder)localObject1).append("moveto ACTIVITY_CREATED: ");
+          ((StringBuilder)localObject1).append(paramF);
+          Log.v("FragmentManager", ((StringBuilder)localObject1).toString());
+        }
+        if (!o)
+        {
+          localObject1 = null;
+          paramInt1 = A;
+          if (paramInt1 != 0) {
+            if (paramInt1 != -1)
+            {
+              localObject3 = (ViewGroup)p.a(paramInt1);
+              localObject1 = localObject3;
+              if (localObject3 == null) {
+                if (q)
+                {
+                  localObject1 = localObject3;
+                }
+                else
+                {
+                  try
+                  {
+                    localObject1 = paramF.v().getResourceName(A);
+                  }
+                  catch (Resources.NotFoundException localNotFoundException)
+                  {
+                    localObject2 = "unknown";
+                  }
+                  localObject3 = new StringBuilder();
+                  ((StringBuilder)localObject3).append("No view found for id 0x");
+                  ((StringBuilder)localObject3).append(Integer.toHexString(A));
+                  ((StringBuilder)localObject3).append(" (");
+                  ((StringBuilder)localObject3).append((String)localObject2);
+                  ((StringBuilder)localObject3).append(") for fragment ");
+                  ((StringBuilder)localObject3).append(paramF);
+                  a(new IllegalArgumentException(((StringBuilder)localObject3).toString()));
+                  throw null;
+                }
+              }
+            }
+            else
+            {
+              localObject2 = new StringBuilder();
+              ((StringBuilder)localObject2).append("Cannot create fragment ");
+              ((StringBuilder)localObject2).append(paramF);
+              ((StringBuilder)localObject2).append(" for a container view with no id");
+              a(new IllegalArgumentException(((StringBuilder)localObject2).toString()));
+              throw null;
+            }
+          }
+          J = ((ViewGroup)localObject2);
+          paramF.b(paramF.i(d), (ViewGroup)localObject2, d);
+          localObject3 = K;
+          if (localObject3 != null)
+          {
+            L = ((View)localObject3);
+            ((View)localObject3).setSaveFromParentEnabled(false);
+            if (localObject2 != null) {
+              ((ViewGroup)localObject2).addView(K);
+            }
+            if (C) {
+              K.setVisibility(8);
+            }
+            paramF.a(K, d);
+            a(paramF, K, d, false);
+            if ((K.getVisibility() == 0) && (J != null)) {
+              paramBoolean = bool1;
+            } else {
+              paramBoolean = false;
+            }
+            P = paramBoolean;
+          }
+          else
+          {
+            L = null;
+          }
+        }
+        paramF.g(d);
+        a(paramF, d, false);
+        if (K != null) {
+          paramF.l(d);
+        }
+        d = null;
+        paramInt3 = paramInt2;
+      }
+      label1237:
+      paramInt2 = paramInt3;
+      if (paramInt3 > 2)
+      {
+        if (G)
+        {
+          localObject2 = new StringBuilder();
+          ((StringBuilder)localObject2).append("moveto STARTED: ");
+          ((StringBuilder)localObject2).append(paramF);
+          Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+        }
+        paramF.Z();
+        f(paramF, false);
+        paramInt2 = paramInt3;
+      }
+      label1302:
+      paramInt1 = paramInt2;
+      if (paramInt2 > 3)
+      {
+        if (G)
+        {
+          localObject2 = new StringBuilder();
+          ((StringBuilder)localObject2).append("moveto RESUMED: ");
+          ((StringBuilder)localObject2).append(paramF);
+          Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+        }
+        paramF.Y();
+        e(paramF, false);
+        d = null;
+        e = null;
+        paramInt1 = paramInt2;
+      }
+      label1374:
+      paramInt2 = paramInt1;
+    }
+    else if (i1 > paramInt1)
+    {
+      if (i1 != 1)
+      {
+        if (i1 != 2)
+        {
+          if (i1 != 3)
+          {
+            if (i1 != 4)
+            {
+              paramInt2 = paramInt1;
+              break label1992;
+            }
+            if (paramInt1 < 4)
+            {
+              if (G)
+              {
+                localObject2 = new StringBuilder();
+                ((StringBuilder)localObject2).append("movefrom RESUMED: ");
+                ((StringBuilder)localObject2).append(paramF);
+                Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+              }
+              paramF.X();
+              d(paramF, false);
+            }
+          }
+          if (paramInt1 < 3)
+          {
+            if (G)
+            {
+              localObject2 = new StringBuilder();
+              ((StringBuilder)localObject2).append("movefrom STARTED: ");
+              ((StringBuilder)localObject2).append(paramF);
+              Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+            }
+            paramF.a0();
+            g(paramF, false);
+          }
+        }
+        if (paramInt1 < 2)
+        {
+          if (G)
+          {
+            localObject2 = new StringBuilder();
+            ((StringBuilder)localObject2).append("movefrom ACTIVITY_CREATED: ");
+            ((StringBuilder)localObject2).append(paramF);
+            Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+          }
+          if ((K != null) && (o.b(paramF)) && (e == null)) {
+            n(paramF);
+          }
+          paramF.U();
+          h(paramF, false);
+          localObject2 = K;
+          if (localObject2 != null)
+          {
+            localObject3 = J;
+            if (localObject3 != null)
+            {
+              ((ViewGroup)localObject3).endViewTransition((View)localObject2);
+              K.clearAnimation();
+              localObject2 = null;
+              if ((n > 0) && (!v)) {
+                if ((K.getVisibility() == 0) && (R >= 0.0F)) {
+                  localObject2 = a(paramF, paramInt2, false, paramInt3);
+                } else {}
+              }
+              R = 0.0F;
+              if (localObject2 != null) {
+                a(paramF, (g)localObject2, paramInt1);
+              }
+              J.removeView(K);
+            }
+          }
+          J = null;
+          K = null;
+          W = null;
+          X.a(null);
+          L = null;
+          p = false;
+        }
+        else {}
+      }
+      paramInt2 = paramInt1;
+      if (paramInt1 < 1)
+      {
+        if (v) {
+          if (paramF.g() != null)
+          {
+            localObject2 = paramF.g();
+            paramF.a(null);
+            ((View)localObject2).clearAnimation();
+          }
+          else if (paramF.h() != null)
+          {
+            localObject2 = paramF.h();
+            paramF.a(null);
+            ((Animator)localObject2).cancel();
+          }
+        }
+        if ((paramF.g() == null) && (paramF.h() == null))
+        {
+          if (G)
+          {
+            localObject2 = new StringBuilder();
+            ((StringBuilder)localObject2).append("movefrom CREATED: ");
+            ((StringBuilder)localObject2).append(paramF);
+            Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+          }
+          if (!F)
+          {
+            paramF.T();
+            b(paramF, false);
+          }
+          else
+          {
+            c = 0;
+          }
+          paramF.V();
+          c(paramF, false);
+          paramInt2 = paramInt1;
+          if (!paramBoolean) {
+            if (!F)
+            {
+              h(paramF);
+              paramInt2 = paramInt1;
+            }
+            else
+            {
+              u = null;
+              y = null;
+              t = null;
+              paramInt2 = paramInt1;
+            }
+          }
+        }
+        else
+        {
+          paramF.d(paramInt1);
+          paramInt2 = 1;
+        }
+      }
+    }
+    else
+    {
+      paramInt2 = paramInt1;
+    }
+    label1992:
+    if (c != paramInt2)
+    {
+      localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append("moveToState: Fragment state for ");
+      ((StringBuilder)localObject2).append(paramF);
+      ((StringBuilder)localObject2).append(" not updated inline; ");
+      ((StringBuilder)localObject2).append("expected state ");
+      ((StringBuilder)localObject2).append(paramInt2);
+      ((StringBuilder)localObject2).append(" found ");
+      ((StringBuilder)localObject2).append(c);
+      Log.w("FragmentManager", ((StringBuilder)localObject2).toString());
+      c = paramInt2;
+    }
+  }
+  
+  void a(f paramF, Context paramContext, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).a(paramF, paramContext, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.a(this, paramF, paramContext);
+      }
+    }
+  }
+  
+  void a(f paramF, Bundle paramBundle, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).a(paramF, paramBundle, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.a(this, paramF, paramBundle);
+      }
+    }
+  }
+  
+  void a(f paramF, View paramView, Bundle paramBundle, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).a(paramF, paramView, paramBundle, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.a(this, paramF, paramView, paramBundle);
+      }
+    }
+  }
+  
+  public void a(f paramF, boolean paramBoolean)
+  {
+    if (G)
+    {
+      ??? = new StringBuilder();
+      ((StringBuilder)???).append("add: ");
+      ((StringBuilder)???).append(paramF);
+      Log.v("FragmentManager", ((StringBuilder)???).toString());
+    }
+    g(paramF);
+    if (!D)
+    {
+      if (!f.contains(paramF)) {
+        synchronized (f)
+        {
+          f.add(paramF);
+          m = true;
+          n = false;
+          if (K == null) {
+            Q = false;
+          }
+          if ((G) && (H)) {
+            s = true;
+          }
+          if (!paramBoolean) {
+            return;
+          }
+          j(paramF);
+          return;
+        }
+      }
+      ??? = new StringBuilder();
+      ((StringBuilder)???).append("Fragment already added: ");
+      ((StringBuilder)???).append(paramF);
+      throw new IllegalStateException(((StringBuilder)???).toString());
+    }
+  }
+  
+  public void a(j paramJ, h paramH, f paramF)
+  {
+    if (o == null)
+    {
+      o = paramJ;
+      p = paramH;
+      q = paramF;
+      return;
+    }
+    throw new IllegalStateException("Already attached");
+  }
+  
+  public void a(l paramL, boolean paramBoolean)
+  {
+    if (!paramBoolean) {
+      z();
+    }
+    try
+    {
+      if ((!v) && (o != null))
+      {
+        if (c == null) {
+          c = new ArrayList();
+        }
+        c.add(paramL);
+        w();
+        return;
+      }
+      if (paramBoolean) {
+        return;
+      }
+      throw new IllegalStateException("Activity has been destroyed");
+    }
+    finally {}
+  }
+  
+  public void a(Menu paramMenu)
+  {
+    if (n < 1) {
+      return;
+    }
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      if (localF != null) {
+        localF.c(paramMenu);
+      }
+      i1 += 1;
+    }
+  }
+  
+  public void a(String paramString, FileDescriptor paramFileDescriptor, PrintWriter paramPrintWriter, String[] paramArrayOfString)
+  {
+    Object localObject1 = new StringBuilder();
+    ((StringBuilder)localObject1).append(paramString);
+    ((StringBuilder)localObject1).append("    ");
+    localObject1 = ((StringBuilder)localObject1).toString();
+    Object localObject2 = g;
+    int i1;
+    if (localObject2 != null)
+    {
+      i2 = ((SparseArray)localObject2).size();
+      if (i2 > 0)
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.print("Active Fragments in ");
+        paramPrintWriter.print(Integer.toHexString(System.identityHashCode(this)));
+        paramPrintWriter.println(":");
+        i1 = 0;
+        while (i1 < i2)
+        {
+          localObject2 = (f)g.valueAt(i1);
+          paramPrintWriter.print(paramString);
+          paramPrintWriter.print("  #");
+          paramPrintWriter.print(i1);
+          paramPrintWriter.print(": ");
+          paramPrintWriter.println(localObject2);
+          if (localObject2 != null) {
+            ((f)localObject2).a((String)localObject1, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+          }
+          i1 += 1;
+        }
+      }
+    }
+    int i2 = f.size();
+    if (i2 > 0)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.println("Added Fragments:");
+      i1 = 0;
+      while (i1 < i2)
+      {
+        localObject2 = (f)f.get(i1);
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.print("  #");
+        paramPrintWriter.print(i1);
+        paramPrintWriter.print(": ");
+        paramPrintWriter.println(((f)localObject2).toString());
+        i1 += 1;
+      }
+    }
+    localObject2 = i;
+    if (localObject2 != null)
+    {
+      i2 = ((ArrayList)localObject2).size();
+      if (i2 > 0)
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.println("Fragments Created Menus:");
+        i1 = 0;
+        while (i1 < i2)
+        {
+          localObject2 = (f)i.get(i1);
+          paramPrintWriter.print(paramString);
+          paramPrintWriter.print("  #");
+          paramPrintWriter.print(i1);
+          paramPrintWriter.print(": ");
+          paramPrintWriter.println(((f)localObject2).toString());
+          i1 += 1;
+        }
+      }
+    }
+    localObject2 = h;
+    if (localObject2 != null)
+    {
+      i2 = ((ArrayList)localObject2).size();
+      if (i2 > 0)
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.println("Back Stack:");
+        i1 = 0;
+        while (i1 < i2)
+        {
+          localObject2 = (c)h.get(i1);
+          paramPrintWriter.print(paramString);
+          paramPrintWriter.print("  #");
+          paramPrintWriter.print(i1);
+          paramPrintWriter.print(": ");
+          paramPrintWriter.println(((c)localObject2).toString());
+          ((c)localObject2).a((String)localObject1, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+          i1 += 1;
+        }
+      }
+    }
+    try
+    {
+      if (j != null)
+      {
+        i2 = j.size();
+        if (i2 > 0)
+        {
+          paramPrintWriter.print(paramString);
+          paramPrintWriter.println("Back Stack Indices:");
+          i1 = 0;
+          while (i1 < i2)
+          {
+            paramFileDescriptor = (c)j.get(i1);
+            paramPrintWriter.print(paramString);
+            paramPrintWriter.print("  #");
+            paramPrintWriter.print(i1);
+            paramPrintWriter.print(": ");
+            paramPrintWriter.println(paramFileDescriptor);
+            i1 += 1;
+          }
+        }
+      }
+      if ((k != null) && (k.size() > 0))
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.print("mAvailBackStackIndices: ");
+        paramPrintWriter.println(Arrays.toString(k.toArray()));
+      }
+      paramFileDescriptor = c;
+      if (paramFileDescriptor != null)
+      {
+        i2 = paramFileDescriptor.size();
+        if (i2 > 0)
+        {
+          paramPrintWriter.print(paramString);
+          paramPrintWriter.println("Pending Actions:");
+          i1 = 0;
+          while (i1 < i2)
+          {
+            paramFileDescriptor = (l)c.get(i1);
+            paramPrintWriter.print(paramString);
+            paramPrintWriter.print("  #");
+            paramPrintWriter.print(i1);
+            paramPrintWriter.print(": ");
+            paramPrintWriter.println(paramFileDescriptor);
+            i1 += 1;
+          }
+        }
+      }
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.println("FragmentManager misc state:");
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("  mHost=");
+      paramPrintWriter.println(o);
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("  mContainer=");
+      paramPrintWriter.println(p);
+      if (q != null)
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.print("  mParent=");
+        paramPrintWriter.println(q);
+      }
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("  mCurState=");
+      paramPrintWriter.print(n);
+      paramPrintWriter.print(" mStateSaved=");
+      paramPrintWriter.print(t);
+      paramPrintWriter.print(" mStopped=");
+      paramPrintWriter.print(u);
+      paramPrintWriter.print(" mDestroyed=");
+      paramPrintWriter.println(v);
+      if (s)
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.print("  mNeedMenuInvalidate=");
+        paramPrintWriter.println(s);
+      }
+      if (w != null)
+      {
+        paramPrintWriter.print(paramString);
+        paramPrintWriter.print("  mNoTransactionsBecause=");
+        paramPrintWriter.println(w);
+      }
+      return;
+    }
+    finally {}
+    for (;;)
+    {
+      throw paramString;
+    }
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    int i1 = f.size() - 1;
+    while (i1 >= 0)
+    {
+      f localF = (f)f.get(i1);
+      if (localF != null) {
+        localF.d(paramBoolean);
+      }
+      i1 -= 1;
+    }
+  }
+  
+  public boolean a(Menu paramMenu, MenuInflater paramMenuInflater)
+  {
+    if (n < 1) {
+      return false;
+    }
+    boolean bool1 = false;
+    Object localObject1 = null;
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      boolean bool2 = bool1;
+      Object localObject2 = localObject1;
+      if (localF != null)
+      {
+        bool2 = bool1;
+        localObject2 = localObject1;
+        if (localF.b(paramMenu, paramMenuInflater))
+        {
+          bool2 = true;
+          localObject2 = localObject1;
+          if (localObject1 == null) {
+            localObject2 = new ArrayList();
+          }
+          ((ArrayList)localObject2).add(localF);
+        }
+      }
+      i1 += 1;
+      bool1 = bool2;
+      localObject1 = localObject2;
+    }
+    if (i != null)
+    {
+      i1 = 0;
+      while (i1 < i.size())
+      {
+        paramMenu = (f)i.get(i1);
+        if ((localObject1 == null) || (!localObject1.contains(paramMenu))) {
+          paramMenu.L();
+        }
+        i1 += 1;
+      }
+    }
+    i = localObject1;
+    return bool1;
+  }
+  
+  public boolean a(MenuItem paramMenuItem)
+  {
+    if (n < 1) {
+      return false;
+    }
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      if ((localF != null) && (localF.c(paramMenuItem))) {
+        return true;
+      }
+      i1 += 1;
+    }
+    return false;
+  }
+  
+  boolean a(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1, String paramString, int paramInt1, int paramInt2)
+  {
+    Object localObject = h;
+    if (localObject == null) {
+      return false;
+    }
+    if ((paramString == null) && (paramInt1 < 0) && ((paramInt2 & 0x1) == 0))
+    {
+      paramInt1 = ((ArrayList)localObject).size() - 1;
+      if (paramInt1 < 0) {
+        return false;
+      }
+      paramArrayList.add(h.remove(paramInt1));
+      paramArrayList1.add(Boolean.valueOf(true));
+      return true;
+    }
+    int i1 = -1;
+    if ((paramString != null) || (paramInt1 >= 0))
+    {
+      int i2 = h.size() - 1;
+      while (i2 >= 0)
+      {
+        localObject = (c)h.get(i2);
+        if (((paramString != null) && (paramString.equals(((c)localObject).f()))) || ((paramInt1 >= 0) && (paramInt1 == l))) {
+          break;
+        }
+        i2 -= 1;
+      }
+      if (i2 < 0) {
+        return false;
+      }
+      i1 = i2;
+      if ((paramInt2 & 0x1) != 0)
+      {
+        paramInt2 = i2 - 1;
+        for (;;)
+        {
+          i1 = paramInt2;
+          if (paramInt2 < 0) {
+            break;
+          }
+          localObject = (c)h.get(paramInt2);
+          if ((paramString == null) || (!paramString.equals(((c)localObject).f())))
+          {
+            i1 = paramInt2;
+            if (paramInt1 < 0) {
+              break;
+            }
+            i1 = paramInt2;
+            if (paramInt1 != l) {
+              break;
+            }
+          }
+          paramInt2 -= 1;
+        }
+      }
+    }
+    if (i1 == h.size() - 1) {
+      return false;
+    }
+    paramInt1 = h.size() - 1;
+    while (paramInt1 > i1)
+    {
+      paramArrayList.add(h.remove(paramInt1));
+      paramArrayList1.add(Boolean.valueOf(true));
+      paramInt1 -= 1;
+    }
+    return true;
+  }
+  
+  public int b(c paramC)
+  {
+    try
+    {
+      StringBuilder localStringBuilder;
+      if ((k != null) && (k.size() > 0))
+      {
+        i1 = ((Integer)k.remove(k.size() - 1)).intValue();
+        if (G)
+        {
+          localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Adding back stack index ");
+          localStringBuilder.append(i1);
+          localStringBuilder.append(" with ");
+          localStringBuilder.append(paramC);
+          Log.v("FragmentManager", localStringBuilder.toString());
+        }
+        j.set(i1, paramC);
+        return i1;
+      }
+      if (j == null) {
+        j = new ArrayList();
+      }
+      int i1 = j.size();
+      if (G)
+      {
+        localStringBuilder = new StringBuilder();
+        localStringBuilder.append("Setting back stack index ");
+        localStringBuilder.append(i1);
+        localStringBuilder.append(" to ");
+        localStringBuilder.append(paramC);
+        Log.v("FragmentManager", localStringBuilder.toString());
+      }
+      j.add(paramC);
+      return i1;
+    }
+    finally {}
+  }
+  
+  public f b(String paramString)
+  {
+    Object localObject = g;
+    if ((localObject != null) && (paramString != null))
+    {
+      int i1 = ((SparseArray)localObject).size() - 1;
+      while (i1 >= 0)
+      {
+        localObject = (f)g.valueAt(i1);
+        if (localObject != null)
+        {
+          localObject = ((f)localObject).a(paramString);
+          if (localObject != null) {
+            return localObject;
+          }
+        }
+        i1 -= 1;
+      }
+    }
+    return null;
+  }
+  
+  public List<f> b()
+  {
+    if (f.isEmpty()) {
+      return Collections.emptyList();
+    }
+    synchronized (f)
+    {
+      List localList = (List)f.clone();
+      return localList;
+    }
+  }
+  
+  public void b(int paramInt)
+  {
+    try
+    {
+      j.set(paramInt, null);
+      if (k == null) {
+        k = new ArrayList();
+      }
+      if (G)
+      {
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append("Freeing back stack index ");
+        localStringBuilder.append(paramInt);
+        Log.v("FragmentManager", localStringBuilder.toString());
+      }
+      k.add(Integer.valueOf(paramInt));
+      return;
+    }
+    finally {}
+  }
+  
+  public void b(f paramF)
+  {
+    if (G)
+    {
+      ??? = new StringBuilder();
+      ((StringBuilder)???).append("attach: ");
+      ((StringBuilder)???).append(paramF);
+      Log.v("FragmentManager", ((StringBuilder)???).toString());
+    }
+    if (D)
+    {
+      D = false;
+      if (!m)
+      {
+        if (!f.contains(paramF))
+        {
+          if (G)
+          {
+            ??? = new StringBuilder();
+            ((StringBuilder)???).append("add from attach: ");
+            ((StringBuilder)???).append(paramF);
+            Log.v("FragmentManager", ((StringBuilder)???).toString());
+          }
+          synchronized (f)
+          {
+            f.add(paramF);
+            m = true;
+            if ((!G) || (!H)) {
+              return;
+            }
+            s = true;
+            return;
+          }
+        }
+        ??? = new StringBuilder();
+        ((StringBuilder)???).append("Fragment already added: ");
+        ((StringBuilder)???).append(paramF);
+        throw new IllegalStateException(((StringBuilder)???).toString());
+      }
+    }
+  }
+  
+  void b(f paramF, Context paramContext, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).b(paramF, paramContext, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.b(this, paramF, paramContext);
+      }
+    }
+  }
+  
+  void b(f paramF, Bundle paramBundle, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).b(paramF, paramBundle, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.b(this, paramF, paramBundle);
+      }
+    }
+  }
+  
+  void b(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).b(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.a(this, paramF);
+      }
+    }
+  }
+  
+  public void b(l paramL, boolean paramBoolean)
+  {
+    if ((paramBoolean) && ((o == null) || (v))) {
+      return;
+    }
+    c(paramBoolean);
+    if (paramL.a(y, z)) {
+      d = true;
+    }
+    try
+    {
+      c(y, z);
+      A();
+    }
+    finally
+    {
+      A();
+    }
+    y();
+  }
+  
+  public void b(boolean paramBoolean)
+  {
+    int i1 = f.size() - 1;
+    while (i1 >= 0)
+    {
+      f localF = (f)f.get(i1);
+      if (localF != null) {
+        localF.e(paramBoolean);
+      }
+      i1 -= 1;
+    }
+  }
+  
+  public boolean b(Menu paramMenu)
+  {
+    if (n < 1) {
+      return false;
+    }
+    boolean bool1 = false;
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      boolean bool2 = bool1;
+      if (localF != null)
+      {
+        bool2 = bool1;
+        if (localF.d(paramMenu)) {
+          bool2 = true;
+        }
+      }
+      i1 += 1;
+      bool1 = bool2;
+    }
+    return bool1;
+  }
+  
+  public boolean b(MenuItem paramMenuItem)
+  {
+    if (n < 1) {
+      return false;
+    }
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      if ((localF != null) && (localF.d(paramMenuItem))) {
+        return true;
+      }
+      i1 += 1;
+    }
+    return false;
+  }
+  
+  void c(final f paramF)
+  {
+    if (K != null)
+    {
+      g localG = a(paramF, paramF.r(), C ^ true, paramF.s());
+      if (localG != null)
+      {
+        Object localObject = b;
+        if (localObject != null)
+        {
+          ((Animator)localObject).setTarget(K);
+          if (C)
+          {
+            if (paramF.F())
+            {
+              paramF.f(false);
+            }
+            else
+            {
+              localObject = J;
+              final View localView = K;
+              ((ViewGroup)localObject).startViewTransition(localView);
+              b.addListener(new d((ViewGroup)localObject, localView, paramF));
+            }
+          }
+          else {
+            K.setVisibility(0);
+          }
+          a(K, localG);
+          b.start();
+          break label213;
+        }
+      }
+      if (localG != null)
+      {
+        a(K, localG);
+        K.startAnimation(a);
+        a.start();
+      }
+      int i1;
+      if ((C) && (!paramF.F())) {
+        i1 = 8;
+      } else {
+        i1 = 0;
+      }
+      K.setVisibility(i1);
+      if (paramF.F()) {
+        paramF.f(false);
+      }
+    }
+    label213:
+    if ((m) && (G) && (H)) {
+      s = true;
+    }
+    Q = false;
+    paramF.a(C);
+  }
+  
+  void c(f paramF, Bundle paramBundle, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).c(paramF, paramBundle, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.c(this, paramF, paramBundle);
+      }
+    }
+  }
+  
+  void c(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).c(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.b(this, paramF);
+      }
+    }
+  }
+  
+  public boolean c()
+  {
+    return (t) || (u);
+  }
+  
+  boolean c(int paramInt)
+  {
+    return n >= paramInt;
+  }
+  
+  public void d(f paramF)
+  {
+    if (G)
+    {
+      ??? = new StringBuilder();
+      ((StringBuilder)???).append("detach: ");
+      ((StringBuilder)???).append(paramF);
+      Log.v("FragmentManager", ((StringBuilder)???).toString());
+    }
+    if (!D)
+    {
+      D = true;
+      if (m)
+      {
+        if (G)
+        {
+          ??? = new StringBuilder();
+          ((StringBuilder)???).append("remove from detach: ");
+          ((StringBuilder)???).append(paramF);
+          Log.v("FragmentManager", ((StringBuilder)???).toString());
+        }
+        synchronized (f)
+        {
+          f.remove(paramF);
+          if ((G) && (H)) {
+            s = true;
+          }
+          m = false;
+          return;
+        }
+      }
+    }
+  }
+  
+  void d(f paramF, Bundle paramBundle, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).d(paramF, paramBundle, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.d(this, paramF, paramBundle);
+      }
+    }
+  }
+  
+  void d(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).d(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.c(this, paramF);
+      }
+    }
+  }
+  
+  public boolean d()
+  {
+    z();
+    return a(null, -1, 0);
+  }
+  
+  public void e()
+  {
+    t = false;
+    u = false;
+    d(2);
+  }
+  
+  void e(f paramF)
+  {
+    if ((o) && (!r))
+    {
+      paramF.b(paramF.i(d), null, d);
+      View localView = K;
+      if (localView != null)
+      {
+        L = localView;
+        localView.setSaveFromParentEnabled(false);
+        if (C) {
+          K.setVisibility(8);
+        }
+        paramF.a(K, d);
+        a(paramF, K, d, false);
+        return;
+      }
+      L = null;
+    }
+  }
+  
+  void e(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).e(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.d(this, paramF);
+      }
+    }
+  }
+  
+  public void f()
+  {
+    t = false;
+    u = false;
+    d(1);
+  }
+  
+  public void f(f paramF)
+  {
+    if (G)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("hide: ");
+      localStringBuilder.append(paramF);
+      Log.v("FragmentManager", localStringBuilder.toString());
+    }
+    if (!C)
+    {
+      C = true;
+      Q = (true ^ Q);
+    }
+  }
+  
+  void f(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).f(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.e(this, paramF);
+      }
+    }
+  }
+  
+  public void g()
+  {
+    v = true;
+    o();
+    d(0);
+    o = null;
+    p = null;
+    q = null;
+  }
+  
+  void g(f paramF)
+  {
+    if (g >= 0) {
+      return;
+    }
+    int i1 = e;
+    e = (i1 + 1);
+    paramF.a(i1, q);
+    if (g == null) {
+      g = new SparseArray();
+    }
+    g.put(g, paramF);
+    if (G)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Allocated fragment index ");
+      localStringBuilder.append(paramF);
+      Log.v("FragmentManager", localStringBuilder.toString());
+    }
+  }
+  
+  void g(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).g(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.f(this, paramF);
+      }
+    }
+  }
+  
+  public void h()
+  {
+    d(1);
+  }
+  
+  void h(f paramF)
+  {
+    if (g < 0) {
+      return;
+    }
+    if (G)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Freeing fragment index ");
+      localStringBuilder.append(paramF);
+      Log.v("FragmentManager", localStringBuilder.toString());
+    }
+    g.put(g, null);
+    paramF.B();
+  }
+  
+  void h(f paramF, boolean paramBoolean)
+  {
+    Object localObject = q;
+    if (localObject != null)
+    {
+      localObject = ((f)localObject).p();
+      if ((localObject instanceof l)) {
+        ((l)localObject).h(paramF, true);
+      }
+    }
+    localObject = m.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      j localJ = (j)((Iterator)localObject).next();
+      if ((!paramBoolean) || (b)) {
+        a.g(this, paramF);
+      }
+    }
+  }
+  
+  public void i()
+  {
+    int i1 = 0;
+    while (i1 < f.size())
+    {
+      f localF = (f)f.get(i1);
+      if (localF != null) {
+        localF.W();
+      }
+      i1 += 1;
+    }
+  }
+  
+  void i(f paramF)
+  {
+    if (paramF == null) {
+      return;
+    }
+    int i2 = n;
+    int i1 = i2;
+    if (n) {
+      if (paramF.G()) {
+        i1 = Math.min(i2, 1);
+      } else {
+        i1 = Math.min(i2, 0);
+      }
+    }
+    a(paramF, i1, paramF.r(), paramF.s(), false);
+    if (K != null)
+    {
+      Object localObject1 = q(paramF);
+      Object localObject2;
+      if (localObject1 != null)
+      {
+        localObject1 = K;
+        localObject2 = J;
+        i1 = ((ViewGroup)localObject2).indexOfChild((View)localObject1);
+        i2 = ((ViewGroup)localObject2).indexOfChild(K);
+        if (i2 < i1)
+        {
+          ((ViewGroup)localObject2).removeViewAt(i2);
+          ((ViewGroup)localObject2).addView(K, i1);
+        }
+      }
+      if ((P) && (J != null))
+      {
+        float f1 = R;
+        if (f1 > 0.0F) {
+          K.setAlpha(f1);
+        }
+        R = 0.0F;
+        P = false;
+        localObject1 = a(paramF, paramF.r(), true, paramF.s());
+        if (localObject1 != null)
+        {
+          a(K, (g)localObject1);
+          localObject2 = a;
+          if (localObject2 != null)
+          {
+            K.startAnimation((Animation)localObject2);
+          }
+          else
+          {
+            b.setTarget(K);
+            b.start();
+          }
+        }
+      }
+    }
+    if (Q) {
+      c(paramF);
+    }
+  }
+  
+  public void j()
+  {
+    d(3);
+  }
+  
+  void j(f paramF)
+  {
+    a(paramF, n, 0, 0, false);
+  }
+  
+  public void k()
+  {
+    t = false;
+    u = false;
+    d(4);
+  }
+  
+  public void k(f paramF)
+  {
+    if (M)
+    {
+      if (d)
+      {
+        x = true;
+        return;
+      }
+      M = false;
+      a(paramF, n, 0, 0, false);
+    }
+  }
+  
+  public void l()
+  {
+    t = false;
+    u = false;
+    d(3);
+  }
+  
+  public void l(f paramF)
+  {
+    if (G)
+    {
+      ??? = new StringBuilder();
+      ((StringBuilder)???).append("remove: ");
+      ((StringBuilder)???).append(paramF);
+      ((StringBuilder)???).append(" nesting=");
+      ((StringBuilder)???).append(s);
+      Log.v("FragmentManager", ((StringBuilder)???).toString());
+    }
+    boolean bool = paramF.G();
+    if ((!D) || ((bool ^ true))) {}
+    synchronized (f)
+    {
+      f.remove(paramF);
+      if ((G) && (H)) {
+        s = true;
+      }
+      m = false;
+      n = true;
+      return;
+    }
+  }
+  
+  Bundle m(f paramF)
+  {
+    Object localObject2 = null;
+    if (B == null) {
+      B = new Bundle();
+    }
+    paramF.j(B);
+    d(paramF, B, false);
+    if (!B.isEmpty())
+    {
+      localObject2 = B;
+      B = null;
+    }
+    if (K != null) {
+      n(paramF);
+    }
+    Object localObject1 = localObject2;
+    if (e != null)
+    {
+      localObject1 = localObject2;
+      if (localObject2 == null) {
+        localObject1 = new Bundle();
+      }
+      ((Bundle)localObject1).putSparseParcelableArray("android:view_state", e);
+    }
+    localObject2 = localObject1;
+    if (!N)
+    {
+      localObject2 = localObject1;
+      if (localObject1 == null) {
+        localObject2 = new Bundle();
+      }
+      ((Bundle)localObject2).putBoolean("android:user_visible_hint", N);
+    }
+    return localObject2;
+  }
+  
+  public void m()
+  {
+    u = true;
+    d(2);
+  }
+  
+  void n()
+  {
+    if (x)
+    {
+      x = false;
+      x();
+    }
+  }
+  
+  void n(f paramF)
+  {
+    if (L == null) {
+      return;
+    }
+    SparseArray localSparseArray = C;
+    if (localSparseArray == null) {
+      C = new SparseArray();
+    } else {
+      localSparseArray.clear();
+    }
+    L.saveHierarchyState(C);
+    if (C.size() > 0)
+    {
+      e = C;
+      C = null;
+    }
+  }
+  
+  public void o(f paramF)
+  {
+    if ((paramF != null) && ((g.get(g) != paramF) || ((u != null) && (paramF.p() != this))))
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Fragment ");
+      localStringBuilder.append(paramF);
+      localStringBuilder.append(" is not an active fragment of FragmentManager ");
+      localStringBuilder.append(this);
+      throw new IllegalArgumentException(localStringBuilder.toString());
+    }
+    r = paramF;
+  }
+  
+  public boolean o()
+  {
+    c(true);
+    boolean bool = false;
+    for (;;)
+    {
+      if (b(y, z)) {
+        d = true;
+      }
+      try
+      {
+        c(y, z);
+        A();
+        bool = true;
+      }
+      finally
+      {
+        A();
+      }
+    }
+    y();
+    return bool;
+  }
+  
+  public View onCreateView(View paramView, String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    if (!"fragment".equals(paramString)) {
+      return null;
+    }
+    String str1 = paramAttributeSet.getAttributeValue(null, "class");
+    paramString = paramContext.obtainStyledAttributes(paramAttributeSet, k.a);
+    int i1 = 0;
+    if (str1 == null) {
+      str1 = paramString.getString(0);
+    }
+    int i3 = paramString.getResourceId(1, -1);
+    String str2 = paramString.getString(2);
+    paramString.recycle();
+    if (!f.a(o.c(), str1)) {
+      return null;
+    }
+    if (paramView != null) {
+      i1 = paramView.getId();
+    }
+    if ((i1 == -1) && (i3 == -1) && (str2 == null))
+    {
+      paramView = new StringBuilder();
+      paramView.append(paramAttributeSet.getPositionDescription());
+      paramView.append(": Must specify unique android:id, android:tag, or have a parent with an id for ");
+      paramView.append(str1);
+      throw new IllegalArgumentException(paramView.toString());
+    }
+    if (i3 != -1) {
+      paramView = a(i3);
+    } else {
+      paramView = null;
+    }
+    paramString = paramView;
+    if (paramView == null)
+    {
+      paramString = paramView;
+      if (str2 != null) {
+        paramString = a(str2);
+      }
+    }
+    paramView = paramString;
+    if (paramString == null)
+    {
+      paramView = paramString;
+      if (i1 != -1) {
+        paramView = a(i1);
+      }
+    }
+    if (G)
+    {
+      paramString = new StringBuilder();
+      paramString.append("onCreateView: id=0x");
+      paramString.append(Integer.toHexString(i3));
+      paramString.append(" fname=");
+      paramString.append(str1);
+      paramString.append(" existing=");
+      paramString.append(paramView);
+      Log.v("FragmentManager", paramString.toString());
+    }
+    if (paramView == null)
+    {
+      paramView = p.a(paramContext, str1, null);
+      o = true;
+      int i2;
+      if (i3 != 0) {
+        i2 = i3;
+      } else {
+        i2 = i1;
+      }
+      z = i2;
+      A = i1;
+      B = str2;
+      p = true;
+      t = this;
+      paramString = o;
+      u = paramString;
+      paramView.a(paramString.c(), paramAttributeSet, d);
+      a(paramView, true);
+    }
+    else
+    {
+      if (p) {
+        break label557;
+      }
+      p = true;
+      paramString = o;
+      u = paramString;
+      if (!F) {
+        paramView.a(paramString.c(), paramAttributeSet, d);
+      }
+    }
+    if ((n < 1) && (o)) {
+      a(paramView, 1, 0, 0, false);
+    } else {
+      j(paramView);
+    }
+    paramString = K;
+    if (paramString != null)
+    {
+      if (i3 != 0) {
+        paramString.setId(i3);
+      }
+      if (K.getTag() == null) {
+        K.setTag(str2);
+      }
+      return K;
+    }
+    paramView = new StringBuilder();
+    paramView.append("Fragment ");
+    paramView.append(str1);
+    paramView.append(" did not create a view.");
+    throw new IllegalStateException(paramView.toString());
+    label557:
+    paramView = new StringBuilder();
+    paramView.append(paramAttributeSet.getPositionDescription());
+    paramView.append(": Duplicate id 0x");
+    paramView.append(Integer.toHexString(i3));
+    paramView.append(", tag ");
+    paramView.append(str2);
+    paramView.append(", or parent id 0x");
+    paramView.append(Integer.toHexString(i1));
+    paramView.append(" with another fragment for ");
+    paramView.append(str1);
+    throw new IllegalArgumentException(paramView.toString());
+  }
+  
+  public View onCreateView(String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    return onCreateView(null, paramString, paramContext, paramAttributeSet);
+  }
+  
+  LayoutInflater.Factory2 p()
+  {
+    return this;
+  }
+  
+  public void p(f paramF)
+  {
+    if (G)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("show: ");
+      localStringBuilder.append(paramF);
+      Log.v("FragmentManager", localStringBuilder.toString());
+    }
+    if (C)
+    {
+      C = false;
+      Q ^= true;
+    }
+  }
+  
+  public f q()
+  {
+    return r;
+  }
+  
+  public void r()
+  {
+    E = null;
+    t = false;
+    u = false;
+    int i2 = f.size();
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      f localF = (f)f.get(i1);
+      if (localF != null) {
+        localF.J();
+      }
+      i1 += 1;
+    }
+  }
+  
+  void s()
+  {
+    if (l != null)
+    {
+      int i1 = 0;
+      while (i1 < l.size())
+      {
+        ((k.c)l.get(i1)).a();
+        i1 += 1;
+      }
+    }
+  }
+  
+  m t()
+  {
+    a(E);
+    return E;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder(128);
+    localStringBuilder.append("FragmentManager{");
+    localStringBuilder.append(Integer.toHexString(System.identityHashCode(this)));
+    localStringBuilder.append(" in ");
+    f localF = q;
+    if (localF != null) {
+      a.b.g.g.d.a(localF, localStringBuilder);
+    } else {
+      a.b.g.g.d.a(o, localStringBuilder);
+    }
+    localStringBuilder.append("}}");
+    return localStringBuilder.toString();
+  }
+  
+  Parcelable u()
+  {
+    C();
+    B();
+    o();
+    t = true;
+    E = null;
+    Object localObject1 = g;
+    if (localObject1 != null)
+    {
+      if (((SparseArray)localObject1).size() <= 0) {
+        return null;
+      }
+      int i4 = g.size();
+      o[] arrayOfO = new o[i4];
+      int i2 = 0;
+      int i1 = 0;
+      while (i1 < i4)
+      {
+        localObject1 = (f)g.valueAt(i1);
+        if (localObject1 != null) {
+          if (g >= 0)
+          {
+            int i3 = 1;
+            localObject2 = new o((f)localObject1);
+            arrayOfO[i1] = localObject2;
+            if ((c > 0) && (m == null))
+            {
+              m = m((f)localObject1);
+              localObject3 = j;
+              if (localObject3 != null) {
+                if (g >= 0)
+                {
+                  if (m == null) {
+                    m = new Bundle();
+                  }
+                  a(m, "android:target_state", j);
+                  i2 = l;
+                  if (i2 != 0) {
+                    m.putInt("android:target_req_state", i2);
+                  }
+                }
+                else
+                {
+                  localObject2 = new StringBuilder();
+                  ((StringBuilder)localObject2).append("Failure saving state: ");
+                  ((StringBuilder)localObject2).append(localObject1);
+                  ((StringBuilder)localObject2).append(" has target not in fragment manager: ");
+                  ((StringBuilder)localObject2).append(j);
+                  a(new IllegalStateException(((StringBuilder)localObject2).toString()));
+                  throw null;
+                }
+              }
+            }
+            else
+            {
+              m = d;
+            }
+            i2 = i3;
+            if (G)
+            {
+              localObject3 = new StringBuilder();
+              ((StringBuilder)localObject3).append("Saved state of ");
+              ((StringBuilder)localObject3).append(localObject1);
+              ((StringBuilder)localObject3).append(": ");
+              ((StringBuilder)localObject3).append(m);
+              Log.v("FragmentManager", ((StringBuilder)localObject3).toString());
+              i2 = i3;
+            }
+          }
+          else
+          {
+            localObject2 = new StringBuilder();
+            ((StringBuilder)localObject2).append("Failure saving state: active ");
+            ((StringBuilder)localObject2).append(localObject1);
+            ((StringBuilder)localObject2).append(" has cleared index: ");
+            ((StringBuilder)localObject2).append(g);
+            a(new IllegalStateException(((StringBuilder)localObject2).toString()));
+            throw null;
+          }
+        }
+        i1 += 1;
+      }
+      if (i2 == 0)
+      {
+        if (G) {
+          Log.v("FragmentManager", "saveAllState: no fragments!");
+        }
+        return null;
+      }
+      localObject1 = null;
+      Object localObject3 = null;
+      i2 = f.size();
+      if (i2 > 0)
+      {
+        localObject2 = new int[i2];
+        i1 = 0;
+        for (;;)
+        {
+          localObject1 = localObject2;
+          if (i1 >= i2) {
+            break label663;
+          }
+          localObject2[i1] = f.get(i1)).g;
+          if (localObject2[i1] < 0) {
+            break;
+          }
+          if (G)
+          {
+            localObject1 = new StringBuilder();
+            ((StringBuilder)localObject1).append("saveAllState: adding fragment #");
+            ((StringBuilder)localObject1).append(i1);
+            ((StringBuilder)localObject1).append(": ");
+            ((StringBuilder)localObject1).append(f.get(i1));
+            Log.v("FragmentManager", ((StringBuilder)localObject1).toString());
+          }
+          i1 += 1;
+        }
+        localObject1 = new StringBuilder();
+        ((StringBuilder)localObject1).append("Failure saving state: active ");
+        ((StringBuilder)localObject1).append(f.get(i1));
+        ((StringBuilder)localObject1).append(" has cleared index: ");
+        ((StringBuilder)localObject1).append(localObject2[i1]);
+        a(new IllegalStateException(((StringBuilder)localObject1).toString()));
+        throw null;
+      }
+      label663:
+      ArrayList localArrayList = h;
+      Object localObject2 = localObject3;
+      if (localArrayList != null)
+      {
+        i2 = localArrayList.size();
+        localObject2 = localObject3;
+        if (i2 > 0)
+        {
+          localObject3 = new d[i2];
+          i1 = 0;
+          for (;;)
+          {
+            localObject2 = localObject3;
+            if (i1 >= i2) {
+              break;
+            }
+            localObject3[i1] = new d((c)h.get(i1));
+            if (G)
+            {
+              localObject2 = new StringBuilder();
+              ((StringBuilder)localObject2).append("saveAllState: adding back stack #");
+              ((StringBuilder)localObject2).append(i1);
+              ((StringBuilder)localObject2).append(": ");
+              ((StringBuilder)localObject2).append(h.get(i1));
+              Log.v("FragmentManager", ((StringBuilder)localObject2).toString());
+            }
+            i1 += 1;
+          }
+        }
+      }
+      localObject3 = new n();
+      c = arrayOfO;
+      d = ((int[])localObject1);
+      e = ((d[])localObject2);
+      localObject1 = r;
+      if (localObject1 != null) {
+        f = g;
+      }
+      g = e;
+      v();
+      return localObject3;
+    }
+    return null;
+  }
+  
+  void v()
+  {
+    Object localObject4 = null;
+    Object localObject1 = null;
+    Object localObject5 = null;
+    Object localObject3 = null;
+    Object localObject6 = null;
+    Object localObject2 = null;
+    if (g != null)
+    {
+      int i1 = 0;
+      for (;;)
+      {
+        localObject4 = localObject1;
+        localObject5 = localObject3;
+        localObject6 = localObject2;
+        if (i1 >= g.size()) {
+          break;
+        }
+        f localF = (f)g.valueAt(i1);
+        localObject5 = localObject1;
+        localObject6 = localObject3;
+        Object localObject7 = localObject2;
+        if (localF != null)
+        {
+          localObject4 = localObject1;
+          int i2;
+          if (E)
+          {
+            localObject5 = localObject1;
+            if (localObject1 == null) {
+              localObject5 = new ArrayList();
+            }
+            ((ArrayList)localObject5).add(localF);
+            localObject1 = j;
+            if (localObject1 != null) {
+              i2 = g;
+            } else {
+              i2 = -1;
+            }
+            k = i2;
+            localObject4 = localObject5;
+            if (G)
+            {
+              localObject1 = new StringBuilder();
+              ((StringBuilder)localObject1).append("retainNonConfig: keeping retained ");
+              ((StringBuilder)localObject1).append(localF);
+              Log.v("FragmentManager", ((StringBuilder)localObject1).toString());
+              localObject4 = localObject5;
+            }
+          }
+          localObject1 = v;
+          if (localObject1 != null)
+          {
+            ((l)localObject1).v();
+            localObject5 = v.E;
+          }
+          else
+          {
+            localObject5 = w;
+          }
+          localObject1 = localObject3;
+          if (localObject3 == null)
+          {
+            localObject1 = localObject3;
+            if (localObject5 != null)
+            {
+              localObject3 = new ArrayList(g.size());
+              i2 = 0;
+              for (;;)
+              {
+                localObject1 = localObject3;
+                if (i2 >= i1) {
+                  break;
+                }
+                ((ArrayList)localObject3).add(null);
+                i2 += 1;
+              }
+            }
+          }
+          if (localObject1 != null) {
+            ((ArrayList)localObject1).add(localObject5);
+          }
+          localObject3 = localObject2;
+          if (localObject2 == null)
+          {
+            localObject3 = localObject2;
+            if (x != null)
+            {
+              localObject2 = new ArrayList(g.size());
+              i2 = 0;
+              for (;;)
+              {
+                localObject3 = localObject2;
+                if (i2 >= i1) {
+                  break;
+                }
+                ((ArrayList)localObject2).add(null);
+                i2 += 1;
+              }
+            }
+          }
+          localObject5 = localObject4;
+          localObject6 = localObject1;
+          localObject7 = localObject3;
+          if (localObject3 != null)
+          {
+            ((ArrayList)localObject3).add(x);
+            localObject7 = localObject3;
+            localObject6 = localObject1;
+            localObject5 = localObject4;
+          }
+        }
+        i1 += 1;
+        localObject1 = localObject5;
+        localObject3 = localObject6;
+        localObject2 = localObject7;
+      }
+    }
+    if ((localObject4 == null) && (localObject5 == null) && (localObject6 == null))
+    {
+      E = null;
+      return;
+    }
+    E = new m(localObject4, (List)localObject5, localObject6);
+  }
+  
+  void w()
+  {
+    for (;;)
+    {
+      int i2;
+      try
+      {
+        ArrayList localArrayList = D;
+        int i3 = 0;
+        if ((localArrayList == null) || (D.isEmpty())) {
+          break label96;
+        }
+        i1 = 1;
+        i2 = i3;
+        if (c == null) {
+          break label101;
+        }
+        i2 = i3;
+        if (c.size() != 1) {
+          break label101;
+        }
+        i2 = 1;
+      }
+      finally {}
+      o.e().removeCallbacks(F);
+      o.e().post(F);
+      return;
+      label96:
+      int i1 = 0;
+      continue;
+      label101:
+      if (i1 == 0) {
+        if (i2 == 0) {}
+      }
+    }
+  }
+  
+  void x()
+  {
+    if (g == null) {
+      return;
+    }
+    int i1 = 0;
+    while (i1 < g.size())
+    {
+      f localF = (f)g.valueAt(i1);
+      if (localF != null) {
+        k(localF);
+      }
+      i1 += 1;
+    }
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      o();
+    }
+  }
+  
+  class b
+    extends l.f
+  {
+    b(Animation.AnimationListener paramAnimationListener, ViewGroup paramViewGroup, f paramF)
+    {
+      super();
+    }
+    
+    public void onAnimationEnd(Animation paramAnimation)
+    {
+      super.onAnimationEnd(paramAnimation);
+      localViewGroup.post(new a());
+    }
+    
+    class a
+      implements Runnable
+    {
+      a() {}
+      
+      public void run()
+      {
+        if (c.g() != null)
+        {
+          c.a(null);
+          Object localObject = l.b.this;
+          l localL = d;
+          localObject = c;
+          localL.a((f)localObject, ((f)localObject).z(), 0, 0, false);
+        }
+      }
+    }
+  }
+  
+  class c
+    extends AnimatorListenerAdapter
+  {
+    c(ViewGroup paramViewGroup, View paramView, f paramF) {}
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      localViewGroup.endViewTransition(localView);
+      paramAnimator = paramF.h();
+      paramF.a(null);
+      if ((paramAnimator != null) && (localViewGroup.indexOfChild(localView) < 0))
+      {
+        paramAnimator = l.this;
+        f localF = paramF;
+        paramAnimator.a(localF, localF.z(), 0, 0, false);
+      }
+    }
+  }
+  
+  class d
+    extends AnimatorListenerAdapter
+  {
+    d(ViewGroup paramViewGroup, View paramView, f paramF) {}
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      a.endViewTransition(localView);
+      paramAnimator.removeListener(this);
+      paramAnimator = paramFK;
+      if (paramAnimator != null) {
+        paramAnimator.setVisibility(8);
+      }
+    }
+  }
+  
+  private static class e
+    extends l.f
+  {
+    View b;
+    
+    e(View paramView, Animation.AnimationListener paramAnimationListener)
+    {
+      super();
+      b = paramView;
+    }
+    
+    public void onAnimationEnd(Animation paramAnimation)
+    {
+      if ((!u.x(b)) && (Build.VERSION.SDK_INT < 24)) {
+        b.setLayerType(0, null);
+      } else {
+        b.post(new a());
+      }
+      super.onAnimationEnd(paramAnimation);
+    }
+    
+    class a
+      implements Runnable
+    {
+      a() {}
+      
+      public void run()
+      {
+        b.setLayerType(0, null);
+      }
+    }
+  }
+  
+  private static class f
+    implements Animation.AnimationListener
+  {
+    private final Animation.AnimationListener a;
+    
+    f(Animation.AnimationListener paramAnimationListener)
+    {
+      a = paramAnimationListener;
+    }
+    
+    public void onAnimationEnd(Animation paramAnimation)
+    {
+      Animation.AnimationListener localAnimationListener = a;
+      if (localAnimationListener != null) {
+        localAnimationListener.onAnimationEnd(paramAnimation);
+      }
+    }
+    
+    public void onAnimationRepeat(Animation paramAnimation)
+    {
+      Animation.AnimationListener localAnimationListener = a;
+      if (localAnimationListener != null) {
+        localAnimationListener.onAnimationRepeat(paramAnimation);
+      }
+    }
+    
+    public void onAnimationStart(Animation paramAnimation)
+    {
+      Animation.AnimationListener localAnimationListener = a;
+      if (localAnimationListener != null) {
+        localAnimationListener.onAnimationStart(paramAnimation);
+      }
+    }
+  }
+  
+  private static class g
+  {
+    public final Animation a;
+    public final Animator b;
+    
+    g(Animator paramAnimator)
+    {
+      a = null;
+      b = paramAnimator;
+      if (paramAnimator != null) {
+        return;
+      }
+      throw new IllegalStateException("Animator cannot be null");
+    }
+    
+    g(Animation paramAnimation)
+    {
+      a = paramAnimation;
+      b = null;
+      if (paramAnimation != null) {
+        return;
+      }
+      throw new IllegalStateException("Animation cannot be null");
+    }
+  }
+  
+  private static class h
+    extends AnimatorListenerAdapter
+  {
+    View a;
+    
+    h(View paramView)
+    {
+      a = paramView;
+    }
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      a.setLayerType(0, null);
+      paramAnimator.removeListener(this);
+    }
+    
+    public void onAnimationStart(Animator paramAnimator)
+    {
+      a.setLayerType(2, null);
+    }
+  }
+  
+  private static class i
+    extends AnimationSet
+    implements Runnable
+  {
+    private final ViewGroup c;
+    private final View d;
+    private boolean e;
+    private boolean f;
+    private boolean g = true;
+    
+    i(Animation paramAnimation, ViewGroup paramViewGroup, View paramView)
+    {
+      super();
+      c = paramViewGroup;
+      d = paramView;
+      addAnimation(paramAnimation);
+      c.post(this);
+    }
+    
+    public boolean getTransformation(long paramLong, Transformation paramTransformation)
+    {
+      g = true;
+      if (e) {
+        return true ^ f;
+      }
+      if (!super.getTransformation(paramLong, paramTransformation))
+      {
+        e = true;
+        a0.a(c, this);
+      }
+      return true;
+    }
+    
+    public boolean getTransformation(long paramLong, Transformation paramTransformation, float paramFloat)
+    {
+      g = true;
+      if (e) {
+        return true ^ f;
+      }
+      if (!super.getTransformation(paramLong, paramTransformation, paramFloat))
+      {
+        e = true;
+        a0.a(c, this);
+      }
+      return true;
+    }
+    
+    public void run()
+    {
+      if ((!e) && (g))
+      {
+        g = false;
+        c.post(this);
+        return;
+      }
+      c.endViewTransition(d);
+      f = true;
+    }
+  }
+  
+  private static final class j
+  {
+    final k.b a;
+    final boolean b;
+  }
+  
+  static class k
+  {
+    public static final int[] a = { 16842755, 16842960, 16842961 };
+  }
+  
+  static abstract interface l
+  {
+    public abstract boolean a(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1);
+  }
+  
+  private class m
+    implements l.l
+  {
+    final String a;
+    final int b;
+    final int c;
+    
+    m(String paramString, int paramInt1, int paramInt2)
+    {
+      a = paramString;
+      b = paramInt1;
+      c = paramInt2;
+    }
+    
+    public boolean a(ArrayList<c> paramArrayList, ArrayList<Boolean> paramArrayList1)
+    {
+      Object localObject = r;
+      if ((localObject != null) && (b < 0) && (a == null))
+      {
+        localObject = ((f)localObject).S();
+        if ((localObject != null) && (((k)localObject).d())) {
+          return false;
+        }
+      }
+      return a(paramArrayList, paramArrayList1, a, b, c);
+    }
+  }
+  
+  static class n
+    implements f.f
+  {
+    final boolean a;
+    final c b;
+    private int c;
+    
+    n(c paramC, boolean paramBoolean)
+    {
+      a = paramBoolean;
+      b = paramC;
+    }
+    
+    public void a()
+    {
+      c -= 1;
+      if (c != 0) {
+        return;
+      }
+      b.a.w();
+    }
+    
+    public void b()
+    {
+      c += 1;
+    }
+    
+    public void c()
+    {
+      c localC = b;
+      a.a(localC, a, false, false);
+    }
+    
+    public void d()
+    {
+      int i = c;
+      boolean bool1 = false;
+      if (i > 0) {
+        i = 1;
+      } else {
+        i = 0;
+      }
+      Object localObject1 = b.a;
+      int k = f.size();
+      int j = 0;
+      while (j < k)
+      {
+        localObject2 = (f)f.get(j);
+        ((f)localObject2).a(null);
+        if ((i != 0) && (((f)localObject2).H())) {
+          ((f)localObject2).c0();
+        }
+        j += 1;
+      }
+      localObject1 = b;
+      Object localObject2 = a;
+      boolean bool2 = a;
+      if (i == 0) {
+        bool1 = true;
+      }
+      ((l)localObject2).a((c)localObject1, bool2, bool1, true);
+    }
+    
+    public boolean e()
+    {
+      return c == 0;
+    }
+  }
+}

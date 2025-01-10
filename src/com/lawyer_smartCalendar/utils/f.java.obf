@@ -1,0 +1,72 @@
+package com.lawyer_smartCalendar.utils;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class f
+{
+  Context a;
+  
+  public f(Context paramContext)
+  {
+    a = paramContext;
+  }
+  
+  public Typeface a()
+  {
+    return Typeface.createFromAsset(a.getResources().getAssets(), "fonts/IRANSansMobile_Light.ttf");
+  }
+  
+  public void a(Context paramContext, View paramView)
+  {
+    label89:
+    for (;;)
+    {
+      int i;
+      try
+      {
+        if ((paramView instanceof ViewGroup))
+        {
+          paramView = (ViewGroup)paramView;
+          i = 0;
+          if (i >= paramView.getChildCount()) {
+            break label89;
+          }
+          if (!(paramView instanceof Spinner)) {
+            a(paramContext, paramView.getChildAt(i));
+          }
+        }
+        else
+        {
+          if ((paramView instanceof TextView))
+          {
+            ((TextView)paramView).setTypeface(a());
+            ((TextView)paramView).setTextSize(15.0F);
+          }
+          return;
+        }
+      }
+      catch (Exception paramContext)
+      {
+        paramContext.printStackTrace();
+        return;
+      }
+      i += 1;
+    }
+  }
+  
+  public Typeface b()
+  {
+    return Typeface.createFromAsset(a.getResources().getAssets(), "fonts/IRANSansMobile_Medium.ttf");
+  }
+  
+  public Typeface c()
+  {
+    return Typeface.createFromAsset(a.getResources().getAssets(), "fonts/IRANSansMobile_UltraLight.ttf");
+  }
+}

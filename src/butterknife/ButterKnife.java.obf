@@ -1,0 +1,132 @@
+package butterknife;
+
+import android.app.Activity;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public final class ButterKnife
+{
+  private static boolean a = false;
+  static final Map<Class<?>, Constructor<? extends Unbinder>> b = new LinkedHashMap();
+  
+  private ButterKnife()
+  {
+    throw new AssertionError("No instances.");
+  }
+  
+  public static Unbinder a(Activity paramActivity)
+  {
+    return a(paramActivity, paramActivity.getWindow().getDecorView());
+  }
+  
+  private static Unbinder a(Object paramObject, View paramView)
+  {
+    Object localObject = paramObject.getClass();
+    if (a)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Looking up binding for ");
+      localStringBuilder.append(((Class)localObject).getName());
+      Log.d("ButterKnife", localStringBuilder.toString());
+    }
+    localObject = a((Class)localObject);
+    if (localObject == null) {
+      return Unbinder.a;
+    }
+    try
+    {
+      paramObject = (Unbinder)((Constructor)localObject).newInstance(new Object[] { paramObject, paramView });
+      return paramObject;
+    }
+    catch (InvocationTargetException paramObject)
+    {
+      paramObject = paramObject.getCause();
+      if (!(paramObject instanceof RuntimeException))
+      {
+        if ((paramObject instanceof Error)) {
+          throw ((Error)paramObject);
+        }
+        throw new RuntimeException("Unable to create binding instance.", paramObject);
+      }
+      throw ((RuntimeException)paramObject);
+    }
+    catch (InstantiationException paramObject)
+    {
+      paramView = new StringBuilder();
+      paramView.append("Unable to invoke ");
+      paramView.append(localObject);
+      throw new RuntimeException(paramView.toString(), paramObject);
+    }
+    catch (IllegalAccessException paramObject)
+    {
+      paramView = new StringBuilder();
+      paramView.append("Unable to invoke ");
+      paramView.append(localObject);
+      throw new RuntimeException(paramView.toString(), paramObject);
+    }
+  }
+  
+  private static Constructor<? extends Unbinder> a(Class<?> paramClass)
+  {
+    Object localObject1 = (Constructor)b.get(paramClass);
+    if (localObject1 != null)
+    {
+      if (a) {
+        Log.d("ButterKnife", "HIT: Cached in binding map.");
+      }
+      return localObject1;
+    }
+    String str = paramClass.getName();
+    if ((!str.startsWith("android.")) && (!str.startsWith("java.")))
+    {
+      Object localObject2;
+      try
+      {
+        localObject1 = paramClass.getClassLoader();
+        Object localObject3 = new StringBuilder();
+        ((StringBuilder)localObject3).append(str);
+        ((StringBuilder)localObject3).append("_ViewBinding");
+        localObject3 = ((ClassLoader)localObject1).loadClass(((StringBuilder)localObject3).toString()).getConstructor(new Class[] { paramClass, View.class });
+        localObject1 = localObject3;
+        if (a)
+        {
+          Log.d("ButterKnife", "HIT: Loaded binding class and constructor.");
+          localObject1 = localObject3;
+        }
+      }
+      catch (NoSuchMethodException paramClass)
+      {
+        localObject1 = new StringBuilder();
+        ((StringBuilder)localObject1).append("Unable to find binding constructor for ");
+        ((StringBuilder)localObject1).append(str);
+        throw new RuntimeException(((StringBuilder)localObject1).toString(), paramClass);
+      }
+      catch (ClassNotFoundException localClassNotFoundException)
+      {
+        if (a)
+        {
+          localObject2 = new StringBuilder();
+          ((StringBuilder)localObject2).append("Not found. Trying superclass ");
+          ((StringBuilder)localObject2).append(paramClass.getSuperclass().getName());
+          Log.d("ButterKnife", ((StringBuilder)localObject2).toString());
+        }
+        localObject2 = a(paramClass.getSuperclass());
+      }
+      b.put(paramClass, localObject2);
+      return localObject2;
+    }
+    if (a) {
+      Log.d("ButterKnife", "MISS: Reached framework class. Abandoning search.");
+    }
+    return null;
+  }
+  
+  public static abstract interface Action<T extends View> {}
+  
+  public static abstract interface Setter<T extends View, V> {}
+}

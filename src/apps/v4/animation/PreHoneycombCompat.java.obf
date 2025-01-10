@@ -1,0 +1,279 @@
+package b.h.a;
+
+import android.view.View;
+import b.h.b.b;
+import b.h.b.c;
+
+final class j
+{
+  static c<View, Float> a = new f("alpha");
+  static c<View, Float> b = new g("pivotX");
+  static c<View, Float> c = new h("pivotY");
+  static c<View, Float> d = new i("translationX");
+  static c<View, Float> e = new j("translationY");
+  static c<View, Float> f = new k("rotation");
+  static c<View, Float> g = new l("rotationX");
+  static c<View, Float> h = new m("rotationY");
+  static c<View, Float> i = new n("scaleX");
+  static c<View, Float> j = new a("scaleY");
+  static c<View, Integer> k = new b("scrollX");
+  static c<View, Integer> l = new c("scrollY");
+  static c<View, Float> m = new d("x");
+  static c<View, Float> n = new e("y");
+  
+  static final class a
+    extends b.h.b.a<View>
+  {
+    a(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).h());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).h(paramFloat);
+    }
+  }
+  
+  static final class b
+    extends b<View>
+  {
+    b(String paramString)
+    {
+      super();
+    }
+    
+    public Integer a(View paramView)
+    {
+      return Integer.valueOf(b.h.c.b.a.a(paramView).i());
+    }
+  }
+  
+  static final class c
+    extends b<View>
+  {
+    c(String paramString)
+    {
+      super();
+    }
+    
+    public Integer a(View paramView)
+    {
+      return Integer.valueOf(b.h.c.b.a.a(paramView).j());
+    }
+  }
+  
+  static final class d
+    extends b.h.b.a<View>
+  {
+    d(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).n());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).k(paramFloat);
+    }
+  }
+  
+  static final class e
+    extends b.h.b.a<View>
+  {
+    e(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).o());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).l(paramFloat);
+    }
+  }
+  
+  static final class f
+    extends b.h.b.a<View>
+  {
+    f(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).a());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).a(paramFloat);
+    }
+  }
+  
+  static final class g
+    extends b.h.b.a<View>
+  {
+    g(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).b());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).b(paramFloat);
+    }
+  }
+  
+  static final class h
+    extends b.h.b.a<View>
+  {
+    h(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).c());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).c(paramFloat);
+    }
+  }
+  
+  static final class i
+    extends b.h.b.a<View>
+  {
+    i(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).k());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).i(paramFloat);
+    }
+  }
+  
+  static final class j
+    extends b.h.b.a<View>
+  {
+    j(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).m());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).j(paramFloat);
+    }
+  }
+  
+  static final class k
+    extends b.h.b.a<View>
+  {
+    k(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).d());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).d(paramFloat);
+    }
+  }
+  
+  static final class l
+    extends b.h.b.a<View>
+  {
+    l(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).e());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).e(paramFloat);
+    }
+  }
+  
+  static final class m
+    extends b.h.b.a<View>
+  {
+    m(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).f());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).f(paramFloat);
+    }
+  }
+  
+  static final class n
+    extends b.h.b.a<View>
+  {
+    n(String paramString)
+    {
+      super();
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(b.h.c.b.a.a(paramView).g());
+    }
+    
+    public void a(View paramView, float paramFloat)
+    {
+      b.h.c.b.a.a(paramView).g(paramFloat);
+    }
+  }
+}

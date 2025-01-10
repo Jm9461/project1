@@ -1,0 +1,45 @@
+package com.squareup.picasso;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.net.Uri;
+import f.l;
+import java.util.List;
+
+class b
+  extends y
+{
+  private static final int d = "file:///android_asset/".length();
+  private final Context a;
+  private final Object b = new Object();
+  private AssetManager c;
+  
+  b(Context paramContext)
+  {
+    a = paramContext;
+  }
+  
+  static String c(w paramW)
+  {
+    return d.toString().substring(d);
+  }
+  
+  public y.a a(w paramW, int paramInt)
+  {
+    if (c == null) {
+      synchronized (b)
+      {
+        if (c == null) {
+          c = a.getAssets();
+        }
+      }
+    }
+    return new y.a(l.a(c.open(c(paramW))), t.e.e);
+  }
+  
+  public boolean a(w paramW)
+  {
+    paramW = d;
+    return ("file".equals(paramW.getScheme())) && (!paramW.getPathSegments().isEmpty()) && ("android_asset".equals(paramW.getPathSegments().get(0)));
+  }
+}

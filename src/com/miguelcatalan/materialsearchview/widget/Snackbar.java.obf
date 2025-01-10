@@ -1,0 +1,94 @@
+package com.miguelcatalan.materialsearchview.e;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.content.res.Resources;
+import android.support.v4.view.u;
+import android.support.v4.view.y;
+import android.support.v4.view.z;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+
+public class a
+{
+  public static int a = 400;
+  
+  public static void a(View paramView, int paramInt, c paramC)
+  {
+    paramView.setVisibility(0);
+    paramView.setAlpha(0.0F);
+    a localA = null;
+    if (paramC != null) {
+      localA = new a(paramC);
+    }
+    paramView = u.a(paramView);
+    paramView.a(1.0F);
+    paramView.a(paramInt);
+    paramView.a(localA);
+  }
+  
+  @TargetApi(21)
+  public static void a(final View paramView, c paramC)
+  {
+    Animator localAnimator = ViewAnimationUtils.createCircularReveal(paramView, paramView.getWidth() - (int)TypedValue.applyDimension(1, 24.0F, paramView.getResources().getDisplayMetrics()), paramView.getHeight() / 2, 0.0F, Math.max(paramView.getWidth(), paramView.getHeight()));
+    paramView.setVisibility(0);
+    localAnimator.addListener(new b(paramC, paramView));
+    localAnimator.start();
+  }
+  
+  static final class a
+    implements z
+  {
+    a(a.c paramC) {}
+    
+    public void a(View paramView)
+    {
+      if (!a.a(paramView)) {
+        paramView.setDrawingCacheEnabled(false);
+      }
+    }
+    
+    public void b(View paramView)
+    {
+      if (!a.b(paramView)) {
+        paramView.setDrawingCacheEnabled(true);
+      }
+    }
+    
+    public void c(View paramView) {}
+  }
+  
+  static final class b
+    extends AnimatorListenerAdapter
+  {
+    b(a.c paramC, View paramView) {}
+    
+    public void onAnimationCancel(Animator paramAnimator)
+    {
+      a.c(paramView);
+    }
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      a.a(paramView);
+    }
+    
+    public void onAnimationRepeat(Animator paramAnimator) {}
+    
+    public void onAnimationStart(Animator paramAnimator)
+    {
+      a.b(paramView);
+    }
+  }
+  
+  public static abstract interface c
+  {
+    public abstract boolean a(View paramView);
+    
+    public abstract boolean b(View paramView);
+    
+    public abstract boolean c(View paramView);
+  }
+}

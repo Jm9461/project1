@@ -1,0 +1,13 @@
+package a.b.f;
+
+public class n
+  implements m.f
+{
+  public n() {}
+  
+  public void a(m paramM) {}
+  
+  public void c(m paramM) {}
+  
+  public void d(m paramM) {}
+}

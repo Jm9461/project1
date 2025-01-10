@@ -1,0 +1,33 @@
+package android.support.v4.app;
+
+import android.arch.lifecycle.p;
+import java.util.List;
+
+public class m
+{
+  private final List<f> a;
+  private final List<m> b;
+  private final List<p> c;
+  
+  m(List<f> paramList, List<m> paramList1, List<p> paramList2)
+  {
+    a = paramList;
+    b = paramList1;
+    c = paramList2;
+  }
+  
+  List<m> a()
+  {
+    return b;
+  }
+  
+  List<f> b()
+  {
+    return a;
+  }
+  
+  List<p> c()
+  {
+    return c;
+  }
+}

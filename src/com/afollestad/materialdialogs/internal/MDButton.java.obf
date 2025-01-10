@@ -1,0 +1,110 @@
+package com.afollestad.materialdialogs.internal;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.util.AttributeSet;
+import android.widget.TextView;
+import b.a.a.e;
+import b.a.a.i;
+
+@SuppressLint({"AppCompatCustomView"})
+public class MDButton
+  extends TextView
+{
+  private boolean c = false;
+  private e d;
+  private int e;
+  private Drawable f;
+  private Drawable g;
+  
+  public MDButton(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+    a(paramContext);
+  }
+  
+  public MDButton(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    a(paramContext);
+  }
+  
+  private void a(Context paramContext)
+  {
+    e = paramContext.getResources().getDimensionPixelSize(i.md_dialog_frame_margin);
+    d = e.e;
+  }
+  
+  void a(boolean paramBoolean1, boolean paramBoolean2)
+  {
+    if ((c != paramBoolean1) || (paramBoolean2))
+    {
+      int i;
+      if (paramBoolean1) {
+        i = d.a() | 0x10;
+      } else {
+        i = 17;
+      }
+      setGravity(i);
+      if (Build.VERSION.SDK_INT >= 17)
+      {
+        if (paramBoolean1) {
+          i = d.b();
+        } else {
+          i = 4;
+        }
+        setTextAlignment(i);
+      }
+      Drawable localDrawable;
+      if (paramBoolean1) {
+        localDrawable = f;
+      } else {
+        localDrawable = g;
+      }
+      b.a.a.r.a.a(this, localDrawable);
+      if (paramBoolean1) {
+        setPadding(e, getPaddingTop(), e, getPaddingBottom());
+      }
+      c = paramBoolean1;
+    }
+  }
+  
+  public void setAllCapsCompat(boolean paramBoolean)
+  {
+    if (Build.VERSION.SDK_INT >= 14)
+    {
+      setAllCaps(paramBoolean);
+      return;
+    }
+    if (paramBoolean)
+    {
+      setTransformationMethod(new a(getContext()));
+      return;
+    }
+    setTransformationMethod(null);
+  }
+  
+  public void setDefaultSelector(Drawable paramDrawable)
+  {
+    g = paramDrawable;
+    if (!c) {
+      a(false, true);
+    }
+  }
+  
+  public void setStackedGravity(e paramE)
+  {
+    d = paramE;
+  }
+  
+  public void setStackedSelector(Drawable paramDrawable)
+  {
+    f = paramDrawable;
+    if (c) {
+      a(true, true);
+    }
+  }
+}

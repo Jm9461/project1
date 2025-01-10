@@ -1,0 +1,157 @@
+package b.d.a;
+
+import android.opengl.GLES20;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.Random;
+
+class h
+  extends g
+{
+  private static final int p = (int)Math.ceil(2.5D) * 3;
+  private FloatBuffer c;
+  private ShortBuffer d;
+  private final Random e;
+  private final float f;
+  private final float g;
+  private final float h;
+  private final float i;
+  private float[] j;
+  private float k;
+  private float l;
+  private float m;
+  private float n;
+  float o;
+  
+  public h(float[] paramArrayOfFloat, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, byte paramByte, Random paramRandom)
+  {
+    super(paramArrayOfFloat);
+    float f1 = 0.0F;
+    o = 0.0F;
+    f = paramFloat1;
+    g = paramFloat2;
+    h = paramFloat3;
+    i = paramFloat4;
+    e = paramRandom;
+    if (paramByte == 0) {
+      paramFloat1 = f1;
+    } else {
+      paramFloat1 = 3.1415927F;
+    }
+    k = paramFloat1;
+    f();
+    e();
+  }
+  
+  private void e()
+  {
+    short[] arrayOfShort = new short['?'];
+    int i1 = 0;
+    while (i1 < arrayOfShort.length / 3)
+    {
+      arrayOfShort[(i1 * 3)] = 0;
+      arrayOfShort[(i1 * 3 + 1)] = ((short)(i1 + 1));
+      arrayOfShort[(i1 * 3 + 2)] = ((short)(i1 + 2));
+      i1 += 1;
+    }
+    ByteBuffer localByteBuffer = ByteBuffer.allocateDirect(arrayOfShort.length * 2);
+    localByteBuffer.order(ByteOrder.nativeOrder());
+    d = localByteBuffer.asShortBuffer();
+    d.put(arrayOfShort);
+    d.position(0);
+  }
+  
+  private void f()
+  {
+    j = new float[45 * 3];
+    j[0] = l.b(0.0F, f, g);
+    j[1] = l.b(-1.0F, h, i);
+    j[3] = l.b(-1.0F, f, g);
+    j[4] = l.b(-1.0F, h, i);
+    float[] arrayOfFloat = j;
+    arrayOfFloat[6] = arrayOfFloat[3];
+    arrayOfFloat[7] = l.b(0.0F, h, i);
+    arrayOfFloat = j;
+    arrayOfFloat[(arrayOfFloat.length - 6)] = l.b(1.0F, f, g);
+    arrayOfFloat = j;
+    arrayOfFloat[(arrayOfFloat.length - 5)] = arrayOfFloat[7];
+    arrayOfFloat[(arrayOfFloat.length - 3)] = arrayOfFloat[(arrayOfFloat.length - 6)];
+    arrayOfFloat[(arrayOfFloat.length - 2)] = arrayOfFloat[4];
+  }
+  
+  public void a(float paramFloat)
+  {
+    m = paramFloat;
+  }
+  
+  public void b(float paramFloat)
+  {
+    Object localObject;
+    if (c == null)
+    {
+      localObject = ByteBuffer.allocateDirect(j.length * 4);
+      ((ByteBuffer)localObject).order(ByteOrder.nativeOrder());
+      c = ((ByteBuffer)localObject).asFloatBuffer();
+      c.put(j);
+      c.position(0);
+    }
+    float f1 = k + paramFloat;
+    k = f1;
+    if (l == 0.0F)
+    {
+      paramFloat = m;
+      if (paramFloat > 0.0F) {
+        l = l.c(0.0F, paramFloat, 0.35F);
+      }
+    }
+    paramFloat = (float)Math.sin(f1) * l;
+    if (((n > 0.0F) && (paramFloat <= 0.0F)) || ((n < 0.0F) && (paramFloat >= 0.0F)))
+    {
+      l = l.c(l, m, 0.35F);
+      f2 = e.nextFloat();
+      if (e.nextBoolean()) {
+        i1 = 1;
+      } else {
+        i1 = -1;
+      }
+      o = (f2 * 0.3F * i1);
+    }
+    n = paramFloat;
+    int i1 = 0;
+    float f2 = l.b(o, f, g);
+    float f3 = l.b(paramFloat, h, i);
+    double d1;
+    for (paramFloat = 0.0F; paramFloat < 1.0D - 0.025D / 2.0D; paramFloat = (float)(d1 + 0.025D))
+    {
+      localObject = j;
+      int i2 = p;
+      localObject[(i1 * 3 + 1 + i2)] = f1;
+      c.put(i1 * 3 + i2, l.a(paramFloat, localObject[6], f2, localObject[(localObject.length - 6)]));
+      localObject = c;
+      i2 = p;
+      float[] arrayOfFloat = j;
+      ((FloatBuffer)localObject).put(i1 * 3 + 1 + i2, l.a(paramFloat, arrayOfFloat[7], f3, arrayOfFloat[(arrayOfFloat.length - 5)]));
+      i1 += 1;
+      d1 = paramFloat;
+      Double.isNaN(d1);
+    }
+  }
+  
+  public void c()
+  {
+    GLES20.glUseProgram(b());
+    int i1 = GLES20.glGetAttribLocation(b(), "vPosition");
+    GLES20.glEnableVertexAttribArray(i1);
+    GLES20.glVertexAttribPointer(i1, 3, 5126, false, 12, c);
+    GLES20.glUniform4fv(GLES20.glGetUniformLocation(b(), "vColor"), 1, a(), 0);
+    GLES20.glDrawElements(6, d.capacity(), 5123, d);
+    GLES20.glDisableVertexAttribArray(i1);
+  }
+  
+  public boolean d()
+  {
+    return Math.abs(n) < 0.001F;
+  }
+}

@@ -1,0 +1,32 @@
+package android.databinding;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class MergedDataBinderMapper
+  extends c
+{
+  private Set<Class<? extends c>> a = new HashSet();
+  private List<c> b = new CopyOnWriteArrayList();
+  
+  public MergedDataBinderMapper()
+  {
+    new CopyOnWriteArrayList();
+  }
+  
+  public void a(c paramC)
+  {
+    Class localClass = paramC.getClass();
+    if (a.add(localClass))
+    {
+      b.add(paramC);
+      paramC = paramC.a().iterator();
+      while (paramC.hasNext()) {
+        a((c)paramC.next());
+      }
+    }
+  }
+}

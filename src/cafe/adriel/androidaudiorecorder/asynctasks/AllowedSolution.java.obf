@@ -1,0 +1,11 @@
+package cafe.adriel.androidaudiorecorder.j;
+
+public enum b
+{
+  private b() {}
+  
+  public int a()
+  {
+    return Integer.parseInt(name().replace("HZ_", ""));
+  }
+}

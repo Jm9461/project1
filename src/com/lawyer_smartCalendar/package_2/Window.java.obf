@@ -1,0 +1,157 @@
+package com.lawyer_smartCalendar.a;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.lawyer_smartCalendar.activity.NoteDetailActivity;
+import com.lawyer_smartCalendar.b.a;
+import com.lawyer_smartCalendar.c.l;
+import java.util.Calendar;
+import java.util.List;
+
+public class m
+  extends RecyclerView.g<a>
+{
+  private Context c;
+  private List<com.lawyer_smartCalendar.d.f> d;
+  private com.lawyer_smartCalendar.utils.f e;
+  private Calendar f;
+  private l g;
+  
+  public m(Context paramContext, l paramL, List<com.lawyer_smartCalendar.d.f> paramList)
+  {
+    a(true);
+    c = paramContext;
+    d = paramList;
+    g = paramL;
+    e = new com.lawyer_smartCalendar.utils.f(c);
+    f = Calendar.getInstance();
+  }
+  
+  public int a()
+  {
+    return d.size();
+  }
+  
+  public long a(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    int j = ((com.lawyer_smartCalendar.d.f)d.get(paramInt)).g().length();
+    int i = 0;
+    if (j > 31)
+    {
+      localObject1 = v;
+      localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append(((com.lawyer_smartCalendar.d.f)d.get(paramInt)).g().substring(0, 30));
+      ((StringBuilder)localObject2).append("...");
+      ((TextView)localObject1).setText(((StringBuilder)localObject2).toString());
+    }
+    else
+    {
+      v.setText(((com.lawyer_smartCalendar.d.f)d.get(paramInt)).g());
+    }
+    v.setTypeface(e.a());
+    Object localObject1 = "";
+    Object localObject2 = ((com.lawyer_smartCalendar.d.f)d.get(paramInt)).f();
+    j = ((String)localObject2).hashCode();
+    if (j != -1199578693)
+    {
+      break label174;
+      if (j != 76517104) {
+        break label205;
+      }
+    }
+    label174:
+    while (!((String)localObject2).equals("ClientCase"))
+    {
+      while (!((String)localObject2).equals("Other")) {}
+      i = 1;
+      break;
+    }
+    break label207;
+    label205:
+    i = -1;
+    label207:
+    if (i != 0)
+    {
+      if (i == 1)
+      {
+        w.setBackgroundResource(2131231000);
+        localObject1 = "????";
+      }
+    }
+    else
+    {
+      w.setBackgroundResource(2131230999);
+      localObject1 = "????/??????";
+    }
+    w.setText((CharSequence)localObject1);
+    w.setTypeface(e.a());
+    localObject1 = a.a(Long.valueOf(Long.parseLong(((com.lawyer_smartCalendar.d.f)d.get(paramInt)).c())));
+    x.setText((CharSequence)localObject1);
+    x.setTypeface(e.a());
+    f.setTimeInMillis(Long.parseLong(((com.lawyer_smartCalendar.d.f)d.get(paramInt)).c()));
+    localObject1 = y;
+    localObject2 = new StringBuilder();
+    ((StringBuilder)localObject2).append(f.get(11));
+    ((StringBuilder)localObject2).append(":");
+    ((StringBuilder)localObject2).append(f.get(12));
+    ((TextView)localObject1).setText(((StringBuilder)localObject2).toString());
+    y.setTypeface(e.b());
+  }
+  
+  public int b(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(paramViewGroup.getContext()).inflate(2131493025, paramViewGroup, false));
+  }
+  
+  public class a
+    extends RecyclerView.d0
+  {
+    TextView v;
+    TextView w;
+    TextView x;
+    TextView y;
+    
+    public a(View paramView)
+    {
+      super();
+      v = ((TextView)paramView.findViewById(2131296800));
+      w = ((TextView)paramView.findViewById(2131296801));
+      x = ((TextView)paramView.findViewById(2131296798));
+      y = ((TextView)paramView.findViewById(2131296799));
+      paramView.setOnClickListener(new a(m.this));
+    }
+    
+    class a
+      implements View.OnClickListener
+    {
+      a(m paramM) {}
+      
+      public void onClick(View paramView)
+      {
+        paramView = new Intent(m.a(m.this), NoteDetailActivity.class);
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append(((com.lawyer_smartCalendar.d.f)m.b(m.this).get(f())).e());
+        localStringBuilder.append("");
+        paramView.putExtra("id", localStringBuilder.toString());
+        m.c(m.this).b(paramView);
+      }
+    }
+  }
+}

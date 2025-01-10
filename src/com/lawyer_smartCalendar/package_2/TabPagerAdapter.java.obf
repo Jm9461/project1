@@ -1,0 +1,56 @@
+package com.lawyer_smartCalendar.a;
+
+import android.support.v4.app.f;
+import android.support.v4.app.k;
+import android.support.v4.app.p;
+import com.lawyer_smartCalendar.c.a;
+import com.lawyer_smartCalendar.c.b;
+import com.lawyer_smartCalendar.c.c;
+import com.lawyer_smartCalendar.c.d;
+import com.lawyer_smartCalendar.c.t;
+
+public class y
+  extends p
+{
+  int h;
+  
+  public y(k paramK, int paramInt)
+  {
+    super(paramK);
+    h = paramInt;
+  }
+  
+  public int a()
+  {
+    return h;
+  }
+  
+  public f c(int paramInt)
+  {
+    Object localObject;
+    switch (paramInt)
+    {
+    default: 
+      return null;
+    case 6: 
+      localObject = new a();
+      com.lawyer_smartCalendar.utils.e.b = (a)localObject;
+      return localObject;
+    case 5: 
+      localObject = new b();
+      com.lawyer_smartCalendar.utils.e.c = (b)localObject;
+      return localObject;
+    case 4: 
+      localObject = new c();
+      com.lawyer_smartCalendar.utils.e.d = (c)localObject;
+      return localObject;
+    case 3: 
+      return new d();
+    case 2: 
+      return new t();
+    case 1: 
+      return new t();
+    }
+    return new t();
+  }
+}

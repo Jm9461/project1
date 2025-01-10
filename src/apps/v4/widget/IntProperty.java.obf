@@ -1,0 +1,17 @@
+package b.h.b;
+
+public abstract class a<T>
+  extends c<T, Float>
+{
+  public a(String paramString)
+  {
+    super(Float.class, paramString);
+  }
+  
+  public abstract void a(T paramT, float paramFloat);
+  
+  public final void a(T paramT, Float paramFloat)
+  {
+    a(paramT, paramFloat.floatValue());
+  }
+}

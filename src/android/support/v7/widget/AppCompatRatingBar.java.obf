@@ -1,0 +1,39 @@
+package android.support.v7.widget;
+
+import a.b.h.a.a;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.RatingBar;
+
+public class s
+  extends RatingBar
+{
+  private final r c = new r(this);
+  
+  public s(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, a.ratingBarStyle);
+  }
+  
+  public s(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    c.a(paramAttributeSet, paramInt);
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    try
+    {
+      super.onMeasure(paramInt1, paramInt2);
+      Bitmap localBitmap = c.a();
+      if (localBitmap != null) {
+        setMeasuredDimension(View.resolveSizeAndState(localBitmap.getWidth() * getNumStars(), paramInt1, 0), getMeasuredHeight());
+      }
+      return;
+    }
+    finally {}
+  }
+}

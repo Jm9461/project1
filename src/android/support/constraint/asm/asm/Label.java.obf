@@ -1,0 +1,48 @@
+package android.support.constraint.i.j;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+public class m
+{
+  HashSet<m> a = new HashSet(2);
+  int b = 0;
+  
+  public m() {}
+  
+  public void a()
+  {
+    b = 1;
+    Iterator localIterator = a.iterator();
+    while (localIterator.hasNext()) {
+      ((m)localIterator.next()).e();
+    }
+  }
+  
+  public void a(m paramM)
+  {
+    a.add(paramM);
+  }
+  
+  public void b()
+  {
+    b = 0;
+    Iterator localIterator = a.iterator();
+    while (localIterator.hasNext()) {
+      ((m)localIterator.next()).b();
+    }
+  }
+  
+  public boolean c()
+  {
+    return b == 1;
+  }
+  
+  public void d()
+  {
+    b = 0;
+    a.clear();
+  }
+  
+  public void e() {}
+}

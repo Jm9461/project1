@@ -1,0 +1,123 @@
+package android.support.design.transformation;
+
+import a.b.c.o.b;
+import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.CoordinatorLayout.c;
+import android.support.v4.view.u;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnPreDrawListener;
+import java.util.List;
+
+public abstract class ExpandableBehavior
+  extends CoordinatorLayout.c<View>
+{
+  private int a = 0;
+  
+  public ExpandableBehavior() {}
+  
+  public ExpandableBehavior(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+  }
+  
+  private boolean a(boolean paramBoolean)
+  {
+    boolean bool2 = false;
+    boolean bool1 = false;
+    if (paramBoolean)
+    {
+      int i = a;
+      if (i != 0)
+      {
+        paramBoolean = bool1;
+        if (i != 2) {}
+      }
+      else
+      {
+        paramBoolean = true;
+      }
+      return paramBoolean;
+    }
+    paramBoolean = bool2;
+    if (a == 1) {
+      paramBoolean = true;
+    }
+    return paramBoolean;
+  }
+  
+  public boolean a(final CoordinatorLayout paramCoordinatorLayout, final View paramView, final int paramInt)
+  {
+    if (!u.y(paramView))
+    {
+      paramCoordinatorLayout = e(paramCoordinatorLayout, paramView);
+      if ((paramCoordinatorLayout != null) && (a(paramCoordinatorLayout.a())))
+      {
+        if (paramCoordinatorLayout.a()) {
+          paramInt = 1;
+        } else {
+          paramInt = 2;
+        }
+        a = paramInt;
+        paramInt = a;
+        paramView.getViewTreeObserver().addOnPreDrawListener(new a(paramView, paramInt, paramCoordinatorLayout));
+      }
+    }
+    return false;
+  }
+  
+  protected abstract boolean a(View paramView1, View paramView2, boolean paramBoolean1, boolean paramBoolean2);
+  
+  public boolean b(CoordinatorLayout paramCoordinatorLayout, View paramView1, View paramView2)
+  {
+    paramCoordinatorLayout = (b)paramView2;
+    if (a(paramCoordinatorLayout.a()))
+    {
+      int i;
+      if (paramCoordinatorLayout.a()) {
+        i = 1;
+      } else {
+        i = 2;
+      }
+      a = i;
+      return a((View)paramCoordinatorLayout, paramView1, paramCoordinatorLayout.a(), true);
+    }
+    return false;
+  }
+  
+  protected b e(CoordinatorLayout paramCoordinatorLayout, View paramView)
+  {
+    List localList = paramCoordinatorLayout.b(paramView);
+    int i = 0;
+    int j = localList.size();
+    while (i < j)
+    {
+      View localView = (View)localList.get(i);
+      if (a(paramCoordinatorLayout, paramView, localView)) {
+        return (b)localView;
+      }
+      i += 1;
+    }
+    return null;
+  }
+  
+  class a
+    implements ViewTreeObserver.OnPreDrawListener
+  {
+    a(View paramView, int paramInt, b paramB) {}
+    
+    public boolean onPreDraw()
+    {
+      paramView.getViewTreeObserver().removeOnPreDrawListener(this);
+      if (ExpandableBehavior.a(ExpandableBehavior.this) == paramInt)
+      {
+        ExpandableBehavior localExpandableBehavior = ExpandableBehavior.this;
+        b localB = paramCoordinatorLayout;
+        localExpandableBehavior.a((View)localB, paramView, localB.a(), false);
+      }
+      return false;
+    }
+  }
+}

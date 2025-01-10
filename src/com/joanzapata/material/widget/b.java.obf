@@ -1,0 +1,143 @@
+package com.rey.material.widget;
+
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import b.j.a.e.c.b;
+
+public final class e
+  implements View.OnClickListener
+{
+  private View.OnClickListener c;
+  private boolean d = false;
+  
+  public e() {}
+  
+  public static void a(View paramView)
+  {
+    Drawable localDrawable = paramView.getBackground();
+    if ((localDrawable instanceof b.j.a.e.c)) {
+      ((b.j.a.e.c)localDrawable).a();
+    } else if ((localDrawable instanceof b.j.a.e.d)) {
+      ((b.j.a.e.d)localDrawable).a();
+    }
+    if ((paramView instanceof ViewGroup))
+    {
+      paramView = (ViewGroup)paramView;
+      int i = 0;
+      int j = paramView.getChildCount();
+      while (i < j)
+      {
+        a(paramView.getChildAt(i));
+        i += 1;
+      }
+    }
+  }
+  
+  private void b(View paramView)
+  {
+    View.OnClickListener localOnClickListener = c;
+    if (localOnClickListener != null) {
+      localOnClickListener.onClick(paramView);
+    }
+  }
+  
+  private Drawable c(View paramView)
+  {
+    paramView = paramView.getBackground();
+    if (paramView == null) {
+      return null;
+    }
+    if ((paramView instanceof b.j.a.e.c)) {
+      return ((b.j.a.e.c)paramView).b();
+    }
+    return paramView;
+  }
+  
+  public void a(View.OnClickListener paramOnClickListener)
+  {
+    c = paramOnClickListener;
+  }
+  
+  public void a(View paramView, Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    if (paramView.isInEditMode()) {
+      return;
+    }
+    TypedArray localTypedArray = paramContext.obtainStyledAttributes(paramAttributeSet, b.j.a.c.RippleView, paramInt1, paramInt2);
+    int i = localTypedArray.getResourceId(b.j.a.c.RippleView_rd_style, 0);
+    b.j.a.e.c localC = null;
+    if (i != 0)
+    {
+      paramContext = new c.b(paramContext, i);
+      paramContext.a(c(paramView));
+      localC = paramContext.a();
+    }
+    else if (localTypedArray.getBoolean(b.j.a.c.RippleView_rd_enable, false))
+    {
+      paramContext = new c.b(paramContext, paramAttributeSet, paramInt1, paramInt2);
+      paramContext.a(c(paramView));
+      localC = paramContext.a();
+    }
+    localTypedArray.recycle();
+    if (localC != null) {
+      b.j.a.f.d.a(paramView, localC);
+    }
+  }
+  
+  public boolean a(View paramView, MotionEvent paramMotionEvent)
+  {
+    Drawable localDrawable = paramView.getBackground();
+    return (localDrawable != null) && ((localDrawable instanceof b.j.a.e.c)) && (((b.j.a.e.c)localDrawable).onTouch(paramView, paramMotionEvent));
+  }
+  
+  public void onClick(View paramView)
+  {
+    Drawable localDrawable = paramView.getBackground();
+    long l2 = 0L;
+    long l1 = l2;
+    if (localDrawable != null) {
+      if ((localDrawable instanceof b.j.a.e.c))
+      {
+        l1 = ((b.j.a.e.c)localDrawable).c();
+      }
+      else
+      {
+        l1 = l2;
+        if ((localDrawable instanceof b.j.a.e.d)) {
+          l1 = ((b.j.a.e.d)localDrawable).b();
+        }
+      }
+    }
+    if ((l1 > 0L) && (paramView.getHandler() != null) && (!d))
+    {
+      d = true;
+      paramView.getHandler().postDelayed(new a(paramView), l1);
+      return;
+    }
+    b(paramView);
+  }
+  
+  class a
+    implements Runnable
+  {
+    View c;
+    
+    public a(View paramView)
+    {
+      c = paramView;
+    }
+    
+    public void run()
+    {
+      e.a(e.this, false);
+      e.a(e.this, c);
+    }
+  }
+}

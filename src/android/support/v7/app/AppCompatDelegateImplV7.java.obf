@@ -1,0 +1,2689 @@
+package android.support.v7.app;
+
+import a.b.h.a.c;
+import a.b.h.f.b;
+import a.b.h.f.b.a;
+import a.b.h.f.d;
+import a.b.h.f.f.a;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.UiModeManager;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
+import android.content.res.Resources.Theme;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.support.v4.app.v;
+import android.support.v4.view.a0;
+import android.support.v4.view.c0;
+import android.support.v4.view.e.a;
+import android.support.v4.view.u;
+import android.support.v4.view.y;
+import android.support.v7.view.menu.p.a;
+import android.support.v7.view.menu.q;
+import android.support.v7.widget.ActionBarContextView;
+import android.support.v7.widget.ContentFrameLayout;
+import android.support.v7.widget.ContentFrameLayout.a;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.ViewStubCompat;
+import android.support.v7.widget.e0;
+import android.support.v7.widget.j1;
+import android.support.v7.widget.k0;
+import android.support.v7.widget.k0.a;
+import android.support.v7.widget.r1;
+import android.text.TextUtils;
+import android.util.AndroidRuntimeException;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.KeyboardShortcutGroup;
+import android.view.LayoutInflater;
+import android.view.LayoutInflater.Factory2;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.view.ViewParent;
+import android.view.Window;
+import android.view.Window.Callback;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
+import android.widget.FrameLayout;
+import android.widget.ListAdapter;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import java.util.List;
+
+class h
+  extends g
+  implements android.support.v7.view.menu.h.a, LayoutInflater.Factory2
+{
+  private static final boolean U;
+  private static final int[] V;
+  private static boolean W;
+  boolean A;
+  boolean B;
+  boolean C;
+  boolean D;
+  boolean E;
+  private boolean F;
+  private n[] G;
+  private n H;
+  private boolean I;
+  boolean J;
+  private int K = -100;
+  private boolean L;
+  private l M;
+  boolean N;
+  int O;
+  private final Runnable P = new b();
+  private boolean Q;
+  private Rect R;
+  private Rect S;
+  private AppCompatViewInflater T;
+  final Context d;
+  final Window e;
+  final Window.Callback f;
+  final Window.Callback g;
+  final f h;
+  a i;
+  MenuInflater j;
+  private CharSequence k;
+  private e0 l;
+  private i m;
+  private o n;
+  b o;
+  ActionBarContextView p;
+  PopupWindow q;
+  Runnable r;
+  y s = null;
+  private boolean t = true;
+  private boolean u;
+  private ViewGroup v;
+  private TextView w;
+  private View x;
+  private boolean y;
+  private boolean z;
+  
+  static
+  {
+    boolean bool;
+    if (Build.VERSION.SDK_INT < 21) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    U = bool;
+    V = new int[] { 16842836 };
+    if ((U) && (!W))
+    {
+      Thread.setDefaultUncaughtExceptionHandler(new a(Thread.getDefaultUncaughtExceptionHandler()));
+      W = true;
+    }
+  }
+  
+  h(Context paramContext, Window paramWindow, f paramF)
+  {
+    d = paramContext;
+    e = paramWindow;
+    h = paramF;
+    f = e.getCallback();
+    paramWindow = f;
+    if (!(paramWindow instanceof k))
+    {
+      g = new k(paramWindow);
+      e.setCallback(g);
+      paramContext = j1.a(paramContext, null, V);
+      paramWindow = paramContext.c(0);
+      if (paramWindow != null) {
+        e.setBackgroundDrawable(paramWindow);
+      }
+      paramContext.a();
+      return;
+    }
+    throw new IllegalStateException("AppCompat has already installed itself into the Window");
+  }
+  
+  private boolean A()
+  {
+    boolean bool2 = L;
+    boolean bool1 = false;
+    if (bool2)
+    {
+      Object localObject = d;
+      if ((localObject instanceof Activity))
+      {
+        localObject = ((Context)localObject).getPackageManager();
+        try
+        {
+          int i1 = getActivityInfoComponentNamed, d.getClass()), 0).configChanges;
+          if ((i1 & 0x200) == 0) {
+            bool1 = true;
+          }
+          return bool1;
+        }
+        catch (PackageManager.NameNotFoundException localNameNotFoundException)
+        {
+          Log.d("AppCompatDelegate", "Exception while getting ActivityInfo", localNameNotFoundException);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
+  private void B()
+  {
+    if (!u) {
+      return;
+    }
+    throw new AndroidRuntimeException("Window feature must be requested before adding content");
+  }
+  
+  private void a(n paramN, KeyEvent paramKeyEvent)
+  {
+    if (!o)
+    {
+      if (J) {
+        return;
+      }
+      int i1;
+      if (a == 0)
+      {
+        if ((d.getResources().getConfiguration().screenLayout & 0xF) == 4) {
+          i1 = 1;
+        } else {
+          i1 = 0;
+        }
+        if (i1 != 0) {
+          return;
+        }
+      }
+      Object localObject = p();
+      if ((localObject != null) && (!((Window.Callback)localObject).onMenuOpened(a, j)))
+      {
+        a(paramN, true);
+        return;
+      }
+      WindowManager localWindowManager = (WindowManager)d.getSystemService("window");
+      if (localWindowManager == null) {
+        return;
+      }
+      if (!b(paramN, paramKeyEvent)) {
+        return;
+      }
+      int i2 = -2;
+      if ((g != null) && (!q))
+      {
+        paramKeyEvent = i;
+        if (paramKeyEvent != null)
+        {
+          paramKeyEvent = paramKeyEvent.getLayoutParams();
+          i1 = i2;
+          if (paramKeyEvent == null) {
+            break label356;
+          }
+          i1 = i2;
+          if (width != -1) {
+            break label356;
+          }
+          i1 = -1;
+          break label356;
+        }
+      }
+      for (;;)
+      {
+        i1 = i2;
+        break;
+        paramKeyEvent = g;
+        if (paramKeyEvent == null)
+        {
+          if ((b(paramN)) && (g != null)) {}
+        }
+        else if ((q) && (paramKeyEvent.getChildCount() > 0)) {
+          g.removeAllViews();
+        }
+        if (!a(paramN)) {
+          break label422;
+        }
+        if (!paramN.a()) {
+          return;
+        }
+        localObject = h.getLayoutParams();
+        paramKeyEvent = (KeyEvent)localObject;
+        if (localObject == null) {
+          paramKeyEvent = new ViewGroup.LayoutParams(-2, -2);
+        }
+        i1 = b;
+        g.setBackgroundResource(i1);
+        localObject = h.getParent();
+        if ((localObject != null) && ((localObject instanceof ViewGroup))) {
+          ((ViewGroup)localObject).removeView(h);
+        }
+        g.addView(h, paramKeyEvent);
+        if (!h.hasFocus()) {
+          h.requestFocus();
+        }
+      }
+      label356:
+      n = false;
+      paramKeyEvent = new WindowManager.LayoutParams(i1, -2, d, e, 1002, 8519680, -3);
+      gravity = c;
+      windowAnimations = f;
+      localWindowManager.addView(g, paramKeyEvent);
+      o = true;
+      return;
+      label422:
+      return;
+    }
+  }
+  
+  private void a(android.support.v7.view.menu.h paramH, boolean paramBoolean)
+  {
+    paramH = l;
+    if ((paramH != null) && (paramH.f()) && ((!ViewConfiguration.get(d).hasPermanentMenuKey()) || (l.a())))
+    {
+      paramH = p();
+      if ((l.b()) && (paramBoolean))
+      {
+        l.c();
+        if (!J) {
+          paramH.onPanelClosed(108, a0j);
+        }
+      }
+      else if ((paramH != null) && (!J))
+      {
+        if ((N) && ((O & 0x1) != 0))
+        {
+          e.getDecorView().removeCallbacks(P);
+          P.run();
+        }
+        n localN = a(0, true);
+        android.support.v7.view.menu.h localH = j;
+        if ((localH != null) && (!r) && (paramH.onPreparePanel(0, i, localH)))
+        {
+          paramH.onMenuOpened(108, j);
+          l.d();
+        }
+      }
+      return;
+    }
+    paramH = a(0, true);
+    q = true;
+    a(paramH, false);
+    a(paramH, null);
+  }
+  
+  private boolean a(n paramN)
+  {
+    View localView = i;
+    if (localView != null)
+    {
+      h = localView;
+      return true;
+    }
+    if (j == null) {
+      return false;
+    }
+    if (n == null) {
+      n = new o();
+    }
+    h = ((View)paramN.a(n));
+    return h != null;
+  }
+  
+  private boolean a(n paramN, int paramInt1, KeyEvent paramKeyEvent, int paramInt2)
+  {
+    if (paramKeyEvent.isSystem()) {
+      return false;
+    }
+    boolean bool2 = false;
+    boolean bool1;
+    if (!m)
+    {
+      bool1 = bool2;
+      if (!b(paramN, paramKeyEvent)) {}
+    }
+    else
+    {
+      android.support.v7.view.menu.h localH = j;
+      bool1 = bool2;
+      if (localH != null) {
+        bool1 = localH.performShortcut(paramInt1, paramKeyEvent, paramInt2);
+      }
+    }
+    if ((bool1) && ((paramInt2 & 0x1) == 0) && (l == null)) {
+      a(paramN, true);
+    }
+    return bool1;
+  }
+  
+  private boolean a(ViewParent paramViewParent)
+  {
+    if (paramViewParent == null) {
+      return false;
+    }
+    View localView = e.getDecorView();
+    for (;;)
+    {
+      if (paramViewParent == null) {
+        return true;
+      }
+      if ((paramViewParent == localView) || (!(paramViewParent instanceof View))) {
+        break;
+      }
+      if (u.x((View)paramViewParent)) {
+        return false;
+      }
+      paramViewParent = paramViewParent.getParent();
+    }
+    return false;
+  }
+  
+  private boolean b(n paramN)
+  {
+    paramN.a(n());
+    g = new m(l);
+    c = 81;
+    return true;
+  }
+  
+  private boolean b(n paramN, KeyEvent paramKeyEvent)
+  {
+    if (J) {
+      return false;
+    }
+    if (m) {
+      return true;
+    }
+    Object localObject1 = H;
+    if ((localObject1 != null) && (localObject1 != paramN)) {
+      a((n)localObject1, false);
+    }
+    localObject1 = p();
+    if (localObject1 != null) {
+      i = ((Window.Callback)localObject1).onCreatePanelView(a);
+    }
+    int i1 = a;
+    if ((i1 != 0) && (i1 != 108)) {
+      i1 = 0;
+    } else {
+      i1 = 1;
+    }
+    Object localObject2;
+    if (i1 != 0)
+    {
+      localObject2 = l;
+      if (localObject2 != null) {
+        ((e0)localObject2).e();
+      }
+    }
+    if ((i == null) && ((i1 == 0) || (!(s() instanceof k))))
+    {
+      if ((j == null) || (r))
+      {
+        if ((j == null) && ((!c(paramN)) || (j == null))) {
+          return false;
+        }
+        if ((i1 != 0) && (l != null))
+        {
+          if (m == null) {
+            m = new i();
+          }
+          l.a(j, m);
+        }
+        j.s();
+        if (!((Window.Callback)localObject1).onCreatePanelMenu(a, j))
+        {
+          paramN.a(null);
+          if (i1 != 0)
+          {
+            paramN = l;
+            if (paramN != null) {
+              paramN.a(null, m);
+            }
+          }
+          return false;
+        }
+        r = false;
+      }
+      j.s();
+      localObject2 = s;
+      if (localObject2 != null)
+      {
+        j.a((Bundle)localObject2);
+        s = null;
+      }
+      if (!((Window.Callback)localObject1).onPreparePanel(0, i, j))
+      {
+        if (i1 != 0)
+        {
+          paramKeyEvent = l;
+          if (paramKeyEvent != null) {
+            paramKeyEvent.a(null, m);
+          }
+        }
+        j.r();
+        return false;
+      }
+      if (paramKeyEvent != null) {
+        i1 = paramKeyEvent.getDeviceId();
+      } else {
+        i1 = -1;
+      }
+      boolean bool;
+      if (KeyCharacterMap.load(i1).getKeyboardType() != 1) {
+        bool = true;
+      } else {
+        bool = false;
+      }
+      p = bool;
+      j.setQwertyMode(p);
+      j.r();
+    }
+    m = true;
+    n = false;
+    H = paramN;
+    return true;
+  }
+  
+  private boolean c(n paramN)
+  {
+    Context localContext = d;
+    int i1 = a;
+    if (i1 != 0)
+    {
+      localObject1 = localContext;
+      if (i1 != 108) {}
+    }
+    else
+    {
+      localObject1 = localContext;
+      if (l != null)
+      {
+        TypedValue localTypedValue = new TypedValue();
+        Resources.Theme localTheme = localContext.getTheme();
+        localTheme.resolveAttribute(a.b.h.a.a.actionBarTheme, localTypedValue, true);
+        localObject1 = null;
+        if (resourceId != 0)
+        {
+          localObject1 = localContext.getResources().newTheme();
+          ((Resources.Theme)localObject1).setTo(localTheme);
+          ((Resources.Theme)localObject1).applyStyle(resourceId, true);
+          ((Resources.Theme)localObject1).resolveAttribute(a.b.h.a.a.actionBarWidgetTheme, localTypedValue, true);
+        }
+        else
+        {
+          localTheme.resolveAttribute(a.b.h.a.a.actionBarWidgetTheme, localTypedValue, true);
+        }
+        Object localObject2 = localObject1;
+        if (resourceId != 0)
+        {
+          localObject2 = localObject1;
+          if (localObject1 == null)
+          {
+            localObject2 = localContext.getResources().newTheme();
+            ((Resources.Theme)localObject2).setTo(localTheme);
+          }
+          ((Resources.Theme)localObject2).applyStyle(resourceId, true);
+        }
+        localObject1 = localContext;
+        if (localObject2 != null)
+        {
+          localObject1 = new d(localContext, 0);
+          ((d)localObject1).getTheme().setTo((Resources.Theme)localObject2);
+        }
+      }
+    }
+    Object localObject1 = new android.support.v7.view.menu.h((Context)localObject1);
+    ((android.support.v7.view.menu.h)localObject1).a(this);
+    paramN.a((android.support.v7.view.menu.h)localObject1);
+    return true;
+  }
+  
+  private boolean d(int paramInt, KeyEvent paramKeyEvent)
+  {
+    if (paramKeyEvent.getRepeatCount() == 0)
+    {
+      n localN = a(paramInt, true);
+      if (!o) {
+        return b(localN, paramKeyEvent);
+      }
+    }
+    return false;
+  }
+  
+  private boolean e(int paramInt, KeyEvent paramKeyEvent)
+  {
+    if (o != null) {
+      return false;
+    }
+    boolean bool3 = false;
+    n localN = a(paramInt, true);
+    boolean bool1;
+    if (paramInt == 0)
+    {
+      e0 localE0 = l;
+      if ((localE0 != null) && (localE0.f()) && (!ViewConfiguration.get(d).hasPermanentMenuKey()))
+      {
+        if (!l.b())
+        {
+          bool1 = bool3;
+          if (J) {
+            break label208;
+          }
+          bool1 = bool3;
+          if (!b(localN, paramKeyEvent)) {
+            break label208;
+          }
+          bool1 = l.d();
+          break label208;
+        }
+        bool1 = l.c();
+        break label208;
+      }
+    }
+    if ((!o) && (!n))
+    {
+      bool1 = bool3;
+      if (m)
+      {
+        boolean bool2 = true;
+        if (r)
+        {
+          m = false;
+          bool2 = b(localN, paramKeyEvent);
+        }
+        bool1 = bool3;
+        if (bool2)
+        {
+          a(localN, paramKeyEvent);
+          bool1 = true;
+        }
+      }
+    }
+    else
+    {
+      bool1 = o;
+      a(localN, true);
+    }
+    label208:
+    if (bool1)
+    {
+      paramKeyEvent = (AudioManager)d.getSystemService("audio");
+      if (paramKeyEvent != null)
+      {
+        paramKeyEvent.playSoundEffect(0);
+        return bool1;
+      }
+      Log.w("AppCompatDelegate", "Couldn't get audio manager");
+    }
+    return bool1;
+  }
+  
+  private void j(int paramInt)
+  {
+    O |= 1 << paramInt;
+    if (!N)
+    {
+      u.a(e.getDecorView(), P);
+      N = true;
+    }
+  }
+  
+  private int k(int paramInt)
+  {
+    if (paramInt == 8)
+    {
+      Log.i("AppCompatDelegate", "You should now use the AppCompatDelegate.FEATURE_SUPPORT_ACTION_BAR id when requesting this feature.");
+      return 108;
+    }
+    if (paramInt == 9)
+    {
+      Log.i("AppCompatDelegate", "You should now use the AppCompatDelegate.FEATURE_SUPPORT_ACTION_BAR_OVERLAY id when requesting this feature.");
+      return 109;
+    }
+    return paramInt;
+  }
+  
+  private boolean l(int paramInt)
+  {
+    Resources localResources = d.getResources();
+    Configuration localConfiguration = localResources.getConfiguration();
+    int i1 = uiMode;
+    if (paramInt == 2) {
+      paramInt = 32;
+    } else {
+      paramInt = 16;
+    }
+    if ((i1 & 0x30) != paramInt)
+    {
+      if (A())
+      {
+        ((Activity)d).recreate();
+      }
+      else
+      {
+        localConfiguration = new Configuration(localConfiguration);
+        DisplayMetrics localDisplayMetrics = localResources.getDisplayMetrics();
+        uiMode = (uiMode & 0xFFFFFFCF | paramInt);
+        localResources.updateConfiguration(localConfiguration, localDisplayMetrics);
+        if (Build.VERSION.SDK_INT < 26) {
+          j.a(localResources);
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  private void u()
+  {
+    ContentFrameLayout localContentFrameLayout = (ContentFrameLayout)v.findViewById(16908290);
+    Object localObject = e.getDecorView();
+    localContentFrameLayout.a(((View)localObject).getPaddingLeft(), ((View)localObject).getPaddingTop(), ((View)localObject).getPaddingRight(), ((View)localObject).getPaddingBottom());
+    localObject = d.obtainStyledAttributes(a.b.h.a.j.AppCompatTheme);
+    ((TypedArray)localObject).getValue(a.b.h.a.j.AppCompatTheme_windowMinWidthMajor, localContentFrameLayout.getMinWidthMajor());
+    ((TypedArray)localObject).getValue(a.b.h.a.j.AppCompatTheme_windowMinWidthMinor, localContentFrameLayout.getMinWidthMinor());
+    if (((TypedArray)localObject).hasValue(a.b.h.a.j.AppCompatTheme_windowFixedWidthMajor)) {
+      ((TypedArray)localObject).getValue(a.b.h.a.j.AppCompatTheme_windowFixedWidthMajor, localContentFrameLayout.getFixedWidthMajor());
+    }
+    if (((TypedArray)localObject).hasValue(a.b.h.a.j.AppCompatTheme_windowFixedWidthMinor)) {
+      ((TypedArray)localObject).getValue(a.b.h.a.j.AppCompatTheme_windowFixedWidthMinor, localContentFrameLayout.getFixedWidthMinor());
+    }
+    if (((TypedArray)localObject).hasValue(a.b.h.a.j.AppCompatTheme_windowFixedHeightMajor)) {
+      ((TypedArray)localObject).getValue(a.b.h.a.j.AppCompatTheme_windowFixedHeightMajor, localContentFrameLayout.getFixedHeightMajor());
+    }
+    if (((TypedArray)localObject).hasValue(a.b.h.a.j.AppCompatTheme_windowFixedHeightMinor)) {
+      ((TypedArray)localObject).getValue(a.b.h.a.j.AppCompatTheme_windowFixedHeightMinor, localContentFrameLayout.getFixedHeightMinor());
+    }
+    ((TypedArray)localObject).recycle();
+    localContentFrameLayout.requestLayout();
+  }
+  
+  private ViewGroup v()
+  {
+    Object localObject1 = d.obtainStyledAttributes(a.b.h.a.j.AppCompatTheme);
+    if (((TypedArray)localObject1).hasValue(a.b.h.a.j.AppCompatTheme_windowActionBar))
+    {
+      if (((TypedArray)localObject1).getBoolean(a.b.h.a.j.AppCompatTheme_windowNoTitle, false)) {
+        b(1);
+      } else if (((TypedArray)localObject1).getBoolean(a.b.h.a.j.AppCompatTheme_windowActionBar, false)) {
+        b(108);
+      }
+      if (((TypedArray)localObject1).getBoolean(a.b.h.a.j.AppCompatTheme_windowActionBarOverlay, false)) {
+        b(109);
+      }
+      if (((TypedArray)localObject1).getBoolean(a.b.h.a.j.AppCompatTheme_windowActionModeOverlay, false)) {
+        b(10);
+      }
+      D = ((TypedArray)localObject1).getBoolean(a.b.h.a.j.AppCompatTheme_android_windowIsFloating, false);
+      ((TypedArray)localObject1).recycle();
+      e.getDecorView();
+      Object localObject2 = LayoutInflater.from(d);
+      localObject1 = null;
+      if (!E)
+      {
+        if (D)
+        {
+          localObject1 = (ViewGroup)((LayoutInflater)localObject2).inflate(a.b.h.a.g.abc_dialog_title_material, null);
+          B = false;
+          A = false;
+        }
+        else if (A)
+        {
+          localObject1 = new TypedValue();
+          d.getTheme().resolveAttribute(a.b.h.a.a.actionBarTheme, (TypedValue)localObject1, true);
+          int i1 = resourceId;
+          if (i1 != 0) {
+            localObject1 = new d(d, i1);
+          } else {
+            localObject1 = d;
+          }
+          localObject1 = (ViewGroup)LayoutInflater.from((Context)localObject1).inflate(a.b.h.a.g.abc_screen_toolbar, null);
+          l = ((e0)((ViewGroup)localObject1).findViewById(a.b.h.a.f.decor_content_parent));
+          l.setWindowCallback(p());
+          if (B) {
+            l.a(109);
+          }
+          if (y) {
+            l.a(2);
+          }
+          if (z) {
+            l.a(5);
+          }
+        }
+      }
+      else
+      {
+        if (C) {
+          localObject1 = (ViewGroup)((LayoutInflater)localObject2).inflate(a.b.h.a.g.abc_screen_simple_overlay_action_mode, null);
+        } else {
+          localObject1 = (ViewGroup)((LayoutInflater)localObject2).inflate(a.b.h.a.g.abc_screen_simple, null);
+        }
+        if (Build.VERSION.SDK_INT >= 21) {
+          u.a((View)localObject1, new c());
+        } else {
+          ((k0)localObject1).setOnFitSystemWindowsListener(new d());
+        }
+      }
+      if (localObject1 != null)
+      {
+        if (l == null) {
+          w = ((TextView)((ViewGroup)localObject1).findViewById(a.b.h.a.f.title));
+        }
+        r1.b((View)localObject1);
+        localObject2 = (ContentFrameLayout)((ViewGroup)localObject1).findViewById(a.b.h.a.f.action_bar_activity_content);
+        ViewGroup localViewGroup = (ViewGroup)e.findViewById(16908290);
+        if (localViewGroup != null)
+        {
+          while (localViewGroup.getChildCount() > 0)
+          {
+            View localView = localViewGroup.getChildAt(0);
+            localViewGroup.removeViewAt(0);
+            ((FrameLayout)localObject2).addView(localView);
+          }
+          localViewGroup.setId(-1);
+          ((FrameLayout)localObject2).setId(16908290);
+          if ((localViewGroup instanceof FrameLayout)) {
+            ((FrameLayout)localViewGroup).setForeground(null);
+          }
+        }
+        e.setContentView((View)localObject1);
+        ((ContentFrameLayout)localObject2).setAttachListener(new e());
+        return localObject1;
+      }
+      localObject1 = new StringBuilder();
+      ((StringBuilder)localObject1).append("AppCompat does not support the current theme features: { windowActionBar: ");
+      ((StringBuilder)localObject1).append(A);
+      ((StringBuilder)localObject1).append(", windowActionBarOverlay: ");
+      ((StringBuilder)localObject1).append(B);
+      ((StringBuilder)localObject1).append(", android:windowIsFloating: ");
+      ((StringBuilder)localObject1).append(D);
+      ((StringBuilder)localObject1).append(", windowActionModeOverlay: ");
+      ((StringBuilder)localObject1).append(C);
+      ((StringBuilder)localObject1).append(", windowNoTitle: ");
+      ((StringBuilder)localObject1).append(E);
+      ((StringBuilder)localObject1).append(" }");
+      throw new IllegalArgumentException(((StringBuilder)localObject1).toString());
+    }
+    ((TypedArray)localObject1).recycle();
+    localObject1 = new IllegalStateException("You need to use a Theme.AppCompat theme (or descendant) with this activity.");
+    for (;;)
+    {
+      throw ((Throwable)localObject1);
+    }
+  }
+  
+  private void w()
+  {
+    if (M == null) {
+      M = new l(m.a(d));
+    }
+  }
+  
+  private void x()
+  {
+    if (!u)
+    {
+      v = v();
+      Object localObject1 = o();
+      if (!TextUtils.isEmpty((CharSequence)localObject1))
+      {
+        Object localObject2 = l;
+        if (localObject2 != null)
+        {
+          ((e0)localObject2).setWindowTitle((CharSequence)localObject1);
+        }
+        else if (s() != null)
+        {
+          s().b((CharSequence)localObject1);
+        }
+        else
+        {
+          localObject2 = w;
+          if (localObject2 != null) {
+            ((TextView)localObject2).setText((CharSequence)localObject1);
+          }
+        }
+      }
+      u();
+      a(v);
+      u = true;
+      localObject1 = a(0, false);
+      if ((!J) && ((localObject1 == null) || (j == null))) {
+        j(108);
+      }
+    }
+  }
+  
+  private int y()
+  {
+    int i1 = K;
+    if (i1 != -100) {
+      return i1;
+    }
+    return g.k();
+  }
+  
+  private void z()
+  {
+    x();
+    if (A)
+    {
+      if (i != null) {
+        return;
+      }
+      Object localObject = f;
+      if ((localObject instanceof Activity)) {
+        i = new n((Activity)localObject, B);
+      } else if ((localObject instanceof Dialog)) {
+        i = new n((Dialog)localObject);
+      }
+      localObject = i;
+      if (localObject != null) {
+        ((a)localObject).c(Q);
+      }
+      return;
+    }
+  }
+  
+  public b a(b.a paramA)
+  {
+    if (paramA != null)
+    {
+      Object localObject = o;
+      if (localObject != null) {
+        ((b)localObject).a();
+      }
+      paramA = new j(paramA);
+      localObject = d();
+      if (localObject != null)
+      {
+        o = ((a)localObject).a(paramA);
+        localObject = o;
+        if (localObject != null)
+        {
+          f localF = h;
+          if (localF != null) {
+            localF.b((b)localObject);
+          }
+        }
+      }
+      if (o == null) {
+        o = b(paramA);
+      }
+      return o;
+    }
+    throw new IllegalArgumentException("ActionMode callback can not be null.");
+  }
+  
+  protected n a(int paramInt, boolean paramBoolean)
+  {
+    Object localObject1 = G;
+    Object localObject2 = localObject1;
+    if (localObject1 != null)
+    {
+      localObject1 = localObject2;
+      if (localObject2.length > paramInt) {}
+    }
+    else
+    {
+      localObject3 = new n[paramInt + 1];
+      if (localObject2 != null) {
+        System.arraycopy(localObject2, 0, localObject3, 0, localObject2.length);
+      }
+      localObject1 = localObject3;
+      G = ((n[])localObject3);
+    }
+    Object localObject3 = localObject1[paramInt];
+    localObject2 = localObject3;
+    if (localObject3 == null)
+    {
+      localObject3 = new n(paramInt);
+      localObject2 = localObject3;
+      localObject1[paramInt] = localObject3;
+    }
+    return localObject2;
+  }
+  
+  n a(Menu paramMenu)
+  {
+    n[] arrayOfN = G;
+    int i1;
+    if (arrayOfN != null) {
+      i1 = arrayOfN.length;
+    } else {
+      i1 = 0;
+    }
+    int i2 = 0;
+    while (i2 < i1)
+    {
+      n localN = arrayOfN[i2];
+      if ((localN != null) && (j == paramMenu)) {
+        return localN;
+      }
+      i2 += 1;
+    }
+    return null;
+  }
+  
+  public <T extends View> T a(int paramInt)
+  {
+    x();
+    return e.findViewById(paramInt);
+  }
+  
+  /* Error */
+  public View a(View paramView, String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: getfield 967	android/support/v7/app/h:T	Landroid/support/v7/app/AppCompatViewInflater;
+    //   4: astore 7
+    //   6: iconst_0
+    //   7: istore 6
+    //   9: aload 7
+    //   11: ifnonnull +147 -> 158
+    //   14: aload_0
+    //   15: getfield 159	android/support/v7/app/h:d	Landroid/content/Context;
+    //   18: getstatic 664	a/b/h/a/j:AppCompatTheme	[I
+    //   21: invokevirtual 668	android/content/Context:obtainStyledAttributes	([I)Landroid/content/res/TypedArray;
+    //   24: getstatic 970	a/b/h/a/j:AppCompatTheme_viewInflaterClass	I
+    //   27: invokevirtual 974	android/content/res/TypedArray:getString	(I)Ljava/lang/String;
+    //   30: astore 7
+    //   32: aload 7
+    //   34: ifnull +113 -> 147
+    //   37: ldc_w 976
+    //   40: invokevirtual 981	java/lang/Class:getName	()Ljava/lang/String;
+    //   43: aload 7
+    //   45: invokevirtual 987	java/lang/String:equals	(Ljava/lang/Object;)Z
+    //   48: ifeq +6 -> 54
+    //   51: goto +96 -> 147
+    //   54: aload_0
+    //   55: aload 7
+    //   57: invokestatic 991	java/lang/Class:forName	(Ljava/lang/String;)Ljava/lang/Class;
+    //   60: iconst_0
+    //   61: anewarray 978	java/lang/Class
+    //   64: invokevirtual 995	java/lang/Class:getDeclaredConstructor	([Ljava/lang/Class;)Ljava/lang/reflect/Constructor;
+    //   67: iconst_0
+    //   68: anewarray 220	java/lang/Object
+    //   71: invokevirtual 1001	java/lang/reflect/Constructor:newInstance	([Ljava/lang/Object;)Ljava/lang/Object;
+    //   74: checkcast 976	android/support/v7/app/AppCompatViewInflater
+    //   77: putfield 967	android/support/v7/app/h:T	Landroid/support/v7/app/AppCompatViewInflater;
+    //   80: goto +78 -> 158
+    //   83: astore 8
+    //   85: new 843	java/lang/StringBuilder
+    //   88: dup
+    //   89: invokespecial 844	java/lang/StringBuilder:<init>	()V
+    //   92: astore 9
+    //   94: aload 9
+    //   96: ldc_w 1003
+    //   99: invokevirtual 850	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   102: pop
+    //   103: aload 9
+    //   105: aload 7
+    //   107: invokevirtual 850	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   110: pop
+    //   111: aload 9
+    //   113: ldc_w 1005
+    //   116: invokevirtual 850	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   119: pop
+    //   120: ldc -16
+    //   122: aload 9
+    //   124: invokevirtual 869	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   127: aload 8
+    //   129: invokestatic 1007	android/util/Log:i	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    //   132: pop
+    //   133: aload_0
+    //   134: new 976	android/support/v7/app/AppCompatViewInflater
+    //   137: dup
+    //   138: invokespecial 1008	android/support/v7/app/AppCompatViewInflater:<init>	()V
+    //   141: putfield 967	android/support/v7/app/h:T	Landroid/support/v7/app/AppCompatViewInflater;
+    //   144: goto +14 -> 158
+    //   147: aload_0
+    //   148: new 976	android/support/v7/app/AppCompatViewInflater
+    //   151: dup
+    //   152: invokespecial 1008	android/support/v7/app/AppCompatViewInflater:<init>	()V
+    //   155: putfield 967	android/support/v7/app/h:T	Landroid/support/v7/app/AppCompatViewInflater;
+    //   158: iconst_0
+    //   159: istore 5
+    //   161: getstatic 124	android/support/v7/app/h:U	Z
+    //   164: ifeq +45 -> 209
+    //   167: aload 4
+    //   169: instanceof 1010
+    //   172: ifeq +27 -> 199
+    //   175: iload 6
+    //   177: istore 5
+    //   179: aload 4
+    //   181: checkcast 1010	org/xmlpull/v1/XmlPullParser
+    //   184: invokeinterface 1013 1 0
+    //   189: iconst_1
+    //   190: if_icmple +19 -> 209
+    //   193: iconst_1
+    //   194: istore 5
+    //   196: goto +13 -> 209
+    //   199: aload_0
+    //   200: aload_1
+    //   201: checkcast 470	android/view/ViewParent
+    //   204: invokespecial 1015	android/support/v7/app/h:a	(Landroid/view/ViewParent;)Z
+    //   207: istore 5
+    //   209: aload_0
+    //   210: getfield 967	android/support/v7/app/h:T	Landroid/support/v7/app/AppCompatViewInflater;
+    //   213: aload_1
+    //   214: aload_2
+    //   215: aload_3
+    //   216: aload 4
+    //   218: iload 5
+    //   220: getstatic 124	android/support/v7/app/h:U	Z
+    //   223: iconst_1
+    //   224: invokestatic 1018	android/support/v7/widget/o1:b	()Z
+    //   227: invokevirtual 1022	android/support/v7/app/AppCompatViewInflater:createView	(Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;ZZZZ)Landroid/view/View;
+    //   230: areturn
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	231	0	this	h
+    //   0	231	1	paramView	View
+    //   0	231	2	paramString	String
+    //   0	231	3	paramContext	Context
+    //   0	231	4	paramAttributeSet	AttributeSet
+    //   159	60	5	bool1	boolean
+    //   7	169	6	bool2	boolean
+    //   4	102	7	localObject	Object
+    //   83	45	8	localThrowable	Throwable
+    //   92	31	9	localStringBuilder	StringBuilder
+    // Exception table:
+    //   from	to	target	type
+    //   54	80	83	finally
+  }
+  
+  void a(int paramInt, n paramN, Menu paramMenu)
+  {
+    Object localObject1 = paramN;
+    Object localObject2 = paramMenu;
+    if (paramMenu == null)
+    {
+      n localN = paramN;
+      if (paramN == null)
+      {
+        localN = paramN;
+        if (paramInt >= 0)
+        {
+          localObject1 = G;
+          localN = paramN;
+          if (paramInt < localObject1.length) {
+            localN = localObject1[paramInt];
+          }
+        }
+      }
+      localObject1 = localN;
+      localObject2 = paramMenu;
+      if (localN != null)
+      {
+        localObject2 = j;
+        localObject1 = localN;
+      }
+    }
+    if ((localObject1 != null) && (!o)) {
+      return;
+    }
+    if (!J) {
+      f.onPanelClosed(paramInt, (Menu)localObject2);
+    }
+  }
+  
+  public void a(Configuration paramConfiguration)
+  {
+    if ((A) && (u))
+    {
+      a localA = d();
+      if (localA != null) {
+        localA.a(paramConfiguration);
+      }
+    }
+    android.support.v7.widget.j.a().a(d);
+    a();
+  }
+  
+  public void a(Bundle paramBundle)
+  {
+    Object localObject2 = f;
+    if ((localObject2 instanceof Activity))
+    {
+      Object localObject1 = null;
+      try
+      {
+        localObject2 = v.b((Activity)localObject2);
+        localObject1 = localObject2;
+      }
+      catch (IllegalArgumentException localIllegalArgumentException) {}
+      if (localObject1 != null)
+      {
+        localObject1 = s();
+        if (localObject1 == null) {
+          Q = true;
+        } else {
+          ((a)localObject1).c(true);
+        }
+      }
+    }
+    if ((paramBundle != null) && (K == -100)) {
+      K = paramBundle.getInt("appcompat:local_night_mode", -100);
+    }
+  }
+  
+  void a(n paramN, boolean paramBoolean)
+  {
+    if ((paramBoolean) && (a == 0))
+    {
+      localObject = l;
+      if ((localObject != null) && (((e0)localObject).b()))
+      {
+        b(j);
+        return;
+      }
+    }
+    Object localObject = (WindowManager)d.getSystemService("window");
+    if ((localObject != null) && (o))
+    {
+      ViewGroup localViewGroup = g;
+      if (localViewGroup != null)
+      {
+        ((WindowManager)localObject).removeView(localViewGroup);
+        if (paramBoolean) {
+          a(a, paramN, null);
+        }
+      }
+    }
+    m = false;
+    n = false;
+    o = false;
+    h = null;
+    q = true;
+    if (H == paramN) {
+      H = null;
+    }
+  }
+  
+  public void a(android.support.v7.view.menu.h paramH)
+  {
+    a(paramH, true);
+  }
+  
+  public void a(Toolbar paramToolbar)
+  {
+    if (!(f instanceof Activity)) {
+      return;
+    }
+    a localA = d();
+    if (!(localA instanceof n))
+    {
+      j = null;
+      if (localA != null) {
+        localA.j();
+      }
+      if (paramToolbar != null)
+      {
+        paramToolbar = new k(paramToolbar, ((Activity)f).getTitle(), g);
+        i = paramToolbar;
+        e.setCallback(paramToolbar.l());
+      }
+      else
+      {
+        i = null;
+        e.setCallback(g);
+      }
+      f();
+      return;
+    }
+    throw new IllegalStateException("This Activity already has an action bar supplied by the window decor. Do not request Window.FEATURE_SUPPORT_ACTION_BAR and set windowActionBar to false in your theme to use a Toolbar instead.");
+  }
+  
+  public void a(View paramView)
+  {
+    x();
+    ViewGroup localViewGroup = (ViewGroup)v.findViewById(16908290);
+    localViewGroup.removeAllViews();
+    localViewGroup.addView(paramView);
+    f.onContentChanged();
+  }
+  
+  public void a(View paramView, ViewGroup.LayoutParams paramLayoutParams)
+  {
+    x();
+    ((ViewGroup)v.findViewById(16908290)).addView(paramView, paramLayoutParams);
+    f.onContentChanged();
+  }
+  
+  void a(ViewGroup paramViewGroup) {}
+  
+  public final void a(CharSequence paramCharSequence)
+  {
+    k = paramCharSequence;
+    Object localObject = l;
+    if (localObject != null)
+    {
+      ((e0)localObject).setWindowTitle(paramCharSequence);
+      return;
+    }
+    if (s() != null)
+    {
+      s().b(paramCharSequence);
+      return;
+    }
+    localObject = w;
+    if (localObject != null) {
+      ((TextView)localObject).setText(paramCharSequence);
+    }
+  }
+  
+  public boolean a()
+  {
+    boolean bool = false;
+    int i1 = y();
+    int i2 = f(i1);
+    if (i2 != -1) {
+      bool = l(i2);
+    }
+    if (i1 == 0)
+    {
+      w();
+      M.d();
+    }
+    L = true;
+    return bool;
+  }
+  
+  boolean a(int paramInt, KeyEvent paramKeyEvent)
+  {
+    boolean bool = true;
+    if (paramInt != 4)
+    {
+      if (paramInt != 82) {
+        return false;
+      }
+      d(0, paramKeyEvent);
+      return true;
+    }
+    if ((paramKeyEvent.getFlags() & 0x80) == 0) {
+      bool = false;
+    }
+    I = bool;
+    return false;
+  }
+  
+  public boolean a(android.support.v7.view.menu.h paramH, MenuItem paramMenuItem)
+  {
+    Window.Callback localCallback = p();
+    if ((localCallback != null) && (!J))
+    {
+      paramH = a(paramH.m());
+      if (paramH != null) {
+        return localCallback.onMenuItemSelected(a, paramMenuItem);
+      }
+    }
+    return false;
+  }
+  
+  boolean a(KeyEvent paramKeyEvent)
+  {
+    Object localObject = f;
+    boolean bool = localObject instanceof e.a;
+    int i1 = 1;
+    if ((bool) || ((localObject instanceof i)))
+    {
+      localObject = e.getDecorView();
+      if ((localObject != null) && (android.support.v4.view.e.a((View)localObject, paramKeyEvent))) {
+        return true;
+      }
+    }
+    if ((paramKeyEvent.getKeyCode() == 82) && (f.dispatchKeyEvent(paramKeyEvent))) {
+      return true;
+    }
+    int i2 = paramKeyEvent.getKeyCode();
+    if (paramKeyEvent.getAction() != 0) {
+      i1 = 0;
+    }
+    if (i1 != 0) {
+      return a(i2, paramKeyEvent);
+    }
+    return c(i2, paramKeyEvent);
+  }
+  
+  b b(b.a paramA)
+  {
+    m();
+    Object localObject1 = o;
+    if (localObject1 != null) {
+      ((b)localObject1).a();
+    }
+    localObject1 = paramA;
+    if (!(paramA instanceof j)) {
+      localObject1 = new j(paramA);
+    }
+    Object localObject2 = null;
+    Object localObject3 = h;
+    paramA = (b.a)localObject2;
+    if (localObject3 != null)
+    {
+      paramA = (b.a)localObject2;
+      if (!J) {
+        try
+        {
+          paramA = ((f)localObject3).a((b.a)localObject1);
+        }
+        catch (AbstractMethodError paramA)
+        {
+          paramA = (b.a)localObject2;
+        }
+      }
+    }
+    if (paramA != null)
+    {
+      o = paramA;
+    }
+    else
+    {
+      paramA = p;
+      boolean bool = true;
+      if (paramA == null) {
+        if (D)
+        {
+          localObject2 = new TypedValue();
+          paramA = d.getTheme();
+          paramA.resolveAttribute(a.b.h.a.a.actionBarTheme, (TypedValue)localObject2, true);
+          if (resourceId != 0)
+          {
+            localObject3 = d.getResources().newTheme();
+            ((Resources.Theme)localObject3).setTo(paramA);
+            ((Resources.Theme)localObject3).applyStyle(resourceId, true);
+            paramA = new d(d, 0);
+            paramA.getTheme().setTo((Resources.Theme)localObject3);
+          }
+          else
+          {
+            paramA = d;
+          }
+          p = new ActionBarContextView(paramA);
+          q = new PopupWindow(paramA, null, a.b.h.a.a.actionModePopupWindowStyle);
+          android.support.v4.widget.n.a(q, 2);
+          q.setContentView(p);
+          q.setWidth(-1);
+          paramA.getTheme().resolveAttribute(a.b.h.a.a.actionBarSize, (TypedValue)localObject2, true);
+          int i1 = TypedValue.complexToDimensionPixelSize(data, paramA.getResources().getDisplayMetrics());
+          p.setContentHeight(i1);
+          q.setHeight(-2);
+          r = new f();
+        }
+        else
+        {
+          paramA = (ViewStubCompat)v.findViewById(a.b.h.a.f.action_mode_bar_stub);
+          if (paramA != null)
+          {
+            paramA.setLayoutInflater(LayoutInflater.from(n()));
+            p = ((ActionBarContextView)paramA.a());
+          }
+        }
+      }
+      if (p != null)
+      {
+        m();
+        p.c();
+        paramA = p.getContext();
+        localObject2 = p;
+        if (q != null) {
+          bool = false;
+        }
+        paramA = new a.b.h.f.e(paramA, (ActionBarContextView)localObject2, (b.a)localObject1, bool);
+        if (((b.a)localObject1).a(paramA, paramA.c()))
+        {
+          paramA.i();
+          p.a(paramA);
+          o = paramA;
+          if (t())
+          {
+            p.setAlpha(0.0F);
+            paramA = u.a(p);
+            paramA.a(1.0F);
+            s = paramA;
+            s.a(new g());
+          }
+          else
+          {
+            p.setAlpha(1.0F);
+            p.setVisibility(0);
+            p.sendAccessibilityEvent(32);
+            if ((p.getParent() instanceof View)) {
+              u.C((View)p.getParent());
+            }
+          }
+          if (q != null) {
+            e.getDecorView().post(r);
+          }
+        }
+        else
+        {
+          o = null;
+        }
+      }
+    }
+    paramA = o;
+    if (paramA != null)
+    {
+      localObject1 = h;
+      if (localObject1 != null) {
+        ((f)localObject1).b(paramA);
+      }
+    }
+    return o;
+  }
+  
+  public final b.b b()
+  {
+    return new h();
+  }
+  
+  public void b(Bundle paramBundle)
+  {
+    x();
+  }
+  
+  void b(android.support.v7.view.menu.h paramH)
+  {
+    if (F) {
+      return;
+    }
+    F = true;
+    l.g();
+    Window.Callback localCallback = p();
+    if ((localCallback != null) && (!J)) {
+      localCallback.onPanelClosed(108, paramH);
+    }
+    F = false;
+  }
+  
+  public void b(View paramView, ViewGroup.LayoutParams paramLayoutParams)
+  {
+    x();
+    ViewGroup localViewGroup = (ViewGroup)v.findViewById(16908290);
+    localViewGroup.removeAllViews();
+    localViewGroup.addView(paramView, paramLayoutParams);
+    f.onContentChanged();
+  }
+  
+  public boolean b(int paramInt)
+  {
+    paramInt = k(paramInt);
+    if ((E) && (paramInt == 108)) {
+      return false;
+    }
+    if ((A) && (paramInt == 1)) {
+      A = false;
+    }
+    if (paramInt != 1)
+    {
+      if (paramInt != 2)
+      {
+        if (paramInt != 5)
+        {
+          if (paramInt != 10)
+          {
+            if (paramInt != 108)
+            {
+              if (paramInt != 109) {
+                return e.requestFeature(paramInt);
+              }
+              B();
+              B = true;
+              return true;
+            }
+            B();
+            A = true;
+            return true;
+          }
+          B();
+          C = true;
+          return true;
+        }
+        B();
+        z = true;
+        return true;
+      }
+      B();
+      y = true;
+      return true;
+    }
+    B();
+    E = true;
+    return true;
+  }
+  
+  boolean b(int paramInt, KeyEvent paramKeyEvent)
+  {
+    Object localObject = d();
+    if ((localObject != null) && (((a)localObject).a(paramInt, paramKeyEvent))) {
+      return true;
+    }
+    localObject = H;
+    if ((localObject != null) && (a((n)localObject, paramKeyEvent.getKeyCode(), paramKeyEvent, 1)))
+    {
+      paramKeyEvent = H;
+      if (paramKeyEvent != null) {
+        n = true;
+      }
+      return true;
+    }
+    if (H == null)
+    {
+      localObject = a(0, true);
+      b((n)localObject, paramKeyEvent);
+      boolean bool = a((n)localObject, paramKeyEvent.getKeyCode(), paramKeyEvent, 1);
+      m = false;
+      if (bool) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public MenuInflater c()
+  {
+    if (j == null)
+    {
+      z();
+      Object localObject = i;
+      if (localObject != null) {
+        localObject = ((a)localObject).h();
+      } else {
+        localObject = d;
+      }
+      j = new a.b.h.f.g((Context)localObject);
+    }
+    return j;
+  }
+  
+  public void c(int paramInt)
+  {
+    x();
+    ViewGroup localViewGroup = (ViewGroup)v.findViewById(16908290);
+    localViewGroup.removeAllViews();
+    LayoutInflater.from(d).inflate(paramInt, localViewGroup);
+    f.onContentChanged();
+  }
+  
+  public void c(Bundle paramBundle)
+  {
+    int i1 = K;
+    if (i1 != -100) {
+      paramBundle.putInt("appcompat:local_night_mode", i1);
+    }
+  }
+  
+  boolean c(int paramInt, KeyEvent paramKeyEvent)
+  {
+    if (paramInt != 4)
+    {
+      if (paramInt != 82) {
+        return false;
+      }
+      e(0, paramKeyEvent);
+      return true;
+    }
+    boolean bool = I;
+    I = false;
+    paramKeyEvent = a(0, false);
+    if ((paramKeyEvent != null) && (o))
+    {
+      if (!bool) {
+        a(paramKeyEvent, true);
+      }
+      return true;
+    }
+    return r();
+  }
+  
+  public a d()
+  {
+    z();
+    return i;
+  }
+  
+  void d(int paramInt)
+  {
+    a(a(paramInt, true), true);
+  }
+  
+  public void e()
+  {
+    LayoutInflater localLayoutInflater = LayoutInflater.from(d);
+    if (localLayoutInflater.getFactory() == null)
+    {
+      android.support.v4.view.f.b(localLayoutInflater, this);
+      return;
+    }
+    if (!(localLayoutInflater.getFactory2() instanceof h)) {
+      Log.i("AppCompatDelegate", "The Activity's LayoutInflater already has a Factory installed so we can not install AppCompat's");
+    }
+  }
+  
+  void e(int paramInt)
+  {
+    n localN = a(paramInt, true);
+    if (j != null)
+    {
+      Bundle localBundle = new Bundle();
+      j.c(localBundle);
+      if (localBundle.size() > 0) {
+        s = localBundle;
+      }
+      j.s();
+      j.clear();
+    }
+    r = true;
+    q = true;
+    if (((paramInt == 108) || (paramInt == 0)) && (l != null))
+    {
+      localN = a(0, false);
+      if (localN != null)
+      {
+        m = false;
+        b(localN, null);
+      }
+    }
+  }
+  
+  int f(int paramInt)
+  {
+    if (paramInt != -100)
+    {
+      if (paramInt != 0) {
+        return paramInt;
+      }
+      if ((Build.VERSION.SDK_INT >= 23) && (((UiModeManager)d.getSystemService(UiModeManager.class)).getNightMode() == 0)) {
+        return -1;
+      }
+      w();
+      return M.c();
+    }
+    return -1;
+  }
+  
+  public void f()
+  {
+    a localA = d();
+    if ((localA != null) && (localA.i())) {
+      return;
+    }
+    j(0);
+  }
+  
+  public void g()
+  {
+    if (N) {
+      e.getDecorView().removeCallbacks(P);
+    }
+    J = true;
+    Object localObject = i;
+    if (localObject != null) {
+      ((a)localObject).j();
+    }
+    localObject = M;
+    if (localObject != null) {
+      ((l)localObject).a();
+    }
+  }
+  
+  void g(int paramInt)
+  {
+    if (paramInt == 108)
+    {
+      a localA = d();
+      if (localA != null) {
+        localA.b(true);
+      }
+    }
+  }
+  
+  public void h()
+  {
+    a localA = d();
+    if (localA != null) {
+      localA.g(true);
+    }
+  }
+  
+  void h(int paramInt)
+  {
+    Object localObject;
+    if (paramInt == 108)
+    {
+      localObject = d();
+      if (localObject != null) {
+        ((a)localObject).b(false);
+      }
+    }
+    else if (paramInt == 0)
+    {
+      localObject = a(paramInt, true);
+      if (o)
+      {
+        a((n)localObject, false);
+        return;
+      }
+    }
+  }
+  
+  int i(int paramInt)
+  {
+    int i1 = 0;
+    int i7 = 0;
+    Object localObject1 = p;
+    int i6 = 0;
+    int i5 = i1;
+    int i4 = paramInt;
+    if (localObject1 != null)
+    {
+      i5 = i1;
+      i4 = paramInt;
+      if ((((ViewGroup)localObject1).getLayoutParams() instanceof ViewGroup.MarginLayoutParams))
+      {
+        localObject1 = (ViewGroup.MarginLayoutParams)p.getLayoutParams();
+        int i3 = 0;
+        i1 = 0;
+        int i2;
+        if (p.isShown())
+        {
+          if (R == null)
+          {
+            R = new Rect();
+            S = new Rect();
+          }
+          Object localObject2 = R;
+          Rect localRect = S;
+          ((Rect)localObject2).set(0, paramInt, 0, 0);
+          r1.a(v, (Rect)localObject2, localRect);
+          if (top == 0) {
+            i2 = paramInt;
+          } else {
+            i2 = 0;
+          }
+          if (topMargin != i2)
+          {
+            i2 = 1;
+            topMargin = paramInt;
+            localObject2 = x;
+            if (localObject2 == null)
+            {
+              x = new View(d);
+              x.setBackgroundColor(d.getResources().getColor(c.abc_input_method_navigation_guard));
+              v.addView(x, -1, new ViewGroup.LayoutParams(-1, paramInt));
+              i1 = i2;
+            }
+            else
+            {
+              localObject2 = ((View)localObject2).getLayoutParams();
+              i1 = i2;
+              if (height != paramInt)
+              {
+                height = paramInt;
+                x.setLayoutParams((ViewGroup.LayoutParams)localObject2);
+                i1 = i2;
+              }
+            }
+          }
+          if (x != null) {
+            i2 = 1;
+          } else {
+            i2 = 0;
+          }
+          i3 = paramInt;
+          if (!C)
+          {
+            i3 = paramInt;
+            if (i2 != 0) {
+              i3 = 0;
+            }
+          }
+        }
+        else
+        {
+          i2 = i7;
+          i1 = i3;
+          i3 = paramInt;
+          if (topMargin != 0)
+          {
+            i1 = 1;
+            topMargin = 0;
+            i3 = paramInt;
+            i2 = i7;
+          }
+        }
+        i5 = i2;
+        i4 = i3;
+        if (i1 != 0)
+        {
+          p.setLayoutParams((ViewGroup.LayoutParams)localObject1);
+          i4 = i3;
+          i5 = i2;
+        }
+      }
+    }
+    localObject1 = x;
+    if (localObject1 != null)
+    {
+      if (i5 != 0) {
+        paramInt = i6;
+      } else {
+        paramInt = 8;
+      }
+      ((View)localObject1).setVisibility(paramInt);
+    }
+    return i4;
+  }
+  
+  public void i()
+  {
+    a();
+  }
+  
+  public void j()
+  {
+    Object localObject = d();
+    if (localObject != null) {
+      ((a)localObject).g(false);
+    }
+    localObject = M;
+    if (localObject != null) {
+      ((l)localObject).a();
+    }
+  }
+  
+  void l()
+  {
+    e0 localE0 = l;
+    if (localE0 != null) {
+      localE0.g();
+    }
+    if (q != null)
+    {
+      e.getDecorView().removeCallbacks(r);
+      if (q.isShowing()) {
+        try
+        {
+          q.dismiss();
+        }
+        catch (IllegalArgumentException localIllegalArgumentException) {}
+      }
+      q = null;
+    }
+    m();
+    Object localObject = a(0, false);
+    if (localObject != null)
+    {
+      localObject = j;
+      if (localObject != null) {
+        ((android.support.v7.view.menu.h)localObject).close();
+      }
+    }
+  }
+  
+  void m()
+  {
+    y localY = s;
+    if (localY != null) {
+      localY.a();
+    }
+  }
+  
+  final Context n()
+  {
+    Context localContext = null;
+    Object localObject = d();
+    if (localObject != null) {
+      localContext = ((a)localObject).h();
+    }
+    localObject = localContext;
+    if (localContext == null) {
+      localObject = d;
+    }
+    return localObject;
+  }
+  
+  final CharSequence o()
+  {
+    Window.Callback localCallback = f;
+    if ((localCallback instanceof Activity)) {
+      return ((Activity)localCallback).getTitle();
+    }
+    return k;
+  }
+  
+  public final View onCreateView(View paramView, String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    return a(paramView, paramString, paramContext, paramAttributeSet);
+  }
+  
+  public View onCreateView(String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    return onCreateView(null, paramString, paramContext, paramAttributeSet);
+  }
+  
+  final Window.Callback p()
+  {
+    return e.getCallback();
+  }
+  
+  public boolean q()
+  {
+    return t;
+  }
+  
+  boolean r()
+  {
+    Object localObject = o;
+    if (localObject != null)
+    {
+      ((b)localObject).a();
+      return true;
+    }
+    localObject = d();
+    return (localObject != null) && (((a)localObject).f());
+  }
+  
+  final a s()
+  {
+    return i;
+  }
+  
+  final boolean t()
+  {
+    if (u)
+    {
+      ViewGroup localViewGroup = v;
+      if ((localViewGroup != null) && (u.y(localViewGroup))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  static final class a
+    implements Thread.UncaughtExceptionHandler
+  {
+    a(Thread.UncaughtExceptionHandler paramUncaughtExceptionHandler) {}
+    
+    private boolean a(Throwable paramThrowable)
+    {
+      if ((paramThrowable instanceof Resources.NotFoundException))
+      {
+        paramThrowable = paramThrowable.getMessage();
+        return (paramThrowable != null) && ((paramThrowable.contains("drawable")) || (paramThrowable.contains("Drawable")));
+      }
+      return false;
+    }
+    
+    public void uncaughtException(Thread paramThread, Throwable paramThrowable)
+    {
+      if (a(paramThrowable))
+      {
+        Object localObject = new StringBuilder();
+        ((StringBuilder)localObject).append(paramThrowable.getMessage());
+        ((StringBuilder)localObject).append(". If the resource you are trying to use is a vector resource, you may be referencing it in an unsupported way. See AppCompatDelegate.setCompatVectorFromResourcesEnabled() for more info.");
+        localObject = new Resources.NotFoundException(((StringBuilder)localObject).toString());
+        ((Throwable)localObject).initCause(paramThrowable.getCause());
+        ((Throwable)localObject).setStackTrace(paramThrowable.getStackTrace());
+        a.uncaughtException(paramThread, (Throwable)localObject);
+        return;
+      }
+      a.uncaughtException(paramThread, paramThrowable);
+    }
+  }
+  
+  class b
+    implements Runnable
+  {
+    b() {}
+    
+    public void run()
+    {
+      h localH = h.this;
+      if ((O & 0x1) != 0) {
+        localH.e(0);
+      }
+      localH = h.this;
+      if ((O & 0x1000) != 0) {
+        localH.e(108);
+      }
+      localH = h.this;
+      N = false;
+      O = 0;
+    }
+  }
+  
+  class c
+    implements android.support.v4.view.p
+  {
+    c() {}
+    
+    public c0 a(View paramView, c0 paramC0)
+    {
+      int i = paramC0.e();
+      int j = i(i);
+      c0 localC0 = paramC0;
+      if (i != j) {
+        localC0 = paramC0.a(paramC0.c(), j, paramC0.d(), paramC0.b());
+      }
+      return u.b(paramView, localC0);
+    }
+  }
+  
+  class d
+    implements k0.a
+  {
+    d() {}
+    
+    public void a(Rect paramRect)
+    {
+      top = i(top);
+    }
+  }
+  
+  class e
+    implements ContentFrameLayout.a
+  {
+    e() {}
+    
+    public void a() {}
+    
+    public void onDetachedFromWindow()
+    {
+      l();
+    }
+  }
+  
+  class f
+    implements Runnable
+  {
+    f() {}
+    
+    public void run()
+    {
+      h localH = h.this;
+      q.showAtLocation(p, 55, 0, 0);
+      m();
+      if (t())
+      {
+        p.setAlpha(0.0F);
+        localH = h.this;
+        y localY = u.a(p);
+        localY.a(1.0F);
+        s = localY;
+        s.a(new a());
+        return;
+      }
+      p.setAlpha(1.0F);
+      p.setVisibility(0);
+    }
+    
+    class a
+      extends a0
+    {
+      a() {}
+      
+      public void a(View paramView)
+      {
+        p.setAlpha(1.0F);
+        s.a(null);
+        s = null;
+      }
+      
+      public void b(View paramView)
+      {
+        p.setVisibility(0);
+      }
+    }
+  }
+  
+  class g
+    extends a0
+  {
+    g() {}
+    
+    public void a(View paramView)
+    {
+      p.setAlpha(1.0F);
+      s.a(null);
+      s = null;
+    }
+    
+    public void b(View paramView)
+    {
+      p.setVisibility(0);
+      p.sendAccessibilityEvent(32);
+      if ((p.getParent() instanceof View)) {
+        u.C((View)p.getParent());
+      }
+    }
+  }
+  
+  private class h
+    implements b.b
+  {
+    h() {}
+    
+    public Context a()
+    {
+      return n();
+    }
+    
+    public void a(int paramInt)
+    {
+      a localA = d();
+      if (localA != null) {
+        localA.b(paramInt);
+      }
+    }
+    
+    public void a(Drawable paramDrawable, int paramInt)
+    {
+      a localA = d();
+      if (localA != null)
+      {
+        localA.b(paramDrawable);
+        localA.b(paramInt);
+      }
+    }
+    
+    public boolean b()
+    {
+      a localA = d();
+      return (localA != null) && ((localA.g() & 0x4) != 0);
+    }
+    
+    public Drawable c()
+    {
+      j1 localJ1 = j1.a(a(), null, new int[] { a.b.h.a.a.homeAsUpIndicator });
+      Drawable localDrawable = localJ1.b(0);
+      localJ1.a();
+      return localDrawable;
+    }
+  }
+  
+  private final class i
+    implements p.a
+  {
+    i() {}
+    
+    public void a(android.support.v7.view.menu.h paramH, boolean paramBoolean)
+    {
+      b(paramH);
+    }
+    
+    public boolean a(android.support.v7.view.menu.h paramH)
+    {
+      Window.Callback localCallback = p();
+      if (localCallback != null) {
+        localCallback.onMenuOpened(108, paramH);
+      }
+      return true;
+    }
+  }
+  
+  class j
+    implements b.a
+  {
+    private b.a a;
+    
+    public j(b.a paramA)
+    {
+      a = paramA;
+    }
+    
+    public void a(b paramB)
+    {
+      a.a(paramB);
+      paramB = h.this;
+      if (q != null) {
+        e.getDecorView().removeCallbacks(r);
+      }
+      paramB = h.this;
+      if (p != null)
+      {
+        paramB.m();
+        paramB = h.this;
+        localObject = u.a(p);
+        ((y)localObject).a(0.0F);
+        s = ((y)localObject);
+        s.a(new a());
+      }
+      paramB = h.this;
+      Object localObject = h;
+      if (localObject != null) {
+        ((f)localObject).a(o);
+      }
+      o = null;
+    }
+    
+    public boolean a(b paramB, Menu paramMenu)
+    {
+      return a.a(paramB, paramMenu);
+    }
+    
+    public boolean a(b paramB, MenuItem paramMenuItem)
+    {
+      return a.a(paramB, paramMenuItem);
+    }
+    
+    public boolean b(b paramB, Menu paramMenu)
+    {
+      return a.b(paramB, paramMenu);
+    }
+    
+    class a
+      extends a0
+    {
+      a() {}
+      
+      public void a(View paramView)
+      {
+        p.setVisibility(8);
+        paramView = h.this;
+        PopupWindow localPopupWindow = q;
+        if (localPopupWindow != null) {
+          localPopupWindow.dismiss();
+        } else if ((p.getParent() instanceof View)) {
+          u.C((View)p.getParent());
+        }
+        p.removeAllViews();
+        s.a(null);
+        s = null;
+      }
+    }
+  }
+  
+  class k
+    extends a.b.h.f.i
+  {
+    k(Window.Callback paramCallback)
+    {
+      super();
+    }
+    
+    final ActionMode a(ActionMode.Callback paramCallback)
+    {
+      paramCallback = new f.a(d, paramCallback);
+      b localB = a(paramCallback);
+      if (localB != null) {
+        return paramCallback.b(localB);
+      }
+      return null;
+    }
+    
+    public boolean dispatchKeyEvent(KeyEvent paramKeyEvent)
+    {
+      return (a(paramKeyEvent)) || (super.dispatchKeyEvent(paramKeyEvent));
+    }
+    
+    public boolean dispatchKeyShortcutEvent(KeyEvent paramKeyEvent)
+    {
+      return (super.dispatchKeyShortcutEvent(paramKeyEvent)) || (b(paramKeyEvent.getKeyCode(), paramKeyEvent));
+    }
+    
+    public void onContentChanged() {}
+    
+    public boolean onCreatePanelMenu(int paramInt, Menu paramMenu)
+    {
+      if ((paramInt == 0) && (!(paramMenu instanceof android.support.v7.view.menu.h))) {
+        return false;
+      }
+      return super.onCreatePanelMenu(paramInt, paramMenu);
+    }
+    
+    public boolean onMenuOpened(int paramInt, Menu paramMenu)
+    {
+      super.onMenuOpened(paramInt, paramMenu);
+      g(paramInt);
+      return true;
+    }
+    
+    public void onPanelClosed(int paramInt, Menu paramMenu)
+    {
+      super.onPanelClosed(paramInt, paramMenu);
+      h(paramInt);
+    }
+    
+    public boolean onPreparePanel(int paramInt, View paramView, Menu paramMenu)
+    {
+      android.support.v7.view.menu.h localH;
+      if ((paramMenu instanceof android.support.v7.view.menu.h)) {
+        localH = (android.support.v7.view.menu.h)paramMenu;
+      } else {
+        localH = null;
+      }
+      if ((paramInt == 0) && (localH == null)) {
+        return false;
+      }
+      if (localH != null) {
+        localH.c(true);
+      }
+      boolean bool = super.onPreparePanel(paramInt, paramView, paramMenu);
+      if (localH != null) {
+        localH.c(false);
+      }
+      return bool;
+    }
+    
+    public void onProvideKeyboardShortcuts(List<KeyboardShortcutGroup> paramList, Menu paramMenu, int paramInt)
+    {
+      Object localObject = a(0, true);
+      if (localObject != null)
+      {
+        localObject = j;
+        if (localObject != null)
+        {
+          super.onProvideKeyboardShortcuts(paramList, (Menu)localObject, paramInt);
+          return;
+        }
+      }
+      super.onProvideKeyboardShortcuts(paramList, paramMenu, paramInt);
+    }
+    
+    public ActionMode onWindowStartingActionMode(ActionMode.Callback paramCallback)
+    {
+      if (Build.VERSION.SDK_INT >= 23) {
+        return null;
+      }
+      if (q()) {
+        return a(paramCallback);
+      }
+      return super.onWindowStartingActionMode(paramCallback);
+    }
+    
+    public ActionMode onWindowStartingActionMode(ActionMode.Callback paramCallback, int paramInt)
+    {
+      if ((q()) && (paramInt == 0)) {
+        return a(paramCallback);
+      }
+      return super.onWindowStartingActionMode(paramCallback, paramInt);
+    }
+  }
+  
+  final class l
+  {
+    private m a;
+    private boolean b;
+    private BroadcastReceiver c;
+    private IntentFilter d;
+    
+    l(m paramM)
+    {
+      a = paramM;
+      b = paramM.a();
+    }
+    
+    void a()
+    {
+      BroadcastReceiver localBroadcastReceiver = c;
+      if (localBroadcastReceiver != null)
+      {
+        d.unregisterReceiver(localBroadcastReceiver);
+        c = null;
+      }
+    }
+    
+    void b()
+    {
+      boolean bool = a.a();
+      if (bool != b)
+      {
+        b = bool;
+        a();
+      }
+    }
+    
+    int c()
+    {
+      b = a.a();
+      if (b) {
+        return 2;
+      }
+      return 1;
+    }
+    
+    void d()
+    {
+      a();
+      if (c == null) {
+        c = new a();
+      }
+      if (d == null)
+      {
+        d = new IntentFilter();
+        d.addAction("android.intent.action.TIME_SET");
+        d.addAction("android.intent.action.TIMEZONE_CHANGED");
+        d.addAction("android.intent.action.TIME_TICK");
+      }
+      d.registerReceiver(c, d);
+    }
+    
+    class a
+      extends BroadcastReceiver
+    {
+      a() {}
+      
+      public void onReceive(Context paramContext, Intent paramIntent)
+      {
+        b();
+      }
+    }
+  }
+  
+  private class m
+    extends ContentFrameLayout
+  {
+    public m(Context paramContext)
+    {
+      super();
+    }
+    
+    private boolean a(int paramInt1, int paramInt2)
+    {
+      return (paramInt1 < -5) || (paramInt2 < -5) || (paramInt1 > getWidth() + 5) || (paramInt2 > getHeight() + 5);
+    }
+    
+    public boolean dispatchKeyEvent(KeyEvent paramKeyEvent)
+    {
+      return (a(paramKeyEvent)) || (super.dispatchKeyEvent(paramKeyEvent));
+    }
+    
+    public boolean onInterceptTouchEvent(MotionEvent paramMotionEvent)
+    {
+      if ((paramMotionEvent.getAction() == 0) && (a((int)paramMotionEvent.getX(), (int)paramMotionEvent.getY())))
+      {
+        d(0);
+        return true;
+      }
+      return super.onInterceptTouchEvent(paramMotionEvent);
+    }
+    
+    public void setBackgroundResource(int paramInt)
+    {
+      setBackgroundDrawable(a.b.h.c.a.a.c(getContext(), paramInt));
+    }
+  }
+  
+  protected static final class n
+  {
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    ViewGroup g;
+    View h;
+    View i;
+    android.support.v7.view.menu.h j;
+    android.support.v7.view.menu.f k;
+    Context l;
+    boolean m;
+    boolean n;
+    boolean o;
+    public boolean p;
+    boolean q;
+    boolean r;
+    Bundle s;
+    
+    n(int paramInt)
+    {
+      a = paramInt;
+      q = false;
+    }
+    
+    q a(p.a paramA)
+    {
+      if (j == null) {
+        return null;
+      }
+      if (k == null)
+      {
+        k = new android.support.v7.view.menu.f(l, a.b.h.a.g.abc_list_menu_item_layout);
+        k.a(paramA);
+        j.a(k);
+      }
+      return k.a(g);
+    }
+    
+    void a(Context paramContext)
+    {
+      TypedValue localTypedValue = new TypedValue();
+      Resources.Theme localTheme = paramContext.getResources().newTheme();
+      localTheme.setTo(paramContext.getTheme());
+      localTheme.resolveAttribute(a.b.h.a.a.actionBarPopupTheme, localTypedValue, true);
+      int i1 = resourceId;
+      if (i1 != 0) {
+        localTheme.applyStyle(i1, true);
+      }
+      localTheme.resolveAttribute(a.b.h.a.a.panelMenuListTheme, localTypedValue, true);
+      i1 = resourceId;
+      if (i1 != 0) {
+        localTheme.applyStyle(i1, true);
+      } else {
+        localTheme.applyStyle(a.b.h.a.i.Theme_AppCompat_CompactMenu, true);
+      }
+      paramContext = new d(paramContext, 0);
+      paramContext.getTheme().setTo(localTheme);
+      l = paramContext;
+      paramContext = paramContext.obtainStyledAttributes(a.b.h.a.j.AppCompatTheme);
+      b = paramContext.getResourceId(a.b.h.a.j.AppCompatTheme_panelBackground, 0);
+      f = paramContext.getResourceId(a.b.h.a.j.AppCompatTheme_android_windowAnimationStyle, 0);
+      paramContext.recycle();
+    }
+    
+    void a(android.support.v7.view.menu.h paramH)
+    {
+      Object localObject = j;
+      if (paramH == localObject) {
+        return;
+      }
+      if (localObject != null) {
+        ((android.support.v7.view.menu.h)localObject).b(k);
+      }
+      j = paramH;
+      if (paramH != null)
+      {
+        localObject = k;
+        if (localObject != null) {
+          paramH.a((android.support.v7.view.menu.p)localObject);
+        }
+      }
+    }
+    
+    public boolean a()
+    {
+      View localView = h;
+      boolean bool = false;
+      if (localView == null) {
+        return false;
+      }
+      if (i != null) {
+        return true;
+      }
+      if (k.d().getCount() > 0) {
+        bool = true;
+      }
+      return bool;
+    }
+  }
+  
+  private final class o
+    implements p.a
+  {
+    o() {}
+    
+    public void a(android.support.v7.view.menu.h paramH, boolean paramBoolean)
+    {
+      android.support.v7.view.menu.h localH = paramH.m();
+      int i;
+      if (localH != paramH) {
+        i = 1;
+      } else {
+        i = 0;
+      }
+      h localH1 = h.this;
+      if (i != 0) {
+        paramH = localH;
+      }
+      paramH = localH1.a(paramH);
+      if (paramH != null)
+      {
+        if (i != 0)
+        {
+          a(a, paramH, localH);
+          a(paramH, true);
+          return;
+        }
+        a(paramH, paramBoolean);
+      }
+    }
+    
+    public boolean a(android.support.v7.view.menu.h paramH)
+    {
+      if (paramH == null)
+      {
+        Object localObject = h.this;
+        if (A)
+        {
+          localObject = ((h)localObject).p();
+          if ((localObject != null) && (!J)) {
+            ((Window.Callback)localObject).onMenuOpened(108, paramH);
+          }
+        }
+      }
+      return true;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+package b.e.a.a.d;
+
+import android.view.View;
+import b.h.a.c;
+import b.h.a.i;
+
+public class j
+  extends b.e.a.a.a
+{
+  public j() {}
+  
+  public void b(View paramView)
+  {
+    double d = paramView.getWidth();
+    Double.isNaN(d);
+    float f = (float)(d / 100.0D);
+    a().a(new b.h.a.a[] { i.a(paramView, "translationX", new float[] { f * 0.0F, -25.0F * f, 20.0F * f, -15.0F * f, 10.0F * f, -5.0F * f, f * 0.0F, 0.0F }), i.a(paramView, "rotation", new float[] { 0.0F, -5.0F, 3.0F, -3.0F, 2.0F, -1.0F, 0.0F }) });
+  }
+}

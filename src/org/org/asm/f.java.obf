@@ -1,0 +1,398 @@
+package a.b.f;
+
+import android.animation.TimeInterpolator;
+import android.util.AndroidRuntimeException;
+import android.view.View;
+import android.view.ViewGroup;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class q
+  extends m
+{
+  private ArrayList<m> L = new ArrayList();
+  private boolean M = true;
+  int N;
+  boolean O = false;
+  private int P = 0;
+  
+  public q() {}
+  
+  private void r()
+  {
+    b localB = new b(this);
+    Iterator localIterator = L.iterator();
+    while (localIterator.hasNext()) {
+      ((m)localIterator.next()).a(localB);
+    }
+    N = L.size();
+  }
+  
+  public m a(int paramInt)
+  {
+    if ((paramInt >= 0) && (paramInt < L.size())) {
+      return (m)L.get(paramInt);
+    }
+    return null;
+  }
+  
+  public q a(long paramLong)
+  {
+    super.a(paramLong);
+    if (e >= 0L)
+    {
+      int j = L.size();
+      int i = 0;
+      while (i < j)
+      {
+        ((m)L.get(i)).a(paramLong);
+        i += 1;
+      }
+    }
+    return this;
+  }
+  
+  public q a(m.f paramF)
+  {
+    super.a(paramF);
+    return (q)this;
+  }
+  
+  public q a(m paramM)
+  {
+    L.add(paramM);
+    t = this;
+    long l = e;
+    if (l >= 0L) {
+      paramM.a(l);
+    }
+    if ((P & 0x1) != 0) {
+      paramM.a(d());
+    }
+    if ((P & 0x2) != 0) {
+      paramM.a(g());
+    }
+    if ((P & 0x4) != 0) {
+      paramM.a(f());
+    }
+    if ((P & 0x8) != 0) {
+      paramM.a(c());
+    }
+    return this;
+  }
+  
+  public q a(TimeInterpolator paramTimeInterpolator)
+  {
+    P |= 0x1;
+    ArrayList localArrayList = L;
+    if (localArrayList != null)
+    {
+      int j = localArrayList.size();
+      int i = 0;
+      while (i < j)
+      {
+        ((m)L.get(i)).a(paramTimeInterpolator);
+        i += 1;
+      }
+    }
+    super.a(paramTimeInterpolator);
+    return (q)this;
+  }
+  
+  public q a(View paramView)
+  {
+    int i = 0;
+    while (i < L.size())
+    {
+      ((m)L.get(i)).a(paramView);
+      i += 1;
+    }
+    super.a(paramView);
+    return (q)this;
+  }
+  
+  String a(String paramString)
+  {
+    Object localObject = super.a(paramString);
+    int i = 0;
+    while (i < L.size())
+    {
+      StringBuilder localStringBuilder1 = new StringBuilder();
+      localStringBuilder1.append((String)localObject);
+      localStringBuilder1.append("\n");
+      localObject = (m)L.get(i);
+      StringBuilder localStringBuilder2 = new StringBuilder();
+      localStringBuilder2.append(paramString);
+      localStringBuilder2.append("  ");
+      localStringBuilder1.append(((m)localObject).a(localStringBuilder2.toString()));
+      localObject = localStringBuilder1.toString();
+      i += 1;
+    }
+    return localObject;
+  }
+  
+  public void a(g paramG)
+  {
+    super.a(paramG);
+    P |= 0x4;
+    int i = 0;
+    while (i < L.size())
+    {
+      ((m)L.get(i)).a(paramG);
+      i += 1;
+    }
+  }
+  
+  public void a(m.e paramE)
+  {
+    super.a(paramE);
+    P |= 0x8;
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      ((m)L.get(i)).a(paramE);
+      i += 1;
+    }
+  }
+  
+  public void a(p paramP)
+  {
+    super.a(paramP);
+    P |= 0x2;
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      ((m)L.get(i)).a(paramP);
+      i += 1;
+    }
+  }
+  
+  public void a(s paramS)
+  {
+    if (b(b))
+    {
+      Iterator localIterator = L.iterator();
+      while (localIterator.hasNext())
+      {
+        m localM = (m)localIterator.next();
+        if (localM.b(b))
+        {
+          localM.a(paramS);
+          c.add(localM);
+        }
+      }
+    }
+  }
+  
+  protected void a(ViewGroup paramViewGroup, t paramT1, t paramT2, ArrayList<s> paramArrayList1, ArrayList<s> paramArrayList2)
+  {
+    long l1 = h();
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      m localM = (m)L.get(i);
+      if ((l1 > 0L) && ((M) || (i == 0)))
+      {
+        long l2 = localM.h();
+        if (l2 > 0L) {
+          localM.b(l1 + l2);
+        } else {
+          localM.b(l1);
+        }
+      }
+      localM.a(paramViewGroup, paramT1, paramT2, paramArrayList1, paramArrayList2);
+      i += 1;
+    }
+  }
+  
+  public q b(int paramInt)
+  {
+    if (paramInt != 0)
+    {
+      if (paramInt == 1)
+      {
+        M = false;
+        return this;
+      }
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Invalid parameter for TransitionSet ordering: ");
+      localStringBuilder.append(paramInt);
+      throw new AndroidRuntimeException(localStringBuilder.toString());
+    }
+    M = true;
+    return this;
+  }
+  
+  public q b(long paramLong)
+  {
+    super.b(paramLong);
+    return (q)this;
+  }
+  
+  public q b(m.f paramF)
+  {
+    super.b(paramF);
+    return (q)this;
+  }
+  
+  void b(s paramS)
+  {
+    super.b(paramS);
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      ((m)L.get(i)).b(paramS);
+      i += 1;
+    }
+  }
+  
+  public void c(s paramS)
+  {
+    if (b(b))
+    {
+      Iterator localIterator = L.iterator();
+      while (localIterator.hasNext())
+      {
+        m localM = (m)localIterator.next();
+        if (localM.b(b))
+        {
+          localM.c(paramS);
+          c.add(localM);
+        }
+      }
+    }
+  }
+  
+  public void c(View paramView)
+  {
+    super.c(paramView);
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      ((m)L.get(i)).c(paramView);
+      i += 1;
+    }
+  }
+  
+  public m clone()
+  {
+    q localQ = (q)super.clone();
+    L = new ArrayList();
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      localQ.a(((m)L.get(i)).clone());
+      i += 1;
+    }
+    return localQ;
+  }
+  
+  public q d(View paramView)
+  {
+    int i = 0;
+    while (i < L.size())
+    {
+      ((m)L.get(i)).d(paramView);
+      i += 1;
+    }
+    super.d(paramView);
+    return (q)this;
+  }
+  
+  public void e(View paramView)
+  {
+    super.e(paramView);
+    int j = L.size();
+    int i = 0;
+    while (i < j)
+    {
+      ((m)L.get(i)).e(paramView);
+      i += 1;
+    }
+  }
+  
+  protected void o()
+  {
+    if (L.isEmpty())
+    {
+      p();
+      a();
+      return;
+    }
+    r();
+    if (!M)
+    {
+      int i = 1;
+      while (i < L.size())
+      {
+        ((m)L.get(i - 1)).a(new a((m)L.get(i)));
+        i += 1;
+      }
+      localObject = (m)L.get(0);
+      if (localObject != null) {
+        ((m)localObject).o();
+      }
+      return;
+    }
+    Object localObject = L.iterator();
+    while (((Iterator)localObject).hasNext()) {
+      ((m)((Iterator)localObject).next()).o();
+    }
+  }
+  
+  public int q()
+  {
+    return L.size();
+  }
+  
+  class a
+    extends n
+  {
+    a(m paramM) {}
+    
+    public void b(m paramM)
+    {
+      a.o();
+      paramM.b(this);
+    }
+  }
+  
+  static class b
+    extends n
+  {
+    q a;
+    
+    b(q paramQ)
+    {
+      a = paramQ;
+    }
+    
+    public void b(m paramM)
+    {
+      q localQ = a;
+      N -= 1;
+      if (N == 0)
+      {
+        O = false;
+        localQ.a();
+      }
+      paramM.b(this);
+    }
+    
+    public void c(m paramM)
+    {
+      paramM = a;
+      if (!O)
+      {
+        paramM.p();
+        a.O = true;
+      }
+    }
+  }
+}

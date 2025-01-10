@@ -1,0 +1,39 @@
+package android.arch.lifecycle;
+
+class FullLifecycleObserverAdapter
+  implements GenericLifecycleObserver
+{
+  private final FullLifecycleObserver a;
+  
+  FullLifecycleObserverAdapter(FullLifecycleObserver paramFullLifecycleObserver)
+  {
+    a = paramFullLifecycleObserver;
+  }
+  
+  public void a(e paramE, c.a paramA)
+  {
+    switch (a.a[paramA.ordinal()])
+    {
+    default: 
+      return;
+    case 7: 
+      throw new IllegalArgumentException("ON_ANY must not been send by anybody");
+    case 6: 
+      a.a(paramE);
+      return;
+    case 5: 
+      a.b(paramE);
+      return;
+    case 4: 
+      a.e(paramE);
+      return;
+    case 3: 
+      a.f(paramE);
+      return;
+    case 2: 
+      a.c(paramE);
+      return;
+    }
+    a.d(paramE);
+  }
+}

@@ -1,0 +1,99 @@
+package android.support.design.widget;
+
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.drawable.Drawable.Callback;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build.VERSION;
+import android.view.View;
+
+class i
+  extends GradientDrawable
+{
+  private final Paint a = new Paint(1);
+  private final RectF b;
+  private int c;
+  
+  i()
+  {
+    c();
+    b = new RectF();
+  }
+  
+  private void a(Canvas paramCanvas)
+  {
+    if (!a(getCallback())) {
+      paramCanvas.restoreToCount(c);
+    }
+  }
+  
+  private boolean a(Drawable.Callback paramCallback)
+  {
+    return paramCallback instanceof View;
+  }
+  
+  private void b(Canvas paramCanvas)
+  {
+    Drawable.Callback localCallback = getCallback();
+    if (a(localCallback))
+    {
+      ((View)localCallback).setLayerType(2, null);
+      return;
+    }
+    c(paramCanvas);
+  }
+  
+  private void c()
+  {
+    a.setStyle(Paint.Style.FILL_AND_STROKE);
+    a.setColor(-1);
+    a.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+  }
+  
+  private void c(Canvas paramCanvas)
+  {
+    if (Build.VERSION.SDK_INT >= 21)
+    {
+      c = paramCanvas.saveLayer(0.0F, 0.0F, paramCanvas.getWidth(), paramCanvas.getHeight(), null);
+      return;
+    }
+    c = paramCanvas.saveLayer(0.0F, 0.0F, paramCanvas.getWidth(), paramCanvas.getHeight(), null, 31);
+  }
+  
+  void a(float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4)
+  {
+    RectF localRectF = b;
+    if ((paramFloat1 != left) || (paramFloat2 != top) || (paramFloat3 != right) || (paramFloat4 != bottom))
+    {
+      b.set(paramFloat1, paramFloat2, paramFloat3, paramFloat4);
+      invalidateSelf();
+    }
+  }
+  
+  void a(RectF paramRectF)
+  {
+    a(left, top, right, bottom);
+  }
+  
+  boolean a()
+  {
+    return b.isEmpty() ^ true;
+  }
+  
+  void b()
+  {
+    a(0.0F, 0.0F, 0.0F, 0.0F);
+  }
+  
+  public void draw(Canvas paramCanvas)
+  {
+    b(paramCanvas);
+    super.draw(paramCanvas);
+    paramCanvas.drawRect(b, a);
+    a(paramCanvas);
+  }
+}

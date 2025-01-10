@@ -1,0 +1,242 @@
+package f;
+
+import java.nio.ByteBuffer;
+
+final class m
+  implements d
+{
+  public final c c = new c();
+  public final r d;
+  boolean e;
+  
+  m(r paramR)
+  {
+    if (paramR != null)
+    {
+      d = paramR;
+      return;
+    }
+    throw new NullPointerException("sink == null");
+  }
+  
+  public c a()
+  {
+    return c;
+  }
+  
+  public d a(long paramLong)
+  {
+    if (!e)
+    {
+      c.a(paramLong);
+      return d();
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d a(String paramString)
+  {
+    if (!e)
+    {
+      c.a(paramString);
+      return d();
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public void a(c paramC, long paramLong)
+  {
+    if (!e)
+    {
+      c.a(paramC, paramLong);
+      d();
+      return;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public t b()
+  {
+    return d.b();
+  }
+  
+  /* Error */
+  public void close()
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: getfield 37	f/m:e	Z
+    //   4: ifeq +4 -> 8
+    //   7: return
+    //   8: aconst_null
+    //   9: astore_1
+    //   10: aload_0
+    //   11: getfield 22	f/m:c	Lf/c;
+    //   14: getfield 65	f/c:d	J
+    //   17: lconst_0
+    //   18: lcmp
+    //   19: ifle +23 -> 42
+    //   22: aload_0
+    //   23: getfield 24	f/m:d	Lf/r;
+    //   26: aload_0
+    //   27: getfield 22	f/m:c	Lf/c;
+    //   30: aload_0
+    //   31: getfield 22	f/m:c	Lf/c;
+    //   34: getfield 65	f/c:d	J
+    //   37: invokeinterface 66 4 0
+    //   42: goto +4 -> 46
+    //   45: astore_1
+    //   46: aload_0
+    //   47: getfield 24	f/m:d	Lf/r;
+    //   50: invokeinterface 68 1 0
+    //   55: aload_1
+    //   56: astore_2
+    //   57: goto +12 -> 69
+    //   60: astore_3
+    //   61: aload_1
+    //   62: astore_2
+    //   63: aload_1
+    //   64: ifnonnull +5 -> 69
+    //   67: aload_3
+    //   68: astore_2
+    //   69: aload_0
+    //   70: iconst_1
+    //   71: putfield 37	f/m:e	Z
+    //   74: aload_2
+    //   75: ifnonnull +4 -> 79
+    //   78: return
+    //   79: aload_2
+    //   80: invokestatic 73	f/u:a	(Ljava/lang/Throwable;)V
+    //   83: aconst_null
+    //   84: athrow
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	85	0	this	m
+    //   9	1	1	localObject1	Object
+    //   45	19	1	localObject2	Object
+    //   56	24	2	localObject3	Object
+    //   60	8	3	localObject4	Object
+    // Exception table:
+    //   from	to	target	type
+    //   10	42	45	finally
+    //   46	55	60	finally
+  }
+  
+  public d d()
+  {
+    if (!e)
+    {
+      long l = c.n();
+      if (l > 0L) {
+        d.a(c, l);
+      }
+      return this;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d e(long paramLong)
+  {
+    if (!e)
+    {
+      c.e(paramLong);
+      d();
+      return this;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public void flush()
+  {
+    if (!e)
+    {
+      c localC = c;
+      long l = d;
+      if (l > 0L) {
+        d.a(localC, l);
+      }
+      d.flush();
+      return;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public boolean isOpen()
+  {
+    return e ^ true;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("buffer(");
+    localStringBuilder.append(d);
+    localStringBuilder.append(")");
+    return localStringBuilder.toString();
+  }
+  
+  public int write(ByteBuffer paramByteBuffer)
+  {
+    if (!e)
+    {
+      int i = c.write(paramByteBuffer);
+      d();
+      return i;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d write(byte[] paramArrayOfByte)
+  {
+    if (!e)
+    {
+      c.write(paramArrayOfByte);
+      d();
+      return this;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d write(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
+  {
+    if (!e)
+    {
+      c.write(paramArrayOfByte, paramInt1, paramInt2);
+      d();
+      return this;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d writeByte(int paramInt)
+  {
+    if (!e)
+    {
+      c.writeByte(paramInt);
+      d();
+      return this;
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d writeInt(int paramInt)
+  {
+    if (!e)
+    {
+      c.writeInt(paramInt);
+      return d();
+    }
+    throw new IllegalStateException("closed");
+  }
+  
+  public d writeShort(int paramInt)
+  {
+    if (!e)
+    {
+      c.writeShort(paramInt);
+      d();
+      return this;
+    }
+    throw new IllegalStateException("closed");
+  }
+}

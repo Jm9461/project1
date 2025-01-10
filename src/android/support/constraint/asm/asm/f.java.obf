@@ -1,0 +1,492 @@
+package android.support.constraint.i.j;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class f
+  extends o
+{
+  private boolean f0 = false;
+  protected android.support.constraint.i.e g0 = new android.support.constraint.i.e();
+  private n h0;
+  int i0;
+  int j0;
+  int k0;
+  int l0;
+  int m0 = 0;
+  int n0 = 0;
+  c[] o0 = new c[4];
+  c[] p0 = new c[4];
+  private int q0 = 3;
+  private boolean r0 = false;
+  private boolean s0 = false;
+  
+  public f() {}
+  
+  private void T()
+  {
+    m0 = 0;
+    n0 = 0;
+  }
+  
+  private void d(e paramE)
+  {
+    int i = m0;
+    c[] arrayOfC = p0;
+    if (i + 1 >= arrayOfC.length) {
+      p0 = ((c[])Arrays.copyOf(arrayOfC, arrayOfC.length * 2));
+    }
+    p0[m0] = new c(paramE, 0, N());
+    m0 += 1;
+  }
+  
+  private void e(e paramE)
+  {
+    int i = n0;
+    c[] arrayOfC = o0;
+    if (i + 1 >= arrayOfC.length) {
+      o0 = ((c[])Arrays.copyOf(arrayOfC, arrayOfC.length * 2));
+    }
+    o0[n0] = new c(paramE, 1, N());
+    n0 += 1;
+  }
+  
+  public void B()
+  {
+    g0.f();
+    i0 = 0;
+    k0 = 0;
+    j0 = 0;
+    l0 = 0;
+    super.B();
+  }
+  
+  public void I()
+  {
+    int i1 = H;
+    int i2 = I;
+    int i3 = Math.max(0, t());
+    int i4 = Math.max(0, i());
+    r0 = false;
+    s0 = false;
+    if (C != null)
+    {
+      if (h0 == null) {
+        h0 = new n(this);
+      }
+      h0.b(this);
+      n(i0);
+      o(j0);
+      C();
+      a(g0.d());
+    }
+    else
+    {
+      H = 0;
+      I = 0;
+    }
+    if (q0 != 0)
+    {
+      if (!p(8)) {
+        Q();
+      }
+      P();
+      g0.g = true;
+    }
+    else
+    {
+      g0.g = false;
+    }
+    Object localObject2 = B;
+    Object localObject1 = localObject2[1];
+    localObject2 = localObject2[0];
+    T();
+    int i5 = e0.size();
+    int i = 0;
+    while (i < i5)
+    {
+      e localE = (e)e0.get(i);
+      if ((localE instanceof o)) {
+        ((o)localE).I();
+      }
+      i += 1;
+    }
+    boolean bool2 = true;
+    int j = 0;
+    i = 0;
+    Object localObject3;
+    int k;
+    while (bool2)
+    {
+      int n = j + 1;
+      boolean bool1 = bool2;
+      try
+      {
+        g0.f();
+        bool1 = bool2;
+        b(g0);
+        j = 0;
+        while (j < i5)
+        {
+          bool1 = bool2;
+          ((e)e0.get(j)).b(g0);
+          j += 1;
+        }
+        bool1 = bool2;
+        bool2 = d(g0);
+        if (bool2)
+        {
+          bool1 = bool2;
+          g0.e();
+        }
+        bool1 = bool2;
+      }
+      catch (Exception localException)
+      {
+        localException.printStackTrace();
+        PrintStream localPrintStream = System.out;
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append("EXCEPTION : ");
+        localStringBuilder.append(localException);
+        localPrintStream.println(localStringBuilder.toString());
+      }
+      if (bool1)
+      {
+        a(g0, i.a);
+      }
+      else
+      {
+        c(g0);
+        j = 0;
+        while (j < i5)
+        {
+          localObject3 = (e)e0.get(j);
+          if (B[0] == e.b.e) {
+            if (((e)localObject3).t() < ((e)localObject3).v())
+            {
+              i.a[2] = true;
+              break;
+            }
+          }
+          if ((B[1] == e.b.e) && (((e)localObject3).i() < ((e)localObject3).u()))
+          {
+            i.a[2] = true;
+            break;
+          }
+          j += 1;
+        }
+      }
+      bool2 = false;
+      boolean bool3 = false;
+      bool1 = bool2;
+      j = i;
+      if (n < 8)
+      {
+        bool1 = bool2;
+        j = i;
+        if (i.a[2] != 0)
+        {
+          int m = 0;
+          j = 0;
+          k = 0;
+          while (k < i5)
+          {
+            localObject3 = (e)e0.get(k);
+            m = Math.max(m, H + ((e)localObject3).t());
+            j = Math.max(j, I + ((e)localObject3).i());
+            k += 1;
+          }
+          int i6 = Math.max(O, m);
+          m = Math.max(P, j);
+          bool2 = bool3;
+          k = i;
+          if (localObject2 == e.b.d)
+          {
+            bool2 = bool3;
+            k = i;
+            if (t() < i6)
+            {
+              k(i6);
+              B[0] = e.b.d;
+              k = 1;
+              bool2 = true;
+            }
+          }
+          bool1 = bool2;
+          j = k;
+          if (localObject1 == e.b.d)
+          {
+            bool1 = bool2;
+            j = k;
+            if (i() < m)
+            {
+              c(m);
+              B[1] = e.b.d;
+              j = 1;
+              bool1 = true;
+            }
+          }
+        }
+      }
+      k = Math.max(O, t());
+      i = j;
+      if (k > t())
+      {
+        k(k);
+        B[0] = e.b.c;
+        i = 1;
+        bool1 = true;
+      }
+      j = Math.max(P, i());
+      if (j > i())
+      {
+        c(j);
+        B[1] = e.b.c;
+        i = 1;
+        bool1 = true;
+      }
+      if (i == 0)
+      {
+        bool2 = bool1;
+        j = i;
+        if (B[0] == e.b.d)
+        {
+          bool2 = bool1;
+          j = i;
+          if (i3 > 0)
+          {
+            bool2 = bool1;
+            j = i;
+            if (t() > i3)
+            {
+              r0 = true;
+              j = 1;
+              B[0] = e.b.c;
+              k(i3);
+              bool2 = true;
+            }
+          }
+        }
+        if ((B[1] == e.b.d) && (i4 > 0) && (i() > i4))
+        {
+          s0 = true;
+          B[1] = e.b.c;
+          c(i4);
+          bool1 = true;
+          i = 1;
+        }
+        else
+        {
+          bool1 = bool2;
+          i = j;
+        }
+      }
+      bool2 = bool1;
+      j = n;
+    }
+    if (C != null)
+    {
+      j = Math.max(O, t());
+      k = Math.max(P, i());
+      h0.a(this);
+      k(i0 + j + k0);
+      c(j0 + k + l0);
+    }
+    else
+    {
+      H = i1;
+      I = i2;
+    }
+    if (i != 0)
+    {
+      localObject3 = B;
+      localObject3[0] = localObject2;
+      localObject3[1] = localObject1;
+    }
+    a(g0.d());
+    if (this == H()) {
+      F();
+    }
+  }
+  
+  public int K()
+  {
+    return q0;
+  }
+  
+  public boolean L()
+  {
+    return false;
+  }
+  
+  public boolean M()
+  {
+    return s0;
+  }
+  
+  public boolean N()
+  {
+    return f0;
+  }
+  
+  public boolean O()
+  {
+    return r0;
+  }
+  
+  public void P()
+  {
+    if (!p(8)) {
+      a(q0);
+    }
+    S();
+  }
+  
+  public void Q()
+  {
+    int j = e0.size();
+    D();
+    int i = 0;
+    while (i < j)
+    {
+      ((e)e0.get(i)).D();
+      i += 1;
+    }
+  }
+  
+  public void R()
+  {
+    Q();
+    a(q0);
+  }
+  
+  public void S()
+  {
+    k localK1 = a(d.d.d).d();
+    k localK2 = a(d.d.e).d();
+    localK1.a(null, 0.0F);
+    localK2.a(null, 0.0F);
+  }
+  
+  public void a(int paramInt)
+  {
+    super.a(paramInt);
+    int j = e0.size();
+    int i = 0;
+    while (i < j)
+    {
+      ((e)e0.get(i)).a(paramInt);
+      i += 1;
+    }
+  }
+  
+  public void a(android.support.constraint.i.e paramE, boolean[] paramArrayOfBoolean)
+  {
+    paramArrayOfBoolean[2] = false;
+    c(paramE);
+    int j = e0.size();
+    int i = 0;
+    while (i < j)
+    {
+      e localE = (e)e0.get(i);
+      localE.c(paramE);
+      if ((B[0] == e.b.e) && (localE.t() < localE.v())) {
+        paramArrayOfBoolean[2] = true;
+      }
+      if ((B[1] == e.b.e) && (localE.i() < localE.u())) {
+        paramArrayOfBoolean[2] = true;
+      }
+      i += 1;
+    }
+  }
+  
+  void a(e paramE, int paramInt)
+  {
+    if (paramInt == 0)
+    {
+      d(paramE);
+      return;
+    }
+    if (paramInt == 1) {
+      e(paramE);
+    }
+  }
+  
+  public void c(boolean paramBoolean)
+  {
+    f0 = paramBoolean;
+  }
+  
+  public boolean d(android.support.constraint.i.e paramE)
+  {
+    a(paramE);
+    int j = e0.size();
+    int i = 0;
+    while (i < j)
+    {
+      e localE = (e)e0.get(i);
+      if ((localE instanceof f))
+      {
+        Object localObject = B;
+        e.b localB = localObject[0];
+        localObject = localObject[1];
+        if (localB == e.b.d) {
+          localE.a(e.b.c);
+        }
+        if (localObject == e.b.d) {
+          localE.b(e.b.c);
+        }
+        localE.a(paramE);
+        if (localB == e.b.d) {
+          localE.a(localB);
+        }
+        if (localObject == e.b.d) {
+          localE.b((e.b)localObject);
+        }
+      }
+      else
+      {
+        i.a(this, paramE, localE);
+        localE.a(paramE);
+      }
+      i += 1;
+    }
+    if (m0 > 0) {
+      b.a(this, paramE, 0);
+    }
+    if (n0 > 0) {
+      b.a(this, paramE, 1);
+    }
+    return true;
+  }
+  
+  public void e(int paramInt1, int paramInt2)
+  {
+    l localL;
+    if (B[0] != e.b.d)
+    {
+      localL = c;
+      if (localL != null) {
+        localL.a(paramInt1);
+      }
+    }
+    if (B[1] != e.b.d)
+    {
+      localL = d;
+      if (localL != null) {
+        localL.a(paramInt2);
+      }
+    }
+  }
+  
+  public boolean p(int paramInt)
+  {
+    return (q0 & paramInt) == paramInt;
+  }
+  
+  public void q(int paramInt)
+  {
+    q0 = paramInt;
+  }
+}

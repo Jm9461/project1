@@ -1,0 +1,286 @@
+package f;
+
+import java.util.Arrays;
+
+final class q
+  extends f
+{
+  final transient byte[][] h;
+  final transient int[] i;
+  
+  q(c paramC, int paramInt)
+  {
+    super(null);
+    u.a(d, 0L, paramInt);
+    int k = 0;
+    int j = 0;
+    Object localObject = c;
+    int m;
+    while (k < paramInt)
+    {
+      m = c;
+      int n = b;
+      if (m != n)
+      {
+        k += m - n;
+        j += 1;
+        localObject = f;
+      }
+      else
+      {
+        throw new AssertionError("s.limit == s.pos");
+      }
+    }
+    h = new byte[j][];
+    i = new int[j * 2];
+    j = 0;
+    k = 0;
+    for (paramC = c; j < paramInt; paramC = f)
+    {
+      h[k] = a;
+      m = j + (c - b);
+      j = m;
+      if (m > paramInt) {
+        j = paramInt;
+      }
+      localObject = i;
+      localObject[k] = j;
+      localObject[(h.length + k)] = b;
+      d = true;
+      k += 1;
+    }
+  }
+  
+  private int b(int paramInt)
+  {
+    paramInt = Arrays.binarySearch(i, 0, h.length, paramInt + 1);
+    if (paramInt >= 0) {
+      return paramInt;
+    }
+    return paramInt ^ 0xFFFFFFFF;
+  }
+  
+  private f j()
+  {
+    return new f(h());
+  }
+  
+  public byte a(int paramInt)
+  {
+    u.a(i[(h.length - 1)], paramInt, 1L);
+    int k = b(paramInt);
+    int j;
+    if (k == 0) {
+      j = 0;
+    } else {
+      j = i[(k - 1)];
+    }
+    int[] arrayOfInt = i;
+    byte[][] arrayOfByte = h;
+    int m = arrayOfInt[(arrayOfByte.length + k)];
+    return arrayOfByte[k][(paramInt - j + m)];
+  }
+  
+  public f a(int paramInt1, int paramInt2)
+  {
+    return j().a(paramInt1, paramInt2);
+  }
+  
+  public String a()
+  {
+    return j().a();
+  }
+  
+  void a(c paramC)
+  {
+    int k = 0;
+    int j = 0;
+    int n = h.length;
+    while (j < n)
+    {
+      Object localObject = i;
+      int i1 = localObject[(n + j)];
+      int m = localObject[j];
+      localObject = new o(h[j], i1, i1 + m - k, true, false);
+      o localO = c;
+      if (localO == null)
+      {
+        g = ((o)localObject);
+        f = ((o)localObject);
+        c = ((o)localObject);
+      }
+      else
+      {
+        g.a((o)localObject);
+      }
+      k = m;
+      j += 1;
+    }
+    d += k;
+  }
+  
+  public boolean a(int paramInt1, f paramF, int paramInt2, int paramInt3)
+  {
+    if (paramInt1 >= 0)
+    {
+      if (paramInt1 > f() - paramInt3) {
+        return false;
+      }
+      int k = b(paramInt1);
+      int j = paramInt1;
+      paramInt1 = k;
+      while (paramInt3 > 0)
+      {
+        if (paramInt1 == 0) {
+          k = 0;
+        } else {
+          k = i[(paramInt1 - 1)];
+        }
+        int m = Math.min(paramInt3, k + (i[paramInt1] - k) - j);
+        int[] arrayOfInt = i;
+        byte[][] arrayOfByte = h;
+        int n = arrayOfInt[(arrayOfByte.length + paramInt1)];
+        if (!paramF.a(paramInt2, arrayOfByte[paramInt1], j - k + n, m)) {
+          return false;
+        }
+        j += m;
+        paramInt2 += m;
+        paramInt3 -= m;
+        paramInt1 += 1;
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  public boolean a(int paramInt1, byte[] paramArrayOfByte, int paramInt2, int paramInt3)
+  {
+    if ((paramInt1 >= 0) && (paramInt1 <= f() - paramInt3) && (paramInt2 >= 0))
+    {
+      if (paramInt2 > paramArrayOfByte.length - paramInt3) {
+        return false;
+      }
+      int k = b(paramInt1);
+      int j = paramInt1;
+      paramInt1 = k;
+      while (paramInt3 > 0)
+      {
+        if (paramInt1 == 0) {
+          k = 0;
+        } else {
+          k = i[(paramInt1 - 1)];
+        }
+        int m = Math.min(paramInt3, k + (i[paramInt1] - k) - j);
+        int[] arrayOfInt = i;
+        byte[][] arrayOfByte = h;
+        int n = arrayOfInt[(arrayOfByte.length + paramInt1)];
+        if (!u.a(arrayOfByte[paramInt1], j - k + n, paramArrayOfByte, paramInt2, m)) {
+          return false;
+        }
+        j += m;
+        paramInt2 += m;
+        paramInt3 -= m;
+        paramInt1 += 1;
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  public String b()
+  {
+    return j().b();
+  }
+  
+  public f c()
+  {
+    return j().c();
+  }
+  
+  public f d()
+  {
+    return j().d();
+  }
+  
+  public f e()
+  {
+    return j().e();
+  }
+  
+  public boolean equals(Object paramObject)
+  {
+    if (paramObject == this) {
+      return true;
+    }
+    return ((paramObject instanceof f)) && (((f)paramObject).f() == f()) && (a(0, (f)paramObject, 0, f()));
+  }
+  
+  public int f()
+  {
+    return i[(h.length - 1)];
+  }
+  
+  public f g()
+  {
+    return j().g();
+  }
+  
+  public byte[] h()
+  {
+    Object localObject2 = i;
+    Object localObject1 = h;
+    localObject2 = new byte[localObject2[(localObject1.length - 1)]];
+    int k = 0;
+    int j = 0;
+    int n = localObject1.length;
+    while (j < n)
+    {
+      localObject1 = i;
+      int i1 = localObject1[(n + j)];
+      int m = localObject1[j];
+      System.arraycopy(h[j], i1, localObject2, k, m - k);
+      k = m;
+      j += 1;
+    }
+    return localObject2;
+  }
+  
+  public int hashCode()
+  {
+    int j = d;
+    if (j != 0) {
+      return j;
+    }
+    int m = 1;
+    int k = 0;
+    j = 0;
+    int i3 = h.length;
+    while (j < i3)
+    {
+      byte[] arrayOfByte = h[j];
+      int[] arrayOfInt = i;
+      int i1 = arrayOfInt[(i3 + j)];
+      int i2 = arrayOfInt[j];
+      int n = i1;
+      while (n < i1 + (i2 - k))
+      {
+        m = m * 31 + arrayOfByte[n];
+        n += 1;
+      }
+      k = i2;
+      j += 1;
+    }
+    d = m;
+    return m;
+  }
+  
+  public String i()
+  {
+    return j().i();
+  }
+  
+  public String toString()
+  {
+    return j().toString();
+  }
+}

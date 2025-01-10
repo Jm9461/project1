@@ -1,0 +1,104 @@
+package android.support.v7.view.menu;
+
+import a.b.g.b.a.b;
+import a.b.g.g.a;
+import android.content.Context;
+import android.view.MenuItem;
+import android.view.SubMenu;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+abstract class c<T>
+  extends d<T>
+{
+  final Context b;
+  private Map<b, MenuItem> c;
+  private Map<a.b.g.b.a.c, SubMenu> d;
+  
+  c(Context paramContext, T paramT)
+  {
+    super(paramT);
+    b = paramContext;
+  }
+  
+  final MenuItem a(MenuItem paramMenuItem)
+  {
+    if ((paramMenuItem instanceof b))
+    {
+      b localB = (b)paramMenuItem;
+      if (c == null) {
+        c = new a();
+      }
+      MenuItem localMenuItem = (MenuItem)c.get(paramMenuItem);
+      paramMenuItem = localMenuItem;
+      if (localMenuItem == null)
+      {
+        paramMenuItem = r.a(b, localB);
+        c.put(localB, paramMenuItem);
+      }
+      return paramMenuItem;
+    }
+    return paramMenuItem;
+  }
+  
+  final SubMenu a(SubMenu paramSubMenu)
+  {
+    if ((paramSubMenu instanceof a.b.g.b.a.c))
+    {
+      a.b.g.b.a.c localC = (a.b.g.b.a.c)paramSubMenu;
+      if (d == null) {
+        d = new a();
+      }
+      SubMenu localSubMenu = (SubMenu)d.get(localC);
+      paramSubMenu = localSubMenu;
+      if (localSubMenu == null)
+      {
+        paramSubMenu = r.a(b, localC);
+        d.put(localC, paramSubMenu);
+      }
+      return paramSubMenu;
+    }
+    return paramSubMenu;
+  }
+  
+  final void a(int paramInt)
+  {
+    Object localObject = c;
+    if (localObject == null) {
+      return;
+    }
+    localObject = ((Map)localObject).keySet().iterator();
+    while (((Iterator)localObject).hasNext()) {
+      if (paramInt == ((MenuItem)((Iterator)localObject).next()).getGroupId()) {
+        ((Iterator)localObject).remove();
+      }
+    }
+  }
+  
+  final void b()
+  {
+    Map localMap = c;
+    if (localMap != null) {
+      localMap.clear();
+    }
+    localMap = d;
+    if (localMap != null) {
+      localMap.clear();
+    }
+  }
+  
+  final void b(int paramInt)
+  {
+    Object localObject = c;
+    if (localObject == null) {
+      return;
+    }
+    localObject = ((Map)localObject).keySet().iterator();
+    while (((Iterator)localObject).hasNext()) {
+      if (paramInt == ((MenuItem)((Iterator)localObject).next()).getItemId()) {
+        ((Iterator)localObject).remove();
+      }
+    }
+  }
+}

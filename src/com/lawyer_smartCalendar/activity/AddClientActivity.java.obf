@@ -1,0 +1,303 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.g;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import b.a.a.f;
+import b.a.a.f.d;
+import b.a.a.f.m;
+import butterknife.ButterKnife;
+import com.lawyer_smartCalendar.utils.h;
+import com.lawyer_smartCalendar.utils.i;
+import java.util.List;
+import java.util.Locale;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class AddClientActivity
+  extends android.support.v7.app.e
+  implements View.OnClickListener
+{
+  public com.rey.material.widget.Button btn_add_client;
+  public EditText input_client_address;
+  public EditText input_client_email_address;
+  public EditText input_client_father_name;
+  public EditText input_client_landline_phone;
+  public EditText input_client_name;
+  public EditText input_client_national_code;
+  public EditText input_client_phone_number;
+  public TextInputLayout input_layout_client_name;
+  public TextInputLayout input_layout_father_name;
+  public TextInputLayout input_layout_national_code;
+  public TextInputLayout input_layout_phone_number;
+  private String r = "real";
+  public RadioButton radioButton_legal;
+  public RadioButton radioButton_real;
+  private String s = "";
+  private String t = "add";
+  private i u;
+  private b.a.a.e v = b.a.a.e.e;
+  
+  public AddClientActivity() {}
+  
+  protected void attachBaseContext(Context paramContext)
+  {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(paramContext));
+  }
+  
+  public void onClick(View paramView)
+  {
+    if (paramView.getId() != 2131296341) {
+      return;
+    }
+    u.n();
+    int i = u.i().size();
+    u.close();
+    if ((i == 200) && (!b.i.a.a.a.a("app_version", "limited").equals("full")))
+    {
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(b.a.a.e.d);
+      paramView.b(b.a.a.e.d);
+      paramView.a(v);
+      paramView.i(Color.parseColor(com.lawyer_smartCalendar.utils.c.d()));
+      paramView.e("");
+      paramView.f(2131099728);
+      paramView.d(Color.parseColor(com.lawyer_smartCalendar.utils.c.d()));
+      paramView.a("??????? ?????? ????? ????? ????????? ????");
+      paramView.d("???? ??");
+      paramView.c("??????? ?????? ????? ????? ????????? ????");
+      paramView.c(new e());
+      paramView.b(new d());
+      paramView.c();
+      return;
+    }
+    int j = 0;
+    if (input_client_name.getText().toString().equals(""))
+    {
+      input_client_name.setError("???? ??? ? ??? ???????? ?? ???? ????.");
+      j = 1;
+    }
+    i = j;
+    if (!input_client_national_code.getText().toString().equals(""))
+    {
+      i = j;
+      if (input_client_national_code.getText().toString().length() < 10)
+      {
+        input_client_national_code.setError("????? ??? ???? 10 ??? ????.");
+        i = 1;
+      }
+    }
+    j = i;
+    if (input_client_phone_number.getText().toString().length() > 0)
+    {
+      j = i;
+      if (input_client_phone_number.getText().toString().length() < 11)
+      {
+        input_client_phone_number.setError("????? ???? ????? ???? 11 ??? ????.");
+        j = 1;
+      }
+    }
+    if (j == 0)
+    {
+      paramView = new com.lawyer_smartCalendar.d.c();
+      paramView.e(input_client_name.getText().toString());
+      if (r.equals("real"))
+      {
+        paramView.c(input_client_father_name.getText().toString());
+        paramView.f(input_client_national_code.getText().toString());
+        paramView.g(input_client_phone_number.getText().toString());
+      }
+      else
+      {
+        paramView.c("");
+        paramView.f("");
+        paramView.g("");
+      }
+      paramView.d(input_client_landline_phone.getText().toString());
+      paramView.b(input_client_email_address.getText().toString());
+      paramView.a(input_client_address.getText().toString());
+      paramView.h(r);
+      u.n();
+      if (t.equals("edit"))
+      {
+        u.a(paramView, s);
+        new h().a(this, "success", getResources().getString(2131755203));
+      }
+      else
+      {
+        u.a(paramView);
+        new h().a(this, "success", getResources().getString(2131755204));
+      }
+      u.close();
+      try
+      {
+        com.lawyer_smartCalendar.utils.e.c.d0();
+        com.lawyer_smartCalendar.utils.e.d.d0();
+      }
+      catch (Exception paramView) {}
+      setResult(-1);
+      finish();
+    }
+  }
+  
+  protected void onCreate(Bundle paramBundle)
+  {
+    setTheme(com.lawyer_smartCalendar.utils.c.b());
+    super.onCreate(paramBundle);
+    overridePendingTransition(17432576, 17432577);
+    setContentView(2131492898);
+    ButterKnife.a(this);
+    if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == 0) {
+      v = b.a.a.e.e;
+    } else {
+      v = b.a.a.e.c;
+    }
+    if (!b.i.a.a.a.a("app_version", "limited").equals("full")) {
+      new h().a(this, "info", "??????? ?????? ????? ????? ????????? ????");
+    }
+    u = new i(this);
+    paramBundle = (Toolbar)findViewById(2131296838);
+    paramBundle.setPadding(0, 0, 0, 0);
+    paramBundle.a(0, 0);
+    a(paramBundle);
+    paramBundle.setNavigationIcon(2131230856);
+    paramBundle.setNavigationOnClickListener(new a());
+    btn_add_client.setOnClickListener(this);
+    btn_add_client.setVisibility(8);
+    radioButton_real.setOnCheckedChangeListener(new b());
+    radioButton_legal.setOnCheckedChangeListener(new c());
+    s = getIntent().getStringExtra("id");
+    t = getIntent().getStringExtra("frmMode");
+    if (t.equals("edit"))
+    {
+      u.n();
+      paramBundle = u.o(s);
+      u.close();
+      j().a("?????? ????");
+      input_client_name.setText(paramBundle.f());
+      input_client_father_name.setText(paramBundle.c());
+      input_client_national_code.setText(paramBundle.g());
+      input_client_phone_number.setText(paramBundle.h());
+      input_client_landline_phone.setText(paramBundle.e());
+      input_client_email_address.setText(paramBundle.b());
+      input_client_address.setText(paramBundle.a());
+      r = paramBundle.i();
+      if (paramBundle.i().equals("real"))
+      {
+        radioButton_real.setChecked(true);
+        return;
+      }
+      radioButton_legal.setChecked(true);
+    }
+  }
+  
+  public boolean onCreateOptionsMenu(Menu paramMenu)
+  {
+    getMenuInflater().inflate(2131558409, paramMenu);
+    return super.onCreateOptionsMenu(paramMenu);
+  }
+  
+  public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+  {
+    if (paramMenuItem.getItemId() == 2131296278) {
+      btn_add_client.callOnClick();
+    }
+    return super.onOptionsItemSelected(paramMenuItem);
+  }
+  
+  protected void onPause()
+  {
+    super.onPause();
+    if (isFinishing()) {
+      overridePendingTransition(17432576, 17432577);
+    }
+  }
+  
+  class a
+    implements View.OnClickListener
+  {
+    a() {}
+    
+    public void onClick(View paramView)
+    {
+      finish();
+    }
+  }
+  
+  class b
+    implements CompoundButton.OnCheckedChangeListener
+  {
+    b() {}
+    
+    public void onCheckedChanged(CompoundButton paramCompoundButton, boolean paramBoolean)
+    {
+      if (paramBoolean)
+      {
+        radioButton_legal.setChecked(false);
+        AddClientActivity.a(AddClientActivity.this, "real");
+        input_layout_national_code.setVisibility(0);
+        input_layout_father_name.setVisibility(0);
+        input_layout_phone_number.setVisibility(0);
+      }
+    }
+  }
+  
+  class c
+    implements CompoundButton.OnCheckedChangeListener
+  {
+    c() {}
+    
+    public void onCheckedChanged(CompoundButton paramCompoundButton, boolean paramBoolean)
+    {
+      if (paramBoolean)
+      {
+        radioButton_real.setChecked(false);
+        AddClientActivity.a(AddClientActivity.this, "legal");
+        input_layout_national_code.setVisibility(8);
+        input_layout_father_name.setVisibility(8);
+        input_layout_phone_number.setVisibility(8);
+      }
+    }
+  }
+  
+  class d
+    implements f.m
+  {
+    d() {}
+    
+    public void a(f paramF, b.a.a.b paramB)
+    {
+      paramF = AddClientActivity.this;
+      paramF.startActivity(new Intent(paramF, PayActivity.class));
+    }
+  }
+  
+  class e
+    implements f.m
+  {
+    e() {}
+    
+    public void a(f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+    }
+  }
+}

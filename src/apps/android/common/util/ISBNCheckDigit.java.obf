@@ -1,0 +1,16 @@
+package b.e.b.e;
+
+public class b
+  extends b.e.b.a
+{
+  private c c;
+  private a d;
+  
+  public Float a(float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4)
+  {
+    if (paramFloat1 < paramFloat4 / 2.0F) {
+      return Float.valueOf(d.a(2.0F * paramFloat1, 0.0F, paramFloat3, paramFloat4).floatValue() * 0.5F + paramFloat2);
+    }
+    return Float.valueOf(c.a(2.0F * paramFloat1 - paramFloat4, 0.0F, paramFloat3, paramFloat4).floatValue() * 0.5F + 0.5F * paramFloat3 + paramFloat2);
+  }
+}

@@ -1,0 +1,305 @@
+package android.support.v7.app;
+
+import a.b.h.d.a.d;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.d;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+
+public class b
+  implements DrawerLayout.d
+{
+  private final b a;
+  private final DrawerLayout b;
+  private d c;
+  private boolean d = true;
+  boolean e = true;
+  private final int f;
+  private final int g;
+  View.OnClickListener h;
+  private boolean i = false;
+  
+  public b(Activity paramActivity, DrawerLayout paramDrawerLayout, Toolbar paramToolbar, int paramInt1, int paramInt2)
+  {
+    this(paramActivity, paramToolbar, paramDrawerLayout, null, paramInt1, paramInt2);
+  }
+  
+  b(Activity paramActivity, Toolbar paramToolbar, DrawerLayout paramDrawerLayout, d paramD, int paramInt1, int paramInt2)
+  {
+    if (paramToolbar != null)
+    {
+      a = new e(paramToolbar);
+      paramToolbar.setNavigationOnClickListener(new a());
+    }
+    else if ((paramActivity instanceof c))
+    {
+      a = ((c)paramActivity).d();
+    }
+    else
+    {
+      a = new d(paramActivity);
+    }
+    b = paramDrawerLayout;
+    f = paramInt1;
+    g = paramInt2;
+    if (paramD == null) {
+      c = new d(a.a());
+    } else {
+      c = paramD;
+    }
+    a();
+  }
+  
+  private void a(float paramFloat)
+  {
+    if (paramFloat == 1.0F) {
+      c.b(true);
+    } else if (paramFloat == 0.0F) {
+      c.b(false);
+    }
+    c.c(paramFloat);
+  }
+  
+  Drawable a()
+  {
+    return a.c();
+  }
+  
+  public void a(int paramInt) {}
+  
+  void a(Drawable paramDrawable, int paramInt)
+  {
+    if ((!i) && (!a.b()))
+    {
+      Log.w("ActionBarDrawerToggle", "DrawerToggle may not show up because NavigationIcon is not visible. You may need to call actionbar.setDisplayHomeAsUpEnabled(true);");
+      i = true;
+    }
+    a.a(paramDrawable, paramInt);
+  }
+  
+  public void a(View paramView)
+  {
+    a(1.0F);
+    if (e) {
+      b(g);
+    }
+  }
+  
+  public void a(View paramView, float paramFloat)
+  {
+    if (d)
+    {
+      a(Math.min(1.0F, Math.max(0.0F, paramFloat)));
+      return;
+    }
+    a(0.0F);
+  }
+  
+  public void b()
+  {
+    if (b.e(8388611)) {
+      a(1.0F);
+    } else {
+      a(0.0F);
+    }
+    if (e)
+    {
+      d localD = c;
+      int j;
+      if (b.e(8388611)) {
+        j = g;
+      } else {
+        j = f;
+      }
+      a(localD, j);
+    }
+  }
+  
+  void b(int paramInt)
+  {
+    a.a(paramInt);
+  }
+  
+  public void b(View paramView)
+  {
+    a(0.0F);
+    if (e) {
+      b(f);
+    }
+  }
+  
+  void c()
+  {
+    int j = b.c(8388611);
+    if ((b.f(8388611)) && (j != 2))
+    {
+      b.a(8388611);
+      return;
+    }
+    if (j != 1) {
+      b.g(8388611);
+    }
+  }
+  
+  class a
+    implements View.OnClickListener
+  {
+    a() {}
+    
+    public void onClick(View paramView)
+    {
+      Object localObject = b.this;
+      if (e)
+      {
+        ((b)localObject).c();
+        return;
+      }
+      localObject = h;
+      if (localObject != null) {
+        ((View.OnClickListener)localObject).onClick(paramView);
+      }
+    }
+  }
+  
+  public static abstract interface b
+  {
+    public abstract Context a();
+    
+    public abstract void a(int paramInt);
+    
+    public abstract void a(Drawable paramDrawable, int paramInt);
+    
+    public abstract boolean b();
+    
+    public abstract Drawable c();
+  }
+  
+  public static abstract interface c
+  {
+    public abstract b.b d();
+  }
+  
+  private static class d
+    implements b.b
+  {
+    private final Activity a;
+    private c.a b;
+    
+    d(Activity paramActivity)
+    {
+      a = paramActivity;
+    }
+    
+    public Context a()
+    {
+      ActionBar localActionBar = a.getActionBar();
+      if (localActionBar != null) {
+        return localActionBar.getThemedContext();
+      }
+      return a;
+    }
+    
+    public void a(int paramInt)
+    {
+      if (Build.VERSION.SDK_INT >= 18)
+      {
+        ActionBar localActionBar = a.getActionBar();
+        if (localActionBar != null) {
+          localActionBar.setHomeActionContentDescription(paramInt);
+        }
+        return;
+      }
+      b = c.a(b, a, paramInt);
+    }
+    
+    public void a(Drawable paramDrawable, int paramInt)
+    {
+      ActionBar localActionBar = a.getActionBar();
+      if (localActionBar != null)
+      {
+        if (Build.VERSION.SDK_INT >= 18)
+        {
+          localActionBar.setHomeAsUpIndicator(paramDrawable);
+          localActionBar.setHomeActionContentDescription(paramInt);
+          return;
+        }
+        localActionBar.setDisplayShowHomeEnabled(true);
+        b = c.a(b, a, paramDrawable, paramInt);
+        localActionBar.setDisplayShowHomeEnabled(false);
+      }
+    }
+    
+    public boolean b()
+    {
+      ActionBar localActionBar = a.getActionBar();
+      return (localActionBar != null) && ((localActionBar.getDisplayOptions() & 0x4) != 0);
+    }
+    
+    public Drawable c()
+    {
+      if (Build.VERSION.SDK_INT >= 18)
+      {
+        TypedArray localTypedArray = a().obtainStyledAttributes(null, new int[] { 16843531 }, 16843470, 0);
+        Drawable localDrawable = localTypedArray.getDrawable(0);
+        localTypedArray.recycle();
+        return localDrawable;
+      }
+      return c.a(a);
+    }
+  }
+  
+  static class e
+    implements b.b
+  {
+    final Toolbar a;
+    final Drawable b;
+    final CharSequence c;
+    
+    e(Toolbar paramToolbar)
+    {
+      a = paramToolbar;
+      b = paramToolbar.getNavigationIcon();
+      c = paramToolbar.getNavigationContentDescription();
+    }
+    
+    public Context a()
+    {
+      return a.getContext();
+    }
+    
+    public void a(int paramInt)
+    {
+      if (paramInt == 0)
+      {
+        a.setNavigationContentDescription(c);
+        return;
+      }
+      a.setNavigationContentDescription(paramInt);
+    }
+    
+    public void a(Drawable paramDrawable, int paramInt)
+    {
+      a.setNavigationIcon(paramDrawable);
+      a(paramInt);
+    }
+    
+    public boolean b()
+    {
+      return true;
+    }
+    
+    public Drawable c()
+    {
+      return b;
+    }
+  }
+}

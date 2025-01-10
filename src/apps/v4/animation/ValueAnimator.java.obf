@@ -1,0 +1,607 @@
+package b.h.a;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.AndroidRuntimeException;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class m
+  extends a
+{
+  private static final Interpolator A;
+  private static long B = 10L;
+  private static ThreadLocal<f> u = new ThreadLocal();
+  private static final ThreadLocal<ArrayList<m>> v = new a();
+  private static final ThreadLocal<ArrayList<m>> w = new b();
+  private static final ThreadLocal<ArrayList<m>> x = new c();
+  private static final ThreadLocal<ArrayList<m>> y = new d();
+  private static final ThreadLocal<ArrayList<m>> z = new e();
+  long d;
+  long e = -1L;
+  private boolean f = false;
+  private int g = 0;
+  private boolean h = false;
+  private long i;
+  int j = 0;
+  private boolean k = false;
+  boolean l = false;
+  private long m = 300L;
+  private long n = 0L;
+  private int o = 0;
+  private int p = 1;
+  private Interpolator q = A;
+  private ArrayList<g> r = null;
+  k[] s;
+  HashMap<String, k> t;
+  
+  static
+  {
+    A = new AccelerateDecelerateInterpolator();
+    new f();
+    new d();
+  }
+  
+  public m() {}
+  
+  private void a(boolean paramBoolean)
+  {
+    if (Looper.myLooper() != null)
+    {
+      f = paramBoolean;
+      g = 0;
+      j = 0;
+      h = false;
+      ((ArrayList)w.get()).add(this);
+      if (n == 0L)
+      {
+        c(c());
+        j = 0;
+        k = true;
+        localObject = c;
+        if (localObject != null)
+        {
+          localObject = (ArrayList)((ArrayList)localObject).clone();
+          int i2 = ((ArrayList)localObject).size();
+          int i1 = 0;
+          while (i1 < i2)
+          {
+            ((a.a)((ArrayList)localObject).get(i1)).c(this);
+            i1 += 1;
+          }
+        }
+      }
+      f localF = (f)u.get();
+      localObject = localF;
+      if (localF == null)
+      {
+        localObject = new f(null);
+        u.set(localObject);
+      }
+      ((Handler)localObject).sendEmptyMessage(0);
+      return;
+    }
+    Object localObject = new AndroidRuntimeException("Animators may only be run on Looper threads");
+    for (;;)
+    {
+      throw ((Throwable)localObject);
+    }
+  }
+  
+  public static m b(float... paramVarArgs)
+  {
+    m localM = new m();
+    localM.a(paramVarArgs);
+    return localM;
+  }
+  
+  private boolean d(long paramLong)
+  {
+    if (!h)
+    {
+      h = true;
+      i = paramLong;
+    }
+    else
+    {
+      long l1 = paramLong - i;
+      long l2 = n;
+      if (l1 > l2)
+      {
+        d = (paramLong - (l1 - l2));
+        j = 1;
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  private void k()
+  {
+    ((ArrayList)v.get()).remove(this);
+    ((ArrayList)w.get()).remove(this);
+    ((ArrayList)x.get()).remove(this);
+    j = 0;
+    if (k)
+    {
+      ArrayList localArrayList = c;
+      if (localArrayList != null)
+      {
+        localArrayList = (ArrayList)localArrayList.clone();
+        int i2 = localArrayList.size();
+        int i1 = 0;
+        while (i1 < i2)
+        {
+          ((a.a)localArrayList.get(i1)).a(this);
+          i1 += 1;
+        }
+      }
+    }
+    k = false;
+  }
+  
+  private void m()
+  {
+    d();
+    ((ArrayList)v.get()).add(this);
+    if (n > 0L)
+    {
+      ArrayList localArrayList = c;
+      if (localArrayList != null)
+      {
+        localArrayList = (ArrayList)localArrayList.clone();
+        int i2 = localArrayList.size();
+        int i1 = 0;
+        while (i1 < i2)
+        {
+          ((a.a)localArrayList.get(i1)).c(this);
+          i1 += 1;
+        }
+      }
+    }
+  }
+  
+  public m a(long paramLong)
+  {
+    if (paramLong >= 0L)
+    {
+      m = paramLong;
+      return this;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Animators cannot have negative duration: ");
+    localStringBuilder.append(paramLong);
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  void a(float paramFloat)
+  {
+    paramFloat = q.getInterpolation(paramFloat);
+    int i2 = s.length;
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      s[i1].a(paramFloat);
+      i1 += 1;
+    }
+    ArrayList localArrayList = r;
+    if (localArrayList != null)
+    {
+      i2 = localArrayList.size();
+      i1 = 0;
+      while (i1 < i2)
+      {
+        ((g)r.get(i1)).a(this);
+        i1 += 1;
+      }
+    }
+  }
+  
+  public void a(Interpolator paramInterpolator)
+  {
+    if (paramInterpolator != null)
+    {
+      q = paramInterpolator;
+      return;
+    }
+    q = new LinearInterpolator();
+  }
+  
+  public void a(l paramL)
+  {
+    if (paramL != null)
+    {
+      k[] arrayOfK = s;
+      if ((arrayOfK != null) && (arrayOfK.length > 0)) {
+        arrayOfK[0].a(paramL);
+      }
+    }
+  }
+  
+  public void a(float... paramVarArgs)
+  {
+    if (paramVarArgs != null)
+    {
+      if (paramVarArgs.length == 0) {
+        return;
+      }
+      k[] arrayOfK = s;
+      if ((arrayOfK != null) && (arrayOfK.length != 0)) {
+        arrayOfK[0].a(paramVarArgs);
+      } else {
+        a(new k[] { k.a("", paramVarArgs) });
+      }
+      l = false;
+      return;
+    }
+  }
+  
+  public void a(k... paramVarArgs)
+  {
+    int i2 = paramVarArgs.length;
+    s = paramVarArgs;
+    t = new HashMap(i2);
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      k localK = paramVarArgs[i1];
+      t.put(localK.b(), localK);
+      i1 += 1;
+    }
+    l = false;
+  }
+  
+  public void b()
+  {
+    a(false);
+  }
+  
+  boolean b(long paramLong)
+  {
+    boolean bool2 = false;
+    if (j == 0)
+    {
+      j = 1;
+      l1 = e;
+      if (l1 < 0L)
+      {
+        d = paramLong;
+      }
+      else
+      {
+        d = (paramLong - l1);
+        e = -1L;
+      }
+    }
+    int i1 = j;
+    if ((i1 != 1) && (i1 != 2)) {
+      return false;
+    }
+    long l1 = m;
+    if (l1 > 0L) {
+      f2 = (float)(paramLong - d) / (float)l1;
+    } else {
+      f2 = 1.0F;
+    }
+    boolean bool1 = bool2;
+    float f1 = f2;
+    if (f2 >= 1.0F)
+    {
+      i1 = g;
+      int i2 = o;
+      if ((i1 >= i2) && (i2 != -1))
+      {
+        bool1 = true;
+        f1 = Math.min(f2, 1.0F);
+      }
+      else
+      {
+        ArrayList localArrayList = c;
+        if (localArrayList != null)
+        {
+          i2 = localArrayList.size();
+          i1 = 0;
+          while (i1 < i2)
+          {
+            ((a.a)c.get(i1)).b(this);
+            i1 += 1;
+          }
+        }
+        if (p == 2) {
+          f ^= true;
+        }
+        g += (int)f2;
+        f1 = f2 % 1.0F;
+        d += m;
+        bool1 = bool2;
+      }
+    }
+    float f2 = f1;
+    if (f) {
+      f2 = 1.0F - f1;
+    }
+    a(f2);
+    return bool1;
+  }
+  
+  public long c()
+  {
+    if ((l) && (j != 0)) {
+      return AnimationUtils.currentAnimationTimeMillis() - d;
+    }
+    return 0L;
+  }
+  
+  public void c(long paramLong)
+  {
+    d();
+    long l1 = AnimationUtils.currentAnimationTimeMillis();
+    if (j != 1)
+    {
+      e = paramLong;
+      j = 2;
+    }
+    d = (l1 - paramLong);
+    b(l1);
+  }
+  
+  public m clone()
+  {
+    m localM = (m)super.clone();
+    int i2;
+    int i1;
+    if (r != null)
+    {
+      localObject = r;
+      r = new ArrayList();
+      i2 = ((ArrayList)localObject).size();
+      i1 = 0;
+      while (i1 < i2)
+      {
+        r.add(((ArrayList)localObject).get(i1));
+        i1 += 1;
+      }
+    }
+    e = -1L;
+    f = false;
+    g = 0;
+    l = false;
+    j = 0;
+    h = false;
+    Object localObject = s;
+    if (localObject != null)
+    {
+      i2 = localObject.length;
+      s = new k[i2];
+      t = new HashMap(i2);
+      i1 = 0;
+      while (i1 < i2)
+      {
+        k localK = localObject[i1].clone();
+        s[i1] = localK;
+        t.put(localK.b(), localK);
+        i1 += 1;
+      }
+    }
+    return localM;
+  }
+  
+  void d()
+  {
+    if (!l)
+    {
+      int i2 = s.length;
+      int i1 = 0;
+      while (i1 < i2)
+      {
+        s[i1].c();
+        i1 += 1;
+      }
+      l = true;
+    }
+  }
+  
+  public String toString()
+  {
+    Object localObject1 = new StringBuilder();
+    ((StringBuilder)localObject1).append("ValueAnimator@");
+    ((StringBuilder)localObject1).append(Integer.toHexString(hashCode()));
+    localObject1 = ((StringBuilder)localObject1).toString();
+    Object localObject2 = localObject1;
+    if (s != null)
+    {
+      int i1 = 0;
+      for (;;)
+      {
+        localObject2 = localObject1;
+        if (i1 >= s.length) {
+          break;
+        }
+        localObject2 = new StringBuilder();
+        ((StringBuilder)localObject2).append((String)localObject1);
+        ((StringBuilder)localObject2).append("\n    ");
+        ((StringBuilder)localObject2).append(s[i1].toString());
+        localObject1 = ((StringBuilder)localObject2).toString();
+        i1 += 1;
+      }
+    }
+    return localObject2;
+  }
+  
+  static final class a
+    extends ThreadLocal<ArrayList<m>>
+  {
+    a() {}
+    
+    protected ArrayList<m> initialValue()
+    {
+      return new ArrayList();
+    }
+  }
+  
+  static final class b
+    extends ThreadLocal<ArrayList<m>>
+  {
+    b() {}
+    
+    protected ArrayList<m> initialValue()
+    {
+      return new ArrayList();
+    }
+  }
+  
+  static final class c
+    extends ThreadLocal<ArrayList<m>>
+  {
+    c() {}
+    
+    protected ArrayList<m> initialValue()
+    {
+      return new ArrayList();
+    }
+  }
+  
+  static final class d
+    extends ThreadLocal<ArrayList<m>>
+  {
+    d() {}
+    
+    protected ArrayList<m> initialValue()
+    {
+      return new ArrayList();
+    }
+  }
+  
+  static final class e
+    extends ThreadLocal<ArrayList<m>>
+  {
+    e() {}
+    
+    protected ArrayList<m> initialValue()
+    {
+      return new ArrayList();
+    }
+  }
+  
+  private static class f
+    extends Handler
+  {
+    private f() {}
+    
+    public void handleMessage(Message paramMessage)
+    {
+      int j = 1;
+      int i = 1;
+      ArrayList localArrayList1 = (ArrayList)m.e().get();
+      ArrayList localArrayList2 = (ArrayList)m.f().get();
+      int k = what;
+      m localM;
+      if (k != 0)
+      {
+        if (k != 1) {
+          return;
+        }
+      }
+      else
+      {
+        paramMessage = (ArrayList)m.h().get();
+        if ((localArrayList1.size() > 0) || (localArrayList2.size() > 0)) {
+          i = 0;
+        }
+        for (;;)
+        {
+          j = i;
+          if (paramMessage.size() <= 0) {
+            break;
+          }
+          localObject = (ArrayList)paramMessage.clone();
+          paramMessage.clear();
+          k = ((ArrayList)localObject).size();
+          j = 0;
+          while (j < k)
+          {
+            localM = (m)((ArrayList)localObject).get(j);
+            if (m.a(localM) == 0L) {
+              m.b(localM);
+            } else {
+              localArrayList2.add(localM);
+            }
+            j += 1;
+          }
+        }
+      }
+      long l = AnimationUtils.currentAnimationTimeMillis();
+      Object localObject = (ArrayList)m.i().get();
+      paramMessage = (ArrayList)m.j().get();
+      k = localArrayList2.size();
+      i = 0;
+      while (i < k)
+      {
+        localM = (m)localArrayList2.get(i);
+        if (m.a(localM, l)) {
+          ((ArrayList)localObject).add(localM);
+        }
+        i += 1;
+      }
+      k = ((ArrayList)localObject).size();
+      if (k > 0)
+      {
+        i = 0;
+        while (i < k)
+        {
+          localM = (m)((ArrayList)localObject).get(i);
+          m.b(localM);
+          m.a(localM, true);
+          localArrayList2.remove(localM);
+          i += 1;
+        }
+        ((ArrayList)localObject).clear();
+      }
+      i = localArrayList1.size();
+      k = 0;
+      while (k < i)
+      {
+        localObject = (m)localArrayList1.get(k);
+        if (((m)localObject).b(l)) {
+          paramMessage.add(localObject);
+        }
+        if (localArrayList1.size() == i)
+        {
+          k += 1;
+        }
+        else
+        {
+          i -= 1;
+          paramMessage.remove(localObject);
+        }
+      }
+      if (paramMessage.size() > 0)
+      {
+        i = 0;
+        while (i < paramMessage.size())
+        {
+          m.c((m)paramMessage.get(i));
+          i += 1;
+        }
+        paramMessage.clear();
+      }
+      if (j != 0)
+      {
+        if ((localArrayList1.isEmpty()) && (localArrayList2.isEmpty())) {
+          return;
+        }
+        sendEmptyMessageDelayed(1, Math.max(0L, m.g() - (AnimationUtils.currentAnimationTimeMillis() - l)));
+      }
+    }
+  }
+  
+  public static abstract interface g
+  {
+    public abstract void a(m paramM);
+  }
+}

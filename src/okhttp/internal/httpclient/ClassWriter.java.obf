@@ -1,0 +1,494 @@
+package e.f0.g;
+
+import e.a;
+import e.a0;
+import e.b;
+import e.c0;
+import e.s;
+import e.t;
+import e.v;
+import e.y;
+import e.y.a;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.ProtocolException;
+import java.net.Proxy;
+import java.net.Proxy.Type;
+import java.net.SocketTimeoutException;
+import java.security.cert.CertificateException;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLPeerUnverifiedException;
+import javax.net.ssl.SSLSocketFactory;
+
+public final class j
+  implements t
+{
+  private final v a;
+  private final boolean b;
+  private Object c;
+  private volatile boolean d;
+  
+  public j(v paramV, boolean paramBoolean)
+  {
+    a = paramV;
+    b = paramBoolean;
+  }
+  
+  private int a(a0 paramA0, int paramInt)
+  {
+    paramA0 = paramA0.b("Retry-After");
+    if (paramA0 == null) {
+      return paramInt;
+    }
+    if (paramA0.matches("\\d+")) {
+      return Integer.valueOf(paramA0).intValue();
+    }
+    return Integer.MAX_VALUE;
+  }
+  
+  private a a(s paramS)
+  {
+    SSLSocketFactory localSSLSocketFactory = null;
+    HostnameVerifier localHostnameVerifier = null;
+    e.g localG = null;
+    if (paramS.h())
+    {
+      localSSLSocketFactory = a.z();
+      localHostnameVerifier = a.n();
+      localG = a.c();
+    }
+    return new a(paramS.g(), paramS.j(), a.i(), a.y(), localSSLSocketFactory, localHostnameVerifier, localG, a.u(), a.t(), a.s(), a.f(), a.v());
+  }
+  
+  private y a(a0 paramA0, c0 paramC0)
+  {
+    if (paramA0 != null)
+    {
+      int i = paramA0.o();
+      String str = paramA0.y().e();
+      Proxy localProxy = null;
+      if ((i != 307) && (i != 308)) {
+        if (i != 401) {
+          if (i != 503) {
+            if (i != 407) {
+              if (i == 408) {}
+            }
+          }
+        }
+      }
+      switch (i)
+      {
+      default: 
+        return null;
+        if (!a.x()) {
+          return null;
+        }
+        paramA0.y().a();
+        if ((paramA0.v() != null) && (paramA0.v().o() == 408)) {
+          return null;
+        }
+        if (a(paramA0, 0) > 0) {
+          return null;
+        }
+        return paramA0.y();
+        if (paramC0 != null) {
+          localProxy = paramC0.b();
+        } else {
+          localProxy = a.t();
+        }
+        if (localProxy.type() == Proxy.Type.HTTP) {
+          return a.u().a(paramC0, paramA0);
+        }
+        throw new ProtocolException("Received HTTP_PROXY_AUTH (407) code while not using proxy");
+        if ((paramA0.v() != null) && (paramA0.v().o() == 503)) {
+          return null;
+        }
+        if (a(paramA0, Integer.MAX_VALUE) == 0) {
+          return paramA0.y();
+        }
+        return null;
+        return a.a().a(paramC0, paramA0);
+        if ((!str.equals("GET")) && (!str.equals("HEAD"))) {
+          return null;
+        }
+        break;
+      }
+      if (!a.k()) {
+        return null;
+      }
+      paramC0 = paramA0.b("Location");
+      if (paramC0 == null) {
+        return null;
+      }
+      s localS = paramA0.y().g().b(paramC0);
+      if (localS == null) {
+        return null;
+      }
+      if ((!localS.m().equals(paramA0.y().g().m())) && (!a.m())) {
+        return null;
+      }
+      y.a localA = paramA0.y().f();
+      if (f.b(str))
+      {
+        boolean bool = f.d(str);
+        if (f.c(str))
+        {
+          localA.a("GET", null);
+        }
+        else
+        {
+          paramC0 = localProxy;
+          if (bool) {
+            paramC0 = paramA0.y().a();
+          }
+          localA.a(str, paramC0);
+        }
+        if (!bool)
+        {
+          localA.a("Transfer-Encoding");
+          localA.a("Content-Length");
+          localA.a("Content-Type");
+        }
+      }
+      if (!a(paramA0, localS)) {
+        localA.a("Authorization");
+      }
+      localA.a(localS);
+      return localA.a();
+    }
+    throw new IllegalStateException();
+  }
+  
+  private boolean a(a0 paramA0, s paramS)
+  {
+    paramA0 = paramA0.y().g();
+    return (paramA0.g().equals(paramS.g())) && (paramA0.j() == paramS.j()) && (paramA0.m().equals(paramS.m()));
+  }
+  
+  private boolean a(IOException paramIOException, e.f0.f.g paramG, boolean paramBoolean, y paramY)
+  {
+    paramG.a(paramIOException);
+    if (!a.x()) {
+      return false;
+    }
+    if (paramBoolean) {
+      paramY.a();
+    }
+    if (!a(paramIOException, paramBoolean)) {
+      return false;
+    }
+    return paramG.c();
+  }
+  
+  private boolean a(IOException paramIOException, boolean paramBoolean)
+  {
+    boolean bool1 = paramIOException instanceof ProtocolException;
+    boolean bool2 = false;
+    if (bool1) {
+      return false;
+    }
+    if ((paramIOException instanceof InterruptedIOException))
+    {
+      bool1 = bool2;
+      if ((paramIOException instanceof SocketTimeoutException))
+      {
+        bool1 = bool2;
+        if (!paramBoolean) {
+          bool1 = true;
+        }
+      }
+      return bool1;
+    }
+    if (((paramIOException instanceof SSLHandshakeException)) && ((paramIOException.getCause() instanceof CertificateException))) {
+      return false;
+    }
+    return !(paramIOException instanceof SSLPeerUnverifiedException);
+  }
+  
+  /* Error */
+  public a0 a(e.t.a paramA)
+  {
+    // Byte code:
+    //   0: aload_1
+    //   1: invokeinterface 258 1 0
+    //   6: astore 4
+    //   8: aload_1
+    //   9: checkcast 260	e/f0/g/g
+    //   12: astore_1
+    //   13: aload_1
+    //   14: invokevirtual 263	e/f0/g/g:e	()Le/e;
+    //   17: astore 8
+    //   19: aload_1
+    //   20: invokevirtual 266	e/f0/g/g:g	()Le/p;
+    //   23: astore 9
+    //   25: new 227	e/f0/f/g
+    //   28: dup
+    //   29: aload_0
+    //   30: getfield 20	e/f0/g/j:a	Le/v;
+    //   33: invokevirtual 269	e/v:e	()Le/j;
+    //   36: aload_0
+    //   37: aload 4
+    //   39: invokevirtual 178	e/y:g	()Le/s;
+    //   42: invokespecial 271	e/f0/g/j:a	(Le/s;)Le/a;
+    //   45: aload 8
+    //   47: aload 9
+    //   49: aload_0
+    //   50: getfield 273	e/f0/g/j:c	Ljava/lang/Object;
+    //   53: invokespecial 276	e/f0/f/g:<init>	(Le/j;Le/a;Le/e;Le/p;Ljava/lang/Object;)V
+    //   56: astore 5
+    //   58: iconst_0
+    //   59: istore_2
+    //   60: aconst_null
+    //   61: astore 6
+    //   63: aload_0
+    //   64: getfield 278	e/f0/g/j:d	Z
+    //   67: ifne +413 -> 480
+    //   70: iconst_0
+    //   71: istore_3
+    //   72: aload_1
+    //   73: aload 4
+    //   75: aload 5
+    //   77: aconst_null
+    //   78: aconst_null
+    //   79: invokevirtual 281	e/f0/g/g:a	(Le/y;Le/f0/f/g;Le/f0/g/c;Le/f0/f/c;)Le/a0;
+    //   82: astore 7
+    //   84: iconst_0
+    //   85: ifeq +14 -> 99
+    //   88: aload 5
+    //   90: aconst_null
+    //   91: invokevirtual 230	e/f0/f/g:a	(Ljava/io/IOException;)V
+    //   94: aload 5
+    //   96: invokevirtual 283	e/f0/f/g:e	()V
+    //   99: aload 7
+    //   101: astore 4
+    //   103: aload 6
+    //   105: ifnull +42 -> 147
+    //   108: aload 7
+    //   110: invokevirtual 286	e/a0:u	()Le/a0$a;
+    //   113: astore 4
+    //   115: aload 6
+    //   117: invokevirtual 286	e/a0:u	()Le/a0$a;
+    //   120: astore 6
+    //   122: aload 6
+    //   124: aconst_null
+    //   125: invokevirtual 291	e/a0$a:a	(Le/b0;)Le/a0$a;
+    //   128: pop
+    //   129: aload 4
+    //   131: aload 6
+    //   133: invokevirtual 293	e/a0$a:a	()Le/a0;
+    //   136: invokevirtual 296	e/a0$a:c	(Le/a0;)Le/a0$a;
+    //   139: pop
+    //   140: aload 4
+    //   142: invokevirtual 293	e/a0$a:a	()Le/a0;
+    //   145: astore 4
+    //   147: aload_0
+    //   148: aload 4
+    //   150: aload 5
+    //   152: invokevirtual 299	e/f0/f/g:f	()Le/c0;
+    //   155: invokespecial 301	e/f0/g/j:a	(Le/a0;Le/c0;)Le/y;
+    //   158: astore 6
+    //   160: aload 6
+    //   162: ifnonnull +18 -> 180
+    //   165: aload_0
+    //   166: getfield 22	e/f0/g/j:b	Z
+    //   169: ifne +8 -> 177
+    //   172: aload 5
+    //   174: invokevirtual 283	e/f0/f/g:e	()V
+    //   177: aload 4
+    //   179: areturn
+    //   180: aload 4
+    //   182: invokevirtual 305	e/a0:l	()Le/b0;
+    //   185: invokestatic 310	e/f0/c:a	(Ljava/io/Closeable;)V
+    //   188: iload_2
+    //   189: iconst_1
+    //   190: iadd
+    //   191: istore_2
+    //   192: iload_2
+    //   193: bipush 20
+    //   195: if_icmpgt +130 -> 325
+    //   198: aload 6
+    //   200: invokevirtual 127	e/y:a	()Le/z;
+    //   203: pop
+    //   204: aload_0
+    //   205: aload 4
+    //   207: aload 6
+    //   209: invokevirtual 178	e/y:g	()Le/s;
+    //   212: invokespecial 214	e/f0/g/j:a	(Le/a0;Le/s;)Z
+    //   215: ifne +44 -> 259
+    //   218: aload 5
+    //   220: invokevirtual 283	e/f0/f/g:e	()V
+    //   223: new 227	e/f0/f/g
+    //   226: dup
+    //   227: aload_0
+    //   228: getfield 20	e/f0/g/j:a	Le/v;
+    //   231: invokevirtual 269	e/v:e	()Le/j;
+    //   234: aload_0
+    //   235: aload 6
+    //   237: invokevirtual 178	e/y:g	()Le/s;
+    //   240: invokespecial 271	e/f0/g/j:a	(Le/s;)Le/a;
+    //   243: aload 8
+    //   245: aload 9
+    //   247: aload_0
+    //   248: getfield 273	e/f0/g/j:c	Ljava/lang/Object;
+    //   251: invokespecial 276	e/f0/f/g:<init>	(Le/j;Le/a;Le/e;Le/p;Ljava/lang/Object;)V
+    //   254: astore 5
+    //   256: goto +11 -> 267
+    //   259: aload 5
+    //   261: invokevirtual 313	e/f0/f/g:a	()Le/f0/g/c;
+    //   264: ifnonnull +18 -> 282
+    //   267: aload 4
+    //   269: astore 7
+    //   271: aload 6
+    //   273: astore 4
+    //   275: aload 7
+    //   277: astore 6
+    //   279: goto -216 -> 63
+    //   282: new 315	java/lang/StringBuilder
+    //   285: dup
+    //   286: invokespecial 316	java/lang/StringBuilder:<init>	()V
+    //   289: astore_1
+    //   290: aload_1
+    //   291: ldc_w 318
+    //   294: invokevirtual 322	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   297: pop
+    //   298: aload_1
+    //   299: aload 4
+    //   301: invokevirtual 325	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    //   304: pop
+    //   305: aload_1
+    //   306: ldc_w 327
+    //   309: invokevirtual 322	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   312: pop
+    //   313: new 223	java/lang/IllegalStateException
+    //   316: dup
+    //   317: aload_1
+    //   318: invokevirtual 330	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   321: invokespecial 331	java/lang/IllegalStateException:<init>	(Ljava/lang/String;)V
+    //   324: athrow
+    //   325: aload 5
+    //   327: invokevirtual 283	e/f0/f/g:e	()V
+    //   330: new 315	java/lang/StringBuilder
+    //   333: dup
+    //   334: invokespecial 316	java/lang/StringBuilder:<init>	()V
+    //   337: astore_1
+    //   338: aload_1
+    //   339: ldc_w 333
+    //   342: invokevirtual 322	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   345: pop
+    //   346: aload_1
+    //   347: iload_2
+    //   348: invokevirtual 336	java/lang/StringBuilder:append	(I)Ljava/lang/StringBuilder;
+    //   351: pop
+    //   352: new 155	java/net/ProtocolException
+    //   355: dup
+    //   356: aload_1
+    //   357: invokevirtual 330	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   360: invokespecial 160	java/net/ProtocolException:<init>	(Ljava/lang/String;)V
+    //   363: athrow
+    //   364: astore_1
+    //   365: goto +98 -> 463
+    //   368: astore 7
+    //   370: aload 7
+    //   372: instanceof 338
+    //   375: ifne +5 -> 380
+    //   378: iconst_1
+    //   379: istore_3
+    //   380: aload_0
+    //   381: aload 7
+    //   383: aload 5
+    //   385: iload_3
+    //   386: aload 4
+    //   388: invokespecial 340	e/f0/g/j:a	(Ljava/io/IOException;Le/f0/f/g;ZLe/y;)Z
+    //   391: istore_3
+    //   392: iload_3
+    //   393: ifeq +21 -> 414
+    //   396: iconst_0
+    //   397: ifeq +56 -> 453
+    //   400: aload 5
+    //   402: aconst_null
+    //   403: invokevirtual 230	e/f0/f/g:a	(Ljava/io/IOException;)V
+    //   406: aload 5
+    //   408: invokevirtual 283	e/f0/f/g:e	()V
+    //   411: goto +42 -> 453
+    //   414: aload 7
+    //   416: athrow
+    //   417: astore 7
+    //   419: aload_0
+    //   420: aload 7
+    //   422: invokevirtual 343	e/f0/f/e:a	()Ljava/io/IOException;
+    //   425: aload 5
+    //   427: iconst_0
+    //   428: aload 4
+    //   430: invokespecial 340	e/f0/g/j:a	(Ljava/io/IOException;Le/f0/f/g;ZLe/y;)Z
+    //   433: istore_3
+    //   434: iload_3
+    //   435: ifeq +21 -> 456
+    //   438: iconst_0
+    //   439: ifeq +14 -> 453
+    //   442: aload 5
+    //   444: aconst_null
+    //   445: invokevirtual 230	e/f0/f/g:a	(Ljava/io/IOException;)V
+    //   448: aload 5
+    //   450: invokevirtual 283	e/f0/f/g:e	()V
+    //   453: goto -390 -> 63
+    //   456: aload 7
+    //   458: invokevirtual 343	e/f0/f/e:a	()Ljava/io/IOException;
+    //   461: athrow
+    //   462: astore_1
+    //   463: iconst_1
+    //   464: ifeq +14 -> 478
+    //   467: aload 5
+    //   469: aconst_null
+    //   470: invokevirtual 230	e/f0/f/g:a	(Ljava/io/IOException;)V
+    //   473: aload 5
+    //   475: invokevirtual 283	e/f0/f/g:e	()V
+    //   478: aload_1
+    //   479: athrow
+    //   480: aload 5
+    //   482: invokevirtual 283	e/f0/f/g:e	()V
+    //   485: new 243	java/io/IOException
+    //   488: dup
+    //   489: ldc_w 345
+    //   492: invokespecial 346	java/io/IOException:<init>	(Ljava/lang/String;)V
+    //   495: astore_1
+    //   496: goto +5 -> 501
+    //   499: aload_1
+    //   500: athrow
+    //   501: goto -2 -> 499
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	504	0	this	j
+    //   0	504	1	paramA	e.t.a
+    //   59	289	2	i	int
+    //   71	364	3	bool	boolean
+    //   6	423	4	localObject1	Object
+    //   56	425	5	localG	e.f0.f.g
+    //   61	217	6	localObject2	Object
+    //   82	194	7	localObject3	Object
+    //   368	47	7	localIOException	IOException
+    //   417	40	7	localE	e.f0.f.e
+    //   17	227	8	localE1	e.e
+    //   23	223	9	localP	e.p
+    // Exception table:
+    //   from	to	target	type
+    //   72	84	364	finally
+    //   72	84	368	java/io/IOException
+    //   72	84	417	e/f0/f/e
+    //   370	378	462	finally
+    //   380	392	462	finally
+    //   414	417	462	finally
+    //   419	434	462	finally
+    //   456	462	462	finally
+  }
+  
+  public void a(Object paramObject)
+  {
+    c = paramObject;
+  }
+  
+  public boolean a()
+  {
+    return d;
+  }
+}

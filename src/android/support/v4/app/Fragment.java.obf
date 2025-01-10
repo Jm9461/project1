@@ -1,0 +1,1724 @@
+package android.support.v4.app;
+
+import a.b.g.g.d;
+import a.b.g.g.n;
+import android.animation.Animator;
+import android.app.Activity;
+import android.arch.lifecycle.c;
+import android.arch.lifecycle.c.a;
+import android.arch.lifecycle.e;
+import android.arch.lifecycle.p;
+import android.arch.lifecycle.q;
+import android.content.ComponentCallbacks;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.ClassLoaderCreator;
+import android.os.Parcelable.Creator;
+import android.util.AttributeSet;
+import android.util.SparseArray;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnCreateContextMenuListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+public class f
+  implements ComponentCallbacks, View.OnCreateContextMenuListener, e, q
+{
+  private static final n<String, Class<?>> Y = new n();
+  static final Object Z = new Object();
+  int A;
+  String B;
+  boolean C;
+  boolean D;
+  boolean E;
+  boolean F;
+  boolean G;
+  boolean H = true;
+  boolean I;
+  ViewGroup J;
+  View K;
+  View L;
+  boolean M;
+  boolean N = true;
+  d O;
+  boolean P;
+  boolean Q;
+  float R;
+  LayoutInflater S;
+  boolean T;
+  android.arch.lifecycle.f U = new android.arch.lifecycle.f(this);
+  android.arch.lifecycle.f V;
+  e W;
+  android.arch.lifecycle.j<e> X = new android.arch.lifecycle.j();
+  int c = 0;
+  Bundle d;
+  SparseArray<Parcelable> e;
+  Boolean f;
+  int g = -1;
+  String h;
+  Bundle i;
+  f j;
+  int k = -1;
+  int l;
+  boolean m;
+  boolean n;
+  boolean o;
+  boolean p;
+  boolean q;
+  boolean r;
+  int s;
+  l t;
+  j u;
+  l v;
+  m w;
+  p x;
+  f y;
+  int z;
+  
+  public f() {}
+  
+  public static f a(Context paramContext, String paramString, Bundle paramBundle)
+  {
+    try
+    {
+      Class localClass2 = (Class)Y.get(paramString);
+      Class localClass1 = localClass2;
+      if (localClass2 == null)
+      {
+        localClass1 = paramContext.getClassLoader().loadClass(paramString);
+        Y.put(paramString, localClass1);
+      }
+      paramContext = (f)localClass1.getConstructor(new Class[0]).newInstance(new Object[0]);
+      if (paramBundle != null)
+      {
+        paramBundle.setClassLoader(paramContext.getClass().getClassLoader());
+        paramContext.m(paramBundle);
+      }
+      return paramContext;
+    }
+    catch (InvocationTargetException paramContext)
+    {
+      paramBundle = new StringBuilder();
+      paramBundle.append("Unable to instantiate fragment ");
+      paramBundle.append(paramString);
+      paramBundle.append(": calling Fragment constructor caused an exception");
+      throw new e(paramBundle.toString(), paramContext);
+    }
+    catch (NoSuchMethodException paramContext)
+    {
+      paramBundle = new StringBuilder();
+      paramBundle.append("Unable to instantiate fragment ");
+      paramBundle.append(paramString);
+      paramBundle.append(": could not find Fragment constructor");
+      throw new e(paramBundle.toString(), paramContext);
+    }
+    catch (IllegalAccessException paramContext)
+    {
+      paramBundle = new StringBuilder();
+      paramBundle.append("Unable to instantiate fragment ");
+      paramBundle.append(paramString);
+      paramBundle.append(": make sure class name exists, is public, and has an");
+      paramBundle.append(" empty constructor that is public");
+      throw new e(paramBundle.toString(), paramContext);
+    }
+    catch (InstantiationException paramContext)
+    {
+      paramBundle = new StringBuilder();
+      paramBundle.append("Unable to instantiate fragment ");
+      paramBundle.append(paramString);
+      paramBundle.append(": make sure class name exists, is public, and has an");
+      paramBundle.append(" empty constructor that is public");
+      throw new e(paramBundle.toString(), paramContext);
+    }
+    catch (ClassNotFoundException paramContext)
+    {
+      paramBundle = new StringBuilder();
+      paramBundle.append("Unable to instantiate fragment ");
+      paramBundle.append(paramString);
+      paramBundle.append(": make sure class name exists, is public, and has an");
+      paramBundle.append(" empty constructor that is public");
+      throw new e(paramBundle.toString(), paramContext);
+    }
+  }
+  
+  static boolean a(Context paramContext, String paramString)
+  {
+    try
+    {
+      Class localClass2 = (Class)Y.get(paramString);
+      Class localClass1 = localClass2;
+      if (localClass2 == null)
+      {
+        localClass1 = paramContext.getClassLoader().loadClass(paramString);
+        Y.put(paramString, localClass1);
+      }
+      boolean bool = f.class.isAssignableFrom(localClass1);
+      return bool;
+    }
+    catch (ClassNotFoundException paramContext) {}
+    return false;
+  }
+  
+  private d d0()
+  {
+    if (O == null) {
+      O = new d();
+    }
+    return O;
+  }
+  
+  public View A()
+  {
+    return K;
+  }
+  
+  void B()
+  {
+    g = -1;
+    h = null;
+    m = false;
+    n = false;
+    o = false;
+    p = false;
+    q = false;
+    s = 0;
+    t = null;
+    v = null;
+    u = null;
+    z = 0;
+    A = 0;
+    B = null;
+    C = false;
+    D = false;
+    F = false;
+  }
+  
+  void C()
+  {
+    if (u != null)
+    {
+      v = new l();
+      v.a(u, new b(), this);
+      return;
+    }
+    throw new IllegalStateException("Fragment has not been attached yet.");
+  }
+  
+  public final boolean D()
+  {
+    return (u != null) && (m);
+  }
+  
+  public final boolean E()
+  {
+    return C;
+  }
+  
+  boolean F()
+  {
+    d localD = O;
+    if (localD == null) {
+      return false;
+    }
+    return s;
+  }
+  
+  final boolean G()
+  {
+    return s > 0;
+  }
+  
+  boolean H()
+  {
+    d localD = O;
+    if (localD == null) {
+      return false;
+    }
+    return q;
+  }
+  
+  public final boolean I()
+  {
+    l localL = t;
+    if (localL == null) {
+      return false;
+    }
+    return localL.c();
+  }
+  
+  void J()
+  {
+    l localL = v;
+    if (localL != null) {
+      localL.r();
+    }
+  }
+  
+  public void K()
+  {
+    int i1 = 1;
+    I = true;
+    Object localObject = d();
+    if ((localObject == null) || (!((Activity)localObject).isChangingConfigurations())) {
+      i1 = 0;
+    }
+    localObject = x;
+    if ((localObject != null) && (i1 == 0)) {
+      ((p)localObject).a();
+    }
+  }
+  
+  public void L() {}
+  
+  public void M()
+  {
+    I = true;
+  }
+  
+  public void N()
+  {
+    I = true;
+  }
+  
+  public void O()
+  {
+    I = true;
+  }
+  
+  public void P()
+  {
+    I = true;
+  }
+  
+  public void Q()
+  {
+    I = true;
+  }
+  
+  public void R()
+  {
+    I = true;
+  }
+  
+  k S()
+  {
+    return v;
+  }
+  
+  void T()
+  {
+    U.a(c.a.ON_DESTROY);
+    Object localObject = v;
+    if (localObject != null) {
+      ((l)localObject).g();
+    }
+    c = 0;
+    I = false;
+    T = false;
+    K();
+    if (I)
+    {
+      v = null;
+      return;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onDestroy()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  void U()
+  {
+    if (K != null) {
+      V.a(c.a.ON_DESTROY);
+    }
+    Object localObject = v;
+    if (localObject != null) {
+      ((l)localObject).h();
+    }
+    c = 1;
+    I = false;
+    M();
+    if (I)
+    {
+      u.a(this).a();
+      r = false;
+      return;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onDestroyView()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  void V()
+  {
+    I = false;
+    N();
+    S = null;
+    if (I)
+    {
+      localObject = v;
+      if (localObject != null)
+      {
+        if (F)
+        {
+          ((l)localObject).g();
+          v = null;
+          return;
+        }
+        localObject = new StringBuilder();
+        ((StringBuilder)localObject).append("Child FragmentManager of ");
+        ((StringBuilder)localObject).append(this);
+        ((StringBuilder)localObject).append(" was not ");
+        ((StringBuilder)localObject).append(" destroyed and this fragment is not retaining instance");
+        throw new IllegalStateException(((StringBuilder)localObject).toString());
+      }
+      return;
+    }
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onDetach()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  void W()
+  {
+    onLowMemory();
+    l localL = v;
+    if (localL != null) {
+      localL.i();
+    }
+  }
+  
+  void X()
+  {
+    if (K != null) {
+      V.a(c.a.ON_PAUSE);
+    }
+    U.a(c.a.ON_PAUSE);
+    Object localObject = v;
+    if (localObject != null) {
+      ((l)localObject).j();
+    }
+    c = 3;
+    I = false;
+    O();
+    if (I) {
+      return;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onPause()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  void Y()
+  {
+    Object localObject = v;
+    if (localObject != null)
+    {
+      ((l)localObject).r();
+      v.o();
+    }
+    c = 4;
+    I = false;
+    P();
+    if (I)
+    {
+      localObject = v;
+      if (localObject != null)
+      {
+        ((l)localObject).k();
+        v.o();
+      }
+      U.a(c.a.ON_RESUME);
+      if (K != null) {
+        V.a(c.a.ON_RESUME);
+      }
+      return;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onResume()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  void Z()
+  {
+    Object localObject = v;
+    if (localObject != null)
+    {
+      ((l)localObject).r();
+      v.o();
+    }
+    c = 3;
+    I = false;
+    Q();
+    if (I)
+    {
+      localObject = v;
+      if (localObject != null) {
+        ((l)localObject).l();
+      }
+      U.a(c.a.ON_START);
+      if (K != null) {
+        V.a(c.a.ON_START);
+      }
+      return;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onStart()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  public c a()
+  {
+    return U;
+  }
+  
+  f a(String paramString)
+  {
+    if (paramString.equals(h)) {
+      return this;
+    }
+    l localL = v;
+    if (localL != null) {
+      return localL.b(paramString);
+    }
+    return null;
+  }
+  
+  @Deprecated
+  public LayoutInflater a(Bundle paramBundle)
+  {
+    paramBundle = u;
+    if (paramBundle != null)
+    {
+      paramBundle = paramBundle.f();
+      j();
+      l localL = v;
+      localL.p();
+      android.support.v4.view.f.b(paramBundle, localL);
+      return paramBundle;
+    }
+    throw new IllegalStateException("onGetLayoutInflater() cannot be executed until the Fragment is attached to the FragmentManager.");
+  }
+  
+  public View a(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+  {
+    return null;
+  }
+  
+  public Animation a(int paramInt1, boolean paramBoolean, int paramInt2)
+  {
+    return null;
+  }
+  
+  void a(int paramInt1, int paramInt2)
+  {
+    if ((O == null) && (paramInt1 == 0) && (paramInt2 == 0)) {
+      return;
+    }
+    d0();
+    d localD = O;
+    e = paramInt1;
+    f = paramInt2;
+  }
+  
+  public void a(int paramInt1, int paramInt2, Intent paramIntent) {}
+  
+  final void a(int paramInt, f paramF)
+  {
+    g = paramInt;
+    if (paramF != null)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(h);
+      localStringBuilder.append(":");
+      localStringBuilder.append(g);
+      h = localStringBuilder.toString();
+      return;
+    }
+    paramF = new StringBuilder();
+    paramF.append("android:fragment:");
+    paramF.append(g);
+    h = paramF.toString();
+  }
+  
+  public void a(int paramInt, String[] paramArrayOfString, int[] paramArrayOfInt) {}
+  
+  void a(Animator paramAnimator)
+  {
+    d0b = paramAnimator;
+  }
+  
+  @Deprecated
+  public void a(Activity paramActivity)
+  {
+    I = true;
+  }
+  
+  @Deprecated
+  public void a(Activity paramActivity, AttributeSet paramAttributeSet, Bundle paramBundle)
+  {
+    I = true;
+  }
+  
+  public void a(Context paramContext)
+  {
+    I = true;
+    paramContext = u;
+    if (paramContext == null) {
+      paramContext = null;
+    } else {
+      paramContext = paramContext.b();
+    }
+    if (paramContext != null)
+    {
+      I = false;
+      a(paramContext);
+    }
+  }
+  
+  public void a(Context paramContext, AttributeSet paramAttributeSet, Bundle paramBundle)
+  {
+    I = true;
+    paramContext = u;
+    if (paramContext == null) {
+      paramContext = null;
+    } else {
+      paramContext = paramContext.b();
+    }
+    if (paramContext != null)
+    {
+      I = false;
+      a(paramContext, paramAttributeSet, paramBundle);
+    }
+  }
+  
+  public void a(Intent paramIntent)
+  {
+    a(paramIntent, null);
+  }
+  
+  public void a(Intent paramIntent, int paramInt)
+  {
+    a(paramIntent, paramInt, null);
+  }
+  
+  public void a(Intent paramIntent, int paramInt, Bundle paramBundle)
+  {
+    j localJ = u;
+    if (localJ != null)
+    {
+      localJ.a(this, paramIntent, paramInt, paramBundle);
+      return;
+    }
+    paramIntent = new StringBuilder();
+    paramIntent.append("Fragment ");
+    paramIntent.append(this);
+    paramIntent.append(" not attached to Activity");
+    throw new IllegalStateException(paramIntent.toString());
+  }
+  
+  public void a(Intent paramIntent, Bundle paramBundle)
+  {
+    j localJ = u;
+    if (localJ != null)
+    {
+      localJ.a(this, paramIntent, -1, paramBundle);
+      return;
+    }
+    paramIntent = new StringBuilder();
+    paramIntent.append("Fragment ");
+    paramIntent.append(this);
+    paramIntent.append(" not attached to Activity");
+    throw new IllegalStateException(paramIntent.toString());
+  }
+  
+  void a(Configuration paramConfiguration)
+  {
+    onConfigurationChanged(paramConfiguration);
+    l localL = v;
+    if (localL != null) {
+      localL.a(paramConfiguration);
+    }
+  }
+  
+  void a(f paramF)
+  {
+    d0();
+    Object localObject = O.r;
+    if (paramF == localObject) {
+      return;
+    }
+    if ((paramF != null) && (localObject != null))
+    {
+      paramF = new StringBuilder();
+      paramF.append("Trying to set a replacement startPostponedEnterTransition on ");
+      paramF.append(this);
+      throw new IllegalStateException(paramF.toString());
+    }
+    localObject = O;
+    if (q) {
+      r = paramF;
+    }
+    if (paramF != null) {
+      paramF.b();
+    }
+  }
+  
+  public void a(g paramG)
+  {
+    if (g < 0)
+    {
+      if (paramG != null)
+      {
+        paramG = c;
+        if (paramG != null) {}
+      }
+      else
+      {
+        paramG = null;
+      }
+      d = paramG;
+      return;
+    }
+    throw new IllegalStateException("Fragment already active");
+  }
+  
+  public void a(f paramF) {}
+  
+  public void a(Menu paramMenu) {}
+  
+  public void a(Menu paramMenu, MenuInflater paramMenuInflater) {}
+  
+  void a(View paramView)
+  {
+    d0a = paramView;
+  }
+  
+  public void a(View paramView, Bundle paramBundle) {}
+  
+  public void a(String paramString, FileDescriptor paramFileDescriptor, PrintWriter paramPrintWriter, String[] paramArrayOfString)
+  {
+    paramPrintWriter.print(paramString);
+    paramPrintWriter.print("mFragmentId=#");
+    paramPrintWriter.print(Integer.toHexString(z));
+    paramPrintWriter.print(" mContainerId=#");
+    paramPrintWriter.print(Integer.toHexString(A));
+    paramPrintWriter.print(" mTag=");
+    paramPrintWriter.println(B);
+    paramPrintWriter.print(paramString);
+    paramPrintWriter.print("mState=");
+    paramPrintWriter.print(c);
+    paramPrintWriter.print(" mIndex=");
+    paramPrintWriter.print(g);
+    paramPrintWriter.print(" mWho=");
+    paramPrintWriter.print(h);
+    paramPrintWriter.print(" mBackStackNesting=");
+    paramPrintWriter.println(s);
+    paramPrintWriter.print(paramString);
+    paramPrintWriter.print("mAdded=");
+    paramPrintWriter.print(m);
+    paramPrintWriter.print(" mRemoving=");
+    paramPrintWriter.print(n);
+    paramPrintWriter.print(" mFromLayout=");
+    paramPrintWriter.print(o);
+    paramPrintWriter.print(" mInLayout=");
+    paramPrintWriter.println(p);
+    paramPrintWriter.print(paramString);
+    paramPrintWriter.print("mHidden=");
+    paramPrintWriter.print(C);
+    paramPrintWriter.print(" mDetached=");
+    paramPrintWriter.print(D);
+    paramPrintWriter.print(" mMenuVisible=");
+    paramPrintWriter.print(H);
+    paramPrintWriter.print(" mHasMenu=");
+    paramPrintWriter.println(G);
+    paramPrintWriter.print(paramString);
+    paramPrintWriter.print("mRetainInstance=");
+    paramPrintWriter.print(E);
+    paramPrintWriter.print(" mRetaining=");
+    paramPrintWriter.print(F);
+    paramPrintWriter.print(" mUserVisibleHint=");
+    paramPrintWriter.println(N);
+    if (t != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mFragmentManager=");
+      paramPrintWriter.println(t);
+    }
+    if (u != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mHost=");
+      paramPrintWriter.println(u);
+    }
+    if (y != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mParentFragment=");
+      paramPrintWriter.println(y);
+    }
+    if (i != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mArguments=");
+      paramPrintWriter.println(i);
+    }
+    if (d != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mSavedFragmentState=");
+      paramPrintWriter.println(d);
+    }
+    if (e != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mSavedViewState=");
+      paramPrintWriter.println(e);
+    }
+    if (j != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mTarget=");
+      paramPrintWriter.print(j);
+      paramPrintWriter.print(" mTargetRequestCode=");
+      paramPrintWriter.println(l);
+    }
+    if (q() != 0)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mNextAnim=");
+      paramPrintWriter.println(q());
+    }
+    if (J != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mContainer=");
+      paramPrintWriter.println(J);
+    }
+    if (K != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mView=");
+      paramPrintWriter.println(K);
+    }
+    if (L != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mInnerView=");
+      paramPrintWriter.println(K);
+    }
+    if (g() != null)
+    {
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mAnimatingAway=");
+      paramPrintWriter.println(g());
+      paramPrintWriter.print(paramString);
+      paramPrintWriter.print("mStateAfterAnimating=");
+      paramPrintWriter.println(z());
+    }
+    if (k() != null) {
+      u.a(this).a(paramString, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+    }
+    if (v != null)
+    {
+      paramPrintWriter.print(paramString);
+      Object localObject = new StringBuilder();
+      ((StringBuilder)localObject).append("Child ");
+      ((StringBuilder)localObject).append(v);
+      ((StringBuilder)localObject).append(":");
+      paramPrintWriter.println(((StringBuilder)localObject).toString());
+      localObject = v;
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(paramString);
+      localStringBuilder.append("  ");
+      ((l)localObject).a(localStringBuilder.toString(), paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+    }
+  }
+  
+  public void a(boolean paramBoolean) {}
+  
+  public boolean a(MenuItem paramMenuItem)
+  {
+    return false;
+  }
+  
+  void a0()
+  {
+    if (K != null) {
+      V.a(c.a.ON_STOP);
+    }
+    U.a(c.a.ON_STOP);
+    Object localObject = v;
+    if (localObject != null) {
+      ((l)localObject).m();
+    }
+    c = 2;
+    I = false;
+    R();
+    if (I) {
+      return;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" did not call through to super.onStop()");
+    throw new d0(((StringBuilder)localObject).toString());
+  }
+  
+  public Animator b(int paramInt1, boolean paramBoolean, int paramInt2)
+  {
+    return null;
+  }
+  
+  public p b()
+  {
+    if (k() != null)
+    {
+      if (x == null) {
+        x = new p();
+      }
+      return x;
+    }
+    throw new IllegalStateException("Can't access ViewModels from detached fragment");
+  }
+  
+  public void b(Bundle paramBundle)
+  {
+    I = true;
+  }
+  
+  void b(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+  {
+    l localL = v;
+    if (localL != null) {
+      localL.r();
+    }
+    r = true;
+    W = new c();
+    V = null;
+    K = a(paramLayoutInflater, paramViewGroup, paramBundle);
+    if (K != null)
+    {
+      W.a();
+      X.a(W);
+      return;
+    }
+    if (V == null)
+    {
+      W = null;
+      return;
+    }
+    throw new IllegalStateException("Called getViewLifecycleOwner() but onCreateView() returned null");
+  }
+  
+  public void b(Menu paramMenu) {}
+  
+  public void b(boolean paramBoolean) {}
+  
+  boolean b(Menu paramMenu, MenuInflater paramMenuInflater)
+  {
+    boolean bool2 = false;
+    boolean bool3 = false;
+    if (!C)
+    {
+      boolean bool1 = bool3;
+      if (G)
+      {
+        bool1 = bool3;
+        if (H)
+        {
+          bool1 = true;
+          a(paramMenu, paramMenuInflater);
+        }
+      }
+      l localL = v;
+      bool2 = bool1;
+      if (localL != null) {
+        bool2 = bool1 | localL.a(paramMenu, paramMenuInflater);
+      }
+    }
+    return bool2;
+  }
+  
+  public boolean b(MenuItem paramMenuItem)
+  {
+    return false;
+  }
+  
+  public final Context b0()
+  {
+    Object localObject = k();
+    if (localObject != null) {
+      return localObject;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Fragment ");
+    ((StringBuilder)localObject).append(this);
+    ((StringBuilder)localObject).append(" not attached to a context.");
+    throw new IllegalStateException(((StringBuilder)localObject).toString());
+  }
+  
+  void c()
+  {
+    d localD = O;
+    f localF;
+    if (localD == null)
+    {
+      localF = null;
+    }
+    else
+    {
+      q = false;
+      localF = r;
+      r = null;
+    }
+    if (localF != null) {
+      localF.a();
+    }
+  }
+  
+  void c(int paramInt)
+  {
+    if ((O == null) && (paramInt == 0)) {
+      return;
+    }
+    d0d = paramInt;
+  }
+  
+  public void c(Bundle paramBundle)
+  {
+    I = true;
+    k(paramBundle);
+    paramBundle = v;
+    if ((paramBundle != null) && (!paramBundle.c(1))) {
+      v.f();
+    }
+  }
+  
+  void c(Menu paramMenu)
+  {
+    if (!C)
+    {
+      if ((G) && (H)) {
+        a(paramMenu);
+      }
+      l localL = v;
+      if (localL != null) {
+        localL.a(paramMenu);
+      }
+    }
+  }
+  
+  public void c(boolean paramBoolean) {}
+  
+  boolean c(MenuItem paramMenuItem)
+  {
+    if (!C)
+    {
+      if (a(paramMenuItem)) {
+        return true;
+      }
+      l localL = v;
+      if ((localL != null) && (localL.a(paramMenuItem))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public void c0()
+  {
+    l localL = t;
+    if ((localL != null) && (o != null))
+    {
+      if (Looper.myLooper() != t.o.e().getLooper())
+      {
+        t.o.e().postAtFrontOfQueue(new a());
+        return;
+      }
+      c();
+      return;
+    }
+    d0q = false;
+  }
+  
+  public final g d()
+  {
+    j localJ = u;
+    if (localJ == null) {
+      return null;
+    }
+    return (g)localJ.b();
+  }
+  
+  public LayoutInflater d(Bundle paramBundle)
+  {
+    return a(paramBundle);
+  }
+  
+  void d(int paramInt)
+  {
+    d0c = paramInt;
+  }
+  
+  void d(boolean paramBoolean)
+  {
+    b(paramBoolean);
+    l localL = v;
+    if (localL != null) {
+      localL.a(paramBoolean);
+    }
+  }
+  
+  boolean d(Menu paramMenu)
+  {
+    boolean bool2 = false;
+    boolean bool3 = false;
+    if (!C)
+    {
+      boolean bool1 = bool3;
+      if (G)
+      {
+        bool1 = bool3;
+        if (H)
+        {
+          bool1 = true;
+          b(paramMenu);
+        }
+      }
+      l localL = v;
+      bool2 = bool1;
+      if (localL != null) {
+        bool2 = bool1 | localL.b(paramMenu);
+      }
+    }
+    return bool2;
+  }
+  
+  boolean d(MenuItem paramMenuItem)
+  {
+    if (!C)
+    {
+      if ((G) && (H) && (b(paramMenuItem))) {
+        return true;
+      }
+      l localL = v;
+      if ((localL != null) && (localL.b(paramMenuItem))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public void e(Bundle paramBundle) {}
+  
+  void e(boolean paramBoolean)
+  {
+    c(paramBoolean);
+    l localL = v;
+    if (localL != null) {
+      localL.b(paramBoolean);
+    }
+  }
+  
+  public boolean e()
+  {
+    Object localObject = O;
+    if (localObject != null)
+    {
+      localObject = n;
+      if (localObject != null) {
+        return ((Boolean)localObject).booleanValue();
+      }
+    }
+    return true;
+  }
+  
+  public final boolean equals(Object paramObject)
+  {
+    return super.equals(paramObject);
+  }
+  
+  public void f(Bundle paramBundle)
+  {
+    I = true;
+  }
+  
+  void f(boolean paramBoolean)
+  {
+    d0s = paramBoolean;
+  }
+  
+  public boolean f()
+  {
+    Object localObject = O;
+    if (localObject != null)
+    {
+      localObject = m;
+      if (localObject != null) {
+        return ((Boolean)localObject).booleanValue();
+      }
+    }
+    return true;
+  }
+  
+  View g()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return a;
+  }
+  
+  void g(Bundle paramBundle)
+  {
+    l localL = v;
+    if (localL != null) {
+      localL.r();
+    }
+    c = 2;
+    I = false;
+    b(paramBundle);
+    if (I)
+    {
+      paramBundle = v;
+      if (paramBundle != null) {
+        paramBundle.e();
+      }
+      return;
+    }
+    paramBundle = new StringBuilder();
+    paramBundle.append("Fragment ");
+    paramBundle.append(this);
+    paramBundle.append(" did not call through to super.onActivityCreated()");
+    throw new d0(paramBundle.toString());
+  }
+  
+  public void g(boolean paramBoolean)
+  {
+    if (H != paramBoolean)
+    {
+      H = paramBoolean;
+      if ((G) && (D()) && (!E())) {
+        u.i();
+      }
+    }
+  }
+  
+  Animator h()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return b;
+  }
+  
+  void h(Bundle paramBundle)
+  {
+    l localL = v;
+    if (localL != null) {
+      localL.r();
+    }
+    c = 1;
+    I = false;
+    c(paramBundle);
+    T = true;
+    if (I)
+    {
+      U.a(c.a.ON_CREATE);
+      return;
+    }
+    paramBundle = new StringBuilder();
+    paramBundle.append("Fragment ");
+    paramBundle.append(this);
+    paramBundle.append(" did not call through to super.onCreate()");
+    throw new d0(paramBundle.toString());
+  }
+  
+  public void h(boolean paramBoolean)
+  {
+    if ((!N) && (paramBoolean) && (c < 3) && (t != null) && (D()) && (T)) {
+      t.k(this);
+    }
+    N = paramBoolean;
+    boolean bool;
+    if ((c < 3) && (!paramBoolean)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    M = bool;
+    if (d != null) {
+      f = Boolean.valueOf(paramBoolean);
+    }
+  }
+  
+  public final int hashCode()
+  {
+    return super.hashCode();
+  }
+  
+  public final Bundle i()
+  {
+    return i;
+  }
+  
+  LayoutInflater i(Bundle paramBundle)
+  {
+    S = d(paramBundle);
+    return S;
+  }
+  
+  public final k j()
+  {
+    if (v == null)
+    {
+      C();
+      int i1 = c;
+      if (i1 >= 4) {
+        v.k();
+      } else if (i1 >= 3) {
+        v.l();
+      } else if (i1 >= 2) {
+        v.e();
+      } else if (i1 >= 1) {
+        v.f();
+      }
+    }
+    return v;
+  }
+  
+  void j(Bundle paramBundle)
+  {
+    e(paramBundle);
+    Object localObject = v;
+    if (localObject != null)
+    {
+      localObject = ((l)localObject).u();
+      if (localObject != null) {
+        paramBundle.putParcelable("android:support:fragments", (Parcelable)localObject);
+      }
+    }
+  }
+  
+  public Context k()
+  {
+    j localJ = u;
+    if (localJ == null) {
+      return null;
+    }
+    return localJ.c();
+  }
+  
+  void k(Bundle paramBundle)
+  {
+    if (paramBundle != null)
+    {
+      paramBundle = paramBundle.getParcelable("android:support:fragments");
+      if (paramBundle != null)
+      {
+        if (v == null) {
+          C();
+        }
+        v.a(paramBundle, w);
+        w = null;
+        v.f();
+      }
+    }
+  }
+  
+  public Object l()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return g;
+  }
+  
+  final void l(Bundle paramBundle)
+  {
+    SparseArray localSparseArray = e;
+    if (localSparseArray != null)
+    {
+      L.restoreHierarchyState(localSparseArray);
+      e = null;
+    }
+    I = false;
+    f(paramBundle);
+    if (I)
+    {
+      if (K != null) {
+        V.a(c.a.ON_CREATE);
+      }
+      return;
+    }
+    paramBundle = new StringBuilder();
+    paramBundle.append("Fragment ");
+    paramBundle.append(this);
+    paramBundle.append(" did not call through to super.onViewStateRestored()");
+    throw new d0(paramBundle.toString());
+  }
+  
+  c0 m()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return o;
+  }
+  
+  public void m(Bundle paramBundle)
+  {
+    if ((g >= 0) && (I())) {
+      throw new IllegalStateException("Fragment already active and state has been saved");
+    }
+    i = paramBundle;
+  }
+  
+  public Object n()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return i;
+  }
+  
+  c0 o()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return p;
+  }
+  
+  public void onConfigurationChanged(Configuration paramConfiguration)
+  {
+    I = true;
+  }
+  
+  public void onCreateContextMenu(ContextMenu paramContextMenu, View paramView, ContextMenu.ContextMenuInfo paramContextMenuInfo)
+  {
+    d().onCreateContextMenu(paramContextMenu, paramView, paramContextMenuInfo);
+  }
+  
+  public void onLowMemory()
+  {
+    I = true;
+  }
+  
+  public final k p()
+  {
+    return t;
+  }
+  
+  int q()
+  {
+    d localD = O;
+    if (localD == null) {
+      return 0;
+    }
+    return d;
+  }
+  
+  int r()
+  {
+    d localD = O;
+    if (localD == null) {
+      return 0;
+    }
+    return e;
+  }
+  
+  int s()
+  {
+    d localD = O;
+    if (localD == null) {
+      return 0;
+    }
+    return f;
+  }
+  
+  public final f t()
+  {
+    return y;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder(128);
+    d.a(this, localStringBuilder);
+    if (g >= 0)
+    {
+      localStringBuilder.append(" #");
+      localStringBuilder.append(g);
+    }
+    if (z != 0)
+    {
+      localStringBuilder.append(" id=0x");
+      localStringBuilder.append(Integer.toHexString(z));
+    }
+    if (B != null)
+    {
+      localStringBuilder.append(" ");
+      localStringBuilder.append(B);
+    }
+    localStringBuilder.append('}');
+    return localStringBuilder.toString();
+  }
+  
+  public Object u()
+  {
+    Object localObject1 = O;
+    if (localObject1 == null) {
+      return null;
+    }
+    Object localObject2 = j;
+    localObject1 = localObject2;
+    if (localObject2 == Z) {
+      localObject1 = n();
+    }
+    return localObject1;
+  }
+  
+  public final Resources v()
+  {
+    return b0().getResources();
+  }
+  
+  public Object w()
+  {
+    Object localObject1 = O;
+    if (localObject1 == null) {
+      return null;
+    }
+    Object localObject2 = h;
+    localObject1 = localObject2;
+    if (localObject2 == Z) {
+      localObject1 = l();
+    }
+    return localObject1;
+  }
+  
+  public Object x()
+  {
+    d localD = O;
+    if (localD == null) {
+      return null;
+    }
+    return k;
+  }
+  
+  public Object y()
+  {
+    Object localObject = O;
+    if (localObject == null) {
+      return null;
+    }
+    localObject = l;
+    if (localObject == Z) {
+      return x();
+    }
+    return localObject;
+  }
+  
+  int z()
+  {
+    d localD = O;
+    if (localD == null) {
+      return 0;
+    }
+    return c;
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      c();
+    }
+  }
+  
+  class b
+    extends h
+  {
+    b() {}
+    
+    public f a(Context paramContext, String paramString, Bundle paramBundle)
+    {
+      return u.a(paramContext, paramString, paramBundle);
+    }
+    
+    public View a(int paramInt)
+    {
+      View localView = K;
+      if (localView != null) {
+        return localView.findViewById(paramInt);
+      }
+      throw new IllegalStateException("Fragment does not have a view");
+    }
+    
+    public boolean a()
+    {
+      return K != null;
+    }
+  }
+  
+  class c
+    implements e
+  {
+    c() {}
+    
+    public c a()
+    {
+      f localF = f.this;
+      if (V == null) {
+        V = new android.arch.lifecycle.f(W);
+      }
+      return V;
+    }
+  }
+  
+  static class d
+  {
+    View a;
+    Animator b;
+    int c;
+    int d;
+    int e;
+    int f;
+    Object g = null;
+    Object h;
+    Object i;
+    Object j;
+    Object k;
+    Object l;
+    Boolean m;
+    Boolean n;
+    c0 o;
+    c0 p;
+    boolean q;
+    f.f r;
+    boolean s;
+    
+    d()
+    {
+      Object localObject = f.Z;
+      h = localObject;
+      i = null;
+      j = localObject;
+      k = null;
+      l = localObject;
+      o = null;
+      p = null;
+    }
+  }
+  
+  public static class e
+    extends RuntimeException
+  {
+    public e(String paramString, Exception paramException)
+    {
+      super(paramException);
+    }
+  }
+  
+  static abstract interface f
+  {
+    public abstract void a();
+    
+    public abstract void b();
+  }
+  
+  public static class g
+    implements Parcelable
+  {
+    public static final Parcelable.Creator<g> CREATOR = new a();
+    final Bundle c;
+    
+    g(Bundle paramBundle)
+    {
+      c = paramBundle;
+    }
+    
+    g(Parcel paramParcel, ClassLoader paramClassLoader)
+    {
+      c = paramParcel.readBundle();
+      if (paramClassLoader != null)
+      {
+        paramParcel = c;
+        if (paramParcel != null) {
+          paramParcel.setClassLoader(paramClassLoader);
+        }
+      }
+    }
+    
+    public int describeContents()
+    {
+      return 0;
+    }
+    
+    public void writeToParcel(Parcel paramParcel, int paramInt)
+    {
+      paramParcel.writeBundle(c);
+    }
+    
+    static final class a
+      implements Parcelable.ClassLoaderCreator<f.g>
+    {
+      a() {}
+      
+      public f.g createFromParcel(Parcel paramParcel)
+      {
+        return new f.g(paramParcel, null);
+      }
+      
+      public f.g createFromParcel(Parcel paramParcel, ClassLoader paramClassLoader)
+      {
+        return new f.g(paramParcel, paramClassLoader);
+      }
+      
+      public f.g[] newArray(int paramInt)
+      {
+        return new f.g[paramInt];
+      }
+    }
+  }
+}

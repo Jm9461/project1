@@ -1,0 +1,27 @@
+package b.h.b;
+
+public abstract class c<T, V>
+{
+  private final String a;
+  
+  public c(Class<V> paramClass, String paramString)
+  {
+    a = paramString;
+  }
+  
+  public abstract V a(T paramT);
+  
+  public String a()
+  {
+    return a;
+  }
+  
+  public void a(T paramT, V paramV)
+  {
+    paramT = new StringBuilder();
+    paramT.append("Property ");
+    paramT.append(a());
+    paramT.append(" is read-only");
+    throw new UnsupportedOperationException(paramT.toString());
+  }
+}

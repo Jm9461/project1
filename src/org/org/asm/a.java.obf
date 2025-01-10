@@ -1,0 +1,155 @@
+package a.b.f;
+
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.support.v4.view.u;
+import android.util.Log;
+import android.util.Property;
+import android.view.View;
+import java.lang.reflect.Field;
+
+class d0
+{
+  private static final h0 a;
+  private static Field b;
+  private static boolean c;
+  static final Property<View, Float> d;
+  
+  static
+  {
+    int i = Build.VERSION.SDK_INT;
+    if (i >= 22) {
+      a = new g0();
+    } else if (i >= 21) {
+      a = new f0();
+    } else if (i >= 19) {
+      a = new e0();
+    } else {
+      a = new h0();
+    }
+    d = new a(Float.class, "translationAlpha");
+    new b(Rect.class, "clipBounds");
+  }
+  
+  private static void a()
+  {
+    if (!c)
+    {
+      try
+      {
+        b = View.class.getDeclaredField("mViewFlags");
+        b.setAccessible(true);
+      }
+      catch (NoSuchFieldException localNoSuchFieldException)
+      {
+        Log.i("ViewUtils", "fetchViewFlagsField: ");
+      }
+      c = true;
+    }
+  }
+  
+  static void a(View paramView)
+  {
+    a.a(paramView);
+  }
+  
+  static void a(View paramView, float paramFloat)
+  {
+    a.a(paramView, paramFloat);
+  }
+  
+  static void a(View paramView, int paramInt)
+  {
+    a();
+    Field localField = b;
+    if (localField != null) {
+      try
+      {
+        int i = localField.getInt(paramView);
+        b.setInt(paramView, i & 0xFFFFFFF3 | paramInt);
+        return;
+      }
+      catch (IllegalAccessException paramView) {}
+    }
+  }
+  
+  static void a(View paramView, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    a.a(paramView, paramInt1, paramInt2, paramInt3, paramInt4);
+  }
+  
+  static void a(View paramView, Matrix paramMatrix)
+  {
+    a.a(paramView, paramMatrix);
+  }
+  
+  static c0 b(View paramView)
+  {
+    if (Build.VERSION.SDK_INT >= 18) {
+      return new b0(paramView);
+    }
+    return a0.c(paramView);
+  }
+  
+  static void b(View paramView, Matrix paramMatrix)
+  {
+    a.b(paramView, paramMatrix);
+  }
+  
+  static float c(View paramView)
+  {
+    return a.b(paramView);
+  }
+  
+  static l0 d(View paramView)
+  {
+    if (Build.VERSION.SDK_INT >= 18) {
+      return new k0(paramView);
+    }
+    return new j0(paramView.getWindowToken());
+  }
+  
+  static void e(View paramView)
+  {
+    a.c(paramView);
+  }
+  
+  static final class a
+    extends Property<View, Float>
+  {
+    a(Class paramClass, String paramString)
+    {
+      super(paramString);
+    }
+    
+    public Float a(View paramView)
+    {
+      return Float.valueOf(d0.c(paramView));
+    }
+    
+    public void a(View paramView, Float paramFloat)
+    {
+      d0.a(paramView, paramFloat.floatValue());
+    }
+  }
+  
+  static final class b
+    extends Property<View, Rect>
+  {
+    b(Class paramClass, String paramString)
+    {
+      super(paramString);
+    }
+    
+    public Rect a(View paramView)
+    {
+      return u.e(paramView);
+    }
+    
+    public void a(View paramView, Rect paramRect)
+    {
+      u.a(paramView, paramRect);
+    }
+  }
+}

@@ -1,0 +1,1508 @@
+package f;
+
+import java.io.EOFException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.ByteChannel;
+import java.nio.charset.Charset;
+
+public final class c
+  implements e, d, Cloneable, ByteChannel
+{
+  private static final byte[] e = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102 };
+  o c;
+  long d;
+  
+  public c() {}
+  
+  public int a(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
+  {
+    u.a(paramArrayOfByte.length, paramInt1, paramInt2);
+    o localO = c;
+    if (localO == null) {
+      return -1;
+    }
+    paramInt2 = Math.min(paramInt2, c - b);
+    System.arraycopy(a, b, paramArrayOfByte, paramInt1, paramInt2);
+    b += paramInt2;
+    d -= paramInt2;
+    if (b == c)
+    {
+      c = localO.b();
+      p.a(localO);
+    }
+    return paramInt2;
+  }
+  
+  public long a(byte paramByte)
+  {
+    return a(paramByte, 0L, Long.MAX_VALUE);
+  }
+  
+  public long a(byte paramByte, long paramLong1, long paramLong2)
+  {
+    if ((paramLong1 >= 0L) && (paramLong2 >= paramLong1))
+    {
+      long l2 = paramLong2;
+      if (paramLong2 > d) {
+        l2 = d;
+      }
+      if (paramLong1 == l2) {
+        return -1L;
+      }
+      Object localObject2 = c;
+      if (localObject2 == null) {
+        return -1L;
+      }
+      long l1;
+      long l3;
+      if (d - paramLong1 < paramLong1) {
+        for (l1 = d;; l1 -= c - b)
+        {
+          localObject1 = localObject2;
+          paramLong2 = l1;
+          l3 = paramLong1;
+          if (l1 <= paramLong1) {
+            break;
+          }
+          localObject2 = g;
+        }
+      }
+      for (paramLong2 = 0L;; paramLong2 = l1)
+      {
+        l1 = c - b + paramLong2;
+        localObject1 = localObject2;
+        l3 = paramLong1;
+        if (l1 >= paramLong1) {
+          break;
+        }
+        localObject2 = f;
+      }
+      while (paramLong2 < l2)
+      {
+        localObject2 = a;
+        int j = (int)Math.min(c, b + l2 - paramLong2);
+        int i = (int)(b + l3 - paramLong2);
+        while (i < j)
+        {
+          if (localObject2[i] == paramByte) {
+            return i - b + paramLong2;
+          }
+          i += 1;
+        }
+        paramLong2 += c - b;
+        l3 = paramLong2;
+        localObject1 = f;
+      }
+      return -1L;
+    }
+    Object localObject1 = new IllegalArgumentException(String.format("size=%s fromIndex=%s toIndex=%s", new Object[] { Long.valueOf(d), Long.valueOf(paramLong1), Long.valueOf(paramLong2) }));
+    for (;;)
+    {
+      throw ((Throwable)localObject1);
+    }
+  }
+  
+  public long a(s paramS)
+  {
+    if (paramS != null)
+    {
+      long l2;
+      for (long l1 = 0L;; l1 += l2)
+      {
+        l2 = paramS.b(this, 8192L);
+        if (l2 == -1L) {
+          break;
+        }
+      }
+      return l1;
+    }
+    paramS = new IllegalArgumentException("source == null");
+    for (;;)
+    {
+      throw paramS;
+    }
+  }
+  
+  public c a()
+  {
+    return this;
+  }
+  
+  public c a(long paramLong)
+  {
+    if (paramLong == 0L)
+    {
+      writeByte(48);
+      return this;
+    }
+    int j = Long.numberOfTrailingZeros(Long.highestOneBit(paramLong)) / 4 + 1;
+    o localO = b(j);
+    byte[] arrayOfByte = a;
+    int i = c + j - 1;
+    int k = c;
+    while (i >= k)
+    {
+      arrayOfByte[i] = e[((int)(0xF & paramLong))];
+      paramLong >>>= 4;
+      i -= 1;
+    }
+    c += j;
+    d += j;
+    return this;
+  }
+  
+  public c a(c paramC, long paramLong1, long paramLong2)
+  {
+    if (paramC != null)
+    {
+      u.a(d, paramLong1, paramLong2);
+      if (paramLong2 == 0L) {
+        return this;
+      }
+      d += paramLong2;
+      o localO2;
+      long l1;
+      long l2;
+      for (o localO1 = c;; localO1 = f)
+      {
+        int i = c;
+        int j = b;
+        localO2 = localO1;
+        l1 = paramLong1;
+        l2 = paramLong2;
+        if (paramLong1 < i - j) {
+          break;
+        }
+        paramLong1 -= i - j;
+      }
+      while (l2 > 0L)
+      {
+        localO1 = localO2.c();
+        b = ((int)(b + l1));
+        c = Math.min(b + (int)l2, c);
+        o localO3 = c;
+        if (localO3 == null)
+        {
+          g = localO1;
+          f = localO1;
+          c = localO1;
+        }
+        else
+        {
+          g.a(localO1);
+        }
+        l2 -= c - b;
+        l1 = 0L;
+        localO2 = f;
+      }
+      return this;
+    }
+    paramC = new IllegalArgumentException("out == null");
+    for (;;)
+    {
+      throw paramC;
+    }
+  }
+  
+  public c a(f paramF)
+  {
+    if (paramF != null)
+    {
+      paramF.a(this);
+      return this;
+    }
+    throw new IllegalArgumentException("byteString == null");
+  }
+  
+  public c a(String paramString)
+  {
+    a(paramString, 0, paramString.length());
+    return this;
+  }
+  
+  public c a(String paramString, int paramInt1, int paramInt2)
+  {
+    if (paramString != null)
+    {
+      if (paramInt1 >= 0)
+      {
+        if (paramInt2 >= paramInt1)
+        {
+          if (paramInt2 <= paramString.length())
+          {
+            while (paramInt1 < paramInt2)
+            {
+              int k = paramString.charAt(paramInt1);
+              int i;
+              if (k < 128)
+              {
+                localObject = b(1);
+                byte[] arrayOfByte = a;
+                int j = c - paramInt1;
+                int m = Math.min(paramInt2, 8192 - j);
+                i = paramInt1 + 1;
+                arrayOfByte[(paramInt1 + j)] = ((byte)k);
+                paramInt1 = i;
+                while (paramInt1 < m)
+                {
+                  i = paramString.charAt(paramInt1);
+                  if (i >= 128) {
+                    break;
+                  }
+                  arrayOfByte[(paramInt1 + j)] = ((byte)i);
+                  paramInt1 += 1;
+                }
+                i = c;
+                j = paramInt1 + j - i;
+                c = (i + j);
+                d += j;
+              }
+              else if (k < 2048)
+              {
+                writeByte(k >> 6 | 0xC0);
+                writeByte(0x80 | k & 0x3F);
+                paramInt1 += 1;
+              }
+              else if ((k >= 55296) && (k <= 57343))
+              {
+                if (paramInt1 + 1 < paramInt2) {
+                  i = paramString.charAt(paramInt1 + 1);
+                } else {
+                  i = 0;
+                }
+                if ((k <= 56319) && (i >= 56320) && (i <= 57343))
+                {
+                  i = ((0xFFFF27FF & k) << 10 | 0xFFFF23FF & i) + 65536;
+                  writeByte(i >> 18 | 0xF0);
+                  writeByte(i >> 12 & 0x3F | 0x80);
+                  writeByte(i >> 6 & 0x3F | 0x80);
+                  writeByte(0x80 | i & 0x3F);
+                  paramInt1 += 2;
+                }
+                else
+                {
+                  writeByte(63);
+                  paramInt1 += 1;
+                }
+              }
+              else
+              {
+                writeByte(k >> 12 | 0xE0);
+                writeByte(k >> 6 & 0x3F | 0x80);
+                writeByte(0x80 | k & 0x3F);
+                paramInt1 += 1;
+              }
+            }
+            return this;
+          }
+          Object localObject = new StringBuilder();
+          ((StringBuilder)localObject).append("endIndex > string.length: ");
+          ((StringBuilder)localObject).append(paramInt2);
+          ((StringBuilder)localObject).append(" > ");
+          ((StringBuilder)localObject).append(paramString.length());
+          throw new IllegalArgumentException(((StringBuilder)localObject).toString());
+        }
+        paramString = new StringBuilder();
+        paramString.append("endIndex < beginIndex: ");
+        paramString.append(paramInt2);
+        paramString.append(" < ");
+        paramString.append(paramInt1);
+        throw new IllegalArgumentException(paramString.toString());
+      }
+      paramString = new StringBuilder();
+      paramString.append("beginIndex < 0: ");
+      paramString.append(paramInt1);
+      throw new IllegalArgumentException(paramString.toString());
+    }
+    paramString = new IllegalArgumentException("string == null");
+    for (;;)
+    {
+      throw paramString;
+    }
+  }
+  
+  public c a(String paramString, int paramInt1, int paramInt2, Charset paramCharset)
+  {
+    if (paramString != null)
+    {
+      if (paramInt1 >= 0)
+      {
+        if (paramInt2 >= paramInt1)
+        {
+          if (paramInt2 <= paramString.length())
+          {
+            if (paramCharset != null)
+            {
+              if (paramCharset.equals(u.a))
+              {
+                a(paramString, paramInt1, paramInt2);
+                return this;
+              }
+              paramString = paramString.substring(paramInt1, paramInt2).getBytes(paramCharset);
+              write(paramString, 0, paramString.length);
+              return this;
+            }
+            throw new IllegalArgumentException("charset == null");
+          }
+          paramCharset = new StringBuilder();
+          paramCharset.append("endIndex > string.length: ");
+          paramCharset.append(paramInt2);
+          paramCharset.append(" > ");
+          paramCharset.append(paramString.length());
+          throw new IllegalArgumentException(paramCharset.toString());
+        }
+        paramString = new StringBuilder();
+        paramString.append("endIndex < beginIndex: ");
+        paramString.append(paramInt2);
+        paramString.append(" < ");
+        paramString.append(paramInt1);
+        throw new IllegalArgumentException(paramString.toString());
+      }
+      paramString = new StringBuilder();
+      paramString.append("beginIndex < 0: ");
+      paramString.append(paramInt1);
+      throw new IllegalAccessError(paramString.toString());
+    }
+    throw new IllegalArgumentException("string == null");
+  }
+  
+  public f a(int paramInt)
+  {
+    if (paramInt == 0) {
+      return f.g;
+    }
+    return new q(this, paramInt);
+  }
+  
+  public String a(long paramLong, Charset paramCharset)
+  {
+    u.a(d, 0L, paramLong);
+    if (paramCharset != null)
+    {
+      if (paramLong <= 2147483647L)
+      {
+        if (paramLong == 0L) {
+          return "";
+        }
+        o localO = c;
+        int i = b;
+        if (i + paramLong > c) {
+          return new String(f(paramLong), paramCharset);
+        }
+        paramCharset = new String(a, i, (int)paramLong, paramCharset);
+        b = ((int)(b + paramLong));
+        d -= paramLong;
+        if (b == c)
+        {
+          c = localO.b();
+          p.a(localO);
+        }
+        return paramCharset;
+      }
+      paramCharset = new StringBuilder();
+      paramCharset.append("byteCount > Integer.MAX_VALUE: ");
+      paramCharset.append(paramLong);
+      throw new IllegalArgumentException(paramCharset.toString());
+    }
+    throw new IllegalArgumentException("charset == null");
+  }
+  
+  public void a(c paramC, long paramLong)
+  {
+    if (paramC != null)
+    {
+      if (paramC != this)
+      {
+        u.a(d, 0L, paramLong);
+        while (paramLong > 0L)
+        {
+          o localO1 = c;
+          if (paramLong < c - b)
+          {
+            localO1 = c;
+            if (localO1 != null) {
+              localO1 = g;
+            } else {
+              localO1 = null;
+            }
+            if ((localO1 != null) && (e))
+            {
+              l = c;
+              int i;
+              if (d) {
+                i = 0;
+              } else {
+                i = b;
+              }
+              if (l + paramLong - i <= 8192L)
+              {
+                c.a(localO1, (int)paramLong);
+                d -= paramLong;
+                d += paramLong;
+                return;
+              }
+            }
+            c = c.a((int)paramLong);
+          }
+          localO1 = c;
+          long l = c - b;
+          c = localO1.b();
+          o localO2 = c;
+          if (localO2 == null)
+          {
+            c = localO1;
+            localO1 = c;
+            g = localO1;
+            f = localO1;
+          }
+          else
+          {
+            g.a(localO1).a();
+          }
+          d -= l;
+          d += l;
+          paramLong -= l;
+        }
+        return;
+      }
+      throw new IllegalArgumentException("source == this");
+    }
+    paramC = new IllegalArgumentException("source == null");
+    for (;;)
+    {
+      throw paramC;
+    }
+  }
+  
+  public boolean a(long paramLong, f paramF)
+  {
+    return a(paramLong, paramF, 0, paramF.f());
+  }
+  
+  public boolean a(long paramLong, f paramF, int paramInt1, int paramInt2)
+  {
+    if ((paramLong >= 0L) && (paramInt1 >= 0) && (paramInt2 >= 0) && (d - paramLong >= paramInt2))
+    {
+      if (paramF.f() - paramInt1 < paramInt2) {
+        return false;
+      }
+      int i = 0;
+      while (i < paramInt2)
+      {
+        if (g(i + paramLong) != paramF.a(paramInt1 + i)) {
+          return false;
+        }
+        i += 1;
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  public long b(c paramC, long paramLong)
+  {
+    if (paramC != null)
+    {
+      if (paramLong >= 0L)
+      {
+        long l2 = d;
+        if (l2 == 0L) {
+          return -1L;
+        }
+        long l1 = paramLong;
+        if (paramLong > l2) {
+          l1 = d;
+        }
+        paramC.a(this, l1);
+        return l1;
+      }
+      paramC = new StringBuilder();
+      paramC.append("byteCount < 0: ");
+      paramC.append(paramLong);
+      throw new IllegalArgumentException(paramC.toString());
+    }
+    throw new IllegalArgumentException("sink == null");
+  }
+  
+  public f b(long paramLong)
+  {
+    return new f(f(paramLong));
+  }
+  
+  o b(int paramInt)
+  {
+    if ((paramInt >= 1) && (paramInt <= 8192))
+    {
+      Object localObject = c;
+      if (localObject == null)
+      {
+        c = p.a();
+        localObject = c;
+        g = ((o)localObject);
+        f = ((o)localObject);
+        return localObject;
+      }
+      o localO = g;
+      if (c + paramInt <= 8192)
+      {
+        localObject = localO;
+        if (e) {}
+      }
+      else
+      {
+        localObject = localO.a(p.a());
+      }
+      return localObject;
+    }
+    throw new IllegalArgumentException();
+  }
+  
+  public t b()
+  {
+    return t.d;
+  }
+  
+  public c c(int paramInt)
+  {
+    if (paramInt < 128)
+    {
+      writeByte(paramInt);
+      return this;
+    }
+    if (paramInt < 2048)
+    {
+      writeByte(paramInt >> 6 | 0xC0);
+      writeByte(0x80 | paramInt & 0x3F);
+      return this;
+    }
+    if (paramInt < 65536)
+    {
+      if ((paramInt >= 55296) && (paramInt <= 57343))
+      {
+        writeByte(63);
+        return this;
+      }
+      writeByte(paramInt >> 12 | 0xE0);
+      writeByte(paramInt >> 6 & 0x3F | 0x80);
+      writeByte(0x80 | paramInt & 0x3F);
+      return this;
+    }
+    if (paramInt <= 1114111)
+    {
+      writeByte(paramInt >> 18 | 0xF0);
+      writeByte(paramInt >> 12 & 0x3F | 0x80);
+      writeByte(paramInt >> 6 & 0x3F | 0x80);
+      writeByte(0x80 | paramInt & 0x3F);
+      return this;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Unexpected code point: ");
+    localStringBuilder.append(Integer.toHexString(paramInt));
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  public String c(long paramLong)
+  {
+    if (paramLong >= 0L)
+    {
+      long l1 = Long.MAX_VALUE;
+      if (paramLong != Long.MAX_VALUE) {
+        l1 = paramLong + 1L;
+      }
+      long l2 = a((byte)10, 0L, l1);
+      if (l2 != -1L) {
+        return i(l2);
+      }
+      if ((l1 < q()) && (g(l1 - 1L) == 13) && (g(l1) == 10)) {
+        return i(l1);
+      }
+      localObject = new c();
+      a((c)localObject, 0L, Math.min(32L, q()));
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("\\n not found: limit=");
+      localStringBuilder.append(Math.min(q(), paramLong));
+      localStringBuilder.append(" content=");
+      localStringBuilder.append(((c)localObject).o().b());
+      localStringBuilder.append('?');
+      throw new EOFException(localStringBuilder.toString());
+    }
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("limit < 0: ");
+    ((StringBuilder)localObject).append(paramLong);
+    throw new IllegalArgumentException(((StringBuilder)localObject).toString());
+  }
+  
+  public short c()
+  {
+    return u.a(readShort());
+  }
+  
+  public c clone()
+  {
+    c localC = new c();
+    if (d == 0L) {
+      return localC;
+    }
+    c = c.c();
+    o localO = c;
+    g = localO;
+    f = localO;
+    for (localO = c.f; localO != c; localO = f) {
+      c.g.a(localO.c());
+    }
+    d = d;
+    return localC;
+  }
+  
+  public void close() {}
+  
+  public c d()
+  {
+    return this;
+  }
+  
+  public void d(long paramLong)
+  {
+    if (d >= paramLong) {
+      return;
+    }
+    throw new EOFException();
+  }
+  
+  public long e()
+  {
+    if (d != 0L)
+    {
+      long l3 = 0L;
+      int k = 0;
+      int m = 0;
+      int i = 0;
+      long l1 = -922337203685477580L;
+      long l2 = -7L;
+      for (;;)
+      {
+        Object localObject2 = c;
+        localObject1 = a;
+        int j = b;
+        int n = c;
+        while (j < n)
+        {
+          int i1 = localObject1[j];
+          if ((i1 >= 48) && (i1 <= 57))
+          {
+            int i2 = 48 - i1;
+            if ((l3 >= l1) && ((l3 != l1) || (i2 >= l2)))
+            {
+              l3 = l3 * 10L + i2;
+            }
+            else
+            {
+              localObject1 = new c();
+              ((c)localObject1).e(l3);
+              localObject1 = ((c)localObject1).writeByte(i1);
+              if (m == 0) {
+                ((c)localObject1).readByte();
+              }
+              localObject2 = new StringBuilder();
+              ((StringBuilder)localObject2).append("Number too large: ");
+              ((StringBuilder)localObject2).append(((c)localObject1).p());
+              throw new NumberFormatException(((StringBuilder)localObject2).toString());
+            }
+          }
+          else
+          {
+            if ((i1 != 45) || (k != 0)) {
+              break label241;
+            }
+            m = 1;
+            l2 -= 1L;
+          }
+          j += 1;
+          k += 1;
+          continue;
+          label241:
+          if (k != 0)
+          {
+            i = 1;
+          }
+          else
+          {
+            localObject1 = new StringBuilder();
+            ((StringBuilder)localObject1).append("Expected leading [0-9] or '-' character but was 0x");
+            ((StringBuilder)localObject1).append(Integer.toHexString(i1));
+            throw new NumberFormatException(((StringBuilder)localObject1).toString());
+          }
+        }
+        if (j == n)
+        {
+          c = ((o)localObject2).b();
+          p.a((o)localObject2);
+        }
+        else
+        {
+          b = j;
+        }
+        if ((i != 0) || (c == null)) {
+          break;
+        }
+      }
+      d -= k;
+      if (m != 0) {
+        return l3;
+      }
+      return -l3;
+    }
+    Object localObject1 = new IllegalStateException("size == 0");
+    for (;;)
+    {
+      throw ((Throwable)localObject1);
+    }
+  }
+  
+  public c e(long paramLong)
+  {
+    if (paramLong == 0L)
+    {
+      writeByte(48);
+      return this;
+    }
+    int j = 0;
+    long l = paramLong;
+    if (paramLong < 0L)
+    {
+      l = -paramLong;
+      if (l < 0L)
+      {
+        a("-9223372036854775808");
+        return this;
+      }
+      j = 1;
+    }
+    if (l < 100000000L)
+    {
+      if (l < 10000L)
+      {
+        if (l < 100L)
+        {
+          if (l < 10L) {
+            i = 1;
+          } else {
+            i = 2;
+          }
+        }
+        else if (l < 1000L) {
+          i = 3;
+        } else {
+          i = 4;
+        }
+      }
+      else if (l < 1000000L)
+      {
+        if (l < 100000L) {
+          i = 5;
+        } else {
+          i = 6;
+        }
+      }
+      else if (l < 10000000L) {
+        i = 7;
+      } else {
+        i = 8;
+      }
+    }
+    else if (l < 1000000000000L)
+    {
+      if (l < 10000000000L)
+      {
+        if (l < 1000000000L) {
+          i = 9;
+        } else {
+          i = 10;
+        }
+      }
+      else if (l < 100000000000L) {
+        i = 11;
+      } else {
+        i = 12;
+      }
+    }
+    else if (l < 1000000000000000L)
+    {
+      if (l < 10000000000000L) {
+        i = 13;
+      } else if (l < 100000000000000L) {
+        i = 14;
+      } else {
+        i = 15;
+      }
+    }
+    else if (l < 100000000000000000L)
+    {
+      if (l < 10000000000000000L) {
+        i = 16;
+      } else {
+        i = 17;
+      }
+    }
+    else if (l < 1000000000000000000L) {
+      i = 18;
+    } else {
+      i = 19;
+    }
+    int k = i;
+    if (j != 0) {
+      k = i + 1;
+    }
+    o localO = b(k);
+    byte[] arrayOfByte = a;
+    int i = c + k;
+    while (l != 0L)
+    {
+      int m = (int)(l % 10L);
+      i -= 1;
+      arrayOfByte[i] = e[m];
+      l /= 10L;
+    }
+    if (j != 0) {
+      arrayOfByte[(i - 1)] = 45;
+    }
+    c += k;
+    d += k;
+    return this;
+  }
+  
+  public boolean equals(Object paramObject)
+  {
+    if (this == paramObject) {
+      return true;
+    }
+    if (!(paramObject instanceof c)) {
+      return false;
+    }
+    paramObject = (c)paramObject;
+    long l1 = d;
+    if (l1 != d) {
+      return false;
+    }
+    if (l1 == 0L) {
+      return true;
+    }
+    Object localObject2 = c;
+    paramObject = c;
+    int j = b;
+    int i = b;
+    l1 = 0L;
+    while (l1 < d)
+    {
+      long l2 = Math.min(c - j, c - i);
+      int k = 0;
+      while (k < l2)
+      {
+        if (a[j] != a[i]) {
+          return false;
+        }
+        k += 1;
+        j += 1;
+        i += 1;
+      }
+      Object localObject1 = localObject2;
+      k = j;
+      if (j == c)
+      {
+        localObject1 = f;
+        k = b;
+      }
+      Object localObject3 = paramObject;
+      int m = i;
+      if (i == c)
+      {
+        localObject3 = f;
+        m = b;
+      }
+      l1 += l2;
+      localObject2 = localObject1;
+      paramObject = localObject3;
+      j = k;
+      i = m;
+    }
+    return true;
+  }
+  
+  public String f()
+  {
+    return c(Long.MAX_VALUE);
+  }
+  
+  public byte[] f(long paramLong)
+  {
+    u.a(d, 0L, paramLong);
+    if (paramLong <= 2147483647L)
+    {
+      localObject = new byte[(int)paramLong];
+      readFully((byte[])localObject);
+      return localObject;
+    }
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("byteCount > Integer.MAX_VALUE: ");
+    ((StringBuilder)localObject).append(paramLong);
+    throw new IllegalArgumentException(((StringBuilder)localObject).toString());
+  }
+  
+  public void flush() {}
+  
+  public byte g(long paramLong)
+  {
+    u.a(d, paramLong, 1L);
+    long l = d;
+    int j;
+    int i;
+    if (l - paramLong > paramLong) {
+      for (localO = c;; localO = f)
+      {
+        j = c;
+        i = b;
+        j -= i;
+        if (paramLong < j) {
+          return a[(i + (int)paramLong)];
+        }
+        paramLong -= j;
+      }
+    }
+    paramLong -= l;
+    for (o localO = c.g;; localO = g)
+    {
+      i = c;
+      j = b;
+      paramLong += i - j;
+      if (paramLong >= 0L) {
+        return a[(j + (int)paramLong)];
+      }
+    }
+  }
+  
+  public byte[] g()
+  {
+    try
+    {
+      byte[] arrayOfByte = f(d);
+      return arrayOfByte;
+    }
+    catch (EOFException localEOFException)
+    {
+      throw new AssertionError(localEOFException);
+    }
+  }
+  
+  public int h()
+  {
+    return u.a(readInt());
+  }
+  
+  public String h(long paramLong)
+  {
+    return a(paramLong, u.a);
+  }
+  
+  public int hashCode()
+  {
+    o localO = c;
+    if (localO == null) {
+      return 0;
+    }
+    int j = 1;
+    for (;;)
+    {
+      int i = b;
+      int k = c;
+      while (i < k)
+      {
+        j = j * 31 + a[i];
+        i += 1;
+      }
+      localO = f;
+      if (localO == c) {
+        return j;
+      }
+    }
+  }
+  
+  String i(long paramLong)
+  {
+    if ((paramLong > 0L) && (g(paramLong - 1L) == 13))
+    {
+      str = h(paramLong - 1L);
+      skip(2L);
+      return str;
+    }
+    String str = h(paramLong);
+    skip(1L);
+    return str;
+  }
+  
+  public boolean i()
+  {
+    return d == 0L;
+  }
+  
+  public boolean isOpen()
+  {
+    return true;
+  }
+  
+  public long j()
+  {
+    if (d != 0L)
+    {
+      long l1 = 0L;
+      int i = 0;
+      int j = 0;
+      int k;
+      long l2;
+      label239:
+      label291:
+      do
+      {
+        localObject1 = c;
+        Object localObject2 = a;
+        int m = b;
+        int i1 = c;
+        k = i;
+        l2 = l1;
+        int n;
+        for (;;)
+        {
+          n = j;
+          if (m >= i1) {
+            break label291;
+          }
+          n = localObject2[m];
+          if ((n >= 48) && (n <= 57))
+          {
+            i = n - 48;
+          }
+          else if ((n >= 97) && (n <= 102))
+          {
+            i = n - 97 + 10;
+          }
+          else
+          {
+            if ((n < 65) || (n > 70)) {
+              break label239;
+            }
+            i = n - 65 + 10;
+          }
+          if ((0xF000000000000000 & l2) != 0L) {
+            break;
+          }
+          l2 = l2 << 4 | i;
+          m += 1;
+          k += 1;
+        }
+        localObject1 = new c();
+        ((c)localObject1).a(l2);
+        localObject1 = ((c)localObject1).writeByte(n);
+        localObject2 = new StringBuilder();
+        ((StringBuilder)localObject2).append("Number too large: ");
+        ((StringBuilder)localObject2).append(((c)localObject1).p());
+        throw new NumberFormatException(((StringBuilder)localObject2).toString());
+        if (k != 0)
+        {
+          n = 1;
+        }
+        else
+        {
+          localObject1 = new StringBuilder();
+          ((StringBuilder)localObject1).append("Expected leading [0-9a-fA-F] character but was 0x");
+          ((StringBuilder)localObject1).append(Integer.toHexString(n));
+          throw new NumberFormatException(((StringBuilder)localObject1).toString());
+        }
+        if (m == i1)
+        {
+          c = ((o)localObject1).b();
+          p.a((o)localObject1);
+        }
+        else
+        {
+          b = m;
+        }
+        if (n != 0) {
+          break;
+        }
+        l1 = l2;
+        i = k;
+        j = n;
+      } while (c != null);
+      d -= k;
+      return l2;
+    }
+    Object localObject1 = new IllegalStateException("size == 0");
+    for (;;)
+    {
+      throw ((Throwable)localObject1);
+    }
+  }
+  
+  public InputStream k()
+  {
+    return new a();
+  }
+  
+  public void m()
+  {
+    try
+    {
+      skip(d);
+      return;
+    }
+    catch (EOFException localEOFException)
+    {
+      throw new AssertionError(localEOFException);
+    }
+  }
+  
+  public long n()
+  {
+    long l2 = d;
+    if (l2 == 0L) {
+      return 0L;
+    }
+    o localO = c.g;
+    int i = c;
+    long l1 = l2;
+    if (i < 8192)
+    {
+      l1 = l2;
+      if (e) {
+        l1 = l2 - (i - b);
+      }
+    }
+    return l1;
+  }
+  
+  public f o()
+  {
+    return new f(g());
+  }
+  
+  public String p()
+  {
+    try
+    {
+      String str = a(d, u.a);
+      return str;
+    }
+    catch (EOFException localEOFException)
+    {
+      throw new AssertionError(localEOFException);
+    }
+  }
+  
+  public long q()
+  {
+    return d;
+  }
+  
+  public f r()
+  {
+    long l = d;
+    if (l <= 2147483647L) {
+      return a((int)l);
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("size > Integer.MAX_VALUE: ");
+    localStringBuilder.append(d);
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  public int read(ByteBuffer paramByteBuffer)
+  {
+    o localO = c;
+    if (localO == null) {
+      return -1;
+    }
+    int i = Math.min(paramByteBuffer.remaining(), c - b);
+    paramByteBuffer.put(a, b, i);
+    b += i;
+    d -= i;
+    if (b == c)
+    {
+      c = localO.b();
+      p.a(localO);
+    }
+    return i;
+  }
+  
+  public byte readByte()
+  {
+    long l = d;
+    if (l != 0L)
+    {
+      o localO = c;
+      int i = b;
+      int j = c;
+      byte[] arrayOfByte = a;
+      int k = i + 1;
+      byte b = arrayOfByte[i];
+      d = (l - 1L);
+      if (k == j)
+      {
+        c = localO.b();
+        p.a(localO);
+        return b;
+      }
+      b = k;
+      return b;
+    }
+    throw new IllegalStateException("size == 0");
+  }
+  
+  public void readFully(byte[] paramArrayOfByte)
+  {
+    int i = 0;
+    while (i < paramArrayOfByte.length)
+    {
+      int j = a(paramArrayOfByte, i, paramArrayOfByte.length - i);
+      if (j != -1) {
+        i += j;
+      } else {
+        throw new EOFException();
+      }
+    }
+  }
+  
+  public int readInt()
+  {
+    long l = d;
+    if (l >= 4L)
+    {
+      localObject = c;
+      int j = b;
+      int i = c;
+      if (i - j < 4) {
+        return (readByte() & 0xFF) << 24 | (readByte() & 0xFF) << 16 | (readByte() & 0xFF) << 8 | readByte() & 0xFF;
+      }
+      byte[] arrayOfByte = a;
+      int k = j + 1;
+      j = arrayOfByte[j];
+      int n = k + 1;
+      k = arrayOfByte[k];
+      int m = n + 1;
+      int i1 = arrayOfByte[n];
+      n = m + 1;
+      j = (j & 0xFF) << 24 | (k & 0xFF) << 16 | (i1 & 0xFF) << 8 | arrayOfByte[m] & 0xFF;
+      d = (l - 4L);
+      if (n == i)
+      {
+        c = ((o)localObject).b();
+        p.a((o)localObject);
+        return j;
+      }
+      b = n;
+      return j;
+    }
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("size < 4: ");
+    ((StringBuilder)localObject).append(d);
+    throw new IllegalStateException(((StringBuilder)localObject).toString());
+  }
+  
+  public short readShort()
+  {
+    long l = d;
+    if (l >= 2L)
+    {
+      localObject = c;
+      int k = b;
+      int i = c;
+      if (i - k < 2) {
+        return (short)((readByte() & 0xFF) << 8 | readByte() & 0xFF);
+      }
+      byte[] arrayOfByte = a;
+      int j = k + 1;
+      k = arrayOfByte[k];
+      int m = j + 1;
+      j = arrayOfByte[j];
+      d = (l - 2L);
+      if (m == i)
+      {
+        c = ((o)localObject).b();
+        p.a((o)localObject);
+      }
+      else
+      {
+        b = m;
+      }
+      return (short)((k & 0xFF) << 8 | j & 0xFF);
+    }
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("size < 2: ");
+    ((StringBuilder)localObject).append(d);
+    throw new IllegalStateException(((StringBuilder)localObject).toString());
+  }
+  
+  public void skip(long paramLong)
+  {
+    while (paramLong > 0L)
+    {
+      o localO = c;
+      if (localO != null)
+      {
+        int i = (int)Math.min(paramLong, c - b);
+        d -= i;
+        paramLong -= i;
+        localO = c;
+        b += i;
+        if (b == c)
+        {
+          localO = c;
+          c = localO.b();
+          p.a(localO);
+        }
+      }
+      else
+      {
+        throw new EOFException();
+      }
+    }
+  }
+  
+  public String toString()
+  {
+    return r().toString();
+  }
+  
+  public int write(ByteBuffer paramByteBuffer)
+  {
+    if (paramByteBuffer != null)
+    {
+      int j = paramByteBuffer.remaining();
+      int i = j;
+      while (i > 0)
+      {
+        o localO = b(1);
+        int k = Math.min(i, 8192 - c);
+        paramByteBuffer.get(a, c, k);
+        i -= k;
+        c += k;
+      }
+      d += j;
+      return j;
+    }
+    paramByteBuffer = new IllegalArgumentException("source == null");
+    for (;;)
+    {
+      throw paramByteBuffer;
+    }
+  }
+  
+  public c write(byte[] paramArrayOfByte)
+  {
+    if (paramArrayOfByte != null)
+    {
+      write(paramArrayOfByte, 0, paramArrayOfByte.length);
+      return this;
+    }
+    throw new IllegalArgumentException("source == null");
+  }
+  
+  public c write(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
+  {
+    if (paramArrayOfByte != null)
+    {
+      u.a(paramArrayOfByte.length, paramInt1, paramInt2);
+      int i = paramInt1 + paramInt2;
+      while (paramInt1 < i)
+      {
+        o localO = b(1);
+        int j = Math.min(i - paramInt1, 8192 - c);
+        System.arraycopy(paramArrayOfByte, paramInt1, a, c, j);
+        paramInt1 += j;
+        c += j;
+      }
+      d += paramInt2;
+      return this;
+    }
+    paramArrayOfByte = new IllegalArgumentException("source == null");
+    for (;;)
+    {
+      throw paramArrayOfByte;
+    }
+  }
+  
+  public c writeByte(int paramInt)
+  {
+    o localO = b(1);
+    byte[] arrayOfByte = a;
+    int i = c;
+    c = (i + 1);
+    arrayOfByte[i] = ((byte)paramInt);
+    d += 1L;
+    return this;
+  }
+  
+  public c writeInt(int paramInt)
+  {
+    o localO = b(4);
+    byte[] arrayOfByte = a;
+    int j = c;
+    int i = j + 1;
+    arrayOfByte[j] = ((byte)(paramInt >>> 24 & 0xFF));
+    j = i + 1;
+    arrayOfByte[i] = ((byte)(paramInt >>> 16 & 0xFF));
+    i = j + 1;
+    arrayOfByte[j] = ((byte)(paramInt >>> 8 & 0xFF));
+    arrayOfByte[i] = ((byte)(paramInt & 0xFF));
+    c = (i + 1);
+    d += 4L;
+    return this;
+  }
+  
+  public c writeShort(int paramInt)
+  {
+    o localO = b(2);
+    byte[] arrayOfByte = a;
+    int i = c;
+    int j = i + 1;
+    arrayOfByte[i] = ((byte)(paramInt >>> 8 & 0xFF));
+    arrayOfByte[j] = ((byte)(paramInt & 0xFF));
+    c = (j + 1);
+    d += 2L;
+    return this;
+  }
+  
+  class a
+    extends InputStream
+  {
+    a() {}
+    
+    public int available()
+    {
+      return (int)Math.min(d, 2147483647L);
+    }
+    
+    public void close() {}
+    
+    public int read()
+    {
+      c localC = c.this;
+      if (d > 0L) {
+        return localC.readByte() & 0xFF;
+      }
+      return -1;
+    }
+    
+    public int read(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
+    {
+      return a(paramArrayOfByte, paramInt1, paramInt2);
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(c.this);
+      localStringBuilder.append(".inputStream()");
+      return localStringBuilder.toString();
+    }
+  }
+}

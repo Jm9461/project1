@@ -1,0 +1,201 @@
+package com.lawyer_smartCalendar.a;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.lawyer_smartCalendar.activity.CaseDetailActivity;
+import com.lawyer_smartCalendar.activity.SearchActivity;
+import com.lawyer_smartCalendar.b.a;
+import com.lawyer_smartCalendar.d.b;
+import com.lawyer_smartCalendar.utils.i;
+import java.util.List;
+
+public class f
+  extends RecyclerView.g<a>
+{
+  private Context c;
+  private List<b> d;
+  private i e;
+  private com.lawyer_smartCalendar.utils.f f;
+  
+  public f(Context paramContext, List<b> paramList)
+  {
+    a(true);
+    c = paramContext;
+    d = paramList;
+    f = new com.lawyer_smartCalendar.utils.f(c);
+    e = new i(c);
+  }
+  
+  public int a()
+  {
+    return d.size();
+  }
+  
+  public long a(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    String str = "";
+    Object localObject = ((b)d.get(paramInt)).o();
+    int i = ((String)localObject).hashCode();
+    int j = 0;
+    switch (i)
+    {
+    }
+    for (;;)
+    {
+      break;
+      if (((String)localObject).equals("Executive"))
+      {
+        i = 1;
+        break label141;
+        if (((String)localObject).equals("Bank"))
+        {
+          i = 3;
+          break label141;
+          if (((String)localObject).equals("Challenge"))
+          {
+            i = 2;
+            break label141;
+            if (((String)localObject).equals("Normal"))
+            {
+              i = 0;
+              break label141;
+            }
+          }
+        }
+      }
+    }
+    i = -1;
+    label141:
+    if (i != 0)
+    {
+      if (i != 1)
+      {
+        if (i != 2)
+        {
+          if (i == 3) {
+            str = "?????";
+          }
+        }
+        else {
+          str = "???????/??????";
+        }
+      }
+      else {
+        str = "??????";
+      }
+    }
+    else {
+      str = "????";
+    }
+    v.setText(str);
+    v.setTypeface(f.a());
+    e.n();
+    str = e.b(((b)d.get(paramInt)).g());
+    e.close();
+    localObject = w;
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("????: ");
+    localStringBuilder.append(str);
+    ((TextView)localObject).setText(localStringBuilder.toString());
+    str = "";
+    localObject = ((b)d.get(paramInt)).m().toString();
+    i = ((String)localObject).hashCode();
+    if (i != -1808122976)
+    {
+      break label334;
+      if (i != -609016686) {
+        break label368;
+      }
+    }
+    label334:
+    while (!((String)localObject).equals("Stream"))
+    {
+      while (!((String)localObject).equals("Finished")) {}
+      i = 1;
+      break;
+    }
+    i = j;
+    break label370;
+    label368:
+    i = -1;
+    label370:
+    if (i != 0)
+    {
+      if (i == 1)
+      {
+        str = "??????";
+        z.setBackgroundResource(2131230827);
+      }
+    }
+    else
+    {
+      str = "??????";
+      z.setBackgroundResource(2131230826);
+      y.setTextColor(-1);
+    }
+    y.setText(str);
+    x.setText(a.a(Long.valueOf(Long.parseLong(((b)d.get(paramInt)).j()))));
+    w.setTypeface(f.a());
+    x.setTypeface(f.a());
+  }
+  
+  public int b(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(paramViewGroup.getContext()).inflate(2131492941, paramViewGroup, false));
+  }
+  
+  public class a
+    extends RecyclerView.d0
+  {
+    TextView v;
+    TextView w;
+    TextView x;
+    TextView y;
+    LinearLayout z;
+    
+    public a(View paramView)
+    {
+      super();
+      w = ((TextView)paramView.findViewById(2131296858));
+      x = ((TextView)paramView.findViewById(2131296859));
+      y = ((TextView)paramView.findViewById(2131296871));
+      v = ((TextView)paramView.findViewById(2131296873));
+      z = ((LinearLayout)paramView.findViewById(2131296560));
+      paramView.setOnClickListener(new a(f.this));
+    }
+    
+    class a
+      implements View.OnClickListener
+    {
+      a(f paramF) {}
+      
+      public void onClick(View paramView)
+      {
+        paramView = new Intent(f.a(f.this), CaseDetailActivity.class);
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append(((b)f.b(f.this).get(f())).k());
+        localStringBuilder.append("");
+        paramView.putExtra("id", localStringBuilder.toString());
+        ((SearchActivity)f.a(f.this)).c(paramView);
+      }
+    }
+  }
+}

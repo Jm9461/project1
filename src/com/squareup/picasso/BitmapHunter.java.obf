@@ -1,0 +1,1043 @@
+package com.squareup.picasso;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.Matrix;
+import android.net.NetworkInfo;
+import android.os.Build.VERSION;
+import android.os.Handler;
+import f.e;
+import f.l;
+import f.s;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
+
+class c
+  implements Runnable
+{
+  private static final Object v = new Object();
+  private static final ThreadLocal<StringBuilder> w = new a();
+  private static final AtomicInteger x = new AtomicInteger();
+  private static final y y = new b();
+  final int c = x.incrementAndGet();
+  final t d;
+  final i e;
+  final d f;
+  final a0 g;
+  final String h;
+  final w i;
+  final int j;
+  int k;
+  final y l;
+  a m;
+  List<a> n;
+  Bitmap o;
+  Future<?> p;
+  t.e q;
+  Exception r;
+  int s;
+  int t;
+  t.f u;
+  
+  c(t paramT, i paramI, d paramD, a0 paramA0, a paramA, y paramY)
+  {
+    d = paramT;
+    e = paramI;
+    f = paramD;
+    g = paramA0;
+    m = paramA;
+    h = paramA.b();
+    i = paramA.g();
+    u = paramA.f();
+    j = paramA.c();
+    k = paramA.d();
+    l = paramY;
+    t = paramY.a();
+  }
+  
+  static int a(int paramInt)
+  {
+    switch (paramInt)
+    {
+    default: 
+      return 0;
+    case 7: 
+    case 8: 
+      return 270;
+    case 5: 
+    case 6: 
+      return 90;
+    }
+    return 180;
+  }
+  
+  static Bitmap a(w paramW, Bitmap paramBitmap, int paramInt)
+  {
+    int i4 = paramBitmap.getWidth();
+    int i5 = paramBitmap.getHeight();
+    boolean bool = m;
+    Object localObject1 = new Matrix();
+    int i1;
+    int i2;
+    if ((!paramW.e()) && (paramInt == 0))
+    {
+      i1 = 0;
+      paramInt = 0;
+      i2 = i4;
+    }
+    else
+    {
+      i2 = h;
+      i1 = i;
+      float f1 = n;
+      float f2;
+      if (f1 != 0.0F)
+      {
+        double d1 = Math.cos(Math.toRadians(f1));
+        double d2 = Math.sin(Math.toRadians(f1));
+        double d3;
+        double d4;
+        double d5;
+        double d6;
+        double d7;
+        if (q)
+        {
+          ((Matrix)localObject1).setRotate(f1, o, p);
+          f1 = o;
+          d3 = f1;
+          Double.isNaN(d3);
+          f2 = p;
+          d4 = f2;
+          Double.isNaN(d4);
+          d3 = d3 * (1.0D - d1) + d4 * d2;
+          d4 = f2;
+          Double.isNaN(d4);
+          d5 = f1;
+          Double.isNaN(d5);
+          d4 = d4 * (1.0D - d1) - d5 * d2;
+          i1 = h;
+          d5 = i1;
+          Double.isNaN(d5);
+          d6 = d5 * d1 + d3;
+          d5 = i1;
+          Double.isNaN(d5);
+          d5 = d5 * d2 + d4;
+          d7 = i1;
+          Double.isNaN(d7);
+          i2 = i;
+          double d8 = i2;
+          Double.isNaN(d8);
+          d7 = d7 * d1 + d3 - d8 * d2;
+          d8 = i1;
+          Double.isNaN(d8);
+          double d9 = i2;
+          Double.isNaN(d9);
+          d8 = d8 * d2 + d4 + d9 * d1;
+          d9 = i2;
+          Double.isNaN(d9);
+          d2 = d3 - d9 * d2;
+          d9 = i2;
+          Double.isNaN(d9);
+          d9 = d9 * d1 + d4;
+          d1 = Math.max(d2, Math.max(d7, Math.max(d3, d6)));
+          d2 = Math.min(d2, Math.min(d7, Math.min(d3, d6)));
+          d3 = Math.max(d9, Math.max(d8, Math.max(d4, d5)));
+          d4 = Math.min(d9, Math.min(d8, Math.min(d4, d5)));
+          i2 = (int)Math.floor(d1 - d2);
+          i1 = (int)Math.floor(d3 - d4);
+        }
+        else
+        {
+          ((Matrix)localObject1).setRotate(f1);
+          i1 = h;
+          d3 = i1;
+          Double.isNaN(d3);
+          d4 = d3 * d1;
+          d3 = i1;
+          Double.isNaN(d3);
+          d3 *= d2;
+          d5 = i1;
+          Double.isNaN(d5);
+          i2 = i;
+          d6 = i2;
+          Double.isNaN(d6);
+          d5 = d5 * d1 - d6 * d2;
+          d6 = i1;
+          Double.isNaN(d6);
+          d7 = i2;
+          Double.isNaN(d7);
+          d6 = d6 * d2 + d7 * d1;
+          d7 = i2;
+          Double.isNaN(d7);
+          d2 = -(d7 * d2);
+          d7 = i2;
+          Double.isNaN(d7);
+          d7 *= d1;
+          d1 = Math.max(d2, Math.max(d5, Math.max(0.0D, d4)));
+          d2 = Math.min(d2, Math.min(d5, Math.min(0.0D, d4)));
+          d4 = Math.max(d7, Math.max(d6, Math.max(0.0D, d3)));
+          d3 = Math.min(d7, Math.min(d6, Math.min(0.0D, d3)));
+          i2 = (int)Math.floor(d1 - d2);
+          i1 = (int)Math.floor(d4 - d3);
+        }
+      }
+      int i8 = i4;
+      int i3 = i5;
+      int i9 = i5;
+      int i12 = 0;
+      int i10 = 0;
+      int i13 = 0;
+      int i11 = 0;
+      localObject2 = localObject1;
+      int i6 = i1;
+      int i7 = i2;
+      if (paramInt != 0)
+      {
+        i6 = a(paramInt);
+        int i14 = b(paramInt);
+        i5 = i1;
+        paramInt = i2;
+        if (i6 != 0)
+        {
+          ((Matrix)localObject2).preRotate(i6);
+          if (i6 != 90)
+          {
+            i5 = i1;
+            paramInt = i2;
+            if (i6 != 270) {}
+          }
+          else
+          {
+            paramInt = i1;
+            i5 = i2;
+          }
+        }
+        i6 = i5;
+        i7 = paramInt;
+        if (i14 != 1)
+        {
+          ((Matrix)localObject2).postScale(i14, 1.0F);
+          i7 = paramInt;
+          i6 = i5;
+        }
+      }
+      float f3;
+      if (j)
+      {
+        if (i7 != 0) {
+          f1 = i7 / i8;
+        } else {
+          f1 = i6 / i9;
+        }
+        i5 = i8;
+        if (i6 != 0)
+        {
+          f2 = i6;
+          f3 = i9;
+        }
+        else
+        {
+          f2 = i7;
+          f3 = i5;
+        }
+        f2 /= f3;
+        if (f1 > f2)
+        {
+          i1 = (int)Math.ceil(i9 * (f2 / f1));
+          paramInt = k;
+          if ((paramInt & 0x30) == 48) {
+            paramInt = 0;
+          } else if ((paramInt & 0x50) == 80) {
+            paramInt = i9 - i1;
+          } else {
+            paramInt = (i9 - i1) / 2;
+          }
+          f2 = i6 / i1;
+          i3 = paramInt;
+          paramInt = i1;
+          i1 = i11;
+          i2 = i4;
+        }
+        else if (f1 < f2)
+        {
+          i2 = (int)Math.ceil(i5 * (f1 / f2));
+          paramInt = k;
+          if ((paramInt & 0x3) == 3) {
+            paramInt = 0;
+          } else if ((paramInt & 0x5) == 5) {
+            paramInt = i5 - i2;
+          } else {
+            paramInt = (i5 - i2) / 2;
+          }
+          f1 = i7 / i2;
+          i1 = paramInt;
+          paramInt = i3;
+          i3 = i10;
+        }
+        else
+        {
+          f1 = f2;
+          f3 = f2;
+          i1 = 0;
+          i2 = i5;
+          paramInt = i3;
+          i3 = i10;
+          f2 = f1;
+          f1 = f3;
+        }
+        if (a(bool, i5, i9, i7, i6)) {
+          ((Matrix)localObject2).preScale(f1, f2);
+        }
+        i5 = paramInt;
+        paramInt = i3;
+      }
+      else
+      {
+        if (l)
+        {
+          if (i7 != 0)
+          {
+            f1 = i7;
+            f2 = i8;
+          }
+          else
+          {
+            f1 = i6;
+            f2 = i9;
+          }
+          f3 = f1 / f2;
+          if (i6 != 0)
+          {
+            f1 = i6;
+            f2 = i9;
+          }
+          else
+          {
+            f1 = i7;
+            f2 = i8;
+          }
+          f1 /= f2;
+          if (f3 < f1) {
+            f1 = f3;
+          }
+          if (a(bool, i8, i9, i7, i6)) {
+            ((Matrix)localObject2).preScale(f1, f1);
+          }
+        }
+        else
+        {
+          if ((i7 != 0) || (i6 != 0)) {
+            break label1328;
+          }
+        }
+        label1328:
+        while ((i7 == i8) && (i6 == i9))
+        {
+          i1 = i13;
+          paramInt = i12;
+          i2 = i4;
+          i5 = i3;
+          break;
+        }
+        if (i7 != 0)
+        {
+          f1 = i7;
+          f2 = i8;
+        }
+        else
+        {
+          f1 = i6;
+          f2 = i9;
+        }
+        f3 = f1 / f2;
+        if (i6 != 0)
+        {
+          f1 = i6;
+          f2 = i9;
+        }
+        else
+        {
+          f1 = i7;
+          f2 = i8;
+        }
+        f1 /= f2;
+        i1 = i13;
+        paramInt = i12;
+        i2 = i4;
+        i5 = i3;
+        if (a(bool, i8, i9, i7, i6))
+        {
+          ((Matrix)localObject2).preScale(f3, f1);
+          i5 = i3;
+          i2 = i4;
+          paramInt = i12;
+          i1 = i13;
+        }
+      }
+    }
+    Object localObject2 = Bitmap.createBitmap(paramBitmap, i1, paramInt, i2, i5, (Matrix)localObject1, true);
+    paramW = paramBitmap;
+    localObject1 = paramW;
+    if (localObject2 != paramW)
+    {
+      paramBitmap.recycle();
+      localObject1 = localObject2;
+    }
+    return localObject1;
+  }
+  
+  static Bitmap a(s paramS, w paramW)
+  {
+    paramS = l.a(paramS);
+    boolean bool1 = d0.a(paramS);
+    int i1;
+    if ((r) && (Build.VERSION.SDK_INT < 21)) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    BitmapFactory.Options localOptions = y.b(paramW);
+    boolean bool2 = y.a(localOptions);
+    if ((!bool1) && (i1 == 0))
+    {
+      Object localObject = paramS.k();
+      paramS = (s)localObject;
+      if (bool2)
+      {
+        localObject = new n((InputStream)localObject);
+        paramS = (s)localObject;
+        ((n)localObject).a(false);
+        long l1 = ((n)localObject).a(1024);
+        BitmapFactory.decodeStream(paramS, null, localOptions);
+        y.a(h, i, localOptions, paramW);
+        ((n)localObject).g(l1);
+        ((n)localObject).a(true);
+      }
+      paramS = BitmapFactory.decodeStream(paramS, null, localOptions);
+      if (paramS != null) {
+        return paramS;
+      }
+      throw new IOException("Failed to decode stream.");
+    }
+    paramS = paramS.g();
+    if (bool2)
+    {
+      BitmapFactory.decodeByteArray(paramS, 0, paramS.length, localOptions);
+      y.a(h, i, localOptions, paramW);
+    }
+    return BitmapFactory.decodeByteArray(paramS, 0, paramS.length, localOptions);
+  }
+  
+  static Bitmap a(final List<c0> paramList, Bitmap paramBitmap)
+  {
+    int i1 = 0;
+    int i2 = paramList.size();
+    while (i1 < i2)
+    {
+      c0 localC0 = (c0)paramList.get(i1);
+      try
+      {
+        Bitmap localBitmap = localC0.a(paramBitmap);
+        if (localBitmap == null)
+        {
+          paramBitmap = new StringBuilder();
+          paramBitmap.append("Transformation ");
+          paramBitmap.append(localC0.a());
+          paramBitmap.append(" returned null after ");
+          paramBitmap.append(i1);
+          paramBitmap = paramBitmap.append(" previous transformation(s).\n\nTransformation list:\n");
+          paramList = paramList.iterator();
+          while (paramList.hasNext())
+          {
+            paramBitmap.append(((c0)paramList.next()).a());
+            paramBitmap.append('\n');
+          }
+          t.p.post(new d(paramBitmap));
+          return null;
+        }
+        if ((localBitmap == paramBitmap) && (paramBitmap.isRecycled()))
+        {
+          t.p.post(new e(localC0));
+          return null;
+        }
+        if ((localBitmap != paramBitmap) && (!paramBitmap.isRecycled()))
+        {
+          t.p.post(new f(localC0));
+          return null;
+        }
+        paramBitmap = localBitmap;
+        i1 += 1;
+      }
+      catch (RuntimeException paramList)
+      {
+        t.p.post(new c(localC0, paramList));
+        return null;
+      }
+    }
+    return paramBitmap;
+  }
+  
+  static c a(t paramT, i paramI, d paramD, a0 paramA0, a paramA)
+  {
+    w localW = paramA.g();
+    List localList = paramT.a();
+    int i1 = 0;
+    int i2 = localList.size();
+    while (i1 < i2)
+    {
+      y localY = (y)localList.get(i1);
+      if (localY.a(localW)) {
+        return new c(paramT, paramI, paramD, paramA0, paramA, localY);
+      }
+      i1 += 1;
+    }
+    return new c(paramT, paramI, paramD, paramA0, paramA, y);
+  }
+  
+  static void a(w paramW)
+  {
+    paramW = paramW.a();
+    StringBuilder localStringBuilder = (StringBuilder)w.get();
+    localStringBuilder.ensureCapacity("Picasso-".length() + paramW.length());
+    localStringBuilder.replace("Picasso-".length(), localStringBuilder.length(), paramW);
+    Thread.currentThread().setName(localStringBuilder.toString());
+  }
+  
+  private static boolean a(boolean paramBoolean, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    return (!paramBoolean) || ((paramInt3 != 0) && (paramInt1 > paramInt3)) || ((paramInt4 != 0) && (paramInt2 > paramInt4));
+  }
+  
+  static int b(int paramInt)
+  {
+    if ((paramInt != 2) && (paramInt != 7) && (paramInt != 4) && (paramInt != 5)) {
+      return 1;
+    }
+    return -1;
+  }
+  
+  private t.f o()
+  {
+    Object localObject1 = t.f.c;
+    Object localObject2 = n;
+    int i2 = 0;
+    int i1;
+    if ((localObject2 != null) && (!((List)localObject2).isEmpty())) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    if ((m != null) || (i1 != 0)) {
+      i2 = 1;
+    }
+    if (i2 == 0) {
+      return localObject1;
+    }
+    localObject2 = m;
+    if (localObject2 != null) {
+      localObject1 = ((a)localObject2).f();
+    }
+    localObject2 = localObject1;
+    if (i1 != 0)
+    {
+      i1 = 0;
+      i2 = n.size();
+      for (;;)
+      {
+        localObject2 = localObject1;
+        if (i1 >= i2) {
+          break;
+        }
+        t.f localF = ((a)n.get(i1)).f();
+        localObject2 = localObject1;
+        if (localF.ordinal() > ((Enum)localObject1).ordinal()) {
+          localObject2 = localF;
+        }
+        i1 += 1;
+        localObject1 = localObject2;
+      }
+    }
+    return localObject2;
+  }
+  
+  void a(a paramA)
+  {
+    boolean bool = d.n;
+    w localW = b;
+    if (m == null)
+    {
+      m = paramA;
+      if (bool)
+      {
+        paramA = n;
+        if ((paramA != null) && (!paramA.isEmpty()))
+        {
+          d0.a("Hunter", "joined", localW.d(), d0.a(this, "to "));
+          return;
+        }
+        d0.a("Hunter", "joined", localW.d(), "to empty hunter");
+      }
+      return;
+    }
+    if (n == null) {
+      n = new ArrayList(3);
+    }
+    n.add(paramA);
+    if (bool) {
+      d0.a("Hunter", "joined", localW.d(), d0.a(this, "to "));
+    }
+    paramA = paramA.f();
+    if (paramA.ordinal() > u.ordinal()) {
+      u = paramA;
+    }
+  }
+  
+  boolean a()
+  {
+    if (m == null)
+    {
+      Object localObject = n;
+      if ((localObject == null) || (((List)localObject).isEmpty()))
+      {
+        localObject = p;
+        if ((localObject != null) && (((Future)localObject).cancel(false))) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
+  boolean a(boolean paramBoolean, NetworkInfo paramNetworkInfo)
+  {
+    int i1;
+    if (t > 0) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    if (i1 == 0) {
+      return false;
+    }
+    t -= 1;
+    return l.a(paramBoolean, paramNetworkInfo);
+  }
+  
+  a b()
+  {
+    return m;
+  }
+  
+  void b(a paramA)
+  {
+    boolean bool = false;
+    if (m == paramA)
+    {
+      m = null;
+      bool = true;
+    }
+    else
+    {
+      List localList = n;
+      if (localList != null) {
+        bool = localList.remove(paramA);
+      }
+    }
+    if ((bool) && (paramA.f() == u)) {
+      u = o();
+    }
+    if (d.n) {
+      d0.a("Hunter", "removed", b.d(), d0.a(this, "from "));
+    }
+  }
+  
+  List<a> c()
+  {
+    return n;
+  }
+  
+  w d()
+  {
+    return i;
+  }
+  
+  Exception e()
+  {
+    return r;
+  }
+  
+  String f()
+  {
+    return h;
+  }
+  
+  t.e g()
+  {
+    return q;
+  }
+  
+  int h()
+  {
+    return j;
+  }
+  
+  t i()
+  {
+    return d;
+  }
+  
+  t.f j()
+  {
+    return u;
+  }
+  
+  Bitmap k()
+  {
+    return o;
+  }
+  
+  Bitmap l()
+  {
+    Object localObject1 = null;
+    Object localObject4;
+    if (p.a(j))
+    {
+      localObject4 = f.a(h);
+      localObject1 = localObject4;
+      if (localObject4 != null)
+      {
+        g.b();
+        q = t.e.d;
+        if (d.n) {
+          d0.a("Hunter", "decoded", i.d(), "from cache");
+        }
+        return localObject4;
+      }
+    }
+    int i1;
+    if (t == 0) {
+      i1 = fc;
+    } else {
+      i1 = k;
+    }
+    k = i1;
+    ??? = l.a(i, k);
+    if (??? != null)
+    {
+      q = ((y.a)???).c();
+      s = ((y.a)???).b();
+      localObject4 = ((y.a)???).a();
+      localObject1 = localObject4;
+      if (localObject4 == null) {
+        localObject4 = ((y.a)???).d();
+      }
+    }
+    Object localObject5;
+    try
+    {
+      localObject1 = a((s)localObject4, i);
+      try
+      {
+        ((s)localObject4).close();
+      }
+      catch (IOException localIOException1) {}
+      d0.a("Hunter", "decoded", i.d());
+    }
+    finally
+    {
+      try
+      {
+        localIOException1.close();
+      }
+      catch (IOException localIOException2) {}
+    }
+    g.a(localBitmap);
+    if (!i.f())
+    {
+      localObject5 = localBitmap;
+      if (s == 0) {}
+    }
+    else
+    {
+      synchronized (v)
+      {
+        if (!i.e())
+        {
+          localObject5 = localBitmap;
+          if (s == 0) {}
+        }
+        else
+        {
+          localObject2 = a(i, localBitmap, s);
+          localObject5 = localObject2;
+          if (d.n)
+          {
+            d0.a("Hunter", "transformed", i.d());
+            localObject5 = localObject2;
+          }
+        }
+        Object localObject2 = localObject5;
+        if (i.b())
+        {
+          localObject5 = a(i.g, (Bitmap)localObject5);
+          localObject2 = localObject5;
+          if (d.n)
+          {
+            d0.a("Hunter", "transformed", i.d(), "from custom transformations");
+            localObject2 = localObject5;
+          }
+        }
+        localObject5 = localObject2;
+        if (localObject2 != null)
+        {
+          g.b((Bitmap)localObject2);
+          return localObject2;
+        }
+      }
+    }
+    return localObject5;
+  }
+  
+  boolean m()
+  {
+    Future localFuture = p;
+    return (localFuture != null) && (localFuture.isCancelled());
+  }
+  
+  boolean n()
+  {
+    return l.b();
+  }
+  
+  /* Error */
+  public void run()
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: getfield 111	com/squareup/picasso/c:i	Lcom/squareup/picasso/w;
+    //   4: invokestatic 582	com/squareup/picasso/c:a	(Lcom/squareup/picasso/w;)V
+    //   7: aload_0
+    //   8: getfield 90	com/squareup/picasso/c:d	Lcom/squareup/picasso/t;
+    //   11: getfield 438	com/squareup/picasso/t:n	Z
+    //   14: ifeq +16 -> 30
+    //   17: ldc_w 442
+    //   20: ldc_w 584
+    //   23: aload_0
+    //   24: invokestatic 587	com/squareup/picasso/d0:a	(Lcom/squareup/picasso/c;)Ljava/lang/String;
+    //   27: invokestatic 550	com/squareup/picasso/d0:a	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    //   30: aload_0
+    //   31: aload_0
+    //   32: invokevirtual 589	com/squareup/picasso/c:l	()Landroid/graphics/Bitmap;
+    //   35: putfield 496	com/squareup/picasso/c:o	Landroid/graphics/Bitmap;
+    //   38: aload_0
+    //   39: getfield 496	com/squareup/picasso/c:o	Landroid/graphics/Bitmap;
+    //   42: ifnonnull +14 -> 56
+    //   45: aload_0
+    //   46: getfield 92	com/squareup/picasso/c:e	Lcom/squareup/picasso/i;
+    //   49: aload_0
+    //   50: invokevirtual 594	com/squareup/picasso/i:b	(Lcom/squareup/picasso/c;)V
+    //   53: goto +103 -> 156
+    //   56: aload_0
+    //   57: getfield 92	com/squareup/picasso/c:e	Lcom/squareup/picasso/i;
+    //   60: aload_0
+    //   61: invokevirtual 596	com/squareup/picasso/i:a	(Lcom/squareup/picasso/c;)V
+    //   64: goto +92 -> 156
+    //   67: astore_1
+    //   68: goto +135 -> 203
+    //   71: astore_1
+    //   72: aload_0
+    //   73: aload_1
+    //   74: putfield 489	com/squareup/picasso/c:r	Ljava/lang/Exception;
+    //   77: aload_0
+    //   78: getfield 92	com/squareup/picasso/c:e	Lcom/squareup/picasso/i;
+    //   81: aload_0
+    //   82: invokevirtual 594	com/squareup/picasso/i:b	(Lcom/squareup/picasso/c;)V
+    //   85: goto +71 -> 156
+    //   88: astore_1
+    //   89: new 598	java/io/StringWriter
+    //   92: dup
+    //   93: invokespecial 599	java/io/StringWriter:<init>	()V
+    //   96: astore_2
+    //   97: aload_0
+    //   98: getfield 96	com/squareup/picasso/c:g	Lcom/squareup/picasso/a0;
+    //   101: invokevirtual 602	com/squareup/picasso/a0:a	()Lcom/squareup/picasso/b0;
+    //   104: new 604	java/io/PrintWriter
+    //   107: dup
+    //   108: aload_2
+    //   109: invokespecial 607	java/io/PrintWriter:<init>	(Ljava/io/Writer;)V
+    //   112: invokevirtual 612	com/squareup/picasso/b0:a	(Ljava/io/PrintWriter;)V
+    //   115: aload_0
+    //   116: new 304	java/lang/RuntimeException
+    //   119: dup
+    //   120: aload_2
+    //   121: invokevirtual 613	java/io/StringWriter:toString	()Ljava/lang/String;
+    //   124: aload_1
+    //   125: invokespecial 616	java/lang/RuntimeException:<init>	(Ljava/lang/String;Ljava/lang/Throwable;)V
+    //   128: putfield 489	com/squareup/picasso/c:r	Ljava/lang/Exception;
+    //   131: aload_0
+    //   132: getfield 92	com/squareup/picasso/c:e	Lcom/squareup/picasso/i;
+    //   135: aload_0
+    //   136: invokevirtual 594	com/squareup/picasso/i:b	(Lcom/squareup/picasso/c;)V
+    //   139: goto +17 -> 156
+    //   142: astore_1
+    //   143: aload_0
+    //   144: aload_1
+    //   145: putfield 489	com/squareup/picasso/c:r	Ljava/lang/Exception;
+    //   148: aload_0
+    //   149: getfield 92	com/squareup/picasso/c:e	Lcom/squareup/picasso/i;
+    //   152: aload_0
+    //   153: invokevirtual 618	com/squareup/picasso/i:c	(Lcom/squareup/picasso/c;)V
+    //   156: invokestatic 415	java/lang/Thread:currentThread	()Ljava/lang/Thread;
+    //   159: ldc_w 620
+    //   162: invokevirtual 421	java/lang/Thread:setName	(Ljava/lang/String;)V
+    //   165: return
+    //   166: astore_1
+    //   167: aload_1
+    //   168: getfield 622	com/squareup/picasso/r$b:d	I
+    //   171: invokestatic 623	com/squareup/picasso/q:a	(I)Z
+    //   174: ifeq +13 -> 187
+    //   177: aload_1
+    //   178: getfield 624	com/squareup/picasso/r$b:c	I
+    //   181: sipush 504
+    //   184: if_icmpeq +8 -> 192
+    //   187: aload_0
+    //   188: aload_1
+    //   189: putfield 489	com/squareup/picasso/c:r	Ljava/lang/Exception;
+    //   192: aload_0
+    //   193: getfield 92	com/squareup/picasso/c:e	Lcom/squareup/picasso/i;
+    //   196: aload_0
+    //   197: invokevirtual 594	com/squareup/picasso/i:b	(Lcom/squareup/picasso/c;)V
+    //   200: goto -44 -> 156
+    //   203: invokestatic 415	java/lang/Thread:currentThread	()Ljava/lang/Thread;
+    //   206: ldc_w 620
+    //   209: invokevirtual 421	java/lang/Thread:setName	(Ljava/lang/String;)V
+    //   212: goto +5 -> 217
+    //   215: aload_1
+    //   216: athrow
+    //   217: goto -2 -> 215
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	220	0	this	c
+    //   67	1	1	localObject	Object
+    //   71	3	1	localException	Exception
+    //   88	37	1	localOutOfMemoryError	OutOfMemoryError
+    //   142	3	1	localIOException	IOException
+    //   166	50	1	localB	r.b
+    //   96	25	2	localStringWriter	java.io.StringWriter
+    // Exception table:
+    //   from	to	target	type
+    //   0	30	67	finally
+    //   30	53	67	finally
+    //   56	64	67	finally
+    //   72	85	67	finally
+    //   89	139	67	finally
+    //   143	156	67	finally
+    //   167	187	67	finally
+    //   187	192	67	finally
+    //   192	200	67	finally
+    //   0	30	71	java/lang/Exception
+    //   30	53	71	java/lang/Exception
+    //   56	64	71	java/lang/Exception
+    //   0	30	88	java/lang/OutOfMemoryError
+    //   30	53	88	java/lang/OutOfMemoryError
+    //   56	64	88	java/lang/OutOfMemoryError
+    //   0	30	142	java/io/IOException
+    //   30	53	142	java/io/IOException
+    //   56	64	142	java/io/IOException
+    //   0	30	166	com/squareup/picasso/r$b
+    //   30	53	166	com/squareup/picasso/r$b
+    //   56	64	166	com/squareup/picasso/r$b
+  }
+  
+  static final class a
+    extends ThreadLocal<StringBuilder>
+  {
+    a() {}
+    
+    protected StringBuilder initialValue()
+    {
+      return new StringBuilder("Picasso-");
+    }
+  }
+  
+  static final class b
+    extends y
+  {
+    b() {}
+    
+    public y.a a(w paramW, int paramInt)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Unrecognized type of request: ");
+      localStringBuilder.append(paramW);
+      throw new IllegalStateException(localStringBuilder.toString());
+    }
+    
+    public boolean a(w paramW)
+    {
+      return true;
+    }
+  }
+  
+  static final class c
+    implements Runnable
+  {
+    c(c0 paramC0, RuntimeException paramRuntimeException) {}
+    
+    public void run()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Transformation ");
+      localStringBuilder.append(c.a());
+      localStringBuilder.append(" crashed with exception.");
+      throw new RuntimeException(localStringBuilder.toString(), paramList);
+    }
+  }
+  
+  static final class d
+    implements Runnable
+  {
+    d(StringBuilder paramStringBuilder) {}
+    
+    public void run()
+    {
+      throw new NullPointerException(c.toString());
+    }
+  }
+  
+  static final class e
+    implements Runnable
+  {
+    e(c0 paramC0) {}
+    
+    public void run()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Transformation ");
+      localStringBuilder.append(c.a());
+      localStringBuilder.append(" returned input Bitmap but recycled it.");
+      throw new IllegalStateException(localStringBuilder.toString());
+    }
+  }
+  
+  static final class f
+    implements Runnable
+  {
+    f(c0 paramC0) {}
+    
+    public void run()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Transformation ");
+      localStringBuilder.append(c.a());
+      localStringBuilder.append(" mutated input Bitmap but failed to recycle the original.");
+      throw new IllegalStateException(localStringBuilder.toString());
+    }
+  }
+}

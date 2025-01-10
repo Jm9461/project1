@@ -1,0 +1,91 @@
+package com.lawyer_smartCalendar.c;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.f;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.github.clans.fab.FloatingActionButton;
+import com.lawyer_smartCalendar.a.m;
+import com.lawyer_smartCalendar.activity.AddNoteActivity;
+import com.lawyer_smartCalendar.activity.ClientDetailActivity;
+import com.lawyer_smartCalendar.utils.i;
+import java.util.List;
+
+public class l
+  extends f
+  implements View.OnClickListener
+{
+  private FloatingActionButton a0;
+  private RecyclerView b0;
+  private int c0 = 102;
+  private TextView d0;
+  
+  public l() {}
+  
+  public View a(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+  {
+    return paramLayoutInflater.inflate(2131492947, paramViewGroup, false);
+  }
+  
+  public void a(int paramInt1, int paramInt2, Intent paramIntent)
+  {
+    if (paramInt2 == -1) {
+      d0();
+    }
+  }
+  
+  public void a(View paramView, Bundle paramBundle)
+  {
+    super.a(paramView, paramBundle);
+    new i(d());
+    d0 = ((TextView)paramView.findViewById(2131296870));
+    a0 = ((FloatingActionButton)paramView.findViewById(2131296276));
+    a0.setOnClickListener(this);
+    b0 = ((RecyclerView)paramView.findViewById(2131296683));
+    b0.setLayoutManager(new LinearLayoutManager(d()));
+    d0();
+  }
+  
+  public void b(Intent paramIntent)
+  {
+    a(paramIntent, c0);
+  }
+  
+  public void d0()
+  {
+    i localI = new i(d());
+    localI.n();
+    List localList = localI.r(ds);
+    localI.close();
+    b0.setAdapter(new m(d(), this, localList));
+    if (localList.isEmpty())
+    {
+      b0.setVisibility(8);
+      d0.setVisibility(0);
+      return;
+    }
+    b0.setVisibility(0);
+    d0.setVisibility(8);
+  }
+  
+  public void onClick(View paramView)
+  {
+    if (paramView.getId() != 2131296276) {
+      return;
+    }
+    paramView = new Intent(d(), AddNoteActivity.class);
+    paramView.putExtra("frmMode", "add");
+    paramView.putExtra("frmStarter", "client");
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(ds);
+    localStringBuilder.append("");
+    paramView.putExtra("id", localStringBuilder.toString());
+    b(paramView);
+  }
+}

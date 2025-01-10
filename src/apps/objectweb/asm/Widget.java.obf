@@ -1,0 +1,30 @@
+package b.d.a;
+
+import android.opengl.GLES20;
+
+abstract class g
+{
+  private final float[] a;
+  private final int b;
+  
+  public g(float[] paramArrayOfFloat)
+  {
+    a = paramArrayOfFloat;
+    int i = f.a(35633, "attribute vec4 vPosition;void main() {  gl_Position = vPosition;}");
+    int j = f.a(35632, "precision mediump float;uniform vec4 vColor;void main() {  gl_FragColor = vColor;}");
+    b = GLES20.glCreateProgram();
+    GLES20.glAttachShader(b, i);
+    GLES20.glAttachShader(b, j);
+    GLES20.glLinkProgram(b);
+  }
+  
+  protected float[] a()
+  {
+    return a;
+  }
+  
+  protected int b()
+  {
+    return b;
+  }
+}

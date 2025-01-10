@@ -1,0 +1,149 @@
+package a.b.c.l;
+
+import android.animation.Animator;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+
+public class i
+{
+  private long a = 0L;
+  private long b = 300L;
+  private TimeInterpolator c = null;
+  private int d = 0;
+  private int e = 1;
+  
+  public i(long paramLong1, long paramLong2)
+  {
+    a = paramLong1;
+    b = paramLong2;
+  }
+  
+  public i(long paramLong1, long paramLong2, TimeInterpolator paramTimeInterpolator)
+  {
+    a = paramLong1;
+    b = paramLong2;
+    c = paramTimeInterpolator;
+  }
+  
+  static i a(ValueAnimator paramValueAnimator)
+  {
+    i localI = new i(paramValueAnimator.getStartDelay(), paramValueAnimator.getDuration(), b(paramValueAnimator));
+    d = paramValueAnimator.getRepeatCount();
+    e = paramValueAnimator.getRepeatMode();
+    return localI;
+  }
+  
+  private static TimeInterpolator b(ValueAnimator paramValueAnimator)
+  {
+    paramValueAnimator = paramValueAnimator.getInterpolator();
+    if ((!(paramValueAnimator instanceof AccelerateDecelerateInterpolator)) && (paramValueAnimator != null))
+    {
+      if ((paramValueAnimator instanceof AccelerateInterpolator)) {
+        return a.c;
+      }
+      if ((paramValueAnimator instanceof DecelerateInterpolator)) {
+        return a.d;
+      }
+      return paramValueAnimator;
+    }
+    return a.b;
+  }
+  
+  public long a()
+  {
+    return a;
+  }
+  
+  public void a(Animator paramAnimator)
+  {
+    paramAnimator.setStartDelay(a());
+    paramAnimator.setDuration(b());
+    paramAnimator.setInterpolator(c());
+    if ((paramAnimator instanceof ValueAnimator))
+    {
+      ((ValueAnimator)paramAnimator).setRepeatCount(d());
+      ((ValueAnimator)paramAnimator).setRepeatMode(e());
+    }
+  }
+  
+  public long b()
+  {
+    return b;
+  }
+  
+  public TimeInterpolator c()
+  {
+    TimeInterpolator localTimeInterpolator = c;
+    if (localTimeInterpolator != null) {
+      return localTimeInterpolator;
+    }
+    return a.b;
+  }
+  
+  public int d()
+  {
+    return d;
+  }
+  
+  public int e()
+  {
+    return e;
+  }
+  
+  public boolean equals(Object paramObject)
+  {
+    if (this == paramObject) {
+      return true;
+    }
+    if (paramObject != null)
+    {
+      if (getClass() != paramObject.getClass()) {
+        return false;
+      }
+      paramObject = (i)paramObject;
+      if (a() != paramObject.a()) {
+        return false;
+      }
+      if (b() != paramObject.b()) {
+        return false;
+      }
+      if (d() != paramObject.d()) {
+        return false;
+      }
+      if (e() != paramObject.e()) {
+        return false;
+      }
+      return c().getClass().equals(paramObject.c().getClass());
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    return ((((int)(a() ^ a() >>> 32) * 31 + (int)(b() ^ b() >>> 32)) * 31 + c().getClass().hashCode()) * 31 + d()) * 31 + e();
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append('\n');
+    localStringBuilder.append(getClass().getName());
+    localStringBuilder.append('{');
+    localStringBuilder.append(Integer.toHexString(System.identityHashCode(this)));
+    localStringBuilder.append(" delay: ");
+    localStringBuilder.append(a());
+    localStringBuilder.append(" duration: ");
+    localStringBuilder.append(b());
+    localStringBuilder.append(" interpolator: ");
+    localStringBuilder.append(c().getClass());
+    localStringBuilder.append(" repeatCount: ");
+    localStringBuilder.append(d());
+    localStringBuilder.append(" repeatMode: ");
+    localStringBuilder.append(e());
+    localStringBuilder.append("}\n");
+    return localStringBuilder.toString();
+  }
+}

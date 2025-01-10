@@ -1,0 +1,77 @@
+package com.squareup.picasso;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+import java.lang.ref.WeakReference;
+
+class l
+  extends a<ImageView>
+{
+  e m;
+  
+  l(t paramT, ImageView paramImageView, w paramW, int paramInt1, int paramInt2, int paramInt3, Drawable paramDrawable, String paramString, Object paramObject, e paramE, boolean paramBoolean)
+  {
+    super(paramT, paramImageView, paramW, paramInt1, paramInt2, paramInt3, paramDrawable, paramString, paramObject, paramBoolean);
+    m = paramE;
+  }
+  
+  void a()
+  {
+    super.a();
+    if (m != null) {
+      m = null;
+    }
+  }
+  
+  public void a(Bitmap paramBitmap, t.e paramE)
+  {
+    if (paramBitmap != null)
+    {
+      ImageView localImageView = (ImageView)c.get();
+      if (localImageView == null) {
+        return;
+      }
+      t localT = a;
+      Context localContext = e;
+      boolean bool = m;
+      u.a(localImageView, localContext, paramBitmap, paramE, d, bool);
+      paramBitmap = m;
+      if (paramBitmap != null) {
+        paramBitmap.a();
+      }
+      return;
+    }
+    throw new AssertionError(String.format("Attempted to complete action with no result!\n%s", new Object[] { this }));
+  }
+  
+  public void a(Exception paramException)
+  {
+    Object localObject = (ImageView)c.get();
+    if (localObject == null) {
+      return;
+    }
+    Drawable localDrawable = ((ImageView)localObject).getDrawable();
+    if ((localDrawable instanceof Animatable)) {
+      ((Animatable)localDrawable).stop();
+    }
+    int i = g;
+    if (i != 0)
+    {
+      ((ImageView)localObject).setImageResource(i);
+    }
+    else
+    {
+      localDrawable = h;
+      if (localDrawable != null) {
+        ((ImageView)localObject).setImageDrawable(localDrawable);
+      }
+    }
+    localObject = m;
+    if (localObject != null) {
+      ((e)localObject).a(paramException);
+    }
+  }
+}

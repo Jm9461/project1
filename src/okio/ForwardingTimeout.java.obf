@@ -1,0 +1,69 @@
+package f;
+
+import java.util.concurrent.TimeUnit;
+
+public class i
+  extends t
+{
+  private t e;
+  
+  public i(t paramT)
+  {
+    if (paramT != null)
+    {
+      e = paramT;
+      return;
+    }
+    throw new IllegalArgumentException("delegate == null");
+  }
+  
+  public final i a(t paramT)
+  {
+    if (paramT != null)
+    {
+      e = paramT;
+      return this;
+    }
+    throw new IllegalArgumentException("delegate == null");
+  }
+  
+  public t a()
+  {
+    return e.a();
+  }
+  
+  public t a(long paramLong)
+  {
+    return e.a(paramLong);
+  }
+  
+  public t a(long paramLong, TimeUnit paramTimeUnit)
+  {
+    return e.a(paramLong, paramTimeUnit);
+  }
+  
+  public t b()
+  {
+    return e.b();
+  }
+  
+  public long c()
+  {
+    return e.c();
+  }
+  
+  public boolean d()
+  {
+    return e.d();
+  }
+  
+  public void e()
+  {
+    e.e();
+  }
+  
+  public final t g()
+  {
+    return e;
+  }
+}

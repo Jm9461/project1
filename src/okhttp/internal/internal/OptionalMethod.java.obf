@@ -1,0 +1,144 @@
+package e.f0.k;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+class e<T>
+{
+  private final Class<?> a;
+  private final String b;
+  private final Class[] c;
+  
+  e(Class<?> paramClass, String paramString, Class... paramVarArgs)
+  {
+    a = paramClass;
+    b = paramString;
+    c = paramVarArgs;
+  }
+  
+  private Method a(Class<?> paramClass)
+  {
+    Class<?> localClass = null;
+    Object localObject = b;
+    if (localObject != null)
+    {
+      paramClass = a(paramClass, (String)localObject, c);
+      localClass = paramClass;
+      if (paramClass != null)
+      {
+        localObject = a;
+        localClass = paramClass;
+        if (localObject != null)
+        {
+          localClass = paramClass;
+          if (!((Class)localObject).isAssignableFrom(paramClass.getReturnType())) {
+            localClass = null;
+          }
+        }
+      }
+    }
+    return localClass;
+  }
+  
+  private static Method a(Class<?> paramClass, String paramString, Class[] paramArrayOfClass)
+  {
+    Class<?> localClass = null;
+    try
+    {
+      paramClass = paramClass.getMethod(paramString, paramArrayOfClass);
+      localClass = paramClass;
+      int i = paramClass.getModifiers();
+      if ((i & 0x1) == 0) {
+        paramClass = null;
+      }
+      return paramClass;
+    }
+    catch (NoSuchMethodException paramClass) {}
+    return localClass;
+  }
+  
+  public Object a(T paramT, Object... paramVarArgs)
+  {
+    Method localMethod = a(paramT.getClass());
+    if (localMethod != null) {
+      try
+      {
+        paramT = localMethod.invoke(paramT, paramVarArgs);
+        return paramT;
+      }
+      catch (IllegalAccessException paramT)
+      {
+        paramVarArgs = new StringBuilder();
+        paramVarArgs.append("Unexpectedly could not call: ");
+        paramVarArgs.append(localMethod);
+        paramVarArgs = new AssertionError(paramVarArgs.toString());
+        paramVarArgs.initCause(paramT);
+        throw paramVarArgs;
+      }
+    }
+    paramVarArgs = new StringBuilder();
+    paramVarArgs.append("Method ");
+    paramVarArgs.append(b);
+    paramVarArgs.append(" not supported for object ");
+    paramVarArgs.append(paramT);
+    throw new AssertionError(paramVarArgs.toString());
+  }
+  
+  public boolean a(T paramT)
+  {
+    return a(paramT.getClass()) != null;
+  }
+  
+  public Object b(T paramT, Object... paramVarArgs)
+  {
+    Method localMethod = a(paramT.getClass());
+    if (localMethod == null) {
+      return null;
+    }
+    try
+    {
+      paramT = localMethod.invoke(paramT, paramVarArgs);
+      return paramT;
+    }
+    catch (IllegalAccessException paramT) {}
+    return null;
+  }
+  
+  public Object c(T paramT, Object... paramVarArgs)
+  {
+    try
+    {
+      paramT = b(paramT, paramVarArgs);
+      return paramT;
+    }
+    catch (InvocationTargetException paramT)
+    {
+      paramT = paramT.getTargetException();
+      if ((paramT instanceof RuntimeException)) {
+        throw ((RuntimeException)paramT);
+      }
+      paramVarArgs = new AssertionError("Unexpected exception");
+      paramVarArgs.initCause(paramT);
+      throw paramVarArgs;
+    }
+  }
+  
+  public Object d(T paramT, Object... paramVarArgs)
+  {
+    try
+    {
+      paramT = a(paramT, paramVarArgs);
+      return paramT;
+    }
+    catch (InvocationTargetException paramT)
+    {
+      paramT = paramT.getTargetException();
+      if ((paramT instanceof RuntimeException)) {
+        throw ((RuntimeException)paramT);
+      }
+      paramVarArgs = new AssertionError("Unexpected exception");
+      paramVarArgs.initCause(paramT);
+      throw paramVarArgs;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+package b.e.a.a.l.e;
+
+import android.view.View;
+import b.e.b.b;
+import b.h.a.i;
+import b.h.a.m;
+
+public class a
+  extends b.e.a.a.a
+{
+  public a() {}
+  
+  protected void b(View paramView)
+  {
+    b.h.a.c localC = a();
+    Object localObject = b.e.b.c.y;
+    float f = (float)b();
+    i localI = i.a(paramView, "scaleX", new float[] { 1.0F, 1.5F });
+    b.a((b.e.b.c)localObject, f, localI);
+    b.e.b.c localC1 = b.e.b.c.y;
+    f = (float)b();
+    localObject = i.a(paramView, "scaleY", new float[] { 1.0F, 1.5F });
+    b.a(localC1, f, (m)localObject);
+    localC1 = b.e.b.c.y;
+    f = (float)b();
+    paramView = i.a(paramView, "alpha", new float[] { 1.0F, 0.0F });
+    b.a(localC1, f, paramView);
+    localC.a(new b.h.a.a[] { localI, localObject, paramView });
+  }
+}

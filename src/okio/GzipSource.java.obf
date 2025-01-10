@@ -1,0 +1,188 @@
+package f;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.zip.CRC32;
+import java.util.zip.Inflater;
+
+public final class j
+  implements s
+{
+  private int c = 0;
+  private final e d;
+  private final Inflater e;
+  private final k f;
+  private final CRC32 g = new CRC32();
+  
+  public j(s paramS)
+  {
+    if (paramS != null)
+    {
+      e = new Inflater(true);
+      d = l.a(paramS);
+      f = new k(d, e);
+      return;
+    }
+    throw new IllegalArgumentException("source == null");
+  }
+  
+  private void a(c paramC, long paramLong1, long paramLong2)
+  {
+    int i;
+    int j;
+    Object localObject;
+    long l1;
+    long l2;
+    for (paramC = c;; paramC = f)
+    {
+      i = c;
+      j = b;
+      localObject = paramC;
+      l1 = paramLong1;
+      l2 = paramLong2;
+      if (paramLong1 < i - j) {
+        break;
+      }
+      paramLong1 -= i - j;
+    }
+    while (l2 > 0L)
+    {
+      i = (int)(b + l1);
+      j = (int)Math.min(c - i, l2);
+      g.update(a, i, j);
+      l2 -= j;
+      l1 = 0L;
+      localObject = f;
+    }
+  }
+  
+  private void a(String paramString, int paramInt1, int paramInt2)
+  {
+    if (paramInt2 == paramInt1) {
+      return;
+    }
+    throw new IOException(String.format("%s: actual 0x%08x != expected 0x%08x", new Object[] { paramString, Integer.valueOf(paramInt2), Integer.valueOf(paramInt1) }));
+  }
+  
+  private void d()
+  {
+    d.d(10L);
+    int j = d.a().g(3L);
+    int i;
+    if ((j >> 1 & 0x1) == 1) {
+      i = 1;
+    } else {
+      i = 0;
+    }
+    if (i != 0) {
+      a(d.a(), 0L, 10L);
+    }
+    a("ID1ID2", 8075, d.readShort());
+    d.skip(8L);
+    if ((j >> 2 & 0x1) == 1)
+    {
+      d.d(2L);
+      if (i != 0) {
+        a(d.a(), 0L, 2L);
+      }
+      int k = d.a().c();
+      d.d(k);
+      if (i != 0) {
+        a(d.a(), 0L, k);
+      }
+      d.skip(k);
+    }
+    long l;
+    if ((j >> 3 & 0x1) == 1)
+    {
+      l = d.a((byte)0);
+      if (l != -1L)
+      {
+        if (i != 0) {
+          a(d.a(), 0L, l + 1L);
+        }
+        d.skip(l + 1L);
+      }
+      else
+      {
+        throw new EOFException();
+      }
+    }
+    if ((j >> 4 & 0x1) == 1)
+    {
+      l = d.a((byte)0);
+      if (l != -1L)
+      {
+        if (i != 0) {
+          a(d.a(), 0L, l + 1L);
+        }
+        d.skip(1L + l);
+      }
+      else
+      {
+        throw new EOFException();
+      }
+    }
+    if (i != 0)
+    {
+      a("FHCRC", d.c(), (short)(int)g.getValue());
+      g.reset();
+    }
+  }
+  
+  private void l()
+  {
+    a("CRC", d.h(), (int)g.getValue());
+    a("ISIZE", d.h(), (int)e.getBytesWritten());
+  }
+  
+  public long b(c paramC, long paramLong)
+  {
+    if (paramLong >= 0L)
+    {
+      if (paramLong == 0L) {
+        return 0L;
+      }
+      if (c == 0)
+      {
+        d();
+        c = 1;
+      }
+      if (c == 1)
+      {
+        long l = d;
+        paramLong = f.b(paramC, paramLong);
+        if (paramLong != -1L)
+        {
+          a(paramC, l, paramLong);
+          return paramLong;
+        }
+        c = 2;
+      }
+      if (c == 2)
+      {
+        l();
+        c = 3;
+        if (d.i()) {
+          return -1L;
+        }
+        throw new IOException("gzip finished without exhausting source");
+      }
+      return -1L;
+    }
+    paramC = new StringBuilder();
+    paramC.append("byteCount < 0: ");
+    paramC.append(paramLong);
+    throw new IllegalArgumentException(paramC.toString());
+  }
+  
+  public t b()
+  {
+    return d.b();
+  }
+  
+  public void close()
+  {
+    f.close();
+  }
+}

@@ -1,0 +1,416 @@
+package com.andexert.library;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.os.Handler;
+import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.animation.ScaleAnimation;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.RelativeLayout;
+
+public class RippleView
+  extends RelativeLayout
+{
+  private final Runnable A = new a();
+  private c B;
+  private int c;
+  private int d;
+  private int e = 10;
+  private int f = 400;
+  private int g = 90;
+  private Handler h;
+  private float i = 0.0F;
+  private boolean j = false;
+  private int k = 0;
+  private int l = 0;
+  private int m = -1;
+  private float n = -1.0F;
+  private float o = -1.0F;
+  private int p;
+  private float q;
+  private ScaleAnimation r;
+  private Boolean s;
+  private Boolean t;
+  private Integer u;
+  private Paint v;
+  private Bitmap w;
+  private int x;
+  private int y;
+  private GestureDetector z;
+  
+  public RippleView(Context paramContext)
+  {
+    super(paramContext);
+  }
+  
+  public RippleView(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+    a(paramContext, paramAttributeSet);
+  }
+  
+  public RippleView(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    a(paramContext, paramAttributeSet);
+  }
+  
+  private Bitmap a(int paramInt)
+  {
+    Bitmap localBitmap = Bitmap.createBitmap(w.getWidth(), w.getHeight(), Bitmap.Config.ARGB_8888);
+    Canvas localCanvas = new Canvas(localBitmap);
+    Paint localPaint = new Paint();
+    float f1 = n;
+    int i1 = (int)(f1 - paramInt);
+    float f2 = o;
+    Rect localRect = new Rect(i1, (int)(f2 - paramInt), (int)(f1 + paramInt), (int)(f2 + paramInt));
+    localPaint.setAntiAlias(true);
+    localCanvas.drawARGB(0, 0, 0, 0);
+    localCanvas.drawCircle(n, o, paramInt, localPaint);
+    localPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    localCanvas.drawBitmap(w, localRect, localRect, localPaint);
+    return localBitmap;
+  }
+  
+  private void a(float paramFloat1, float paramFloat2)
+  {
+    if ((isEnabled()) && (!j))
+    {
+      if (s.booleanValue()) {
+        startAnimation(r);
+      }
+      i = Math.max(c, d);
+      if (u.intValue() != 2) {
+        i /= 2.0F;
+      }
+      i -= y;
+      if ((!t.booleanValue()) && (u.intValue() != 1))
+      {
+        n = paramFloat1;
+        o = paramFloat2;
+      }
+      else
+      {
+        n = (getMeasuredWidth() / 2);
+        o = (getMeasuredHeight() / 2);
+      }
+      j = true;
+      if ((u.intValue() == 1) && (w == null)) {
+        w = getDrawingCache(true);
+      }
+      invalidate();
+    }
+  }
+  
+  private void a(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    if (isInEditMode()) {
+      return;
+    }
+    paramAttributeSet = paramContext.obtainStyledAttributes(paramAttributeSet, b.RippleView);
+    x = paramAttributeSet.getColor(b.RippleView_rv_color, getResources().getColor(a.rippelColor));
+    u = Integer.valueOf(paramAttributeSet.getInt(b.RippleView_rv_type, 0));
+    s = Boolean.valueOf(paramAttributeSet.getBoolean(b.RippleView_rv_zoom, false));
+    t = Boolean.valueOf(paramAttributeSet.getBoolean(b.RippleView_rv_centered, false));
+    f = paramAttributeSet.getInteger(b.RippleView_rv_rippleDuration, f);
+    e = paramAttributeSet.getInteger(b.RippleView_rv_framerate, e);
+    g = paramAttributeSet.getInteger(b.RippleView_rv_alpha, g);
+    y = paramAttributeSet.getDimensionPixelSize(b.RippleView_rv_ripplePadding, 0);
+    h = new Handler();
+    q = paramAttributeSet.getFloat(b.RippleView_rv_zoomScale, 1.03F);
+    p = paramAttributeSet.getInt(b.RippleView_rv_zoomDuration, 200);
+    paramAttributeSet.recycle();
+    v = new Paint();
+    v.setAntiAlias(true);
+    v.setStyle(Paint.Style.FILL);
+    v.setColor(x);
+    v.setAlpha(g);
+    setWillNotDraw(false);
+    z = new GestureDetector(paramContext, new b());
+    setDrawingCacheEnabled(true);
+    setClickable(true);
+  }
+  
+  private void a(Boolean paramBoolean)
+  {
+    if ((getParent() instanceof AdapterView))
+    {
+      AdapterView localAdapterView = (AdapterView)getParent();
+      int i1 = localAdapterView.getPositionForView(this);
+      long l1 = localAdapterView.getItemIdAtPosition(i1);
+      if (paramBoolean.booleanValue())
+      {
+        if (localAdapterView.getOnItemLongClickListener() != null) {
+          localAdapterView.getOnItemLongClickListener().onItemLongClick(localAdapterView, this, i1, l1);
+        }
+      }
+      else if (localAdapterView.getOnItemClickListener() != null) {
+        localAdapterView.getOnItemClickListener().onItemClick(localAdapterView, this, i1, l1);
+      }
+    }
+  }
+  
+  public void a(MotionEvent paramMotionEvent)
+  {
+    a(paramMotionEvent.getX(), paramMotionEvent.getY());
+  }
+  
+  public void draw(Canvas paramCanvas)
+  {
+    super.draw(paramCanvas);
+    if (j)
+    {
+      paramCanvas.save();
+      int i1 = f;
+      int i2 = k;
+      int i3 = e;
+      if (i1 <= i2 * i3)
+      {
+        j = false;
+        k = 0;
+        m = -1;
+        l = 0;
+        if (Build.VERSION.SDK_INT < 23) {
+          paramCanvas.restore();
+        }
+        invalidate();
+        paramCanvas = B;
+        if (paramCanvas != null) {
+          paramCanvas.a(this);
+        }
+        return;
+      }
+      h.postDelayed(A, i3);
+      if (k == 0) {
+        paramCanvas.save();
+      }
+      paramCanvas.drawCircle(n, o, i * (k * e / f), v);
+      v.setColor(Color.parseColor("#ffff4444"));
+      float f1;
+      if ((u.intValue() == 1) && (w != null))
+      {
+        i1 = k;
+        f1 = i1;
+        i2 = e;
+        float f2 = i2;
+        i3 = f;
+        if (f1 * f2 / i3 > 0.4F)
+        {
+          if (m == -1) {
+            m = (i3 - i1 * i2);
+          }
+          l += 1;
+          Bitmap localBitmap = a((int)(i * (l * e / m)));
+          paramCanvas.drawBitmap(localBitmap, 0.0F, 0.0F, v);
+          localBitmap.recycle();
+        }
+      }
+      v.setColor(x);
+      if (u.intValue() == 1)
+      {
+        f1 = k;
+        i1 = e;
+        if (f1 * i1 / f > 0.6F)
+        {
+          paramCanvas = v;
+          i2 = g;
+          paramCanvas.setAlpha((int)(i2 - i2 * (l * i1 / m)));
+        }
+        else
+        {
+          v.setAlpha(g);
+        }
+      }
+      else
+      {
+        paramCanvas = v;
+        i1 = g;
+        paramCanvas.setAlpha((int)(i1 - i1 * (k * e / f)));
+      }
+      k += 1;
+    }
+  }
+  
+  public int getFrameRate()
+  {
+    return e;
+  }
+  
+  public int getRippleAlpha()
+  {
+    return g;
+  }
+  
+  public int getRippleColor()
+  {
+    return x;
+  }
+  
+  public int getRippleDuration()
+  {
+    return f;
+  }
+  
+  public int getRipplePadding()
+  {
+    return y;
+  }
+  
+  public d getRippleType()
+  {
+    return d.values()[u.intValue()];
+  }
+  
+  public int getZoomDuration()
+  {
+    return p;
+  }
+  
+  public float getZoomScale()
+  {
+    return q;
+  }
+  
+  public boolean onInterceptTouchEvent(MotionEvent paramMotionEvent)
+  {
+    onTouchEvent(paramMotionEvent);
+    return super.onInterceptTouchEvent(paramMotionEvent);
+  }
+  
+  protected void onSizeChanged(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    super.onSizeChanged(paramInt1, paramInt2, paramInt3, paramInt4);
+    c = paramInt1;
+    d = paramInt2;
+    float f1 = q;
+    r = new ScaleAnimation(1.0F, f1, 1.0F, f1, paramInt1 / 2, paramInt2 / 2);
+    r.setDuration(p);
+    r.setRepeatMode(2);
+    r.setRepeatCount(1);
+  }
+  
+  public boolean onTouchEvent(MotionEvent paramMotionEvent)
+  {
+    if (z.onTouchEvent(paramMotionEvent))
+    {
+      a(paramMotionEvent);
+      a(Boolean.valueOf(false));
+    }
+    return super.onTouchEvent(paramMotionEvent);
+  }
+  
+  public void setCentered(Boolean paramBoolean)
+  {
+    t = paramBoolean;
+  }
+  
+  public void setFrameRate(int paramInt)
+  {
+    e = paramInt;
+  }
+  
+  public void setOnRippleCompleteListener(c paramC)
+  {
+    B = paramC;
+  }
+  
+  public void setRippleAlpha(int paramInt)
+  {
+    g = paramInt;
+  }
+  
+  public void setRippleColor(int paramInt)
+  {
+    x = getResources().getColor(paramInt);
+  }
+  
+  public void setRippleDuration(int paramInt)
+  {
+    f = paramInt;
+  }
+  
+  public void setRipplePadding(int paramInt)
+  {
+    y = paramInt;
+  }
+  
+  public void setRippleType(d paramD)
+  {
+    u = Integer.valueOf(paramD.ordinal());
+  }
+  
+  public void setZoomDuration(int paramInt)
+  {
+    p = paramInt;
+  }
+  
+  public void setZoomScale(float paramFloat)
+  {
+    q = paramFloat;
+  }
+  
+  public void setZooming(Boolean paramBoolean)
+  {
+    s = paramBoolean;
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      invalidate();
+    }
+  }
+  
+  class b
+    extends GestureDetector.SimpleOnGestureListener
+  {
+    b() {}
+    
+    public void onLongPress(MotionEvent paramMotionEvent)
+    {
+      super.onLongPress(paramMotionEvent);
+      a(paramMotionEvent);
+      RippleView.a(RippleView.this, Boolean.valueOf(true));
+    }
+    
+    public boolean onSingleTapConfirmed(MotionEvent paramMotionEvent)
+    {
+      return true;
+    }
+    
+    public boolean onSingleTapUp(MotionEvent paramMotionEvent)
+    {
+      return true;
+    }
+  }
+  
+  public static abstract interface c
+  {
+    public abstract void a(RippleView paramRippleView);
+  }
+  
+  public static enum d
+  {
+    private d(int paramInt) {}
+  }
+}

@@ -1,0 +1,632 @@
+package android.support.design.widget;
+
+import a.b.g.f.c;
+import a.b.g.f.d;
+import a.b.h.a.j;
+import android.animation.TimeInterpolator;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.os.Build.VERSION;
+import android.support.v4.view.u;
+import android.support.v7.widget.j1;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
+import android.view.View;
+
+public final class h
+{
+  private static final boolean T;
+  private static final Paint U;
+  private Paint A;
+  private float B;
+  private float C;
+  private float D;
+  private float E;
+  private int[] F;
+  private boolean G;
+  private final TextPaint H;
+  private final TextPaint I;
+  private TimeInterpolator J;
+  private TimeInterpolator K;
+  private float L;
+  private float M;
+  private float N;
+  private int O;
+  private float P;
+  private float Q;
+  private float R;
+  private int S;
+  private final View a;
+  private boolean b;
+  private float c;
+  private final Rect d;
+  private final Rect e;
+  private final RectF f;
+  private int g = 16;
+  private int h = 16;
+  private float i = 15.0F;
+  private float j = 15.0F;
+  private ColorStateList k;
+  private ColorStateList l;
+  private float m;
+  private float n;
+  private float o;
+  private float p;
+  private float q;
+  private float r;
+  private Typeface s;
+  private Typeface t;
+  private Typeface u;
+  private CharSequence v;
+  private CharSequence w;
+  private boolean x;
+  private boolean y;
+  private Bitmap z;
+  
+  static
+  {
+    boolean bool;
+    if (Build.VERSION.SDK_INT < 18) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    T = bool;
+    U = null;
+    Paint localPaint = U;
+    if (localPaint != null)
+    {
+      localPaint.setAntiAlias(true);
+      U.setColor(-65281);
+    }
+  }
+  
+  public h(View paramView)
+  {
+    a = paramView;
+    H = new TextPaint(129);
+    I = new TextPaint(H);
+    e = new Rect();
+    d = new Rect();
+    f = new RectF();
+  }
+  
+  private static float a(float paramFloat1, float paramFloat2, float paramFloat3, TimeInterpolator paramTimeInterpolator)
+  {
+    float f1 = paramFloat3;
+    if (paramTimeInterpolator != null) {
+      f1 = paramTimeInterpolator.getInterpolation(paramFloat3);
+    }
+    return a.b.c.l.a.a(paramFloat1, paramFloat2, f1);
+  }
+  
+  private static int a(int paramInt1, int paramInt2, float paramFloat)
+  {
+    float f1 = 1.0F - paramFloat;
+    float f2 = Color.alpha(paramInt1);
+    float f3 = Color.alpha(paramInt2);
+    float f4 = Color.red(paramInt1);
+    float f5 = Color.red(paramInt2);
+    float f6 = Color.green(paramInt1);
+    float f7 = Color.green(paramInt2);
+    float f8 = Color.blue(paramInt1);
+    float f9 = Color.blue(paramInt2);
+    return Color.argb((int)(f2 * f1 + f3 * paramFloat), (int)(f4 * f1 + f5 * paramFloat), (int)(f6 * f1 + f7 * paramFloat), (int)(f8 * f1 + f9 * paramFloat));
+  }
+  
+  private void a(TextPaint paramTextPaint)
+  {
+    paramTextPaint.setTextSize(j);
+    paramTextPaint.setTypeface(s);
+  }
+  
+  private static boolean a(float paramFloat1, float paramFloat2)
+  {
+    return Math.abs(paramFloat1 - paramFloat2) < 0.001F;
+  }
+  
+  private static boolean a(Rect paramRect, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    return (left == paramInt1) && (top == paramInt2) && (right == paramInt3) && (bottom == paramInt4);
+  }
+  
+  private boolean b(CharSequence paramCharSequence)
+  {
+    int i2 = u.k(a);
+    int i1 = 1;
+    if (i2 != 1) {
+      i1 = 0;
+    }
+    c localC;
+    if (i1 != 0) {
+      localC = d.b;
+    } else {
+      localC = d.a;
+    }
+    return localC.a(paramCharSequence, 0, paramCharSequence.length());
+  }
+  
+  private void c(float paramFloat)
+  {
+    e(paramFloat);
+    q = a(o, p, paramFloat, J);
+    r = a(m, n, paramFloat, J);
+    f(a(i, j, paramFloat, K));
+    if (l != k) {
+      H.setColor(a(m(), d(), paramFloat));
+    } else {
+      H.setColor(d());
+    }
+    H.setShadowLayer(a(P, L, paramFloat, null), a(Q, M, paramFloat, null), a(R, N, paramFloat, null), a(S, O, paramFloat));
+    u.B(a);
+  }
+  
+  private Typeface d(int paramInt)
+  {
+    TypedArray localTypedArray = a.getContext().obtainStyledAttributes(paramInt, new int[] { 16843692 });
+    try
+    {
+      Object localObject1 = localTypedArray.getString(0);
+      if (localObject1 != null)
+      {
+        localObject1 = Typeface.create((String)localObject1, 0);
+        return localObject1;
+      }
+      return null;
+    }
+    finally
+    {
+      localTypedArray.recycle();
+    }
+  }
+  
+  private void d(float paramFloat)
+  {
+    if (v == null) {
+      return;
+    }
+    float f2 = e.width();
+    float f3 = d.width();
+    int i2 = 0;
+    int i1 = 0;
+    float f1;
+    Object localObject;
+    Typeface localTypeface;
+    if (a(paramFloat, j))
+    {
+      f1 = j;
+      D = 1.0F;
+      localObject = u;
+      localTypeface = s;
+      if (localObject != localTypeface)
+      {
+        u = localTypeface;
+        i1 = 1;
+      }
+      paramFloat = f2;
+    }
+    else
+    {
+      f1 = i;
+      localObject = u;
+      localTypeface = t;
+      i1 = i2;
+      if (localObject != localTypeface)
+      {
+        u = localTypeface;
+        i1 = 1;
+      }
+      if (a(paramFloat, i)) {
+        D = 1.0F;
+      } else {
+        D = (paramFloat / i);
+      }
+      paramFloat = j / i;
+      if (f3 * paramFloat > f2) {
+        paramFloat = Math.min(f2 / paramFloat, f3);
+      } else {
+        paramFloat = f3;
+      }
+    }
+    boolean bool = true;
+    i2 = i1;
+    if (paramFloat > 0.0F)
+    {
+      if ((E == f1) && (!G) && (i1 == 0)) {
+        i1 = 0;
+      } else {
+        i1 = 1;
+      }
+      E = f1;
+      G = false;
+      i2 = i1;
+    }
+    if ((w == null) || (i2 != 0))
+    {
+      H.setTextSize(E);
+      H.setTypeface(u);
+      localObject = H;
+      if (D == 1.0F) {
+        bool = false;
+      }
+      ((TextPaint)localObject).setLinearText(bool);
+      localObject = TextUtils.ellipsize(v, H, paramFloat, TextUtils.TruncateAt.END);
+      if (!TextUtils.equals((CharSequence)localObject, w))
+      {
+        w = ((CharSequence)localObject);
+        x = b(w);
+      }
+    }
+  }
+  
+  private void e(float paramFloat)
+  {
+    f.left = a(d.left, e.left, paramFloat, J);
+    f.top = a(m, n, paramFloat, J);
+    f.right = a(d.right, e.right, paramFloat, J);
+    f.bottom = a(d.bottom, e.bottom, paramFloat, J);
+  }
+  
+  private void f(float paramFloat)
+  {
+    d(paramFloat);
+    boolean bool;
+    if ((T) && (D != 1.0F)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    y = bool;
+    if (y) {
+      l();
+    }
+    u.B(a);
+  }
+  
+  private void i()
+  {
+    throw new Runtime("d2j fail translate: java.lang.RuntimeException: can not merge I and Z\n\tat com.googlecode.dex2jar.ir.TypeClass.merge(TypeClass.java:100)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeRef.updateTypeClass(TypeTransformer.java:174)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.provideAs(TypeTransformer.java:780)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.e1expr(TypeTransformer.java:496)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:713)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:703)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.enexpr(TypeTransformer.java:698)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:719)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:703)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.s2stmt(TypeTransformer.java:820)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.sxStmt(TypeTransformer.java:843)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.analyze(TypeTransformer.java:206)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer.transform(TypeTransformer.java:44)\n\tat com.googlecode.d2j.dex.Dex2jar$2.optimize(Dex2jar.java:162)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertCode(Dex2Asm.java:414)\n\tat com.googlecode.d2j.dex.ExDex2Asm.convertCode(ExDex2Asm.java:42)\n\tat com.googlecode.d2j.dex.Dex2jar$2.convertCode(Dex2jar.java:128)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertMethod(Dex2Asm.java:509)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertClass(Dex2Asm.java:406)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertDex(Dex2Asm.java:422)\n\tat com.googlecode.d2j.dex.Dex2jar.doTranslate(Dex2jar.java:172)\n\tat com.googlecode.d2j.dex.Dex2jar.to(Dex2jar.java:272)\n\tat com.googlecode.dex2jar.tools.Dex2jarCmd.doCommandLine(Dex2jarCmd.java:108)\n\tat com.googlecode.dex2jar.tools.BaseCmd.doMain(BaseCmd.java:288)\n\tat com.googlecode.dex2jar.tools.Dex2jarCmd.main(Dex2jarCmd.java:32)\n");
+  }
+  
+  private void j()
+  {
+    c(c);
+  }
+  
+  private void k()
+  {
+    Bitmap localBitmap = z;
+    if (localBitmap != null)
+    {
+      localBitmap.recycle();
+      z = null;
+    }
+  }
+  
+  private void l()
+  {
+    if ((z == null) && (!d.isEmpty()))
+    {
+      if (TextUtils.isEmpty(w)) {
+        return;
+      }
+      c(0.0F);
+      B = H.ascent();
+      C = H.descent();
+      Object localObject = H;
+      CharSequence localCharSequence = w;
+      int i1 = Math.round(((TextPaint)localObject).measureText(localCharSequence, 0, localCharSequence.length()));
+      int i2 = Math.round(C - B);
+      if (i1 > 0)
+      {
+        if (i2 <= 0) {
+          return;
+        }
+        z = Bitmap.createBitmap(i1, i2, Bitmap.Config.ARGB_8888);
+        localObject = new Canvas(z);
+        localCharSequence = w;
+        ((Canvas)localObject).drawText(localCharSequence, 0, localCharSequence.length(), 0.0F, i2 - H.descent(), H);
+        if (A == null) {
+          A = new Paint(3);
+        }
+        return;
+      }
+      return;
+    }
+  }
+  
+  private int m()
+  {
+    int[] arrayOfInt = F;
+    if (arrayOfInt != null) {
+      return k.getColorForState(arrayOfInt, 0);
+    }
+    return k.getDefaultColor();
+  }
+  
+  public float a()
+  {
+    if (v == null) {
+      return 0.0F;
+    }
+    a(I);
+    TextPaint localTextPaint = I;
+    CharSequence localCharSequence = v;
+    return localTextPaint.measureText(localCharSequence, 0, localCharSequence.length());
+  }
+  
+  public void a(float paramFloat)
+  {
+    if (i != paramFloat)
+    {
+      i = paramFloat;
+      h();
+    }
+  }
+  
+  public void a(int paramInt)
+  {
+    j1 localJ1 = j1.a(a.getContext(), paramInt, j.TextAppearance);
+    if (localJ1.g(j.TextAppearance_android_textColor)) {
+      l = localJ1.a(j.TextAppearance_android_textColor);
+    }
+    if (localJ1.g(j.TextAppearance_android_textSize)) {
+      j = localJ1.c(j.TextAppearance_android_textSize, (int)j);
+    }
+    O = localJ1.d(j.TextAppearance_android_shadowColor, 0);
+    M = localJ1.b(j.TextAppearance_android_shadowDx, 0.0F);
+    N = localJ1.b(j.TextAppearance_android_shadowDy, 0.0F);
+    L = localJ1.b(j.TextAppearance_android_shadowRadius, 0.0F);
+    localJ1.a();
+    if (Build.VERSION.SDK_INT >= 16) {
+      s = d(paramInt);
+    }
+    h();
+  }
+  
+  public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    if (!a(e, paramInt1, paramInt2, paramInt3, paramInt4))
+    {
+      e.set(paramInt1, paramInt2, paramInt3, paramInt4);
+      G = true;
+      g();
+    }
+  }
+  
+  public void a(TimeInterpolator paramTimeInterpolator)
+  {
+    J = paramTimeInterpolator;
+    h();
+  }
+  
+  public void a(ColorStateList paramColorStateList)
+  {
+    if (l != paramColorStateList)
+    {
+      l = paramColorStateList;
+      h();
+    }
+  }
+  
+  public void a(Canvas paramCanvas)
+  {
+    int i2 = paramCanvas.save();
+    if ((w != null) && (b))
+    {
+      float f3 = q;
+      float f2 = r;
+      int i1;
+      if ((y) && (z != null)) {
+        i1 = 1;
+      } else {
+        i1 = 0;
+      }
+      float f1;
+      float f4;
+      float f5;
+      if (i1 != 0)
+      {
+        f1 = B;
+        f4 = D;
+        f5 = C;
+        f1 *= f4;
+      }
+      else
+      {
+        f1 = H.ascent();
+        f4 = D;
+        H.descent();
+        f5 = D;
+        f1 *= f4;
+      }
+      if (i1 != 0) {
+        f1 = f2 + f1;
+      } else {
+        f1 = f2;
+      }
+      f2 = D;
+      if (f2 != 1.0F) {
+        paramCanvas.scale(f2, f2, f3, f1);
+      }
+      if (i1 != 0)
+      {
+        paramCanvas.drawBitmap(z, f3, f1, A);
+      }
+      else
+      {
+        CharSequence localCharSequence = w;
+        paramCanvas.drawText(localCharSequence, 0, localCharSequence.length(), f3, f1, H);
+      }
+    }
+    paramCanvas.restoreToCount(i2);
+  }
+  
+  public void a(RectF paramRectF)
+  {
+    boolean bool = b(v);
+    Rect localRect = e;
+    float f1;
+    if (!bool) {
+      f1 = left;
+    } else {
+      f1 = right - a();
+    }
+    left = f1;
+    localRect = e;
+    top = top;
+    if (!bool) {
+      f1 = left + a();
+    } else {
+      f1 = right;
+    }
+    right = f1;
+    bottom = (e.top + c());
+  }
+  
+  public void a(Typeface paramTypeface)
+  {
+    t = paramTypeface;
+    s = paramTypeface;
+    h();
+  }
+  
+  public void a(CharSequence paramCharSequence)
+  {
+    if ((paramCharSequence == null) || (!paramCharSequence.equals(v)))
+    {
+      v = paramCharSequence;
+      w = null;
+      k();
+      h();
+    }
+  }
+  
+  public final boolean a(int[] paramArrayOfInt)
+  {
+    F = paramArrayOfInt;
+    if (f())
+    {
+      h();
+      return true;
+    }
+    return false;
+  }
+  
+  public ColorStateList b()
+  {
+    return l;
+  }
+  
+  public void b(float paramFloat)
+  {
+    paramFloat = a.b.g.c.a.a(paramFloat, 0.0F, 1.0F);
+    if (paramFloat != c)
+    {
+      c = paramFloat;
+      j();
+    }
+  }
+  
+  public void b(int paramInt)
+  {
+    if (h != paramInt)
+    {
+      h = paramInt;
+      h();
+    }
+  }
+  
+  public void b(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    if (!a(d, paramInt1, paramInt2, paramInt3, paramInt4))
+    {
+      d.set(paramInt1, paramInt2, paramInt3, paramInt4);
+      G = true;
+      g();
+    }
+  }
+  
+  public void b(TimeInterpolator paramTimeInterpolator)
+  {
+    K = paramTimeInterpolator;
+    h();
+  }
+  
+  public void b(ColorStateList paramColorStateList)
+  {
+    if (k != paramColorStateList)
+    {
+      k = paramColorStateList;
+      h();
+    }
+  }
+  
+  public float c()
+  {
+    a(I);
+    return -I.ascent();
+  }
+  
+  public void c(int paramInt)
+  {
+    if (g != paramInt)
+    {
+      g = paramInt;
+      h();
+    }
+  }
+  
+  public int d()
+  {
+    int[] arrayOfInt = F;
+    if (arrayOfInt != null) {
+      return l.getColorForState(arrayOfInt, 0);
+    }
+    return l.getDefaultColor();
+  }
+  
+  public float e()
+  {
+    return c;
+  }
+  
+  public final boolean f()
+  {
+    ColorStateList localColorStateList = l;
+    if ((localColorStateList == null) || (!localColorStateList.isStateful())) {
+      localColorStateList = k;
+    }
+    return (localColorStateList != null) && (localColorStateList.isStateful());
+  }
+  
+  void g()
+  {
+    boolean bool;
+    if ((e.width() > 0) && (e.height() > 0) && (d.width() > 0) && (d.height() > 0)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    b = bool;
+  }
+  
+  public void h()
+  {
+    if ((a.getHeight() > 0) && (a.getWidth() > 0))
+    {
+      i();
+      j();
+    }
+  }
+}

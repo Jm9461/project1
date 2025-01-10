@@ -1,0 +1,160 @@
+package e.f0.k;
+
+import e.f0.c;
+import e.w;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.List;
+import javax.net.ssl.SSLSocket;
+
+class d
+  extends f
+{
+  private final Method c;
+  private final Method d;
+  private final Method e;
+  private final Class<?> f;
+  private final Class<?> g;
+  
+  d(Method paramMethod1, Method paramMethod2, Method paramMethod3, Class<?> paramClass1, Class<?> paramClass2)
+  {
+    c = paramMethod1;
+    d = paramMethod2;
+    e = paramMethod3;
+    f = paramClass1;
+    g = paramClass2;
+  }
+  
+  public static f c()
+  {
+    try
+    {
+      Object localObject1 = Class.forName("org.eclipse.jetty.alpn.ALPN");
+      Object localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append("org.eclipse.jetty.alpn.ALPN");
+      ((StringBuilder)localObject2).append("$Provider");
+      localObject2 = Class.forName(((StringBuilder)localObject2).toString());
+      Object localObject3 = new StringBuilder();
+      ((StringBuilder)localObject3).append("org.eclipse.jetty.alpn.ALPN");
+      ((StringBuilder)localObject3).append("$ClientProvider");
+      localObject3 = Class.forName(((StringBuilder)localObject3).toString());
+      Object localObject4 = new StringBuilder();
+      ((StringBuilder)localObject4).append("org.eclipse.jetty.alpn.ALPN");
+      ((StringBuilder)localObject4).append("$ServerProvider");
+      localObject4 = Class.forName(((StringBuilder)localObject4).toString());
+      localObject1 = new d(((Class)localObject1).getMethod("put", new Class[] { SSLSocket.class, localObject2 }), ((Class)localObject1).getMethod("get", new Class[] { SSLSocket.class }), ((Class)localObject1).getMethod("remove", new Class[] { SSLSocket.class }), (Class)localObject3, (Class)localObject4);
+      return localObject1;
+    }
+    catch (NoSuchMethodException localNoSuchMethodException) {}catch (ClassNotFoundException localClassNotFoundException) {}
+    return null;
+  }
+  
+  public void a(SSLSocket paramSSLSocket)
+  {
+    try
+    {
+      e.invoke(null, new Object[] { paramSSLSocket });
+      return;
+    }
+    catch (InvocationTargetException paramSSLSocket) {}catch (IllegalAccessException paramSSLSocket) {}
+    throw c.a("unable to remove alpn", paramSSLSocket);
+  }
+  
+  public void a(SSLSocket paramSSLSocket, String paramString, List<w> paramList)
+  {
+    Object localObject = f.a(paramList);
+    try
+    {
+      paramString = f.class.getClassLoader();
+      paramList = f;
+      Class localClass = g;
+      localObject = new a((List)localObject);
+      paramString = Proxy.newProxyInstance(paramString, new Class[] { paramList, localClass }, (InvocationHandler)localObject);
+      c.invoke(null, new Object[] { paramSSLSocket, paramString });
+      return;
+    }
+    catch (IllegalAccessException paramSSLSocket) {}catch (InvocationTargetException paramSSLSocket) {}
+    throw c.a("unable to set alpn", paramSSLSocket);
+  }
+  
+  public String b(SSLSocket paramSSLSocket)
+  {
+    try
+    {
+      paramSSLSocket = (a)Proxy.getInvocationHandler(d.invoke(null, new Object[] { paramSSLSocket }));
+      if ((!b) && (c == null))
+      {
+        f.d().a(4, "ALPN callback dropped: HTTP/2 is disabled. Is alpn-boot on the boot class path?", null);
+        return null;
+      }
+      if (b) {
+        return null;
+      }
+      paramSSLSocket = c;
+      return paramSSLSocket;
+    }
+    catch (IllegalAccessException paramSSLSocket) {}catch (InvocationTargetException paramSSLSocket) {}
+    throw c.a("unable to get selected protocol", paramSSLSocket);
+  }
+  
+  private static class a
+    implements InvocationHandler
+  {
+    private final List<String> a;
+    boolean b;
+    String c;
+    
+    a(List<String> paramList)
+    {
+      a = paramList;
+    }
+    
+    public Object invoke(Object paramObject, Method paramMethod, Object[] paramArrayOfObject)
+    {
+      String str = paramMethod.getName();
+      Class localClass = paramMethod.getReturnType();
+      paramObject = paramArrayOfObject;
+      if (paramArrayOfObject == null) {
+        paramObject = c.b;
+      }
+      if ((str.equals("supports")) && (Boolean.TYPE == localClass)) {
+        return Boolean.valueOf(true);
+      }
+      if ((str.equals("unsupported")) && (Void.TYPE == localClass))
+      {
+        b = true;
+        return null;
+      }
+      if ((str.equals("protocols")) && (paramObject.length == 0)) {
+        return a;
+      }
+      if (((str.equals("selectProtocol")) || (str.equals("select"))) && (String.class == localClass) && (paramObject.length == 1) && ((paramObject[0] instanceof List)))
+      {
+        paramObject = (List)paramObject[0];
+        int i = 0;
+        int j = paramObject.size();
+        while (i < j)
+        {
+          if (a.contains(paramObject.get(i)))
+          {
+            paramObject = (String)paramObject.get(i);
+            c = paramObject;
+            return paramObject;
+          }
+          i += 1;
+        }
+        paramObject = (String)a.get(0);
+        c = paramObject;
+        return paramObject;
+      }
+      if (((str.equals("protocolSelected")) || (str.equals("selected"))) && (paramObject.length == 1))
+      {
+        c = ((String)paramObject[0]);
+        return null;
+      }
+      return paramMethod.invoke(this, paramObject);
+    }
+  }
+}

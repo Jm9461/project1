@@ -1,0 +1,5 @@
+package android.databinding;
+
+public class a
+  implements d
+{}

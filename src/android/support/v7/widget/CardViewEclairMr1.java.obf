@@ -1,0 +1,145 @@
+package android.support.v7.widget;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+
+class a0
+  implements c0
+{
+  final RectF a = new RectF();
+  
+  a0() {}
+  
+  private y0 a(Context paramContext, ColorStateList paramColorStateList, float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    return new y0(paramContext.getResources(), paramColorStateList, paramFloat1, paramFloat2, paramFloat3);
+  }
+  
+  private y0 j(b0 paramB0)
+  {
+    return (y0)paramB0.c();
+  }
+  
+  public float a(b0 paramB0)
+  {
+    return j(paramB0).d();
+  }
+  
+  public void a()
+  {
+    y0.r = new a();
+  }
+  
+  public void a(b0 paramB0, float paramFloat)
+  {
+    j(paramB0).a(paramFloat);
+    i(paramB0);
+  }
+  
+  public void a(b0 paramB0, Context paramContext, ColorStateList paramColorStateList, float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    paramContext = a(paramContext, paramColorStateList, paramFloat1, paramFloat2, paramFloat3);
+    paramContext.a(paramB0.d());
+    paramB0.a(paramContext);
+    i(paramB0);
+  }
+  
+  public void a(b0 paramB0, ColorStateList paramColorStateList)
+  {
+    j(paramB0).a(paramColorStateList);
+  }
+  
+  public float b(b0 paramB0)
+  {
+    return j(paramB0).e();
+  }
+  
+  public void b(b0 paramB0, float paramFloat)
+  {
+    j(paramB0).c(paramFloat);
+  }
+  
+  public void c(b0 paramB0) {}
+  
+  public void c(b0 paramB0, float paramFloat)
+  {
+    j(paramB0).b(paramFloat);
+    i(paramB0);
+  }
+  
+  public float d(b0 paramB0)
+  {
+    return j(paramB0).f();
+  }
+  
+  public ColorStateList e(b0 paramB0)
+  {
+    return j(paramB0).a();
+  }
+  
+  public void f(b0 paramB0)
+  {
+    j(paramB0).a(paramB0.d());
+    i(paramB0);
+  }
+  
+  public float g(b0 paramB0)
+  {
+    return j(paramB0).b();
+  }
+  
+  public float h(b0 paramB0)
+  {
+    return j(paramB0).c();
+  }
+  
+  public void i(b0 paramB0)
+  {
+    Rect localRect = new Rect();
+    j(paramB0).a(localRect);
+    paramB0.a((int)Math.ceil(b(paramB0)), (int)Math.ceil(a(paramB0)));
+    paramB0.a(left, top, right, bottom);
+  }
+  
+  class a
+    implements y0.a
+  {
+    a() {}
+    
+    public void a(Canvas paramCanvas, RectF paramRectF, float paramFloat, Paint paramPaint)
+    {
+      float f2 = paramFloat * 2.0F;
+      float f3 = paramRectF.width() - f2 - 1.0F;
+      float f4 = paramRectF.height();
+      if (paramFloat >= 1.0F)
+      {
+        float f1 = paramFloat + 0.5F;
+        a.set(-f1, -f1, f1, f1);
+        int i = paramCanvas.save();
+        paramCanvas.translate(left + f1, top + f1);
+        paramCanvas.drawArc(a, 180.0F, 90.0F, true, paramPaint);
+        paramCanvas.translate(f3, 0.0F);
+        paramCanvas.rotate(90.0F);
+        paramCanvas.drawArc(a, 180.0F, 90.0F, true, paramPaint);
+        paramCanvas.translate(f4 - f2 - 1.0F, 0.0F);
+        paramCanvas.rotate(90.0F);
+        paramCanvas.drawArc(a, 180.0F, 90.0F, true, paramPaint);
+        paramCanvas.translate(f3, 0.0F);
+        paramCanvas.rotate(90.0F);
+        paramCanvas.drawArc(a, 180.0F, 90.0F, true, paramPaint);
+        paramCanvas.restoreToCount(i);
+        f2 = left;
+        f3 = top;
+        paramCanvas.drawRect(f2 + f1 - 1.0F, f3, right - f1 + 1.0F, f3 + f1, paramPaint);
+        f2 = left;
+        f3 = bottom;
+        paramCanvas.drawRect(f2 + f1 - 1.0F, f3 - f1, right - f1 + 1.0F, f3, paramPaint);
+      }
+      paramCanvas.drawRect(left, top + paramFloat, right, bottom - paramFloat, paramPaint);
+    }
+  }
+}

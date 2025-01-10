@@ -1,0 +1,119 @@
+package android.support.v4.view.d0;
+
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityNodeProvider;
+import java.util.ArrayList;
+import java.util.List;
+
+public class d
+{
+  private final Object a;
+  
+  public d()
+  {
+    int i = Build.VERSION.SDK_INT;
+    if (i >= 19)
+    {
+      a = new b(this);
+      return;
+    }
+    if (i >= 16)
+    {
+      a = new a(this);
+      return;
+    }
+    a = null;
+  }
+  
+  public d(Object paramObject)
+  {
+    a = paramObject;
+  }
+  
+  public c a(int paramInt)
+  {
+    return null;
+  }
+  
+  public Object a()
+  {
+    return a;
+  }
+  
+  public List<c> a(String paramString, int paramInt)
+  {
+    return null;
+  }
+  
+  public boolean a(int paramInt1, int paramInt2, Bundle paramBundle)
+  {
+    return false;
+  }
+  
+  public c b(int paramInt)
+  {
+    return null;
+  }
+  
+  static class a
+    extends AccessibilityNodeProvider
+  {
+    final d a;
+    
+    a(d paramD)
+    {
+      a = paramD;
+    }
+    
+    public AccessibilityNodeInfo createAccessibilityNodeInfo(int paramInt)
+    {
+      c localC = a.a(paramInt);
+      if (localC == null) {
+        return null;
+      }
+      return localC.v();
+    }
+    
+    public List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText(String paramString, int paramInt)
+    {
+      paramString = a.a(paramString, paramInt);
+      if (paramString == null) {
+        return null;
+      }
+      ArrayList localArrayList = new ArrayList();
+      int i = paramString.size();
+      paramInt = 0;
+      while (paramInt < i)
+      {
+        localArrayList.add(((c)paramString.get(paramInt)).v());
+        paramInt += 1;
+      }
+      return localArrayList;
+    }
+    
+    public boolean performAction(int paramInt1, int paramInt2, Bundle paramBundle)
+    {
+      return a.a(paramInt1, paramInt2, paramBundle);
+    }
+  }
+  
+  static class b
+    extends d.a
+  {
+    b(d paramD)
+    {
+      super();
+    }
+    
+    public AccessibilityNodeInfo findFocus(int paramInt)
+    {
+      c localC = a.b(paramInt);
+      if (localC == null) {
+        return null;
+      }
+      return localC.v();
+    }
+  }
+}

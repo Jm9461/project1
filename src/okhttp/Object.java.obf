@@ -1,0 +1,19 @@
+package e;
+
+public abstract interface t
+{
+  public abstract a0 a(a paramA);
+  
+  public static abstract interface a
+  {
+    public abstract int a();
+    
+    public abstract a0 a(y paramY);
+    
+    public abstract y b();
+    
+    public abstract int c();
+    
+    public abstract int d();
+  }
+}

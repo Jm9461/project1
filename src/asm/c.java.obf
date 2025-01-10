@@ -1,0 +1,17 @@
+package g;
+
+import android.os.Handler;
+import android.os.Looper;
+
+final class h
+  implements g
+{
+  private static final Handler a = new Handler(Looper.getMainLooper());
+  
+  h() {}
+  
+  public void a(Runnable paramRunnable)
+  {
+    a.post(paramRunnable);
+  }
+}

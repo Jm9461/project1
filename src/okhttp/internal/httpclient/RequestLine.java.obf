@@ -1,0 +1,42 @@
+package e.f0.g;
+
+import e.s;
+import e.y;
+import java.net.Proxy.Type;
+
+public final class i
+{
+  public static String a(s paramS)
+  {
+    String str = paramS.c();
+    paramS = paramS.e();
+    if (paramS != null)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(str);
+      localStringBuilder.append('?');
+      localStringBuilder.append(paramS);
+      return localStringBuilder.toString();
+    }
+    return str;
+  }
+  
+  public static String a(y paramY, Proxy.Type paramType)
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(paramY.e());
+    localStringBuilder.append(' ');
+    if (b(paramY, paramType)) {
+      localStringBuilder.append(paramY.g());
+    } else {
+      localStringBuilder.append(a(paramY.g()));
+    }
+    localStringBuilder.append(" HTTP/1.1");
+    return localStringBuilder.toString();
+  }
+  
+  private static boolean b(y paramY, Proxy.Type paramType)
+  {
+    return (!paramY.d()) && (paramType == Proxy.Type.HTTP);
+  }
+}

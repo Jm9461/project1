@@ -1,0 +1,117 @@
+package d.a.a;
+
+import android.annotation.TargetApi;
+import android.view.View;
+import java.lang.ref.WeakReference;
+
+public abstract interface a
+{
+  public static final e b = new e();
+  
+  public abstract void a();
+  
+  public abstract void a(d paramD);
+  
+  public abstract void b();
+  
+  public abstract float getRevealRadius();
+  
+  public abstract void setRevealRadius(float paramFloat);
+  
+  public static class a
+    extends e.a
+  {
+    WeakReference<a> a;
+    
+    a(a paramA)
+    {
+      a = new WeakReference(paramA);
+    }
+    
+    public void a(b.h.a.a paramA)
+    {
+      ((a)a.get()).a();
+    }
+    
+    public void c(b.h.a.a paramA)
+    {
+      ((a)a.get()).b();
+    }
+  }
+  
+  @TargetApi(11)
+  public static class b
+    extends a.a
+  {
+    int b;
+    int c;
+    
+    b(a paramA)
+    {
+      super();
+      c = ((View)paramA).getLayerType();
+      b = 1;
+    }
+    
+    public void a(b.h.a.a paramA)
+    {
+      ((View)a.get()).setLayerType(c, null);
+      super.a(paramA);
+    }
+    
+    public void c(b.h.a.a paramA)
+    {
+      ((View)a.get()).setLayerType(b, null);
+      super.c(paramA);
+    }
+  }
+  
+  public static class c
+    extends a.b
+  {
+    @TargetApi(11)
+    c(a paramA)
+    {
+      super();
+      b = 2;
+    }
+  }
+  
+  public static class d
+  {
+    public final int a;
+    public final int b;
+    public final WeakReference<View> c;
+    
+    public d(int paramInt1, int paramInt2, float paramFloat1, float paramFloat2, WeakReference<View> paramWeakReference)
+    {
+      a = paramInt1;
+      b = paramInt2;
+      c = paramWeakReference;
+    }
+    
+    public View a()
+    {
+      return (View)c.get();
+    }
+  }
+  
+  public static class e
+    extends b.h.b.a<a>
+  {
+    public e()
+    {
+      super();
+    }
+    
+    public Float a(a paramA)
+    {
+      return Float.valueOf(paramA.getRevealRadius());
+    }
+    
+    public void a(a paramA, float paramFloat)
+    {
+      paramA.setRevealRadius(paramFloat);
+    }
+  }
+}

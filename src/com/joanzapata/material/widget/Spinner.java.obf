@@ -1,0 +1,1676 @@
+package com.rey.material.widget;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.database.DataSetObserver;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import android.text.TextUtils.TruncateAt;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.BaseSavedState;
+import android.view.View.MeasureSpec;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.ListAdapter;
+import android.widget.PopupWindow.OnDismissListener;
+import android.widget.SpinnerAdapter;
+import b.j.a.d.a.c;
+
+public class Spinner
+  extends a
+  implements a.c
+{
+  private d A;
+  private j B = new j(null);
+  private boolean C;
+  private boolean f;
+  private TextView g;
+  private SpinnerAdapter h;
+  private f i;
+  private g j;
+  private int k;
+  private int l;
+  private e m;
+  private int n;
+  private b.j.a.e.a o;
+  private int p;
+  private int q;
+  private boolean r;
+  private b.j.a.e.b s;
+  private int t;
+  private int u;
+  private int v;
+  private boolean w;
+  private int x;
+  private h y = new h(null);
+  private Rect z = new Rect();
+  
+  public Spinner(Context paramContext)
+  {
+    super(paramContext, null, b.j.a.a.listPopupWindowStyle);
+  }
+  
+  public Spinner(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet, b.j.a.a.listPopupWindowStyle);
+  }
+  
+  public Spinner(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+  }
+  
+  private int a(int paramInt1, int paramInt2)
+  {
+    if (paramInt2 != -2)
+    {
+      if (paramInt2 != -1) {
+        return View.MeasureSpec.makeMeasureSpec(paramInt2, 1073741824);
+      }
+      if (paramInt1 > 0) {
+        return View.MeasureSpec.makeMeasureSpec(paramInt1, 1073741824);
+      }
+      return View.MeasureSpec.makeMeasureSpec(0, 0);
+    }
+    if (paramInt1 > 0) {
+      return View.MeasureSpec.makeMeasureSpec(paramInt1, Integer.MIN_VALUE);
+    }
+    return View.MeasureSpec.makeMeasureSpec(0, 0);
+  }
+  
+  private int a(SpinnerAdapter paramSpinnerAdapter, Drawable paramDrawable)
+  {
+    if (paramSpinnerAdapter == null) {
+      return 0;
+    }
+    int i1 = 0;
+    View localView = null;
+    int i3 = 0;
+    int i6 = View.MeasureSpec.makeMeasureSpec(0, 0);
+    int i7 = View.MeasureSpec.makeMeasureSpec(0, 0);
+    int i2 = Math.max(0, getSelectedItemPosition());
+    int i8 = Math.min(paramSpinnerAdapter.getCount(), i2 + 15);
+    i2 = Math.max(0, i2 - (15 - (i8 - i2)));
+    while (i2 < i8)
+    {
+      int i5 = paramSpinnerAdapter.getItemViewType(i2);
+      int i4 = i3;
+      if (i5 != i3)
+      {
+        i4 = i5;
+        localView = null;
+      }
+      localView = paramSpinnerAdapter.getView(i2, localView, this);
+      if (localView.getLayoutParams() == null) {
+        localView.setLayoutParams(new FrameLayout.LayoutParams(-2, -2));
+      }
+      localView.measure(i6, i7);
+      i1 = Math.max(i1, localView.getMeasuredWidth());
+      i2 += 1;
+      i3 = i4;
+    }
+    i2 = i1;
+    if (paramDrawable != null)
+    {
+      paramDrawable.getPadding(z);
+      paramSpinnerAdapter = z;
+      i2 = i1 + (left + right);
+    }
+    return i2;
+  }
+  
+  private void a()
+  {
+    int i1 = x;
+    if (i1 == -1)
+    {
+      setSelection(0);
+      return;
+    }
+    if (i1 < h.getCount())
+    {
+      b();
+      return;
+    }
+    setSelection(h.getCount() - 1);
+  }
+  
+  private void b()
+  {
+    if (h == null) {
+      return;
+    }
+    if (g == null)
+    {
+      removeAllViews();
+    }
+    else
+    {
+      i1 = getChildCount() - 1;
+      while (i1 > 0)
+      {
+        removeViewAt(i1);
+        i1 -= 1;
+      }
+    }
+    int i1 = h.getItemViewType(x);
+    View localView = h.getView(x, y.a(i1), this);
+    localView.setFocusable(false);
+    localView.setClickable(false);
+    if (localView.getParent() != null) {
+      ((ViewGroup)localView.getParent()).removeView(localView);
+    }
+    super.addView(localView);
+    y.a(i1, localView);
+  }
+  
+  private void c()
+  {
+    b.j.a.e.a localA = o;
+    if (localA != null) {
+      localA.a(b.j.a.e.a.p, true);
+    }
+  }
+  
+  private void d()
+  {
+    if (!m.j())
+    {
+      m.k();
+      final c localC = m.f();
+      if (localC != null)
+      {
+        if (Build.VERSION.SDK_INT >= 11) {
+          localC.setChoiceMode(1);
+        }
+        localC.setSelection(getSelectedItemPosition());
+        if ((o != null) && (r)) {
+          localC.getViewTreeObserver().addOnPreDrawListener(new b(localC));
+        }
+      }
+    }
+  }
+  
+  private int getArrowDrawableWidth()
+  {
+    if (o != null) {
+      return p + q * 2;
+    }
+    return 0;
+  }
+  
+  private int getDividerDrawableHeight()
+  {
+    int i1 = t;
+    if (i1 > 0) {
+      return i1 + u;
+    }
+    return 0;
+  }
+  
+  private android.widget.TextView getLabelView()
+  {
+    if (g == null)
+    {
+      g = new TextView(getContext());
+      if (Build.VERSION.SDK_INT >= 17)
+      {
+        TextView localTextView = g;
+        int i1;
+        if (C) {
+          i1 = 4;
+        } else {
+          i1 = 3;
+        }
+        localTextView.setTextDirection(i1);
+      }
+      g.setSingleLine(true);
+      g.setDuplicateParentStateEnabled(true);
+    }
+    return g;
+  }
+  
+  protected void a(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    super.a(paramContext, paramAttributeSet, paramInt1, paramInt2);
+    removeAllViews();
+    TypedArray localTypedArray = paramContext.obtainStyledAttributes(paramAttributeSet, b.j.a.c.Spinner, paramInt1, paramInt2);
+    int i1 = -1;
+    Object localObject2 = null;
+    Object localObject3 = null;
+    boolean bool1 = true;
+    paramInt2 = -1;
+    Object localObject1 = null;
+    Object localObject4 = null;
+    int i4 = -1;
+    int i3 = 0;
+    int i2 = localTypedArray.getIndexCount();
+    while (i3 < i2)
+    {
+      int i8 = localTypedArray.getIndex(i3);
+      int i5;
+      Object localObject5;
+      Object localObject6;
+      boolean bool2;
+      int i6;
+      Object localObject7;
+      int i7;
+      if (i8 == b.j.a.c.Spinner_spn_labelEnable)
+      {
+        f = localTypedArray.getBoolean(i8, false);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_labelPadding)
+      {
+        getLabelView().setPadding(0, 0, 0, localTypedArray.getDimensionPixelSize(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_labelTextSize)
+      {
+        i7 = localTypedArray.getDimensionPixelSize(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_labelTextColor)
+      {
+        localObject7 = localTypedArray.getColorStateList(i8);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_labelTextAppearance)
+      {
+        getLabelView().setTextAppearance(paramContext, localTypedArray.getResourceId(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_labelEllipsize)
+      {
+        i5 = localTypedArray.getInteger(i8, 0);
+        if (i5 != 1)
+        {
+          if (i5 != 2)
+          {
+            if (i5 != 3)
+            {
+              if (i5 != 4) {
+                getLabelView().setEllipsize(TextUtils.TruncateAt.END);
+              } else {
+                getLabelView().setEllipsize(TextUtils.TruncateAt.MARQUEE);
+              }
+            }
+            else {
+              getLabelView().setEllipsize(TextUtils.TruncateAt.END);
+            }
+          }
+          else {
+            getLabelView().setEllipsize(TextUtils.TruncateAt.MIDDLE);
+          }
+        }
+        else {
+          getLabelView().setEllipsize(TextUtils.TruncateAt.START);
+        }
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_label)
+      {
+        getLabelView().setText(localTypedArray.getString(i8));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_android_gravity)
+      {
+        v = localTypedArray.getInt(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_android_minWidth)
+      {
+        setMinimumWidth(localTypedArray.getDimensionPixelOffset(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_android_minHeight)
+      {
+        setMinimumHeight(localTypedArray.getDimensionPixelOffset(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_android_dropDownWidth)
+      {
+        n = localTypedArray.getLayoutDimension(i8, -2);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_android_popupBackground)
+      {
+        m.a(localTypedArray.getDrawable(i8));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_android_prompt)
+      {
+        m.a(localTypedArray.getString(i8));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_popupItemAnimation)
+      {
+        m.d(localTypedArray.getResourceId(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_popupItemAnimOffset)
+      {
+        m.e(localTypedArray.getInteger(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_disableChildrenWhenDisabled)
+      {
+        w = localTypedArray.getBoolean(i8, false);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowSwitchMode)
+      {
+        r = localTypedArray.getBoolean(i8, false);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowAnimDuration)
+      {
+        i5 = localTypedArray.getInteger(i8, 0);
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowSize)
+      {
+        p = localTypedArray.getDimensionPixelSize(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowPadding)
+      {
+        q = localTypedArray.getDimensionPixelSize(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowColor)
+      {
+        localObject5 = localTypedArray.getColorStateList(i8);
+        i5 = i1;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowInterpolator)
+      {
+        localObject6 = AnimationUtils.loadInterpolator(paramContext, localTypedArray.getResourceId(i8, 0));
+        i5 = i1;
+        localObject5 = localObject2;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_arrowAnimClockwise)
+      {
+        bool2 = localTypedArray.getBoolean(i8, true);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_dividerHeight)
+      {
+        t = localTypedArray.getDimensionPixelOffset(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_dividerPadding)
+      {
+        u = localTypedArray.getDimensionPixelOffset(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else if (i8 == b.j.a.c.Spinner_spn_dividerAnimDuration)
+      {
+        i6 = localTypedArray.getInteger(i8, 0);
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        localObject7 = localObject4;
+        i7 = i4;
+      }
+      else
+      {
+        i5 = i1;
+        localObject5 = localObject2;
+        localObject6 = localObject3;
+        bool2 = bool1;
+        i6 = paramInt2;
+        localObject7 = localObject4;
+        i7 = i4;
+        if (i8 == b.j.a.c.Spinner_spn_dividerColor)
+        {
+          localObject1 = localTypedArray.getColorStateList(i8);
+          i7 = i4;
+          localObject7 = localObject4;
+          i6 = paramInt2;
+          bool2 = bool1;
+          localObject6 = localObject3;
+          localObject5 = localObject2;
+          i5 = i1;
+        }
+      }
+      i3 += 1;
+      i1 = i5;
+      localObject2 = localObject5;
+      localObject3 = localObject6;
+      bool1 = bool2;
+      paramInt2 = i6;
+      localObject4 = localObject7;
+      i4 = i7;
+    }
+    localTypedArray.recycle();
+    if (localObject4 != null) {
+      getLabelView().setTextColor((ColorStateList)localObject4);
+    }
+    if (i4 >= 0) {
+      getLabelView().setTextSize(0, i4);
+    }
+    if (f) {
+      addView(getLabelView(), 0, new ViewGroup.LayoutParams(-2, -2));
+    }
+    i2 = p;
+    if (i2 > 0)
+    {
+      localObject4 = o;
+      if (localObject4 == null)
+      {
+        if (localObject2 == null) {
+          localObject2 = ColorStateList.valueOf(b.j.a.f.b.c(paramContext, -16777216));
+        }
+        i2 = i1;
+        if (i1 < 0) {
+          i2 = 0;
+        }
+        o = new b.j.a.e.a(b.j.a.e.a.p, p, (ColorStateList)localObject2, i2, localObject3, bool1);
+        o.setCallback(this);
+      }
+      else
+      {
+        ((b.j.a.e.a)localObject4).b(i2);
+        o.a(bool1);
+        if (localObject2 != null) {
+          o.a((ColorStateList)localObject2);
+        }
+        if (i1 >= 0) {
+          o.a(i1);
+        }
+        if (localObject3 != null) {
+          o.a(localObject3);
+        }
+      }
+    }
+    else
+    {
+      localObject2 = o;
+      if (localObject2 != null)
+      {
+        ((Drawable)localObject2).setCallback(null);
+        o = null;
+      }
+    }
+    i1 = t;
+    if (i1 > 0)
+    {
+      localObject2 = s;
+      if (localObject2 == null)
+      {
+        i1 = paramInt2;
+        if (paramInt2 < 0) {
+          i1 = 0;
+        }
+        localObject2 = localObject1;
+        if (localObject1 == null)
+        {
+          localObject1 = new int[] { -16842919 };
+          localObject2 = new int[] { 16842919, 16842910 };
+          paramInt2 = b.j.a.f.b.c(paramContext, -16777216);
+          i2 = b.j.a.f.b.a(paramContext, -16777216);
+          localObject2 = new ColorStateList(new int[][] { localObject1, localObject2 }, new int[] { paramInt2, i2 });
+        }
+        s = new b.j.a.e.b(t, (ColorStateList)localObject2, i1);
+        s.setCallback(this);
+      }
+      else
+      {
+        ((b.j.a.e.b)localObject2).b(i1);
+        if (localObject1 != null) {
+          s.a((ColorStateList)localObject1);
+        }
+        if (paramInt2 >= 0) {
+          s.a(paramInt2);
+        }
+      }
+    }
+    else
+    {
+      localObject1 = s;
+      if (localObject1 != null)
+      {
+        ((Drawable)localObject1).setCallback(null);
+        s = null;
+      }
+    }
+    localObject1 = A;
+    if (localObject1 != null)
+    {
+      m.a((ListAdapter)localObject1);
+      A = null;
+    }
+    localObject1 = h;
+    if (localObject1 != null) {
+      setAdapter((SpinnerAdapter)localObject1);
+    }
+    if (isInEditMode())
+    {
+      paramContext = new TextView(paramContext, paramAttributeSet, paramInt1);
+      paramContext.setText("Item 1");
+      super.addView(paramContext);
+    }
+    requestLayout();
+  }
+  
+  public boolean a(View paramView, int paramInt, long paramLong)
+  {
+    f localF = i;
+    if (localF != null)
+    {
+      if (localF.a(this, paramView, paramInt, paramLong)) {
+        setSelection(paramInt);
+      }
+      return true;
+    }
+    setSelection(paramInt);
+    return false;
+  }
+  
+  protected void b(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    f = false;
+    n = -2;
+    r = false;
+    v = 17;
+    w = false;
+    x = -1;
+    C = false;
+    setWillNotDraw(false);
+    m = new e(paramContext, paramAttributeSet, paramInt1, paramInt2);
+    m.a(true);
+    if (isInEditMode()) {
+      a(b.j.a.b.Material_Widget_Spinner);
+    }
+    setOnClickListener(new a());
+    super.b(paramContext, paramAttributeSet, paramInt1, paramInt2);
+  }
+  
+  public void draw(Canvas paramCanvas)
+  {
+    super.draw(paramCanvas);
+    Object localObject = s;
+    if (localObject != null) {
+      ((b.j.a.e.b)localObject).draw(paramCanvas);
+    }
+    localObject = o;
+    if (localObject != null) {
+      ((b.j.a.e.a)localObject).draw(paramCanvas);
+    }
+  }
+  
+  protected void drawableStateChanged()
+  {
+    super.drawableStateChanged();
+    Object localObject = o;
+    if (localObject != null) {
+      ((Drawable)localObject).setState(getDrawableState());
+    }
+    localObject = s;
+    if (localObject != null) {
+      ((Drawable)localObject).setState(getDrawableState());
+    }
+  }
+  
+  public SpinnerAdapter getAdapter()
+  {
+    return h;
+  }
+  
+  public int getBaseline()
+  {
+    View localView = getSelectedView();
+    if (localView != null)
+    {
+      int i3 = localView.getBaseline();
+      if (i3 < 0) {
+        return -1;
+      }
+      int i2 = getPaddingTop();
+      TextView localTextView = g;
+      int i1 = i2;
+      if (localTextView != null) {
+        i1 = i2 + localTextView.getMeasuredHeight();
+      }
+      i2 = getMeasuredHeight() - i1 - getPaddingBottom() - getDividerDrawableHeight();
+      int i4 = v & 0x70;
+      if (i4 != 48)
+      {
+        if (i4 != 80) {
+          return (i2 - localView.getMeasuredHeight()) / 2 + i1 + i3;
+        }
+        return i1 + i2 - localView.getMeasuredHeight() + i3;
+      }
+      return i1 + i3;
+    }
+    return -1;
+  }
+  
+  public int getDropDownHorizontalOffset()
+  {
+    return m.e();
+  }
+  
+  public int getDropDownVerticalOffset()
+  {
+    return m.g();
+  }
+  
+  public int getDropDownWidth()
+  {
+    return n;
+  }
+  
+  public Drawable getPopupBackground()
+  {
+    return m.d();
+  }
+  
+  public Object getSelectedItem()
+  {
+    SpinnerAdapter localSpinnerAdapter = h;
+    if (localSpinnerAdapter == null) {
+      return null;
+    }
+    return localSpinnerAdapter.getItem(x);
+  }
+  
+  public int getSelectedItemPosition()
+  {
+    return x;
+  }
+  
+  public View getSelectedView()
+  {
+    View localView = getChildAt(getChildCount() - 1);
+    if (localView == g) {
+      return null;
+    }
+    return localView;
+  }
+  
+  protected void onDetachedFromWindow()
+  {
+    super.onDetachedFromWindow();
+    e localE = m;
+    if ((localE != null) && (localE.j())) {
+      m.b();
+    }
+  }
+  
+  public boolean onInterceptTouchEvent(MotionEvent paramMotionEvent)
+  {
+    return true;
+  }
+  
+  protected void onLayout(boolean paramBoolean, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    paramInt3 -= paramInt1;
+    paramInt2 = paramInt4 - paramInt2;
+    paramInt4 = getArrowDrawableWidth();
+    int i1;
+    if (o != null)
+    {
+      i1 = getPaddingTop();
+      localObject = g;
+      if (localObject == null) {
+        paramInt1 = 0;
+      } else {
+        paramInt1 = ((android.widget.TextView)localObject).getMeasuredHeight();
+      }
+      paramInt1 = i1 + paramInt1;
+      i1 = paramInt2 - getDividerDrawableHeight() - getPaddingBottom();
+      if (C) {
+        o.setBounds(getPaddingLeft(), paramInt1, getPaddingLeft() + paramInt4, i1);
+      } else {
+        o.setBounds(getWidth() - getPaddingRight() - paramInt4, paramInt1, getWidth() - getPaddingRight(), i1);
+      }
+    }
+    Object localObject = s;
+    if (localObject != null) {
+      ((Drawable)localObject).setBounds(getPaddingLeft(), paramInt2 - t - getPaddingBottom(), paramInt3 - getPaddingRight(), paramInt2 - getPaddingBottom());
+    }
+    if (C) {
+      paramInt1 = getPaddingLeft() + paramInt4;
+    } else {
+      paramInt1 = getPaddingLeft();
+    }
+    if (C) {
+      paramInt4 = paramInt3 - getPaddingRight();
+    } else {
+      paramInt4 = paramInt3 - getPaddingRight() - paramInt4;
+    }
+    paramInt3 = getPaddingTop();
+    int i2 = paramInt2 - getPaddingBottom();
+    localObject = g;
+    paramInt2 = paramInt3;
+    if (localObject != null)
+    {
+      if (C) {
+        ((android.widget.TextView)localObject).layout(paramInt4 - ((android.widget.TextView)localObject).getMeasuredWidth(), paramInt3, paramInt4, g.getMeasuredHeight() + paramInt3);
+      } else {
+        ((android.widget.TextView)localObject).layout(paramInt1, paramInt3, ((android.widget.TextView)localObject).getMeasuredWidth() + paramInt1, g.getMeasuredHeight() + paramInt3);
+      }
+      paramInt2 = paramInt3 + g.getMeasuredHeight();
+    }
+    localObject = getSelectedView();
+    if (localObject != null)
+    {
+      i1 = v & 0x7;
+      if (i1 == 8388611)
+      {
+        if (C) {
+          paramInt3 = 5;
+        } else {
+          paramInt3 = 3;
+        }
+      }
+      else
+      {
+        paramInt3 = i1;
+        if (i1 == 8388613) {
+          if (C) {
+            paramInt3 = 3;
+          } else {
+            paramInt3 = 5;
+          }
+        }
+      }
+      if (paramInt3 != 1)
+      {
+        if (paramInt3 != 3) {
+          if (paramInt3 != 5) {
+            paramInt1 = (paramInt4 - paramInt1 - ((View)localObject).getMeasuredWidth()) / 2 + paramInt1;
+          } else {
+            paramInt1 = paramInt4 - ((View)localObject).getMeasuredWidth();
+          }
+        }
+      }
+      else {
+        paramInt1 = (paramInt4 - paramInt1 - ((View)localObject).getMeasuredWidth()) / 2 + paramInt1;
+      }
+      paramInt3 = v & 0x70;
+      if (paramInt3 != 16)
+      {
+        if (paramInt3 != 48) {
+          if (paramInt3 != 80) {
+            paramInt2 = (i2 - paramInt2 - ((View)localObject).getMeasuredHeight()) / 2 + paramInt2;
+          } else {
+            paramInt2 = i2 - ((View)localObject).getMeasuredHeight();
+          }
+        }
+      }
+      else {
+        paramInt2 = (i2 - paramInt2 - ((View)localObject).getMeasuredHeight()) / 2 + paramInt2;
+      }
+      ((View)localObject).layout(paramInt1, paramInt2, ((View)localObject).getMeasuredWidth() + paramInt1, ((View)localObject).getMeasuredHeight() + paramInt2);
+    }
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    int i9 = View.MeasureSpec.getMode(paramInt1);
+    int i5 = View.MeasureSpec.getSize(paramInt1);
+    int i8 = View.MeasureSpec.getMode(paramInt2);
+    int i4 = View.MeasureSpec.getSize(paramInt2);
+    int i7 = getPaddingLeft() + getPaddingRight() + getArrowDrawableWidth();
+    int i6 = getPaddingTop() + getPaddingBottom() + getDividerDrawableHeight();
+    paramInt2 = 0;
+    int i2 = 0;
+    Object localObject = g;
+    paramInt1 = paramInt2;
+    int i1 = i2;
+    if (localObject != null)
+    {
+      paramInt1 = paramInt2;
+      i1 = i2;
+      if (((android.widget.TextView)localObject).getLayoutParams() != null)
+      {
+        if (i9 == 0) {
+          paramInt1 = 0;
+        } else {
+          paramInt1 = i5 - i7;
+        }
+        paramInt1 = View.MeasureSpec.makeMeasureSpec(paramInt1, i9);
+        paramInt2 = View.MeasureSpec.makeMeasureSpec(0, 0);
+        g.measure(paramInt1, paramInt2);
+        paramInt1 = g.getMeasuredWidth();
+        i1 = g.getMeasuredHeight();
+      }
+    }
+    i2 = 0;
+    paramInt2 = 0;
+    localObject = getSelectedView();
+    ViewGroup.LayoutParams localLayoutParams;
+    int i3;
+    if (localObject != null)
+    {
+      localLayoutParams = ((View)localObject).getLayoutParams();
+      paramInt2 = a(i5 - i7, width);
+      i3 = a(i4 - i6 - g.getMeasuredHeight(), height);
+      ((View)localObject).measure(paramInt2, i3);
+      i2 = ((View)localObject).getMeasuredWidth();
+      paramInt2 = ((View)localObject).getMeasuredHeight();
+    }
+    else
+    {
+      i3 = 0;
+    }
+    paramInt1 = Math.max(k, Math.max(paramInt1, i2) + i7);
+    paramInt2 = Math.max(l, paramInt2 + i1 + i6);
+    if (i9 != Integer.MIN_VALUE)
+    {
+      if (i9 == 1073741824) {
+        paramInt1 = i5;
+      }
+    }
+    else {
+      paramInt1 = Math.min(i5, paramInt1);
+    }
+    if (i8 != Integer.MIN_VALUE)
+    {
+      if (i8 == 1073741824) {
+        paramInt2 = i4;
+      }
+    }
+    else {
+      paramInt2 = Math.min(i4, paramInt2);
+    }
+    setMeasuredDimension(paramInt1, paramInt2);
+    if (localObject != null)
+    {
+      localLayoutParams = ((View)localObject).getLayoutParams();
+      i2 = width;
+      if (i2 != -2)
+      {
+        if (i2 != -1) {
+          paramInt1 = width;
+        } else {
+          paramInt1 -= i7;
+        }
+      }
+      else {
+        paramInt1 = ((View)localObject).getMeasuredWidth();
+      }
+      i2 = height;
+      if (i2 != -2)
+      {
+        if (i2 != -1) {
+          paramInt2 = height;
+        } else {
+          paramInt2 = paramInt2 - i1 - i6;
+        }
+      }
+      else {
+        paramInt2 = ((View)localObject).getMeasuredHeight();
+      }
+      if ((((View)localObject).getMeasuredWidth() != paramInt1) || (((View)localObject).getMeasuredHeight() != paramInt2))
+      {
+        ((View)localObject).measure(View.MeasureSpec.makeMeasureSpec(paramInt1, 1073741824), View.MeasureSpec.makeMeasureSpec(paramInt2, 1073741824));
+        return;
+      }
+    }
+  }
+  
+  public void onRestoreInstanceState(Parcelable paramParcelable)
+  {
+    paramParcelable = (i)paramParcelable;
+    super.onRestoreInstanceState(paramParcelable.getSuperState());
+    setSelection(c);
+    if (d)
+    {
+      paramParcelable = getViewTreeObserver();
+      if (paramParcelable != null) {
+        paramParcelable.addOnGlobalLayoutListener(new c());
+      }
+    }
+  }
+  
+  @TargetApi(17)
+  public void onRtlPropertiesChanged(int paramInt)
+  {
+    boolean bool = true;
+    if (paramInt != 1) {
+      bool = false;
+    }
+    if (C != bool)
+    {
+      C = bool;
+      TextView localTextView = g;
+      if ((localTextView != null) && (Build.VERSION.SDK_INT >= 17))
+      {
+        if (C) {
+          paramInt = 4;
+        } else {
+          paramInt = 3;
+        }
+        localTextView.setTextDirection(paramInt);
+      }
+      requestLayout();
+    }
+  }
+  
+  public Parcelable onSaveInstanceState()
+  {
+    i localI = new i(super.onSaveInstanceState());
+    c = getSelectedItemPosition();
+    e localE = m;
+    boolean bool;
+    if ((localE != null) && (localE.j())) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    d = bool;
+    return localI;
+  }
+  
+  public void setAdapter(SpinnerAdapter paramSpinnerAdapter)
+  {
+    Object localObject = h;
+    if (localObject != null) {
+      ((SpinnerAdapter)localObject).unregisterDataSetObserver(B);
+    }
+    y.a();
+    h = paramSpinnerAdapter;
+    h.registerDataSetObserver(B);
+    a();
+    localObject = m;
+    if (localObject != null)
+    {
+      ((e)localObject).a(new d(paramSpinnerAdapter));
+      return;
+    }
+    A = new d(paramSpinnerAdapter);
+  }
+  
+  public void setDropDownHorizontalOffset(int paramInt)
+  {
+    m.b(paramInt);
+  }
+  
+  public void setDropDownVerticalOffset(int paramInt)
+  {
+    m.g(paramInt);
+  }
+  
+  public void setDropDownWidth(int paramInt)
+  {
+    n = paramInt;
+  }
+  
+  public void setEnabled(boolean paramBoolean)
+  {
+    super.setEnabled(paramBoolean);
+    if (w)
+    {
+      int i2 = getChildCount();
+      int i1 = 0;
+      while (i1 < i2)
+      {
+        getChildAt(i1).setEnabled(paramBoolean);
+        i1 += 1;
+      }
+    }
+  }
+  
+  public void setGravity(int paramInt)
+  {
+    if (v != paramInt)
+    {
+      int i1 = paramInt;
+      if ((paramInt & 0x7) == 0) {
+        i1 = paramInt | 0x800003;
+      }
+      v = i1;
+      requestLayout();
+    }
+  }
+  
+  public void setMinimumHeight(int paramInt)
+  {
+    l = paramInt;
+    super.setMinimumHeight(paramInt);
+  }
+  
+  public void setMinimumWidth(int paramInt)
+  {
+    k = paramInt;
+    super.setMinimumWidth(paramInt);
+  }
+  
+  public void setOnItemClickListener(f paramF)
+  {
+    i = paramF;
+  }
+  
+  public void setOnItemSelectedListener(g paramG)
+  {
+    j = paramG;
+  }
+  
+  public void setPopupBackgroundDrawable(Drawable paramDrawable)
+  {
+    m.a(paramDrawable);
+  }
+  
+  public void setPopupBackgroundResource(int paramInt)
+  {
+    setPopupBackgroundDrawable(getContext().getDrawable(paramInt));
+  }
+  
+  public void setSelection(int paramInt)
+  {
+    Object localObject = h;
+    int i1 = paramInt;
+    if (localObject != null) {
+      i1 = Math.max(0, Math.min(paramInt, ((SpinnerAdapter)localObject).getCount() - 1));
+    }
+    if (x != i1)
+    {
+      x = i1;
+      localObject = j;
+      if (localObject != null)
+      {
+        View localView = getSelectedView();
+        SpinnerAdapter localSpinnerAdapter = h;
+        long l1;
+        if (localSpinnerAdapter == null) {
+          l1 = -1L;
+        } else {
+          l1 = localSpinnerAdapter.getItemId(i1);
+        }
+        ((g)localObject).a(this, localView, i1, l1);
+      }
+      b();
+    }
+  }
+  
+  protected boolean verifyDrawable(Drawable paramDrawable)
+  {
+    return (super.verifyDrawable(paramDrawable)) || (o == paramDrawable) || (s == paramDrawable);
+  }
+  
+  class a
+    implements View.OnClickListener
+  {
+    a() {}
+    
+    public void onClick(View paramView)
+    {
+      Spinner.d(Spinner.this);
+    }
+  }
+  
+  class b
+    implements ViewTreeObserver.OnPreDrawListener
+  {
+    b(c paramC) {}
+    
+    public boolean onPreDraw()
+    {
+      localC.getViewTreeObserver().removeOnPreDrawListener(this);
+      Spinner.e(Spinner.this).a(b.j.a.e.a.q, true);
+      return true;
+    }
+  }
+  
+  class c
+    implements ViewTreeObserver.OnGlobalLayoutListener
+  {
+    c() {}
+    
+    public void onGlobalLayout()
+    {
+      Spinner.d(Spinner.this);
+      ViewTreeObserver localViewTreeObserver = getViewTreeObserver();
+      if (localViewTreeObserver != null) {
+        localViewTreeObserver.removeGlobalOnLayoutListener(this);
+      }
+    }
+  }
+  
+  private static class d
+    implements ListAdapter, SpinnerAdapter, View.OnClickListener
+  {
+    private SpinnerAdapter c;
+    private ListAdapter d;
+    private AdapterView.OnItemClickListener e;
+    
+    public d(SpinnerAdapter paramSpinnerAdapter)
+    {
+      c = paramSpinnerAdapter;
+      if ((paramSpinnerAdapter instanceof ListAdapter)) {
+        d = ((ListAdapter)paramSpinnerAdapter);
+      }
+    }
+    
+    public void a(AdapterView.OnItemClickListener paramOnItemClickListener)
+    {
+      e = paramOnItemClickListener;
+    }
+    
+    public boolean areAllItemsEnabled()
+    {
+      ListAdapter localListAdapter = d;
+      return (localListAdapter == null) || (localListAdapter.areAllItemsEnabled());
+    }
+    
+    public int getCount()
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      if (localSpinnerAdapter == null) {
+        return 0;
+      }
+      return localSpinnerAdapter.getCount();
+    }
+    
+    public View getDropDownView(int paramInt, View paramView, ViewGroup paramViewGroup)
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      if (localSpinnerAdapter == null) {
+        return null;
+      }
+      return localSpinnerAdapter.getDropDownView(paramInt, paramView, paramViewGroup);
+    }
+    
+    public Object getItem(int paramInt)
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      if (localSpinnerAdapter == null) {
+        return null;
+      }
+      return localSpinnerAdapter.getItem(paramInt);
+    }
+    
+    public long getItemId(int paramInt)
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      if (localSpinnerAdapter == null) {
+        return -1L;
+      }
+      return localSpinnerAdapter.getItemId(paramInt);
+    }
+    
+    public int getItemViewType(int paramInt)
+    {
+      ListAdapter localListAdapter = d;
+      if (localListAdapter != null) {
+        return localListAdapter.getItemViewType(paramInt);
+      }
+      return 0;
+    }
+    
+    public View getView(int paramInt, View paramView, ViewGroup paramViewGroup)
+    {
+      paramView = getDropDownView(paramInt, paramView, paramViewGroup);
+      paramView.setOnClickListener(this);
+      paramView.setTag(Integer.valueOf(paramInt));
+      return paramView;
+    }
+    
+    public int getViewTypeCount()
+    {
+      ListAdapter localListAdapter = d;
+      if (localListAdapter != null) {
+        return localListAdapter.getViewTypeCount();
+      }
+      return 1;
+    }
+    
+    public boolean hasStableIds()
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      return (localSpinnerAdapter != null) && (localSpinnerAdapter.hasStableIds());
+    }
+    
+    public boolean isEmpty()
+    {
+      return getCount() == 0;
+    }
+    
+    public boolean isEnabled(int paramInt)
+    {
+      ListAdapter localListAdapter = d;
+      return (localListAdapter == null) || (localListAdapter.isEnabled(paramInt));
+    }
+    
+    public void onClick(View paramView)
+    {
+      int i = ((Integer)paramView.getTag()).intValue();
+      AdapterView.OnItemClickListener localOnItemClickListener = e;
+      if (localOnItemClickListener != null) {
+        localOnItemClickListener.onItemClick(null, paramView, i, 0L);
+      }
+    }
+    
+    public void registerDataSetObserver(DataSetObserver paramDataSetObserver)
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      if (localSpinnerAdapter != null) {
+        localSpinnerAdapter.registerDataSetObserver(paramDataSetObserver);
+      }
+    }
+    
+    public void unregisterDataSetObserver(DataSetObserver paramDataSetObserver)
+    {
+      SpinnerAdapter localSpinnerAdapter = c;
+      if (localSpinnerAdapter != null) {
+        localSpinnerAdapter.unregisterDataSetObserver(paramDataSetObserver);
+      }
+    }
+  }
+  
+  private class e
+    extends b
+  {
+    private Spinner.d E;
+    private ViewTreeObserver.OnGlobalLayoutListener F = new a();
+    
+    public e(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+    {
+      super(paramAttributeSet, paramInt1, paramInt2);
+      a(Spinner.this);
+      a(true);
+      f(0);
+      a(new b(Spinner.this));
+    }
+    
+    public void a(ListAdapter paramListAdapter)
+    {
+      super.a(paramListAdapter);
+      E = ((Spinner.d)paramListAdapter);
+      E.a(new c());
+    }
+    
+    public void a(CharSequence paramCharSequence) {}
+    
+    public void k()
+    {
+      boolean bool = j();
+      l();
+      c(2);
+      super.k();
+      if (bool) {
+        return;
+      }
+      ViewTreeObserver localViewTreeObserver = getViewTreeObserver();
+      if (localViewTreeObserver != null) {
+        localViewTreeObserver.addOnGlobalLayoutListener(F);
+      }
+    }
+    
+    void l()
+    {
+      Object localObject = d();
+      int i = 0;
+      if (localObject != null)
+      {
+        ((Drawable)localObject).getPadding(Spinner.a(Spinner.this));
+        if (Spinner.b(Spinner.this)) {
+          i = aright;
+        } else {
+          i = -aleft;
+        }
+      }
+      else
+      {
+        localObject = Spinner.a(Spinner.this);
+        aright = 0;
+        left = 0;
+      }
+      int n = getPaddingLeft();
+      int i1 = getPaddingRight();
+      int i2 = getWidth();
+      if (Spinner.c(Spinner.this) == -2)
+      {
+        int k = Spinner.a(Spinner.this, E, d());
+        int m = getContext().getResources().getDisplayMetrics().widthPixels - aleft - aright;
+        int j = k;
+        if (k > m) {
+          j = m;
+        }
+        a(Math.max(j, i2 - n - i1));
+      }
+      else if (Spinner.c(Spinner.this) == -1)
+      {
+        a(i2 - n - i1);
+      }
+      else
+      {
+        a(Spinner.c(Spinner.this));
+      }
+      if (Spinner.b(Spinner.this)) {
+        i += i2 - i1 - h();
+      } else {
+        i += n;
+      }
+      b(i);
+    }
+    
+    class a
+      implements ViewTreeObserver.OnGlobalLayoutListener
+    {
+      a() {}
+      
+      public void onGlobalLayout()
+      {
+        l();
+        Spinner.e.a(Spinner.e.this);
+      }
+    }
+    
+    class b
+      implements PopupWindow.OnDismissListener
+    {
+      b(Spinner paramSpinner) {}
+      
+      @TargetApi(16)
+      public void onDismiss()
+      {
+        ViewTreeObserver localViewTreeObserver = getViewTreeObserver();
+        if (localViewTreeObserver != null) {
+          if (Build.VERSION.SDK_INT >= 16) {
+            localViewTreeObserver.removeOnGlobalLayoutListener(Spinner.e.b(Spinner.e.this));
+          } else {
+            localViewTreeObserver.removeGlobalOnLayoutListener(Spinner.e.b(Spinner.e.this));
+          }
+        }
+        Spinner.h(Spinner.this);
+      }
+    }
+    
+    class c
+      implements AdapterView.OnItemClickListener
+    {
+      c() {}
+      
+      public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong)
+      {
+        paramAdapterView = Spinner.e.this;
+        G.a(paramView, paramInt, Spinner.e.c(paramAdapterView).getItemId(paramInt));
+        b();
+      }
+    }
+  }
+  
+  public static abstract interface f
+  {
+    public abstract boolean a(Spinner paramSpinner, View paramView, int paramInt, long paramLong);
+  }
+  
+  public static abstract interface g
+  {
+    public abstract void a(Spinner paramSpinner, View paramView, int paramInt, long paramLong);
+  }
+  
+  private class h
+  {
+    private final SparseArray<View> a = new SparseArray();
+    
+    private h() {}
+    
+    View a(int paramInt)
+    {
+      View localView = (View)a.get(paramInt);
+      if (localView != null) {
+        a.delete(paramInt);
+      }
+      return localView;
+    }
+    
+    void a()
+    {
+      a.clear();
+    }
+    
+    public void a(int paramInt, View paramView)
+    {
+      a.put(paramInt, paramView);
+    }
+  }
+  
+  static class i
+    extends View.BaseSavedState
+  {
+    public static final Parcelable.Creator<i> CREATOR = new a();
+    int c;
+    boolean d;
+    
+    i(Parcel paramParcel)
+    {
+      super();
+      c = paramParcel.readInt();
+      boolean bool;
+      if (paramParcel.readByte() != 0) {
+        bool = true;
+      } else {
+        bool = false;
+      }
+      d = bool;
+    }
+    
+    i(Parcelable paramParcelable)
+    {
+      super();
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("AbsSpinner.SavedState{");
+      localStringBuilder.append(Integer.toHexString(System.identityHashCode(this)));
+      localStringBuilder.append(" position=");
+      localStringBuilder.append(c);
+      localStringBuilder.append(" showDropdown=");
+      localStringBuilder.append(d);
+      localStringBuilder.append("}");
+      return localStringBuilder.toString();
+    }
+    
+    public void writeToParcel(Parcel paramParcel, int paramInt)
+    {
+      super.writeToParcel(paramParcel, paramInt);
+      paramParcel.writeInt(c);
+      paramParcel.writeByte((byte)d);
+    }
+    
+    static final class a
+      implements Parcelable.Creator<Spinner.i>
+    {
+      a() {}
+      
+      public Spinner.i createFromParcel(Parcel paramParcel)
+      {
+        return new Spinner.i(paramParcel);
+      }
+      
+      public Spinner.i[] newArray(int paramInt)
+      {
+        return new Spinner.i[paramInt];
+      }
+    }
+  }
+  
+  private class j
+    extends DataSetObserver
+  {
+    private j() {}
+    
+    public void onChanged()
+    {
+      Spinner.f(Spinner.this);
+    }
+    
+    public void onInvalidated()
+    {
+      Spinner.g(Spinner.this);
+    }
+  }
+}

@@ -1,0 +1,3 @@
+package g;
+
+abstract interface g {}

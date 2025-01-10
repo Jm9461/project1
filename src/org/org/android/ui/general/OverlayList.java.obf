@@ -1,0 +1,86 @@
+package a.b.c.n.e;
+
+import a.b.c.n.c;
+import a.b.c.n.d;
+import a.b.c.n.d.e;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
+import android.widget.FrameLayout;
+
+public class a
+  extends CardView
+  implements d
+{
+  private final c l;
+  
+  public void a()
+  {
+    l.a();
+    throw null;
+  }
+  
+  public void b()
+  {
+    l.b();
+    throw null;
+  }
+  
+  public void draw(Canvas paramCanvas)
+  {
+    c localC = l;
+    if (localC == null)
+    {
+      super.draw(paramCanvas);
+      return;
+    }
+    localC.a(paramCanvas);
+    throw null;
+  }
+  
+  public Drawable getCircularRevealOverlayDrawable()
+  {
+    l.c();
+    throw null;
+  }
+  
+  public int getCircularRevealScrimColor()
+  {
+    l.d();
+    throw null;
+  }
+  
+  public d.e getRevealInfo()
+  {
+    l.e();
+    throw null;
+  }
+  
+  public boolean isOpaque()
+  {
+    c localC = l;
+    if (localC == null) {
+      return super.isOpaque();
+    }
+    localC.f();
+    throw null;
+  }
+  
+  public void setCircularRevealOverlayDrawable(Drawable paramDrawable)
+  {
+    l.a(paramDrawable);
+    throw null;
+  }
+  
+  public void setCircularRevealScrimColor(int paramInt)
+  {
+    l.a(paramInt);
+    throw null;
+  }
+  
+  public void setRevealInfo(d.e paramE)
+  {
+    l.a(paramE);
+    throw null;
+  }
+}

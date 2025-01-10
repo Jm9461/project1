@@ -1,0 +1,75 @@
+package e.f0.e;
+
+import f.c;
+import f.g;
+import f.r;
+import java.io.IOException;
+
+class e
+  extends g
+{
+  private boolean d;
+  
+  e(r paramR)
+  {
+    super(paramR);
+  }
+  
+  public void a(c paramC, long paramLong)
+  {
+    if (d)
+    {
+      paramC.skip(paramLong);
+      return;
+    }
+    try
+    {
+      super.a(paramC, paramLong);
+      return;
+    }
+    catch (IOException paramC)
+    {
+      d = true;
+      a(paramC);
+    }
+  }
+  
+  protected void a(IOException paramIOException)
+  {
+    throw null;
+  }
+  
+  public void close()
+  {
+    if (d) {
+      return;
+    }
+    try
+    {
+      super.close();
+      return;
+    }
+    catch (IOException localIOException)
+    {
+      d = true;
+      a(localIOException);
+    }
+  }
+  
+  public void flush()
+  {
+    if (d) {
+      return;
+    }
+    try
+    {
+      super.flush();
+      return;
+    }
+    catch (IOException localIOException)
+    {
+      d = true;
+      a(localIOException);
+    }
+  }
+}

@@ -1,0 +1,44 @@
+package com.squareup.picasso;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.net.Uri;
+
+class z
+  extends y
+{
+  private final Context a;
+  
+  z(Context paramContext)
+  {
+    a = paramContext;
+  }
+  
+  private static Bitmap a(Resources paramResources, int paramInt, w paramW)
+  {
+    BitmapFactory.Options localOptions = y.b(paramW);
+    if (y.a(localOptions))
+    {
+      BitmapFactory.decodeResource(paramResources, paramInt, localOptions);
+      y.a(h, i, localOptions, paramW);
+    }
+    return BitmapFactory.decodeResource(paramResources, paramInt, localOptions);
+  }
+  
+  public y.a a(w paramW, int paramInt)
+  {
+    Resources localResources = d0.a(a, paramW);
+    return new y.a(a(localResources, d0.a(localResources, paramW), paramW), t.e.e);
+  }
+  
+  public boolean a(w paramW)
+  {
+    if (e != 0) {
+      return true;
+    }
+    return "android.resource".equals(d.getScheme());
+  }
+}

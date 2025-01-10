@@ -1,0 +1,73 @@
+package com.lawyer_smartCalendar.d;
+
+public class j
+{
+  private int a;
+  private int b;
+  private long c;
+  private long d;
+  private long e;
+  private String f;
+  
+  public j() {}
+  
+  public int a()
+  {
+    return a;
+  }
+  
+  public void a(int paramInt)
+  {
+    a = paramInt;
+  }
+  
+  public void a(long paramLong)
+  {
+    e = paramLong;
+  }
+  
+  public void a(String paramString)
+  {
+    f = paramString;
+  }
+  
+  public long b()
+  {
+    return e;
+  }
+  
+  public void b(int paramInt)
+  {
+    b = paramInt;
+  }
+  
+  public void b(long paramLong)
+  {
+    d = paramLong;
+  }
+  
+  public long c()
+  {
+    return d;
+  }
+  
+  public void c(long paramLong)
+  {
+    c = paramLong;
+  }
+  
+  public String d()
+  {
+    return f;
+  }
+  
+  public long e()
+  {
+    return c;
+  }
+  
+  public int f()
+  {
+    return b;
+  }
+}

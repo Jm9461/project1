@@ -1,0 +1,107 @@
+package a.b.c.q;
+
+import android.annotation.TargetApi;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build.VERSION;
+import android.util.StateSet;
+
+public class a
+{
+  public static final boolean a;
+  private static final int[] b = { 16842919 };
+  private static final int[] c = { 16843623, 16842908 };
+  private static final int[] d = { 16842908 };
+  private static final int[] e = { 16843623 };
+  private static final int[] f = { 16842913, 16842919 };
+  private static final int[] g = { 16842913, 16843623, 16842908 };
+  private static final int[] h = { 16842913, 16842908 };
+  private static final int[] i = { 16842913, 16843623 };
+  private static final int[] j = { 16842913 };
+  
+  static
+  {
+    boolean bool;
+    if (Build.VERSION.SDK_INT >= 21) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    a = bool;
+  }
+  
+  @TargetApi(21)
+  private static int a(int paramInt)
+  {
+    return a.b.g.a.a.c(paramInt, Math.min(Color.alpha(paramInt) * 2, 255));
+  }
+  
+  private static int a(ColorStateList paramColorStateList, int[] paramArrayOfInt)
+  {
+    int k;
+    if (paramColorStateList != null) {
+      k = paramColorStateList.getColorForState(paramArrayOfInt, paramColorStateList.getDefaultColor());
+    } else {
+      k = 0;
+    }
+    if (a) {
+      return a(k);
+    }
+    return k;
+  }
+  
+  public static ColorStateList a(ColorStateList paramColorStateList)
+  {
+    if (a)
+    {
+      arrayOfInt = new int[2][];
+      arrayOfInt1 = new int[2];
+      arrayOfInt[0] = j;
+      arrayOfInt1[0] = a(paramColorStateList, f);
+      k = 0 + 1;
+      arrayOfInt[k] = StateSet.NOTHING;
+      arrayOfInt1[k] = a(paramColorStateList, b);
+      return new ColorStateList(arrayOfInt, arrayOfInt1);
+    }
+    int[][] arrayOfInt = new int[10][];
+    int[] arrayOfInt1 = new int[10];
+    int[] arrayOfInt2 = f;
+    arrayOfInt[0] = arrayOfInt2;
+    arrayOfInt1[0] = a(paramColorStateList, arrayOfInt2);
+    int k = 0 + 1;
+    arrayOfInt2 = g;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt2 = h;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt2 = i;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt[k] = j;
+    arrayOfInt1[k] = 0;
+    k += 1;
+    arrayOfInt2 = b;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt2 = c;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt2 = d;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt2 = e;
+    arrayOfInt[k] = arrayOfInt2;
+    arrayOfInt1[k] = a(paramColorStateList, arrayOfInt2);
+    k += 1;
+    arrayOfInt[k] = StateSet.NOTHING;
+    arrayOfInt1[k] = 0;
+    return new ColorStateList(arrayOfInt, arrayOfInt1);
+  }
+}

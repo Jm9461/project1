@@ -1,0 +1,250 @@
+package android.support.v7.widget;
+
+import android.graphics.Rect;
+import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
+
+public abstract class t0
+{
+  protected final RecyclerView.o a;
+  private int b = Integer.MIN_VALUE;
+  final Rect c = new Rect();
+  
+  private t0(RecyclerView.o paramO)
+  {
+    a = paramO;
+  }
+  
+  public static t0 a(RecyclerView.o paramO)
+  {
+    return new a(paramO);
+  }
+  
+  public static t0 a(RecyclerView.o paramO, int paramInt)
+  {
+    if (paramInt != 0)
+    {
+      if (paramInt == 1) {
+        return b(paramO);
+      }
+      throw new IllegalArgumentException("invalid orientation");
+    }
+    return a(paramO);
+  }
+  
+  public static t0 b(RecyclerView.o paramO)
+  {
+    return new b(paramO);
+  }
+  
+  public abstract int a();
+  
+  public abstract int a(View paramView);
+  
+  public abstract void a(int paramInt);
+  
+  public abstract int b();
+  
+  public abstract int b(View paramView);
+  
+  public abstract int c();
+  
+  public abstract int c(View paramView);
+  
+  public abstract int d();
+  
+  public abstract int d(View paramView);
+  
+  public abstract int e();
+  
+  public abstract int e(View paramView);
+  
+  public abstract int f();
+  
+  public abstract int f(View paramView);
+  
+  public abstract int g();
+  
+  public int h()
+  {
+    if (Integer.MIN_VALUE == b) {
+      return 0;
+    }
+    return g() - b;
+  }
+  
+  public void i()
+  {
+    b = g();
+  }
+  
+  static final class a
+    extends t0
+  {
+    a(RecyclerView.o paramO)
+    {
+      super(null);
+    }
+    
+    public int a()
+    {
+      return a.q();
+    }
+    
+    public int a(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.i(paramView) + rightMargin;
+    }
+    
+    public void a(int paramInt)
+    {
+      a.d(paramInt);
+    }
+    
+    public int b()
+    {
+      return a.q() - a.o();
+    }
+    
+    public int b(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.h(paramView) + leftMargin + rightMargin;
+    }
+    
+    public int c()
+    {
+      return a.o();
+    }
+    
+    public int c(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.g(paramView) + topMargin + bottomMargin;
+    }
+    
+    public int d()
+    {
+      return a.r();
+    }
+    
+    public int d(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.f(paramView) - leftMargin;
+    }
+    
+    public int e()
+    {
+      return a.i();
+    }
+    
+    public int e(View paramView)
+    {
+      a.a(paramView, true, c);
+      return c.right;
+    }
+    
+    public int f()
+    {
+      return a.n();
+    }
+    
+    public int f(View paramView)
+    {
+      a.a(paramView, true, c);
+      return c.left;
+    }
+    
+    public int g()
+    {
+      return a.q() - a.n() - a.o();
+    }
+  }
+  
+  static final class b
+    extends t0
+  {
+    b(RecyclerView.o paramO)
+    {
+      super(null);
+    }
+    
+    public int a()
+    {
+      return a.h();
+    }
+    
+    public int a(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.e(paramView) + bottomMargin;
+    }
+    
+    public void a(int paramInt)
+    {
+      a.e(paramInt);
+    }
+    
+    public int b()
+    {
+      return a.h() - a.m();
+    }
+    
+    public int b(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.g(paramView) + topMargin + bottomMargin;
+    }
+    
+    public int c()
+    {
+      return a.m();
+    }
+    
+    public int c(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.h(paramView) + leftMargin + rightMargin;
+    }
+    
+    public int d()
+    {
+      return a.i();
+    }
+    
+    public int d(View paramView)
+    {
+      RecyclerView.p localP = (RecyclerView.p)paramView.getLayoutParams();
+      return a.j(paramView) - topMargin;
+    }
+    
+    public int e()
+    {
+      return a.r();
+    }
+    
+    public int e(View paramView)
+    {
+      a.a(paramView, true, c);
+      return c.bottom;
+    }
+    
+    public int f()
+    {
+      return a.p();
+    }
+    
+    public int f(View paramView)
+    {
+      a.a(paramView, true, c);
+      return c.top;
+    }
+    
+    public int g()
+    {
+      return a.h() - a.p() - a.m();
+    }
+  }
+}

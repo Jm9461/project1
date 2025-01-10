@@ -1,0 +1,200 @@
+package com.aurelhubert.ahbottomnavigation;
+
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.content.Context;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.a;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class b
+{
+  public static Drawable a(Drawable paramDrawable, int paramInt, boolean paramBoolean)
+  {
+    if (paramBoolean)
+    {
+      paramDrawable.clearColorFilter();
+      paramDrawable.setColorFilter(paramInt, PorterDuff.Mode.SRC_IN);
+      paramDrawable.invalidateSelf();
+      return paramDrawable;
+    }
+    paramDrawable = a.h(paramDrawable).mutate();
+    a.b(paramDrawable, paramInt);
+    return paramDrawable;
+  }
+  
+  public static void a(Context paramContext, final Drawable paramDrawable, ImageView paramImageView, int paramInt1, int paramInt2, final boolean paramBoolean)
+  {
+    paramContext = ValueAnimator.ofObject(new ArgbEvaluator(), new Object[] { Integer.valueOf(paramInt1), Integer.valueOf(paramInt2) });
+    paramContext.setDuration(150L);
+    paramContext.addUpdateListener(new g(paramImageView, paramDrawable, paramBoolean));
+    paramContext.start();
+  }
+  
+  public static void a(View paramView, float paramFloat1, float paramFloat2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofFloat(new float[] { paramFloat1, paramFloat2 });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new d(paramView));
+    localValueAnimator.start();
+  }
+  
+  public static void a(View paramView, int paramInt1, int paramInt2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofFloat(new float[] { paramInt1, paramInt2 });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new b(paramView));
+    localValueAnimator.start();
+  }
+  
+  public static void a(TextView paramTextView, float paramFloat1, float paramFloat2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofFloat(new float[] { paramFloat1, paramFloat2 });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new c(paramTextView));
+    localValueAnimator.start();
+  }
+  
+  public static void a(TextView paramTextView, int paramInt1, int paramInt2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), new Object[] { Integer.valueOf(paramInt1), Integer.valueOf(paramInt2) });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new e(paramTextView));
+    localValueAnimator.start();
+  }
+  
+  public static void b(View paramView, float paramFloat1, float paramFloat2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofFloat(new float[] { paramFloat1, paramFloat2 });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new h(paramView));
+    localValueAnimator.start();
+  }
+  
+  public static void b(View paramView, int paramInt1, int paramInt2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofFloat(new float[] { paramInt1, paramInt2 });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new a(paramView));
+    localValueAnimator.start();
+  }
+  
+  public static void c(View paramView, int paramInt1, int paramInt2)
+  {
+    ValueAnimator localValueAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), new Object[] { Integer.valueOf(paramInt1), Integer.valueOf(paramInt2) });
+    localValueAnimator.setDuration(150L);
+    localValueAnimator.addUpdateListener(new f(paramView));
+    localValueAnimator.start();
+  }
+  
+  static final class a
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    a(View paramView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      float f = ((Float)paramValueAnimator.getAnimatedValue()).floatValue();
+      if ((a.getLayoutParams() instanceof ViewGroup.MarginLayoutParams))
+      {
+        paramValueAnimator = (ViewGroup.MarginLayoutParams)a.getLayoutParams();
+        paramValueAnimator.setMargins(leftMargin, (int)f, rightMargin, bottomMargin);
+        a.requestLayout();
+      }
+    }
+  }
+  
+  static final class b
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    b(View paramView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      float f = ((Float)paramValueAnimator.getAnimatedValue()).floatValue();
+      if ((a.getLayoutParams() instanceof ViewGroup.MarginLayoutParams))
+      {
+        paramValueAnimator = (ViewGroup.MarginLayoutParams)a.getLayoutParams();
+        paramValueAnimator.setMargins((int)f, topMargin, rightMargin, bottomMargin);
+        a.requestLayout();
+      }
+    }
+  }
+  
+  static final class c
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    c(TextView paramTextView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      float f = ((Float)paramValueAnimator.getAnimatedValue()).floatValue();
+      a.setTextSize(0, f);
+    }
+  }
+  
+  static final class d
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    d(View paramView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      float f = ((Float)paramValueAnimator.getAnimatedValue()).floatValue();
+      a.setAlpha(f);
+    }
+  }
+  
+  static final class e
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    e(TextView paramTextView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      a.setTextColor(((Integer)paramValueAnimator.getAnimatedValue()).intValue());
+    }
+  }
+  
+  static final class f
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    f(View paramView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      a.setBackgroundColor(((Integer)paramValueAnimator.getAnimatedValue()).intValue());
+    }
+  }
+  
+  static final class g
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    g(ImageView paramImageView, Drawable paramDrawable, boolean paramBoolean) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      a.setImageDrawable(b.a(paramDrawable, ((Integer)paramValueAnimator.getAnimatedValue()).intValue(), paramBoolean));
+      a.requestLayout();
+    }
+  }
+  
+  static final class h
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    h(View paramView) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      ViewGroup.LayoutParams localLayoutParams = a.getLayoutParams();
+      width = Math.round(((Float)paramValueAnimator.getAnimatedValue()).floatValue());
+      a.setLayoutParams(localLayoutParams);
+    }
+  }
+}

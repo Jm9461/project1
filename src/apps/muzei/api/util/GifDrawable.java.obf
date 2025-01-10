@@ -1,0 +1,229 @@
+package b.j.a.e;
+
+import android.content.res.ColorStateList;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
+
+public class a
+  extends Drawable
+  implements Animatable
+{
+  public static int p = 0;
+  public static int q = 1;
+  private boolean c = false;
+  private long d;
+  private float e;
+  private int f;
+  private Paint g;
+  private ColorStateList h;
+  private int i;
+  private int j;
+  private int k;
+  private Interpolator l;
+  private Path m;
+  private boolean n = true;
+  private final Runnable o = new a();
+  
+  public a(int paramInt1, int paramInt2, ColorStateList paramColorStateList, int paramInt3, Interpolator paramInterpolator, boolean paramBoolean)
+  {
+    i = paramInt2;
+    f = paramInt3;
+    k = paramInt1;
+    l = paramInterpolator;
+    if (l == null) {
+      l = new DecelerateInterpolator();
+    }
+    n = paramBoolean;
+    g = new Paint();
+    g.setAntiAlias(true);
+    g.setStyle(Paint.Style.FILL);
+    m = new Path();
+    a(paramColorStateList);
+  }
+  
+  private void a()
+  {
+    d = SystemClock.uptimeMillis();
+    e = 0.0F;
+  }
+  
+  private void b()
+  {
+    e = Math.min(1.0F, (float)(SystemClock.uptimeMillis() - d) / f);
+    if (e == 1.0F) {
+      c = false;
+    }
+    if (isRunning()) {
+      scheduleSelf(o, SystemClock.uptimeMillis() + 16L);
+    }
+    invalidateSelf();
+  }
+  
+  public void a(int paramInt)
+  {
+    f = paramInt;
+  }
+  
+  public void a(int paramInt, boolean paramBoolean)
+  {
+    if (k != paramInt)
+    {
+      k = paramInt;
+      if ((paramBoolean) && (f > 0))
+      {
+        start();
+        return;
+      }
+      invalidateSelf();
+    }
+  }
+  
+  public void a(ColorStateList paramColorStateList)
+  {
+    h = paramColorStateList;
+    onStateChange(getState());
+  }
+  
+  public void a(Interpolator paramInterpolator)
+  {
+    l = paramInterpolator;
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    n = paramBoolean;
+  }
+  
+  public void b(int paramInt)
+  {
+    if (i != paramInt)
+    {
+      i = paramInt;
+      invalidateSelf();
+    }
+  }
+  
+  public void draw(Canvas paramCanvas)
+  {
+    int i1 = paramCanvas.save();
+    Rect localRect = getBounds();
+    if (!isRunning())
+    {
+      if (k == q) {
+        paramCanvas.rotate(180.0F, localRect.exactCenterX(), localRect.exactCenterY());
+      }
+    }
+    else
+    {
+      float f1 = l.getInterpolation(e);
+      if (n)
+      {
+        if (k == q) {
+          f1 = 180.0F * f1;
+        } else {
+          f1 = 180.0F * (1.0F + f1);
+        }
+      }
+      else if (k == q) {
+        f1 *= -180.0F;
+      } else {
+        f1 = (1.0F + f1) * -180.0F;
+      }
+      paramCanvas.rotate(f1, localRect.exactCenterX(), localRect.exactCenterY());
+    }
+    g.setColor(j);
+    paramCanvas.drawPath(m, g);
+    paramCanvas.restoreToCount(i1);
+  }
+  
+  public int getOpacity()
+  {
+    return -3;
+  }
+  
+  public boolean isRunning()
+  {
+    return c;
+  }
+  
+  public boolean isStateful()
+  {
+    return true;
+  }
+  
+  protected void onBoundsChange(Rect paramRect)
+  {
+    float f1 = paramRect.exactCenterX();
+    float f2 = paramRect.exactCenterY();
+    m.reset();
+    m.moveTo(f1, i / 2.0F + f2);
+    paramRect = m;
+    int i1 = i;
+    paramRect.lineTo(f1 - i1, f2 - i1 / 2.0F);
+    paramRect = m;
+    i1 = i;
+    paramRect.lineTo(i1 + f1, f2 - i1 / 2.0F);
+    m.close();
+  }
+  
+  protected boolean onStateChange(int[] paramArrayOfInt)
+  {
+    int i1 = h.getColorForState(paramArrayOfInt, j);
+    if (j != i1)
+    {
+      j = i1;
+      return true;
+    }
+    return false;
+  }
+  
+  public void scheduleSelf(Runnable paramRunnable, long paramLong)
+  {
+    c = true;
+    super.scheduleSelf(paramRunnable, paramLong);
+  }
+  
+  public void setAlpha(int paramInt)
+  {
+    g.setAlpha(paramInt);
+  }
+  
+  public void setColorFilter(ColorFilter paramColorFilter)
+  {
+    g.setColorFilter(paramColorFilter);
+  }
+  
+  public void start()
+  {
+    a();
+    scheduleSelf(o, SystemClock.uptimeMillis() + 16L);
+    invalidateSelf();
+  }
+  
+  public void stop()
+  {
+    c = false;
+    unscheduleSelf(o);
+    invalidateSelf();
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      a.a(a.this);
+    }
+  }
+}

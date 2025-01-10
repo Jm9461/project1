@@ -1,0 +1,1706 @@
+package android.support.design.widget;
+
+import a.b.c.d;
+import a.b.c.f;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Drawable.ConstantState;
+import android.graphics.drawable.DrawableContainer;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build.VERSION;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.ClassLoaderCreator;
+import android.os.Parcelable.Creator;
+import android.support.design.internal.g;
+import android.support.v4.view.u;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.h0;
+import android.support.v7.widget.j1;
+import android.support.v7.widget.m;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewStructure;
+import android.view.accessibility.AccessibilityEvent;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
+import java.util.List;
+
+public class TextInputLayout
+  extends LinearLayout
+{
+  private final int A;
+  private int B;
+  private int C;
+  private Drawable D;
+  private final Rect E = new Rect();
+  private final RectF F = new RectF();
+  private Typeface G;
+  private boolean H;
+  private Drawable I;
+  private CharSequence J;
+  private CheckableImageButton K;
+  private boolean L;
+  private Drawable M;
+  private Drawable N;
+  private ColorStateList O;
+  private boolean P;
+  private PorterDuff.Mode Q;
+  private boolean R;
+  private ColorStateList S;
+  private ColorStateList T;
+  private final int U;
+  private final int V;
+  private int W;
+  private final int a0;
+  private boolean b0;
+  private final FrameLayout c;
+  final h c0 = new h(this);
+  EditText d;
+  private boolean d0;
+  private CharSequence e;
+  private ValueAnimator e0;
+  private final p f = new p(this);
+  private boolean f0;
+  boolean g;
+  private boolean g0;
+  private int h;
+  private boolean h0;
+  private boolean i;
+  private TextView j;
+  private final int k;
+  private final int l;
+  private boolean m;
+  private CharSequence n;
+  private boolean o;
+  private GradientDrawable p;
+  private final int q;
+  private final int r;
+  private int s;
+  private final int t;
+  private float u;
+  private float v;
+  private float w;
+  private float x;
+  private int y;
+  private final int z;
+  
+  public TextInputLayout(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public TextInputLayout(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, a.b.c.b.textInputStyle);
+  }
+  
+  public TextInputLayout(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    setOrientation(1);
+    setWillNotDraw(false);
+    setAddStatesFromChildren(true);
+    c = new FrameLayout(paramContext);
+    c.setAddStatesFromChildren(true);
+    addView(c);
+    c0.b(a.b.c.l.a.a);
+    c0.a(a.b.c.l.a.a);
+    c0.b(8388659);
+    paramAttributeSet = g.d(paramContext, paramAttributeSet, a.b.c.k.TextInputLayout, paramInt, a.b.c.j.Widget_Design_TextInputLayout, new int[0]);
+    m = paramAttributeSet.a(a.b.c.k.TextInputLayout_hintEnabled, true);
+    setHint(paramAttributeSet.e(a.b.c.k.TextInputLayout_android_hint));
+    d0 = paramAttributeSet.a(a.b.c.k.TextInputLayout_hintAnimationEnabled, true);
+    q = paramContext.getResources().getDimensionPixelOffset(d.mtrl_textinput_box_bottom_offset);
+    r = paramContext.getResources().getDimensionPixelOffset(d.mtrl_textinput_box_label_cutout_padding);
+    t = paramAttributeSet.b(a.b.c.k.TextInputLayout_boxCollapsedPaddingTop, 0);
+    u = paramAttributeSet.a(a.b.c.k.TextInputLayout_boxCornerRadiusTopStart, 0.0F);
+    v = paramAttributeSet.a(a.b.c.k.TextInputLayout_boxCornerRadiusTopEnd, 0.0F);
+    w = paramAttributeSet.a(a.b.c.k.TextInputLayout_boxCornerRadiusBottomEnd, 0.0F);
+    x = paramAttributeSet.a(a.b.c.k.TextInputLayout_boxCornerRadiusBottomStart, 0.0F);
+    C = paramAttributeSet.a(a.b.c.k.TextInputLayout_boxBackgroundColor, 0);
+    W = paramAttributeSet.a(a.b.c.k.TextInputLayout_boxStrokeColor, 0);
+    z = paramContext.getResources().getDimensionPixelSize(d.mtrl_textinput_box_stroke_width_default);
+    A = paramContext.getResources().getDimensionPixelSize(d.mtrl_textinput_box_stroke_width_focused);
+    y = z;
+    setBoxBackgroundMode(paramAttributeSet.d(a.b.c.k.TextInputLayout_boxBackgroundMode, 0));
+    if (paramAttributeSet.g(a.b.c.k.TextInputLayout_android_textColorHint))
+    {
+      ColorStateList localColorStateList = paramAttributeSet.a(a.b.c.k.TextInputLayout_android_textColorHint);
+      T = localColorStateList;
+      S = localColorStateList;
+    }
+    U = android.support.v4.content.a.a(paramContext, a.b.c.c.mtrl_textinput_default_box_stroke_color);
+    a0 = android.support.v4.content.a.a(paramContext, a.b.c.c.mtrl_textinput_disabled_color);
+    V = android.support.v4.content.a.a(paramContext, a.b.c.c.mtrl_textinput_hovered_box_stroke_color);
+    if (paramAttributeSet.g(a.b.c.k.TextInputLayout_hintTextAppearance, -1) != -1) {
+      setHintTextAppearance(paramAttributeSet.g(a.b.c.k.TextInputLayout_hintTextAppearance, 0));
+    }
+    paramInt = paramAttributeSet.g(a.b.c.k.TextInputLayout_errorTextAppearance, 0);
+    boolean bool1 = paramAttributeSet.a(a.b.c.k.TextInputLayout_errorEnabled, false);
+    int i1 = paramAttributeSet.g(a.b.c.k.TextInputLayout_helperTextTextAppearance, 0);
+    boolean bool2 = paramAttributeSet.a(a.b.c.k.TextInputLayout_helperTextEnabled, false);
+    paramContext = paramAttributeSet.e(a.b.c.k.TextInputLayout_helperText);
+    boolean bool3 = paramAttributeSet.a(a.b.c.k.TextInputLayout_counterEnabled, false);
+    setCounterMaxLength(paramAttributeSet.d(a.b.c.k.TextInputLayout_counterMaxLength, -1));
+    l = paramAttributeSet.g(a.b.c.k.TextInputLayout_counterTextAppearance, 0);
+    k = paramAttributeSet.g(a.b.c.k.TextInputLayout_counterOverflowTextAppearance, 0);
+    H = paramAttributeSet.a(a.b.c.k.TextInputLayout_passwordToggleEnabled, false);
+    I = paramAttributeSet.b(a.b.c.k.TextInputLayout_passwordToggleDrawable);
+    J = paramAttributeSet.e(a.b.c.k.TextInputLayout_passwordToggleContentDescription);
+    if (paramAttributeSet.g(a.b.c.k.TextInputLayout_passwordToggleTint))
+    {
+      P = true;
+      O = paramAttributeSet.a(a.b.c.k.TextInputLayout_passwordToggleTint);
+    }
+    if (paramAttributeSet.g(a.b.c.k.TextInputLayout_passwordToggleTintMode))
+    {
+      R = true;
+      Q = android.support.design.internal.h.a(paramAttributeSet.d(a.b.c.k.TextInputLayout_passwordToggleTintMode, -1), null);
+    }
+    paramAttributeSet.a();
+    setHelperTextEnabled(bool2);
+    setHelperText(paramContext);
+    setHelperTextTextAppearance(i1);
+    setErrorEnabled(bool1);
+    setErrorTextAppearance(paramInt);
+    setCounterEnabled(bool3);
+    f();
+    u.f(this, 2);
+  }
+  
+  private void a(RectF paramRectF)
+  {
+    float f1 = left;
+    int i1 = r;
+    left = (f1 - i1);
+    top -= i1;
+    right += i1;
+    bottom += i1;
+  }
+  
+  private static void a(ViewGroup paramViewGroup, boolean paramBoolean)
+  {
+    int i1 = 0;
+    int i2 = paramViewGroup.getChildCount();
+    while (i1 < i2)
+    {
+      View localView = paramViewGroup.getChildAt(i1);
+      localView.setEnabled(paramBoolean);
+      if ((localView instanceof ViewGroup)) {
+        a((ViewGroup)localView, paramBoolean);
+      }
+      i1 += 1;
+    }
+  }
+  
+  private void a(boolean paramBoolean1, boolean paramBoolean2)
+  {
+    boolean bool1 = isEnabled();
+    Object localObject = d;
+    int i2 = 1;
+    int i1;
+    if ((localObject != null) && (!TextUtils.isEmpty(((EditText)localObject).getText()))) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    localObject = d;
+    if ((localObject == null) || (!((EditText)localObject).hasFocus())) {
+      i2 = 0;
+    }
+    boolean bool2 = f.c();
+    localObject = S;
+    if (localObject != null)
+    {
+      c0.a((ColorStateList)localObject);
+      c0.b(S);
+    }
+    if (!bool1)
+    {
+      c0.a(ColorStateList.valueOf(a0));
+      c0.b(ColorStateList.valueOf(a0));
+    }
+    else if (bool2)
+    {
+      c0.a(f.f());
+    }
+    else
+    {
+      if (i)
+      {
+        localObject = j;
+        if (localObject != null)
+        {
+          c0.a(((TextView)localObject).getTextColors());
+          break label219;
+        }
+      }
+      if (i2 != 0)
+      {
+        localObject = T;
+        if (localObject != null) {
+          c0.a((ColorStateList)localObject);
+        }
+      }
+    }
+    label219:
+    if ((i1 == 0) && ((!isEnabled()) || ((i2 == 0) && (!bool2))))
+    {
+      if ((paramBoolean2) || (!b0)) {
+        d(paramBoolean1);
+      }
+    }
+    else if ((paramBoolean2) || (b0)) {
+      c(paramBoolean1);
+    }
+  }
+  
+  private void c(boolean paramBoolean)
+  {
+    ValueAnimator localValueAnimator = e0;
+    if ((localValueAnimator != null) && (localValueAnimator.isRunning())) {
+      e0.cancel();
+    }
+    if ((paramBoolean) && (d0)) {
+      a(1.0F);
+    } else {
+      c0.b(1.0F);
+    }
+    b0 = false;
+    if (l()) {
+      p();
+    }
+  }
+  
+  private void d(boolean paramBoolean)
+  {
+    ValueAnimator localValueAnimator = e0;
+    if ((localValueAnimator != null) && (localValueAnimator.isRunning())) {
+      e0.cancel();
+    }
+    if ((paramBoolean) && (d0)) {
+      a(0.0F);
+    } else {
+      c0.b(0.0F);
+    }
+    if ((l()) && (((i)p).a())) {
+      k();
+    }
+    b0 = true;
+  }
+  
+  private void e()
+  {
+    if (p == null) {
+      return;
+    }
+    q();
+    EditText localEditText = d;
+    if ((localEditText != null) && (s == 2))
+    {
+      if (localEditText.getBackground() != null) {
+        D = d.getBackground();
+      }
+      u.a(d, null);
+    }
+    localEditText = d;
+    if ((localEditText != null) && (s == 1))
+    {
+      Drawable localDrawable = D;
+      if (localDrawable != null) {
+        u.a(localEditText, localDrawable);
+      }
+    }
+    int i1 = y;
+    if (i1 > -1)
+    {
+      int i2 = B;
+      if (i2 != 0) {
+        p.setStroke(i1, i2);
+      }
+    }
+    p.setCornerRadii(getCornerRadiiAsArray());
+    p.setColor(C);
+    invalidate();
+  }
+  
+  private void f()
+  {
+    if ((I != null) && ((P) || (R)))
+    {
+      I = android.support.v4.graphics.drawable.a.h(I).mutate();
+      if (P) {
+        android.support.v4.graphics.drawable.a.a(I, O);
+      }
+      if (R) {
+        android.support.v4.graphics.drawable.a.a(I, Q);
+      }
+      Object localObject = K;
+      if (localObject != null)
+      {
+        localObject = ((ImageButton)localObject).getDrawable();
+        Drawable localDrawable = I;
+        if (localObject != localDrawable) {
+          K.setImageDrawable(localDrawable);
+        }
+      }
+    }
+  }
+  
+  private void g()
+  {
+    int i1 = s;
+    if (i1 == 0)
+    {
+      p = null;
+      return;
+    }
+    if ((i1 == 2) && (m) && (!(p instanceof i)))
+    {
+      p = new i();
+      return;
+    }
+    if (!(p instanceof GradientDrawable)) {
+      p = new GradientDrawable();
+    }
+  }
+  
+  private Drawable getBoxBackground()
+  {
+    int i1 = s;
+    if ((i1 != 1) && (i1 != 2)) {
+      throw new IllegalStateException();
+    }
+    return p;
+  }
+  
+  private float[] getCornerRadiiAsArray()
+  {
+    if (!android.support.design.internal.h.a(this))
+    {
+      f1 = u;
+      f2 = v;
+      f3 = w;
+      f4 = x;
+      return new float[] { f1, f1, f2, f2, f3, f3, f4, f4 };
+    }
+    float f1 = v;
+    float f2 = u;
+    float f3 = x;
+    float f4 = w;
+    return new float[] { f1, f1, f2, f2, f3, f3, f4, f4 };
+  }
+  
+  private int h()
+  {
+    EditText localEditText = d;
+    if (localEditText == null) {
+      return 0;
+    }
+    int i1 = s;
+    if (i1 != 1)
+    {
+      if (i1 != 2) {
+        return 0;
+      }
+      return localEditText.getTop() + j();
+    }
+    return localEditText.getTop();
+  }
+  
+  private int i()
+  {
+    int i1 = s;
+    if (i1 != 1)
+    {
+      if (i1 != 2) {
+        return getPaddingTop();
+      }
+      return getBoxBackgroundgetBoundstop - j();
+    }
+    return getBoxBackgroundgetBoundstop + t;
+  }
+  
+  private int j()
+  {
+    if (!m) {
+      return 0;
+    }
+    int i1 = s;
+    if ((i1 != 0) && (i1 != 1))
+    {
+      if (i1 != 2) {
+        return 0;
+      }
+      return (int)(c0.c() / 2.0F);
+    }
+    return (int)c0.c();
+  }
+  
+  private void k()
+  {
+    if (l()) {
+      ((i)p).b();
+    }
+  }
+  
+  private boolean l()
+  {
+    return (m) && (!TextUtils.isEmpty(n)) && ((p instanceof i));
+  }
+  
+  private void m()
+  {
+    int i1 = Build.VERSION.SDK_INT;
+    if ((i1 != 21) && (i1 != 22)) {
+      return;
+    }
+    Drawable localDrawable1 = d.getBackground();
+    if (localDrawable1 == null) {
+      return;
+    }
+    if (!f0)
+    {
+      Drawable localDrawable2 = localDrawable1.getConstantState().newDrawable();
+      if ((localDrawable1 instanceof DrawableContainer)) {
+        f0 = k.a((DrawableContainer)localDrawable1, localDrawable2.getConstantState());
+      }
+      if (!f0)
+      {
+        u.a(d, localDrawable2);
+        f0 = true;
+        o();
+      }
+    }
+  }
+  
+  private boolean n()
+  {
+    EditText localEditText = d;
+    return (localEditText != null) && ((localEditText.getTransformationMethod() instanceof PasswordTransformationMethod));
+  }
+  
+  private void o()
+  {
+    g();
+    if (s != 0) {
+      t();
+    }
+    v();
+  }
+  
+  private void p()
+  {
+    if (!l()) {
+      return;
+    }
+    RectF localRectF = F;
+    c0.a(localRectF);
+    a(localRectF);
+    ((i)p).a(localRectF);
+  }
+  
+  private void q()
+  {
+    int i1 = s;
+    if (i1 != 1)
+    {
+      if (i1 != 2) {
+        return;
+      }
+      if (W == 0) {
+        W = T.getColorForState(getDrawableState(), T.getDefaultColor());
+      }
+    }
+    else
+    {
+      y = 0;
+    }
+  }
+  
+  private boolean r()
+  {
+    return (H) && ((n()) || (L));
+  }
+  
+  private void s()
+  {
+    Object localObject1 = d;
+    if (localObject1 == null) {
+      return;
+    }
+    Object localObject2 = ((EditText)localObject1).getBackground();
+    if (localObject2 == null) {
+      return;
+    }
+    localObject1 = localObject2;
+    if (h0.a((Drawable)localObject2)) {
+      localObject1 = ((Drawable)localObject2).mutate();
+    }
+    localObject2 = new Rect();
+    j.a(this, d, (Rect)localObject2);
+    localObject2 = ((Drawable)localObject1).getBounds();
+    if (left != right)
+    {
+      Rect localRect = new Rect();
+      ((Drawable)localObject1).getPadding(localRect);
+      int i1 = left;
+      int i2 = left;
+      int i3 = right;
+      int i4 = right;
+      ((Drawable)localObject1).setBounds(i1 - i2, top, i3 + i4 * 2, d.getBottom());
+    }
+  }
+  
+  private void setEditText(EditText paramEditText)
+  {
+    if (d == null)
+    {
+      if (!(paramEditText instanceof w)) {
+        Log.i("TextInputLayout", "EditText added is not a TextInputEditText. Please switch to using that class instead.");
+      }
+      d = paramEditText;
+      o();
+      setTextInputAccessibilityDelegate(new d(this));
+      if (!n()) {
+        c0.a(d.getTypeface());
+      }
+      c0.a(d.getTextSize());
+      int i1 = d.getGravity();
+      c0.b(i1 & 0xFFFFFF8F | 0x30);
+      c0.c(i1);
+      d.addTextChangedListener(new a());
+      if (S == null) {
+        S = d.getHintTextColors();
+      }
+      if (m)
+      {
+        if (TextUtils.isEmpty(n))
+        {
+          e = d.getHint();
+          setHint(e);
+          d.setHint(null);
+        }
+        o = true;
+      }
+      if (j != null) {
+        a(d.getText().length());
+      }
+      f.a();
+      u();
+      a(false, true);
+      return;
+    }
+    throw new IllegalArgumentException("We already have an EditText, can only have one");
+  }
+  
+  private void setHintInternal(CharSequence paramCharSequence)
+  {
+    if (!TextUtils.equals(paramCharSequence, n))
+    {
+      n = paramCharSequence;
+      c0.a(paramCharSequence);
+      if (!b0) {
+        p();
+      }
+    }
+  }
+  
+  private void t()
+  {
+    LinearLayout.LayoutParams localLayoutParams = (LinearLayout.LayoutParams)c.getLayoutParams();
+    int i1 = j();
+    if (i1 != topMargin)
+    {
+      topMargin = i1;
+      c.requestLayout();
+    }
+  }
+  
+  private void u()
+  {
+    if (d == null) {
+      return;
+    }
+    if (r())
+    {
+      if (K == null)
+      {
+        K = ((CheckableImageButton)LayoutInflater.from(getContext()).inflate(a.b.c.h.design_text_input_password_icon, c, false));
+        K.setImageDrawable(I);
+        K.setContentDescription(J);
+        c.addView(K);
+        K.setOnClickListener(new b());
+      }
+      localObject = d;
+      if ((localObject != null) && (u.l((View)localObject) <= 0)) {
+        d.setMinimumHeight(u.l(K));
+      }
+      K.setVisibility(0);
+      K.setChecked(L);
+      if (M == null) {
+        M = new ColorDrawable();
+      }
+      M.setBounds(0, 0, K.getMeasuredWidth(), 1);
+      localObject = android.support.v4.widget.p.a(d);
+      if (localObject[2] != M) {
+        N = localObject[2];
+      }
+      android.support.v4.widget.p.a(d, localObject[0], localObject[1], M, localObject[3]);
+      K.setPadding(d.getPaddingLeft(), d.getPaddingTop(), d.getPaddingRight(), d.getPaddingBottom());
+      return;
+    }
+    Object localObject = K;
+    if ((localObject != null) && (((ImageButton)localObject).getVisibility() == 0)) {
+      K.setVisibility(8);
+    }
+    if (M != null)
+    {
+      localObject = android.support.v4.widget.p.a(d);
+      if (localObject[2] == M)
+      {
+        android.support.v4.widget.p.a(d, localObject[0], localObject[1], N, localObject[3]);
+        M = null;
+      }
+    }
+  }
+  
+  private void v()
+  {
+    if ((s != 0) && (p != null) && (d != null))
+    {
+      if (getRight() == 0) {
+        return;
+      }
+      int i8 = d.getLeft();
+      int i7 = h();
+      int i6 = d.getRight();
+      int i5 = d.getBottom() + q;
+      int i4 = i8;
+      int i3 = i7;
+      int i2 = i6;
+      int i1 = i5;
+      if (s == 2)
+      {
+        i1 = A;
+        i4 = i8 + i1 / 2;
+        i3 = i7 - i1 / 2;
+        i2 = i6 - i1 / 2;
+        i1 = i5 + i1 / 2;
+      }
+      p.setBounds(i4, i3, i2, i1);
+      e();
+      s();
+      return;
+    }
+  }
+  
+  void a(float paramFloat)
+  {
+    if (c0.e() == paramFloat) {
+      return;
+    }
+    if (e0 == null)
+    {
+      e0 = new ValueAnimator();
+      e0.setInterpolator(a.b.c.l.a.b);
+      e0.setDuration(167L);
+      e0.addUpdateListener(new c());
+    }
+    e0.setFloatValues(new float[] { c0.e(), paramFloat });
+    e0.start();
+  }
+  
+  void a(int paramInt)
+  {
+    boolean bool2 = i;
+    if (h == -1)
+    {
+      j.setText(String.valueOf(paramInt));
+      j.setContentDescription(null);
+      i = false;
+    }
+    else
+    {
+      if (u.b(j) == 1) {
+        u.e(j, 0);
+      }
+      if (paramInt > h) {
+        bool1 = true;
+      } else {
+        bool1 = false;
+      }
+      i = bool1;
+      boolean bool1 = i;
+      if (bool2 != bool1)
+      {
+        TextView localTextView = j;
+        int i1;
+        if (bool1) {
+          i1 = k;
+        } else {
+          i1 = l;
+        }
+        a(localTextView, i1);
+        if (i) {
+          u.e(j, 1);
+        }
+      }
+      j.setText(getContext().getString(a.b.c.i.character_counter_pattern, new Object[] { Integer.valueOf(paramInt), Integer.valueOf(h) }));
+      j.setContentDescription(getContext().getString(a.b.c.i.character_counter_content_description, new Object[] { Integer.valueOf(paramInt), Integer.valueOf(h) }));
+    }
+    if ((d != null) && (bool2 != i))
+    {
+      b(false);
+      d();
+      c();
+    }
+  }
+  
+  void a(TextView paramTextView, int paramInt)
+  {
+    int i1 = 0;
+    try
+    {
+      android.support.v4.widget.p.d(paramTextView, paramInt);
+      paramInt = i1;
+      if (Build.VERSION.SDK_INT >= 23)
+      {
+        int i2 = paramTextView.getTextColors().getDefaultColor();
+        paramInt = i1;
+        if (i2 == -65281) {
+          paramInt = 1;
+        }
+      }
+    }
+    catch (Exception localException)
+    {
+      paramInt = 1;
+    }
+    if (paramInt != 0)
+    {
+      android.support.v4.widget.p.d(paramTextView, a.b.c.j.TextAppearance_AppCompat_Caption);
+      paramTextView.setTextColor(android.support.v4.content.a.a(getContext(), a.b.c.c.design_error));
+    }
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    if (H)
+    {
+      int i1 = d.getSelectionEnd();
+      if (n())
+      {
+        d.setTransformationMethod(null);
+        L = true;
+      }
+      else
+      {
+        d.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        L = false;
+      }
+      K.setChecked(L);
+      if (paramBoolean) {
+        K.jumpDrawablesToCurrentState();
+      }
+      d.setSelection(i1);
+    }
+  }
+  
+  public boolean a()
+  {
+    return f.l();
+  }
+  
+  public void addView(View paramView, int paramInt, ViewGroup.LayoutParams paramLayoutParams)
+  {
+    if ((paramView instanceof EditText))
+    {
+      FrameLayout.LayoutParams localLayoutParams = new FrameLayout.LayoutParams(paramLayoutParams);
+      gravity = (gravity & 0xFFFFFF8F | 0x10);
+      c.addView(paramView, localLayoutParams);
+      c.setLayoutParams(paramLayoutParams);
+      t();
+      setEditText((EditText)paramView);
+      return;
+    }
+    super.addView(paramView, paramInt, paramLayoutParams);
+  }
+  
+  void b(boolean paramBoolean)
+  {
+    a(paramBoolean, false);
+  }
+  
+  boolean b()
+  {
+    return o;
+  }
+  
+  void c()
+  {
+    Object localObject1 = d;
+    if (localObject1 == null) {
+      return;
+    }
+    Object localObject2 = ((EditText)localObject1).getBackground();
+    if (localObject2 == null) {
+      return;
+    }
+    m();
+    localObject1 = localObject2;
+    if (h0.a((Drawable)localObject2)) {
+      localObject1 = ((Drawable)localObject2).mutate();
+    }
+    if (f.c())
+    {
+      ((Drawable)localObject1).setColorFilter(android.support.v7.widget.j.a(f.e(), PorterDuff.Mode.SRC_IN));
+      return;
+    }
+    if (i)
+    {
+      localObject2 = j;
+      if (localObject2 != null)
+      {
+        ((Drawable)localObject1).setColorFilter(android.support.v7.widget.j.a(((TextView)localObject2).getCurrentTextColor(), PorterDuff.Mode.SRC_IN));
+        return;
+      }
+    }
+    android.support.v4.graphics.drawable.a.b((Drawable)localObject1);
+    d.refreshDrawableState();
+  }
+  
+  void d()
+  {
+    if (p != null)
+    {
+      if (s == 0) {
+        return;
+      }
+      Object localObject = d;
+      int i2 = 1;
+      int i1;
+      if ((localObject != null) && (((EditText)localObject).hasFocus())) {
+        i1 = 1;
+      } else {
+        i1 = 0;
+      }
+      localObject = d;
+      if ((localObject == null) || (!((EditText)localObject).isHovered())) {
+        i2 = 0;
+      }
+      if (s == 2)
+      {
+        if (!isEnabled())
+        {
+          B = a0;
+        }
+        else if (f.c())
+        {
+          B = f.e();
+        }
+        else
+        {
+          if (i)
+          {
+            localObject = j;
+            if (localObject != null)
+            {
+              B = ((TextView)localObject).getCurrentTextColor();
+              break label176;
+            }
+          }
+          if (i1 != 0) {
+            B = W;
+          } else if (i2 != 0) {
+            B = V;
+          } else {
+            B = U;
+          }
+        }
+        label176:
+        if (((i2 != 0) || (i1 != 0)) && (isEnabled())) {
+          y = A;
+        } else {
+          y = z;
+        }
+        e();
+      }
+      return;
+    }
+  }
+  
+  public void dispatchProvideAutofillStructure(ViewStructure paramViewStructure, int paramInt)
+  {
+    if (e != null)
+    {
+      Object localObject = d;
+      if (localObject != null)
+      {
+        boolean bool = o;
+        o = false;
+        localObject = ((EditText)localObject).getHint();
+        d.setHint(e);
+        try
+        {
+          super.dispatchProvideAutofillStructure(paramViewStructure, paramInt);
+          return;
+        }
+        finally
+        {
+          d.setHint((CharSequence)localObject);
+          o = bool;
+        }
+      }
+    }
+    super.dispatchProvideAutofillStructure(paramViewStructure, paramInt);
+  }
+  
+  protected void dispatchRestoreInstanceState(SparseArray<Parcelable> paramSparseArray)
+  {
+    h0 = true;
+    super.dispatchRestoreInstanceState(paramSparseArray);
+    h0 = false;
+  }
+  
+  public void draw(Canvas paramCanvas)
+  {
+    GradientDrawable localGradientDrawable = p;
+    if (localGradientDrawable != null) {
+      localGradientDrawable.draw(paramCanvas);
+    }
+    super.draw(paramCanvas);
+    if (m) {
+      c0.a(paramCanvas);
+    }
+  }
+  
+  protected void drawableStateChanged()
+  {
+    if (g0) {
+      return;
+    }
+    boolean bool2 = true;
+    g0 = true;
+    super.drawableStateChanged();
+    int[] arrayOfInt = getDrawableState();
+    boolean bool1 = false;
+    if ((!u.y(this)) || (!isEnabled())) {
+      bool2 = false;
+    }
+    b(bool2);
+    c();
+    v();
+    d();
+    h localH = c0;
+    if (localH != null) {
+      bool1 = false | localH.a(arrayOfInt);
+    }
+    if (bool1) {
+      invalidate();
+    }
+    g0 = false;
+  }
+  
+  public int getBoxBackgroundColor()
+  {
+    return C;
+  }
+  
+  public float getBoxCornerRadiusBottomEnd()
+  {
+    return w;
+  }
+  
+  public float getBoxCornerRadiusBottomStart()
+  {
+    return x;
+  }
+  
+  public float getBoxCornerRadiusTopEnd()
+  {
+    return v;
+  }
+  
+  public float getBoxCornerRadiusTopStart()
+  {
+    return u;
+  }
+  
+  public int getBoxStrokeColor()
+  {
+    return W;
+  }
+  
+  public int getCounterMaxLength()
+  {
+    return h;
+  }
+  
+  CharSequence getCounterOverflowDescription()
+  {
+    if ((g) && (i))
+    {
+      TextView localTextView = j;
+      if (localTextView != null) {
+        return localTextView.getContentDescription();
+      }
+    }
+    return null;
+  }
+  
+  public ColorStateList getDefaultHintTextColor()
+  {
+    return S;
+  }
+  
+  public EditText getEditText()
+  {
+    return d;
+  }
+  
+  public CharSequence getError()
+  {
+    if (f.k()) {
+      return f.d();
+    }
+    return null;
+  }
+  
+  public int getErrorCurrentTextColors()
+  {
+    return f.e();
+  }
+  
+  final int getErrorTextCurrentColor()
+  {
+    return f.e();
+  }
+  
+  public CharSequence getHelperText()
+  {
+    if (f.l()) {
+      return f.g();
+    }
+    return null;
+  }
+  
+  public int getHelperTextCurrentTextColor()
+  {
+    return f.h();
+  }
+  
+  public CharSequence getHint()
+  {
+    if (m) {
+      return n;
+    }
+    return null;
+  }
+  
+  final float getHintCollapsedTextHeight()
+  {
+    return c0.c();
+  }
+  
+  final int getHintCurrentCollapsedTextColor()
+  {
+    return c0.d();
+  }
+  
+  public CharSequence getPasswordVisibilityToggleContentDescription()
+  {
+    return J;
+  }
+  
+  public Drawable getPasswordVisibilityToggleDrawable()
+  {
+    return I;
+  }
+  
+  public Typeface getTypeface()
+  {
+    return G;
+  }
+  
+  protected void onLayout(boolean paramBoolean, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    super.onLayout(paramBoolean, paramInt1, paramInt2, paramInt3, paramInt4);
+    if (p != null) {
+      v();
+    }
+    if (m)
+    {
+      EditText localEditText = d;
+      if (localEditText != null)
+      {
+        Rect localRect = E;
+        j.a(this, localEditText, localRect);
+        paramInt1 = left + d.getCompoundPaddingLeft();
+        paramInt3 = right - d.getCompoundPaddingRight();
+        int i1 = i();
+        c0.b(paramInt1, top + d.getCompoundPaddingTop(), paramInt3, bottom - d.getCompoundPaddingBottom());
+        c0.a(paramInt1, i1, paramInt3, paramInt4 - paramInt2 - getPaddingBottom());
+        c0.h();
+        if ((l()) && (!b0)) {
+          p();
+        }
+      }
+    }
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    u();
+    super.onMeasure(paramInt1, paramInt2);
+  }
+  
+  protected void onRestoreInstanceState(Parcelable paramParcelable)
+  {
+    if (!(paramParcelable instanceof e))
+    {
+      super.onRestoreInstanceState(paramParcelable);
+      return;
+    }
+    paramParcelable = (e)paramParcelable;
+    super.onRestoreInstanceState(paramParcelable.a());
+    setError(e);
+    if (f) {
+      a(true);
+    }
+    requestLayout();
+  }
+  
+  public Parcelable onSaveInstanceState()
+  {
+    e localE = new e(super.onSaveInstanceState());
+    if (f.c()) {
+      e = getError();
+    }
+    f = L;
+    return localE;
+  }
+  
+  public void setBoxBackgroundColor(int paramInt)
+  {
+    if (C != paramInt)
+    {
+      C = paramInt;
+      e();
+    }
+  }
+  
+  public void setBoxBackgroundColorResource(int paramInt)
+  {
+    setBoxBackgroundColor(android.support.v4.content.a.a(getContext(), paramInt));
+  }
+  
+  public void setBoxBackgroundMode(int paramInt)
+  {
+    if (paramInt == s) {
+      return;
+    }
+    s = paramInt;
+    o();
+  }
+  
+  public void setBoxStrokeColor(int paramInt)
+  {
+    if (W != paramInt)
+    {
+      W = paramInt;
+      d();
+    }
+  }
+  
+  public void setCounterEnabled(boolean paramBoolean)
+  {
+    if (g != paramBoolean)
+    {
+      if (paramBoolean)
+      {
+        j = new AppCompatTextView(getContext());
+        j.setId(f.textinput_counter);
+        Object localObject = G;
+        if (localObject != null) {
+          j.setTypeface((Typeface)localObject);
+        }
+        j.setMaxLines(1);
+        a(j, l);
+        f.a(j, 2);
+        localObject = d;
+        if (localObject == null) {
+          a(0);
+        } else {
+          a(((EditText)localObject).getText().length());
+        }
+      }
+      else
+      {
+        f.b(j, 2);
+        j = null;
+      }
+      g = paramBoolean;
+    }
+  }
+  
+  public void setCounterMaxLength(int paramInt)
+  {
+    if (h != paramInt)
+    {
+      if (paramInt > 0) {
+        h = paramInt;
+      } else {
+        h = -1;
+      }
+      if (g)
+      {
+        EditText localEditText = d;
+        if (localEditText == null) {
+          paramInt = 0;
+        } else {
+          paramInt = localEditText.getText().length();
+        }
+        a(paramInt);
+      }
+    }
+  }
+  
+  public void setDefaultHintTextColor(ColorStateList paramColorStateList)
+  {
+    S = paramColorStateList;
+    T = paramColorStateList;
+    if (d != null) {
+      b(false);
+    }
+  }
+  
+  public void setEnabled(boolean paramBoolean)
+  {
+    a(this, paramBoolean);
+    super.setEnabled(paramBoolean);
+  }
+  
+  public void setError(CharSequence paramCharSequence)
+  {
+    if (!f.k())
+    {
+      if (TextUtils.isEmpty(paramCharSequence)) {
+        return;
+      }
+      setErrorEnabled(true);
+    }
+    if (!TextUtils.isEmpty(paramCharSequence))
+    {
+      f.a(paramCharSequence);
+      return;
+    }
+    f.i();
+  }
+  
+  public void setErrorEnabled(boolean paramBoolean)
+  {
+    f.a(paramBoolean);
+  }
+  
+  public void setErrorTextAppearance(int paramInt)
+  {
+    f.b(paramInt);
+  }
+  
+  public void setErrorTextColor(ColorStateList paramColorStateList)
+  {
+    f.a(paramColorStateList);
+  }
+  
+  public void setHelperText(CharSequence paramCharSequence)
+  {
+    if (TextUtils.isEmpty(paramCharSequence))
+    {
+      if (a()) {
+        setHelperTextEnabled(false);
+      }
+    }
+    else
+    {
+      if (!a()) {
+        setHelperTextEnabled(true);
+      }
+      f.b(paramCharSequence);
+    }
+  }
+  
+  public void setHelperTextColor(ColorStateList paramColorStateList)
+  {
+    f.b(paramColorStateList);
+  }
+  
+  public void setHelperTextEnabled(boolean paramBoolean)
+  {
+    f.b(paramBoolean);
+  }
+  
+  public void setHelperTextTextAppearance(int paramInt)
+  {
+    f.c(paramInt);
+  }
+  
+  public void setHint(CharSequence paramCharSequence)
+  {
+    if (m)
+    {
+      setHintInternal(paramCharSequence);
+      sendAccessibilityEvent(2048);
+    }
+  }
+  
+  public void setHintAnimationEnabled(boolean paramBoolean)
+  {
+    d0 = paramBoolean;
+  }
+  
+  public void setHintEnabled(boolean paramBoolean)
+  {
+    if (paramBoolean != m)
+    {
+      m = paramBoolean;
+      if (!m)
+      {
+        o = false;
+        if ((!TextUtils.isEmpty(n)) && (TextUtils.isEmpty(d.getHint()))) {
+          d.setHint(n);
+        }
+        setHintInternal(null);
+      }
+      else
+      {
+        CharSequence localCharSequence = d.getHint();
+        if (!TextUtils.isEmpty(localCharSequence))
+        {
+          if (TextUtils.isEmpty(n)) {
+            setHint(localCharSequence);
+          }
+          d.setHint(null);
+        }
+        o = true;
+      }
+      if (d != null) {
+        t();
+      }
+    }
+  }
+  
+  public void setHintTextAppearance(int paramInt)
+  {
+    c0.a(paramInt);
+    T = c0.b();
+    if (d != null)
+    {
+      b(false);
+      t();
+    }
+  }
+  
+  public void setPasswordVisibilityToggleContentDescription(int paramInt)
+  {
+    CharSequence localCharSequence;
+    if (paramInt != 0) {
+      localCharSequence = getResources().getText(paramInt);
+    } else {
+      localCharSequence = null;
+    }
+    setPasswordVisibilityToggleContentDescription(localCharSequence);
+  }
+  
+  public void setPasswordVisibilityToggleContentDescription(CharSequence paramCharSequence)
+  {
+    J = paramCharSequence;
+    CheckableImageButton localCheckableImageButton = K;
+    if (localCheckableImageButton != null) {
+      localCheckableImageButton.setContentDescription(paramCharSequence);
+    }
+  }
+  
+  public void setPasswordVisibilityToggleDrawable(int paramInt)
+  {
+    Drawable localDrawable;
+    if (paramInt != 0) {
+      localDrawable = a.b.h.c.a.a.c(getContext(), paramInt);
+    } else {
+      localDrawable = null;
+    }
+    setPasswordVisibilityToggleDrawable(localDrawable);
+  }
+  
+  public void setPasswordVisibilityToggleDrawable(Drawable paramDrawable)
+  {
+    I = paramDrawable;
+    CheckableImageButton localCheckableImageButton = K;
+    if (localCheckableImageButton != null) {
+      localCheckableImageButton.setImageDrawable(paramDrawable);
+    }
+  }
+  
+  public void setPasswordVisibilityToggleEnabled(boolean paramBoolean)
+  {
+    if (H != paramBoolean)
+    {
+      H = paramBoolean;
+      if ((!paramBoolean) && (L))
+      {
+        EditText localEditText = d;
+        if (localEditText != null) {
+          localEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+      }
+      L = false;
+      u();
+    }
+  }
+  
+  public void setPasswordVisibilityToggleTintList(ColorStateList paramColorStateList)
+  {
+    O = paramColorStateList;
+    P = true;
+    f();
+  }
+  
+  public void setPasswordVisibilityToggleTintMode(PorterDuff.Mode paramMode)
+  {
+    Q = paramMode;
+    R = true;
+    f();
+  }
+  
+  public void setTextInputAccessibilityDelegate(d paramD)
+  {
+    EditText localEditText = d;
+    if (localEditText != null) {
+      u.a(localEditText, paramD);
+    }
+  }
+  
+  public void setTypeface(Typeface paramTypeface)
+  {
+    if (paramTypeface != G)
+    {
+      G = paramTypeface;
+      c0.a(paramTypeface);
+      f.a(paramTypeface);
+      TextView localTextView = j;
+      if (localTextView != null) {
+        localTextView.setTypeface(paramTypeface);
+      }
+    }
+  }
+  
+  class a
+    implements TextWatcher
+  {
+    a() {}
+    
+    public void afterTextChanged(Editable paramEditable)
+    {
+      TextInputLayout localTextInputLayout = TextInputLayout.this;
+      localTextInputLayout.b(TextInputLayout.a(localTextInputLayout) ^ true);
+      localTextInputLayout = TextInputLayout.this;
+      if (g) {
+        localTextInputLayout.a(paramEditable.length());
+      }
+    }
+    
+    public void beforeTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {}
+  }
+  
+  class b
+    implements View.OnClickListener
+  {
+    b() {}
+    
+    public void onClick(View paramView)
+    {
+      a(false);
+    }
+  }
+  
+  class c
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    c() {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      c0.b(((Float)paramValueAnimator.getAnimatedValue()).floatValue());
+    }
+  }
+  
+  public static class d
+    extends android.support.v4.view.b
+  {
+    private final TextInputLayout c;
+    
+    public d(TextInputLayout paramTextInputLayout)
+    {
+      c = paramTextInputLayout;
+    }
+    
+    public void a(View paramView, android.support.v4.view.d0.c paramC)
+    {
+      super.a(paramView, paramC);
+      paramView = c.getEditText();
+      if (paramView != null) {
+        paramView = paramView.getText();
+      } else {
+        paramView = null;
+      }
+      CharSequence localCharSequence3 = c.getHint();
+      CharSequence localCharSequence1 = c.getError();
+      CharSequence localCharSequence2 = c.getCounterOverflowDescription();
+      boolean bool1 = TextUtils.isEmpty(paramView) ^ true;
+      boolean bool2 = TextUtils.isEmpty(localCharSequence3) ^ true;
+      boolean bool3 = TextUtils.isEmpty(localCharSequence1) ^ true;
+      boolean bool5 = false;
+      int i;
+      if ((!bool3) && (TextUtils.isEmpty(localCharSequence2))) {
+        i = 0;
+      } else {
+        i = 1;
+      }
+      if (bool1) {
+        paramC.f(paramView);
+      } else if (bool2) {
+        paramC.f(localCharSequence3);
+      }
+      if (bool2)
+      {
+        paramC.d(localCharSequence3);
+        boolean bool4 = bool5;
+        if (!bool1)
+        {
+          bool4 = bool5;
+          if (bool2) {
+            bool4 = true;
+          }
+        }
+        paramC.m(bool4);
+      }
+      if (i != 0)
+      {
+        if (bool3) {
+          paramView = localCharSequence1;
+        } else {
+          paramView = localCharSequence2;
+        }
+        paramC.c(paramView);
+        paramC.e(true);
+      }
+    }
+    
+    public void c(View paramView, AccessibilityEvent paramAccessibilityEvent)
+    {
+      super.c(paramView, paramAccessibilityEvent);
+      paramView = c.getEditText();
+      if (paramView != null) {
+        paramView = paramView.getText();
+      } else {
+        paramView = null;
+      }
+      if (TextUtils.isEmpty(paramView)) {
+        paramView = c.getHint();
+      }
+      if (!TextUtils.isEmpty(paramView)) {
+        paramAccessibilityEvent.getText().add(paramView);
+      }
+    }
+  }
+  
+  static class e
+    extends android.support.v4.view.a
+  {
+    public static final Parcelable.Creator<e> CREATOR = new a();
+    CharSequence e;
+    boolean f;
+    
+    e(Parcel paramParcel, ClassLoader paramClassLoader)
+    {
+      super(paramClassLoader);
+      e = ((CharSequence)TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(paramParcel));
+      int i = paramParcel.readInt();
+      boolean bool = true;
+      if (i != 1) {
+        bool = false;
+      }
+      f = bool;
+    }
+    
+    e(Parcelable paramParcelable)
+    {
+      super();
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("TextInputLayout.SavedState{");
+      localStringBuilder.append(Integer.toHexString(System.identityHashCode(this)));
+      localStringBuilder.append(" error=");
+      localStringBuilder.append(e);
+      localStringBuilder.append("}");
+      return localStringBuilder.toString();
+    }
+    
+    public void writeToParcel(Parcel paramParcel, int paramInt)
+    {
+      throw new Runtime("d2j fail translate: java.lang.RuntimeException: can not merge I and Z\n\tat com.googlecode.dex2jar.ir.TypeClass.merge(TypeClass.java:100)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeRef.updateTypeClass(TypeTransformer.java:174)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.provideAs(TypeTransformer.java:780)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.e1expr(TypeTransformer.java:496)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:713)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:703)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.enexpr(TypeTransformer.java:698)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:719)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:703)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.s1stmt(TypeTransformer.java:810)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.sxStmt(TypeTransformer.java:840)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.analyze(TypeTransformer.java:206)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer.transform(TypeTransformer.java:44)\n\tat com.googlecode.d2j.dex.Dex2jar$2.optimize(Dex2jar.java:162)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertCode(Dex2Asm.java:414)\n\tat com.googlecode.d2j.dex.ExDex2Asm.convertCode(ExDex2Asm.java:42)\n\tat com.googlecode.d2j.dex.Dex2jar$2.convertCode(Dex2jar.java:128)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertMethod(Dex2Asm.java:509)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertClass(Dex2Asm.java:406)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertDex(Dex2Asm.java:422)\n\tat com.googlecode.d2j.dex.Dex2jar.doTranslate(Dex2jar.java:172)\n\tat com.googlecode.d2j.dex.Dex2jar.to(Dex2jar.java:272)\n\tat com.googlecode.dex2jar.tools.Dex2jarCmd.doCommandLine(Dex2jarCmd.java:108)\n\tat com.googlecode.dex2jar.tools.BaseCmd.doMain(BaseCmd.java:288)\n\tat com.googlecode.dex2jar.tools.Dex2jarCmd.main(Dex2jarCmd.java:32)\n");
+    }
+    
+    static final class a
+      implements Parcelable.ClassLoaderCreator<TextInputLayout.e>
+    {
+      a() {}
+      
+      public TextInputLayout.e createFromParcel(Parcel paramParcel)
+      {
+        return new TextInputLayout.e(paramParcel, null);
+      }
+      
+      public TextInputLayout.e createFromParcel(Parcel paramParcel, ClassLoader paramClassLoader)
+      {
+        return new TextInputLayout.e(paramParcel, paramClassLoader);
+      }
+      
+      public TextInputLayout.e[] newArray(int paramInt)
+      {
+        return new TextInputLayout.e[paramInt];
+      }
+    }
+  }
+}

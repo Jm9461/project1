@@ -1,0 +1,215 @@
+package info.hoang8f.android.segmented;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.content.res.Resources.Theme;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.os.Build.VERSION;
+import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.LayoutParams;
+
+public class SegmentedGroup
+  extends RadioGroup
+{
+  private int c = (int)getResources().getDimension(b.radio_button_stroke_border);
+  private Resources d = getResources();
+  private int e = d.getColor(a.radio_button_selected_color);
+  private int f = -1;
+  private a g;
+  private Float h = Float.valueOf(getResources().getDimension(b.radio_button_conner_radius));
+  
+  public SegmentedGroup(Context paramContext)
+  {
+    super(paramContext);
+    g = new a(h.floatValue());
+  }
+  
+  public SegmentedGroup(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+    a(paramAttributeSet);
+    g = new a(h.floatValue());
+  }
+  
+  private void a(AttributeSet paramAttributeSet)
+  {
+    paramAttributeSet = getContext().getTheme().obtainStyledAttributes(paramAttributeSet, d.SegmentedGroup, 0, 0);
+    try
+    {
+      c = ((int)paramAttributeSet.getDimension(d.SegmentedGroup_sc_border_width, getResources().getDimension(b.radio_button_stroke_border)));
+      h = Float.valueOf(paramAttributeSet.getDimension(d.SegmentedGroup_sc_corner_radius, getResources().getDimension(b.radio_button_conner_radius)));
+      e = paramAttributeSet.getColor(d.SegmentedGroup_sc_tint_color, getResources().getColor(a.radio_button_selected_color));
+      f = paramAttributeSet.getColor(d.SegmentedGroup_sc_checked_text_color, getResources().getColor(17170443));
+      return;
+    }
+    finally
+    {
+      paramAttributeSet.recycle();
+    }
+  }
+  
+  private void a(View paramView)
+  {
+    int i = g.a();
+    int j = g.b();
+    Object localObject1 = { -16842919, -16842912 };
+    Object localObject2 = { -16842919, 16842912 };
+    int k = e;
+    int m = f;
+    localObject1 = new ColorStateList(new int[][] { { 16842919 }, localObject1, localObject2 }, new int[] { -7829368, k, m });
+    ((Button)paramView).setTextColor((ColorStateList)localObject1);
+    localObject1 = d.getDrawable(i).mutate();
+    localObject2 = d.getDrawable(j).mutate();
+    ((GradientDrawable)localObject1).setColor(e);
+    ((GradientDrawable)localObject1).setStroke(c, e);
+    ((GradientDrawable)localObject2).setStroke(c, e);
+    ((GradientDrawable)localObject1).setCornerRadii(g.a(paramView));
+    ((GradientDrawable)localObject2).setCornerRadii(g.a(paramView));
+    StateListDrawable localStateListDrawable = new StateListDrawable();
+    localStateListDrawable.addState(new int[] { -16842912 }, (Drawable)localObject2);
+    localStateListDrawable.addState(new int[] { 16842912 }, (Drawable)localObject1);
+    if (Build.VERSION.SDK_INT >= 16)
+    {
+      paramView.setBackground(localStateListDrawable);
+      return;
+    }
+    paramView.setBackgroundDrawable(localStateListDrawable);
+  }
+  
+  public void a()
+  {
+    int j = super.getChildCount();
+    int i = 0;
+    while (i < j)
+    {
+      View localView = getChildAt(i);
+      a(localView);
+      if (i == j - 1) {
+        return;
+      }
+      RadioGroup.LayoutParams localLayoutParams = (RadioGroup.LayoutParams)localView.getLayoutParams();
+      localLayoutParams = new RadioGroup.LayoutParams(width, height, weight);
+      if (getOrientation() == 0) {
+        localLayoutParams.setMargins(0, 0, -c, 0);
+      } else {
+        localLayoutParams.setMargins(0, 0, 0, -c);
+      }
+      localView.setLayoutParams(localLayoutParams);
+      i += 1;
+    }
+  }
+  
+  protected void onFinishInflate()
+  {
+    super.onFinishInflate();
+    a();
+  }
+  
+  public void setTintColor(int paramInt)
+  {
+    e = paramInt;
+    a();
+  }
+  
+  private class a
+  {
+    private int a = -1;
+    private int b = -1;
+    private final int c = c.radio_checked;
+    private final int d = c.radio_unchecked;
+    private float e;
+    private final float f = TypedValue.applyDimension(1, 0.1F, getResources().getDisplayMetrics());
+    private final float[] g;
+    private final float[] h;
+    private final float[] i;
+    private final float[] j;
+    private final float[] k;
+    private final float[] l;
+    private float[] m;
+    
+    public a(float paramFloat)
+    {
+      e = paramFloat;
+      paramFloat = e;
+      float f1 = f;
+      g = new float[] { paramFloat, paramFloat, f1, f1, f1, f1, paramFloat, paramFloat };
+      h = new float[] { f1, f1, paramFloat, paramFloat, paramFloat, paramFloat, f1, f1 };
+      i = new float[] { f1, f1, f1, f1, f1, f1, f1, f1 };
+      j = new float[] { paramFloat, paramFloat, paramFloat, paramFloat, paramFloat, paramFloat, paramFloat, paramFloat };
+      k = new float[] { paramFloat, paramFloat, paramFloat, paramFloat, f1, f1, f1, f1 };
+      l = new float[] { f1, f1, f1, f1, paramFloat, paramFloat, paramFloat, paramFloat };
+    }
+    
+    private void a(int paramInt1, int paramInt2)
+    {
+      if ((a == paramInt1) && (b == paramInt2)) {
+        return;
+      }
+      a = paramInt1;
+      b = paramInt2;
+      paramInt1 = a;
+      if (paramInt1 == 1)
+      {
+        m = j;
+        return;
+      }
+      paramInt2 = b;
+      float[] arrayOfFloat;
+      if (paramInt2 == 0)
+      {
+        if (getOrientation() == 0) {
+          arrayOfFloat = g;
+        } else {
+          arrayOfFloat = k;
+        }
+        m = arrayOfFloat;
+        return;
+      }
+      if (paramInt2 == paramInt1 - 1)
+      {
+        if (getOrientation() == 0) {
+          arrayOfFloat = h;
+        } else {
+          arrayOfFloat = l;
+        }
+        m = arrayOfFloat;
+        return;
+      }
+      m = i;
+    }
+    
+    private int b(View paramView)
+    {
+      return indexOfChild(paramView);
+    }
+    
+    private int c()
+    {
+      return getChildCount();
+    }
+    
+    public int a()
+    {
+      return c;
+    }
+    
+    public float[] a(View paramView)
+    {
+      a(c(), b(paramView));
+      return m;
+    }
+    
+    public int b()
+    {
+      return d;
+    }
+  }
+}

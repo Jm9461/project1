@@ -1,0 +1,274 @@
+package android.support.v7.widget;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Rect;
+import android.support.v4.view.u;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.View.MeasureSpec;
+import android.widget.FrameLayout;
+
+public class ContentFrameLayout
+  extends FrameLayout
+{
+  private TypedValue c;
+  private TypedValue d;
+  private TypedValue e;
+  private TypedValue f;
+  private TypedValue g;
+  private TypedValue h;
+  private final Rect i = new Rect();
+  private a j;
+  
+  public ContentFrameLayout(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public ContentFrameLayout(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, 0);
+  }
+  
+  public ContentFrameLayout(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+  }
+  
+  public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    i.set(paramInt1, paramInt2, paramInt3, paramInt4);
+    if (u.y(this)) {
+      requestLayout();
+    }
+  }
+  
+  public void a(Rect paramRect)
+  {
+    fitSystemWindows(paramRect);
+  }
+  
+  public TypedValue getFixedHeightMajor()
+  {
+    if (g == null) {
+      g = new TypedValue();
+    }
+    return g;
+  }
+  
+  public TypedValue getFixedHeightMinor()
+  {
+    if (h == null) {
+      h = new TypedValue();
+    }
+    return h;
+  }
+  
+  public TypedValue getFixedWidthMajor()
+  {
+    if (e == null) {
+      e = new TypedValue();
+    }
+    return e;
+  }
+  
+  public TypedValue getFixedWidthMinor()
+  {
+    if (f == null) {
+      f = new TypedValue();
+    }
+    return f;
+  }
+  
+  public TypedValue getMinWidthMajor()
+  {
+    if (c == null) {
+      c = new TypedValue();
+    }
+    return c;
+  }
+  
+  public TypedValue getMinWidthMinor()
+  {
+    if (d == null) {
+      d = new TypedValue();
+    }
+    return d;
+  }
+  
+  protected void onAttachedToWindow()
+  {
+    super.onAttachedToWindow();
+    a localA = j;
+    if (localA != null) {
+      localA.a();
+    }
+  }
+  
+  protected void onDetachedFromWindow()
+  {
+    super.onDetachedFromWindow();
+    a localA = j;
+    if (localA != null) {
+      localA.onDetachedFromWindow();
+    }
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    DisplayMetrics localDisplayMetrics = getContext().getResources().getDisplayMetrics();
+    int m;
+    if (widthPixels < heightPixels) {
+      m = 1;
+    } else {
+      m = 0;
+    }
+    int i3 = View.MeasureSpec.getMode(paramInt1);
+    int i4 = View.MeasureSpec.getMode(paramInt2);
+    int i2 = 0;
+    int n = i2;
+    int i1 = paramInt1;
+    Object localObject;
+    if (i3 == Integer.MIN_VALUE)
+    {
+      if (m != 0) {
+        localObject = f;
+      } else {
+        localObject = e;
+      }
+      n = i2;
+      i1 = paramInt1;
+      if (localObject != null)
+      {
+        int i5 = type;
+        n = i2;
+        i1 = paramInt1;
+        if (i5 != 0)
+        {
+          k = 0;
+          if (i5 == 5)
+          {
+            k = (int)((TypedValue)localObject).getDimension(localDisplayMetrics);
+          }
+          else if (i5 == 6)
+          {
+            k = widthPixels;
+            k = (int)((TypedValue)localObject).getFraction(k, k);
+          }
+          n = i2;
+          i1 = paramInt1;
+          if (k > 0)
+          {
+            localObject = i;
+            i1 = View.MeasureSpec.makeMeasureSpec(Math.min(k - (left + right), View.MeasureSpec.getSize(paramInt1)), 1073741824);
+            n = 1;
+          }
+        }
+      }
+    }
+    int k = paramInt2;
+    if (i4 == Integer.MIN_VALUE)
+    {
+      if (m != 0) {
+        localObject = g;
+      } else {
+        localObject = h;
+      }
+      k = paramInt2;
+      if (localObject != null)
+      {
+        i2 = type;
+        k = paramInt2;
+        if (i2 != 0)
+        {
+          paramInt1 = 0;
+          if (i2 == 5)
+          {
+            paramInt1 = (int)((TypedValue)localObject).getDimension(localDisplayMetrics);
+          }
+          else if (i2 == 6)
+          {
+            paramInt1 = heightPixels;
+            paramInt1 = (int)((TypedValue)localObject).getFraction(paramInt1, paramInt1);
+          }
+          k = paramInt2;
+          if (paramInt1 > 0)
+          {
+            localObject = i;
+            k = View.MeasureSpec.makeMeasureSpec(Math.min(paramInt1 - (top + bottom), View.MeasureSpec.getSize(paramInt2)), 1073741824);
+          }
+        }
+      }
+    }
+    super.onMeasure(i1, k);
+    i4 = getMeasuredWidth();
+    i1 = 0;
+    i2 = View.MeasureSpec.makeMeasureSpec(i4, 1073741824);
+    paramInt2 = i1;
+    paramInt1 = i2;
+    if (n == 0)
+    {
+      paramInt2 = i1;
+      paramInt1 = i2;
+      if (i3 == Integer.MIN_VALUE)
+      {
+        if (m != 0) {
+          localObject = d;
+        } else {
+          localObject = c;
+        }
+        paramInt2 = i1;
+        paramInt1 = i2;
+        if (localObject != null)
+        {
+          m = type;
+          paramInt2 = i1;
+          paramInt1 = i2;
+          if (m != 0)
+          {
+            paramInt1 = 0;
+            if (m == 5)
+            {
+              paramInt1 = (int)((TypedValue)localObject).getDimension(localDisplayMetrics);
+            }
+            else if (m == 6)
+            {
+              paramInt1 = widthPixels;
+              paramInt1 = (int)((TypedValue)localObject).getFraction(paramInt1, paramInt1);
+            }
+            m = paramInt1;
+            if (paramInt1 > 0)
+            {
+              localObject = i;
+              m = paramInt1 - (left + right);
+            }
+            paramInt2 = i1;
+            paramInt1 = i2;
+            if (i4 < m)
+            {
+              paramInt1 = View.MeasureSpec.makeMeasureSpec(m, 1073741824);
+              paramInt2 = 1;
+            }
+          }
+        }
+      }
+    }
+    if (paramInt2 != 0) {
+      super.onMeasure(paramInt1, k);
+    }
+  }
+  
+  public void setAttachListener(a paramA)
+  {
+    j = paramA;
+  }
+  
+  public static abstract interface a
+  {
+    public abstract void a();
+    
+    public abstract void onDetachedFromWindow();
+  }
+}

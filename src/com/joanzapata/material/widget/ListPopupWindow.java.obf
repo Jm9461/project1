@@ -1,0 +1,695 @@
+package com.rey.material.widget;
+
+import a.b.g.f.e;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.database.DataSetObserver;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Handler;
+import android.support.v4.widget.n;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListAdapter;
+import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
+import b.j.a.a;
+import java.lang.reflect.Method;
+
+public class b
+{
+  private static Method D;
+  private Handler A = new Handler();
+  private Rect B = new Rect();
+  private boolean C;
+  private Context a;
+  private d b;
+  private ListAdapter c;
+  private d d;
+  private int e = -2;
+  private int f = -2;
+  private int g;
+  private int h;
+  private boolean i;
+  private int j;
+  private int k;
+  private int l = 0;
+  private boolean m = false;
+  private boolean n = false;
+  int o = Integer.MAX_VALUE;
+  private View p;
+  private int q = 0;
+  private DataSetObserver r;
+  private View s;
+  private Drawable t;
+  private AdapterView.OnItemClickListener u;
+  private AdapterView.OnItemSelectedListener v;
+  private final i w = new i(null);
+  private final h x = new h(null);
+  private final g y = new g(null);
+  private final e z = new e(null);
+  
+  static
+  {
+    try
+    {
+      D = PopupWindow.class.getDeclaredMethod("setClipToScreenEnabled", new Class[] { Boolean.TYPE });
+      return;
+    }
+    catch (NoSuchMethodException localNoSuchMethodException)
+    {
+      Log.i("ListPopupWindow", "Could not find method setClipToScreenEnabled() on PopupWindow. Oh well.");
+    }
+  }
+  
+  public b(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    a = paramContext;
+    TypedArray localTypedArray = paramContext.obtainStyledAttributes(paramAttributeSet, b.j.a.c.ListPopupWindow, paramInt1, paramInt2);
+    g = localTypedArray.getDimensionPixelOffset(b.j.a.c.ListPopupWindow_android_dropDownHorizontalOffset, 0);
+    h = localTypedArray.getDimensionPixelOffset(b.j.a.c.ListPopupWindow_android_dropDownVerticalOffset, 0);
+    if (h != 0) {
+      i = true;
+    }
+    localTypedArray.recycle();
+    b = new d(paramContext, paramAttributeSet, paramInt1);
+    b.setInputMethodMode(1);
+    e.b(a.getResources().getConfiguration().locale);
+  }
+  
+  private int a(String paramString)
+  {
+    int i1 = 0;
+    int i2 = a.getResources().getIdentifier(paramString, "dimen", "android");
+    if (i2 > 0) {
+      i1 = a.getResources().getDimensionPixelSize(i2);
+    }
+    return i1;
+  }
+  
+  private void b(boolean paramBoolean)
+  {
+    Method localMethod = D;
+    if (localMethod != null)
+    {
+      try
+      {
+        localMethod.invoke(b, new Object[] { Boolean.valueOf(paramBoolean) });
+      }
+      catch (Exception localException)
+      {
+        Log.i("ListPopupWindow", "Could not call setClipToScreenEnabled() on PopupWindow. Oh well.");
+      }
+      return;
+    }
+    if ((paramBoolean) && (Build.VERSION.SDK_INT >= 3)) {
+      b.setClippingEnabled(false);
+    }
+  }
+  
+  private int l()
+  {
+    int i3 = 0;
+    int i1 = 0;
+    Object localObject2;
+    if (d == null)
+    {
+      localObject1 = a;
+      new b();
+      d = new d((Context)localObject1, C ^ true);
+      localObject2 = t;
+      if (localObject2 != null) {
+        d.setSelector((Drawable)localObject2);
+      }
+      d.setAdapter(c);
+      d.setOnItemClickListener(u);
+      d.setFocusable(true);
+      d.setFocusableInTouchMode(true);
+      d.setOnItemSelectedListener(new c());
+      d.setOnScrollListener(y);
+      localObject2 = v;
+      if (localObject2 != null) {
+        d.setOnItemSelectedListener((AdapterView.OnItemSelectedListener)localObject2);
+      }
+      localObject2 = d;
+      View localView = p;
+      if (localView != null)
+      {
+        localObject1 = new LinearLayout((Context)localObject1);
+        ((LinearLayout)localObject1).setOrientation(1);
+        LinearLayout.LayoutParams localLayoutParams = new LinearLayout.LayoutParams(-1, 0, 1.0F);
+        i1 = q;
+        if (i1 != 0)
+        {
+          if (i1 != 1)
+          {
+            localObject2 = new StringBuilder();
+            ((StringBuilder)localObject2).append("Invalid hint position ");
+            ((StringBuilder)localObject2).append(q);
+            Log.e("ListPopupWindow", ((StringBuilder)localObject2).toString());
+          }
+          else
+          {
+            ((LinearLayout)localObject1).addView((View)localObject2, localLayoutParams);
+            ((LinearLayout)localObject1).addView(localView);
+          }
+        }
+        else
+        {
+          ((LinearLayout)localObject1).addView(localView);
+          ((LinearLayout)localObject1).addView((View)localObject2, localLayoutParams);
+        }
+        i2 = View.MeasureSpec.makeMeasureSpec(f, Integer.MIN_VALUE);
+        localView.measure(i2, 0);
+        localObject2 = (LinearLayout.LayoutParams)localView.getLayoutParams();
+        i1 = localView.getMeasuredHeight() + topMargin + bottomMargin;
+      }
+      else
+      {
+        i2 = 0;
+        localObject1 = localObject2;
+      }
+      b.setContentView((View)localObject1);
+    }
+    else
+    {
+      localObject1 = p;
+      if (localObject1 != null)
+      {
+        localObject2 = (LinearLayout.LayoutParams)((View)localObject1).getLayoutParams();
+        i1 = ((View)localObject1).getMeasuredHeight() + topMargin + bottomMargin;
+        i2 = 0;
+      }
+      else
+      {
+        i2 = 0;
+        i1 = i3;
+      }
+    }
+    i3 = 0;
+    Object localObject1 = b.getBackground();
+    if (localObject1 != null)
+    {
+      ((Drawable)localObject1).getPadding(B);
+      localObject1 = B;
+      i4 = top;
+      i2 = i4 + bottom;
+      i3 = i2;
+      if (!i)
+      {
+        h = (-i4);
+        i3 = i2;
+      }
+    }
+    else
+    {
+      B.setEmpty();
+    }
+    int i2 = 0;
+    if (Build.VERSION.SDK_INT >= 21) {
+      i2 = Math.max(a("status_bar_height"), a("navigation_bar_height"));
+    }
+    if (b.getInputMethodMode() == 2) {}
+    int i4 = b.getMaxAvailableHeight(c(), h) - i2;
+    if ((!m) && (e != -1))
+    {
+      i2 = f;
+      if (i2 != -2)
+      {
+        if (i2 != -1)
+        {
+          i2 = View.MeasureSpec.makeMeasureSpec(i2, 1073741824);
+        }
+        else
+        {
+          i2 = a.getResources().getDisplayMetrics().widthPixels;
+          localObject1 = B;
+          i2 = View.MeasureSpec.makeMeasureSpec(i2 - (left + right), 1073741824);
+        }
+      }
+      else
+      {
+        i2 = a.getResources().getDisplayMetrics().widthPixels;
+        localObject1 = B;
+        i2 = View.MeasureSpec.makeMeasureSpec(i2 - (left + right), Integer.MIN_VALUE);
+      }
+      i4 = d.measureHeightOfChildrenCompat(i2, 0, -1, i4 - i1, -1);
+      i2 = i1;
+      if (i4 > 0) {
+        i2 = i1 + i3;
+      }
+      return i4 + i2;
+    }
+    return i4 + i3;
+  }
+  
+  private void m()
+  {
+    Object localObject = p;
+    if (localObject != null)
+    {
+      localObject = ((View)localObject).getParent();
+      if ((localObject instanceof ViewGroup)) {
+        ((ViewGroup)localObject).removeView(p);
+      }
+    }
+  }
+  
+  public void a()
+  {
+    d localD = d;
+    if (localD != null)
+    {
+      d.a(localD, true);
+      localD.requestLayout();
+    }
+  }
+  
+  public void a(int paramInt)
+  {
+    Object localObject = b.getBackground();
+    if (localObject != null)
+    {
+      ((Drawable)localObject).getPadding(B);
+      localObject = B;
+      f = (left + right + paramInt);
+      return;
+    }
+    h(paramInt);
+  }
+  
+  public void a(Drawable paramDrawable)
+  {
+    b.setBackgroundDrawable(paramDrawable);
+  }
+  
+  public void a(View paramView)
+  {
+    s = paramView;
+  }
+  
+  public void a(ListAdapter paramListAdapter)
+  {
+    DataSetObserver localDataSetObserver = r;
+    if (localDataSetObserver == null)
+    {
+      r = new f(null);
+    }
+    else
+    {
+      ListAdapter localListAdapter = c;
+      if (localListAdapter != null) {
+        localListAdapter.unregisterDataSetObserver(localDataSetObserver);
+      }
+    }
+    c = paramListAdapter;
+    if (c != null) {
+      paramListAdapter.registerDataSetObserver(r);
+    }
+    paramListAdapter = d;
+    if (paramListAdapter != null) {
+      paramListAdapter.setAdapter(c);
+    }
+  }
+  
+  public void a(PopupWindow.OnDismissListener paramOnDismissListener)
+  {
+    b.setOnDismissListener(paramOnDismissListener);
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    C = paramBoolean;
+    b.setFocusable(paramBoolean);
+  }
+  
+  public void b()
+  {
+    b.dismiss();
+    m();
+    b.setContentView(null);
+    d = null;
+    A.removeCallbacks(w);
+  }
+  
+  public void b(int paramInt)
+  {
+    g = paramInt;
+  }
+  
+  public View c()
+  {
+    return s;
+  }
+  
+  public void c(int paramInt)
+  {
+    b.setInputMethodMode(paramInt);
+  }
+  
+  public Drawable d()
+  {
+    return b.getBackground();
+  }
+  
+  public void d(int paramInt)
+  {
+    j = paramInt;
+  }
+  
+  public int e()
+  {
+    return g;
+  }
+  
+  public void e(int paramInt)
+  {
+    k = paramInt;
+  }
+  
+  public c f()
+  {
+    return d;
+  }
+  
+  public void f(int paramInt)
+  {
+    q = paramInt;
+  }
+  
+  public int g()
+  {
+    if (!i) {
+      return 0;
+    }
+    return h;
+  }
+  
+  public void g(int paramInt)
+  {
+    h = paramInt;
+    i = true;
+  }
+  
+  public int h()
+  {
+    return f;
+  }
+  
+  public void h(int paramInt)
+  {
+    f = paramInt;
+  }
+  
+  public boolean i()
+  {
+    return b.getInputMethodMode() == 2;
+  }
+  
+  public boolean j()
+  {
+    return b.isShowing();
+  }
+  
+  public void k()
+  {
+    int i2 = l();
+    int i1 = 0;
+    int i4 = 0;
+    boolean bool3 = i();
+    boolean bool4 = b.isShowing();
+    boolean bool2 = true;
+    boolean bool1 = true;
+    int i3 = -1;
+    if (bool4)
+    {
+      i1 = f;
+      if (i1 == -1) {
+        i1 = -1;
+      } else if (i1 == -2) {
+        i1 = c().getWidth();
+      } else {
+        i1 = f;
+      }
+      i4 = e;
+      if (i4 == -1)
+      {
+        if (!bool3) {
+          i2 = -1;
+        }
+        if (bool3)
+        {
+          localD = b;
+          if (f != -1) {
+            i3 = 0;
+          }
+          localD.setWindowLayoutMode(i3, 0);
+        }
+        else
+        {
+          localD = b;
+          if (f == -1) {
+            i3 = -1;
+          } else {
+            i3 = 0;
+          }
+          localD.setWindowLayoutMode(i3, -1);
+        }
+      }
+      else if (i4 != -2)
+      {
+        i2 = e;
+      }
+      localD = b;
+      if ((n) || (m)) {
+        bool1 = false;
+      }
+      localD.setOutsideTouchable(bool1);
+      b.update(c(), g, h, i1, i2);
+      return;
+    }
+    i3 = f;
+    if (i3 == -1) {
+      i1 = -1;
+    } else if (i3 == -2) {
+      b.setWidth(c().getWidth());
+    } else {
+      b.setWidth(i3);
+    }
+    i3 = e;
+    if (i3 == -1)
+    {
+      i2 = -1;
+    }
+    else if (i3 == -2)
+    {
+      b.setHeight(i2);
+      i2 = i4;
+    }
+    else
+    {
+      b.setHeight(i3);
+      i2 = i4;
+    }
+    b.setWindowLayoutMode(i1, i2);
+    b(true);
+    d localD = b;
+    if ((!n) && (!m)) {
+      bool1 = bool2;
+    } else {
+      bool1 = false;
+    }
+    localD.setOutsideTouchable(bool1);
+    b.setTouchInterceptor(x);
+    n.a(b, c(), g, h, l);
+    d.setSelection(-1);
+    if ((!C) || (d.a())) {
+      a();
+    }
+    if (!C) {
+      A.post(z);
+    }
+    if (j != 0) {
+      b.getContentView().getViewTreeObserver().addOnPreDrawListener(new a());
+    }
+  }
+  
+  class a
+    implements ViewTreeObserver.OnPreDrawListener
+  {
+    a() {}
+    
+    public boolean onPreDraw()
+    {
+      b.c(b.this).getContentView().getViewTreeObserver().removeOnPreDrawListener(this);
+      int i = 0;
+      int j = b.d(b.this).getChildCount();
+      while (i < j)
+      {
+        View localView = b.d(b.this).getChildAt(i);
+        Animation localAnimation = AnimationUtils.loadAnimation(b.e(b.this), b.f(b.this));
+        localAnimation.setStartOffset(b.g(b.this) * i);
+        localView.startAnimation(localAnimation);
+        i += 1;
+      }
+      return false;
+    }
+  }
+  
+  class b
+    implements Runnable
+  {
+    b() {}
+    
+    public void run()
+    {
+      View localView = c();
+      if ((localView != null) && (localView.getWindowToken() != null)) {
+        k();
+      }
+    }
+  }
+  
+  class c
+    implements AdapterView.OnItemSelectedListener
+  {
+    c() {}
+    
+    public void onItemSelected(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong)
+    {
+      if (paramInt != -1)
+      {
+        paramAdapterView = b.d(b.this);
+        if (paramAdapterView != null) {
+          b.d.a(paramAdapterView, false);
+        }
+      }
+    }
+    
+    public void onNothingSelected(AdapterView<?> paramAdapterView) {}
+  }
+  
+  private static class d
+    extends c
+  {
+    private boolean d;
+    private boolean e;
+    
+    public d(Context paramContext, boolean paramBoolean)
+    {
+      super(null, a.dropDownListViewStyle);
+      e = paramBoolean;
+      setCacheColorHint(0);
+    }
+    
+    public boolean a()
+    {
+      return ((e) && (d)) || (super.isInTouchMode());
+    }
+  }
+  
+  private class e
+    implements Runnable
+  {
+    private e() {}
+    
+    public void run()
+    {
+      a();
+    }
+  }
+  
+  private class f
+    extends DataSetObserver
+  {
+    private f() {}
+    
+    public void onChanged()
+    {
+      if (j()) {
+        k();
+      }
+    }
+    
+    public void onInvalidated()
+    {
+      b();
+    }
+  }
+  
+  private class g
+    implements AbsListView.OnScrollListener
+  {
+    private g() {}
+    
+    public void onScroll(AbsListView paramAbsListView, int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onScrollStateChanged(AbsListView paramAbsListView, int paramInt)
+    {
+      if ((paramInt == 1) && (!i()) && (b.c(b.this).getContentView() != null))
+      {
+        b.b(b.this).removeCallbacks(b.a(b.this));
+        b.a(b.this).run();
+      }
+    }
+  }
+  
+  private class h
+    implements View.OnTouchListener
+  {
+    private h() {}
+    
+    public boolean onTouch(View paramView, MotionEvent paramMotionEvent)
+    {
+      int i = paramMotionEvent.getAction();
+      int j = (int)paramMotionEvent.getX();
+      int k = (int)paramMotionEvent.getY();
+      if ((i == 0) && (b.c(b.this) != null) && (b.c(b.this).isShowing()) && (j >= 0) && (j < b.c(b.this).getWidth()) && (k >= 0) && (k < b.c(b.this).getHeight())) {
+        b.b(b.this).postDelayed(b.a(b.this), 250L);
+      } else if (i == 1) {
+        b.b(b.this).removeCallbacks(b.a(b.this));
+      }
+      return false;
+    }
+  }
+  
+  private class i
+    implements Runnable
+  {
+    private i() {}
+    
+    public void run()
+    {
+      if ((b.d(b.this) != null) && (b.d(b.this).getCount() > b.d(b.this).getChildCount()))
+      {
+        int i = b.d(b.this).getChildCount();
+        b localB = b.this;
+        if (i <= o)
+        {
+          b.c(localB).setInputMethodMode(2);
+          k();
+        }
+      }
+    }
+  }
+}

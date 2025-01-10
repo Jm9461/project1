@@ -1,0 +1,690 @@
+package com.mohamadamin.persianmaterialdatetimepicker.date;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.view.d0.d;
+import android.support.v4.view.u;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.AccessibilityDelegate;
+import android.view.View.MeasureSpec;
+import android.view.accessibility.AccessibilityEvent;
+import com.mohamadamin.persianmaterialdatetimepicker.g;
+import com.mohamadamin.persianmaterialdatetimepicker.i;
+import java.security.InvalidParameterException;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+
+public abstract class e
+  extends View
+{
+  protected static int H = 32;
+  protected static int I = 10;
+  protected static int J = 1;
+  protected static int K;
+  protected static int L;
+  protected static int M;
+  protected static int N;
+  protected static int O;
+  protected int A;
+  protected int B;
+  protected int C;
+  protected int D;
+  protected int E;
+  protected int F;
+  private int G;
+  protected a c;
+  protected int d;
+  private String e;
+  protected Paint f;
+  protected Paint g;
+  protected Paint h;
+  protected Paint i;
+  private final StringBuilder j;
+  protected int k;
+  protected int l;
+  protected int m;
+  protected int n;
+  protected boolean o;
+  protected int p;
+  protected int q;
+  protected int r;
+  protected int s;
+  protected int t;
+  private final com.mohamadamin.persianmaterialdatetimepicker.j.b u;
+  protected final com.mohamadamin.persianmaterialdatetimepicker.j.b v;
+  private final a w;
+  protected int x;
+  protected b y;
+  private boolean z;
+  
+  public e(Context paramContext, AttributeSet paramAttributeSet, a paramA)
+  {
+    super(paramContext, paramAttributeSet);
+    int i2 = 0;
+    d = 0;
+    n = H;
+    o = false;
+    p = -1;
+    q = -1;
+    r = 7;
+    s = 7;
+    t = s;
+    x = 6;
+    G = 0;
+    c = paramA;
+    paramContext = paramContext.getResources();
+    v = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    u = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    paramContext.getString(g.mdtp_day_of_week_label_typeface);
+    e = paramContext.getString(g.mdtp_sans_serif);
+    paramAttributeSet = c;
+    int i1 = i2;
+    if (paramAttributeSet != null)
+    {
+      i1 = i2;
+      if (paramAttributeSet.f()) {
+        i1 = 1;
+      }
+    }
+    if (i1 != 0)
+    {
+      A = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_text_normal_dark_theme);
+      C = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_month_day_dark_theme);
+      F = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_text_disabled_dark_theme);
+      E = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_text_highlighted_dark_theme);
+    }
+    else
+    {
+      A = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_text_normal);
+      C = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_month_day);
+      F = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_text_disabled);
+      E = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_text_highlighted);
+    }
+    B = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_white);
+    D = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_accent_color);
+    paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_white);
+    j = new StringBuilder(50);
+    K = paramContext.getDimensionPixelSize(com.mohamadamin.persianmaterialdatetimepicker.c.mdtp_day_number_size);
+    L = paramContext.getDimensionPixelSize(com.mohamadamin.persianmaterialdatetimepicker.c.mdtp_month_label_size);
+    M = paramContext.getDimensionPixelSize(com.mohamadamin.persianmaterialdatetimepicker.c.mdtp_month_day_label_text_size);
+    N = paramContext.getDimensionPixelOffset(com.mohamadamin.persianmaterialdatetimepicker.c.mdtp_month_list_item_header_height);
+    O = paramContext.getDimensionPixelSize(com.mohamadamin.persianmaterialdatetimepicker.c.mdtp_day_number_select_circle_radius);
+    n = ((paramContext.getDimensionPixelOffset(com.mohamadamin.persianmaterialdatetimepicker.c.mdtp_date_picker_view_animator_height) - getMonthHeaderSize()) / 6);
+    w = getMonthViewTouchHelper();
+    u.a(this, w);
+    u.f(this, 1);
+    z = true;
+    c();
+  }
+  
+  private void a(int paramInt)
+  {
+    if (b(l, k, paramInt)) {
+      return;
+    }
+    b localB = y;
+    if (localB != null) {
+      localB.a(this, new d.a(l, k, paramInt));
+    }
+    w.b(paramInt, 1);
+  }
+  
+  private boolean a(int paramInt, com.mohamadamin.persianmaterialdatetimepicker.j.b paramB)
+  {
+    return (l == paramB.h()) && (k == paramB.d()) && (paramInt == paramB.b());
+  }
+  
+  private boolean c(int paramInt1, int paramInt2, int paramInt3)
+  {
+    Object localObject = c;
+    if (localObject == null) {
+      return false;
+    }
+    localObject = ((a)localObject).c();
+    if (localObject == null) {
+      return false;
+    }
+    if (paramInt1 > ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).h()) {
+      return true;
+    }
+    if (paramInt1 < ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).h()) {
+      return false;
+    }
+    if (paramInt2 > ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).d()) {
+      return true;
+    }
+    if (paramInt2 < ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).d()) {
+      return false;
+    }
+    return paramInt3 > ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).d();
+  }
+  
+  private boolean d(int paramInt1, int paramInt2, int paramInt3)
+  {
+    Object localObject = c;
+    if (localObject == null) {
+      return false;
+    }
+    localObject = ((a)localObject).j();
+    if (localObject == null) {
+      return false;
+    }
+    if (paramInt1 < ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).h()) {
+      return true;
+    }
+    if (paramInt1 > ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).h()) {
+      return false;
+    }
+    if (paramInt2 < ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).d()) {
+      return true;
+    }
+    if (paramInt2 > ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).d()) {
+      return false;
+    }
+    return paramInt3 < ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).b();
+  }
+  
+  private int e()
+  {
+    int i1 = b();
+    int i3 = t;
+    int i4 = s;
+    int i2 = (i1 + i3) / i4;
+    if ((i3 + i1) % i4 > 0) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    return i1 + i2;
+  }
+  
+  private boolean e(int paramInt1, int paramInt2, int paramInt3)
+  {
+    com.mohamadamin.persianmaterialdatetimepicker.j.b[] arrayOfB = c.d();
+    int i2 = arrayOfB.length;
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      com.mohamadamin.persianmaterialdatetimepicker.j.b localB = arrayOfB[i1];
+      if (paramInt1 >= localB.h())
+      {
+        if (paramInt1 <= localB.h())
+        {
+          if (paramInt2 < localB.d()) {
+            break;
+          }
+          if (paramInt2 <= localB.d())
+          {
+            if (paramInt3 < localB.b()) {
+              break;
+            }
+            if (paramInt3 <= localB.b()) {
+              break label111;
+            }
+          }
+        }
+        i1 += 1;
+        continue;
+        label111:
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  private String getMonthAndYearString()
+  {
+    j.setLength(0);
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(u.e());
+    localStringBuilder.append(" ");
+    localStringBuilder.append(u.h());
+    return com.mohamadamin.persianmaterialdatetimepicker.j.a.b(localStringBuilder.toString());
+  }
+  
+  public int a(float paramFloat1, float paramFloat2)
+  {
+    int i1 = b(paramFloat1, paramFloat2);
+    if ((i1 >= 1) && (i1 <= t)) {
+      return i1;
+    }
+    return -1;
+  }
+  
+  public void a()
+  {
+    w.e();
+  }
+  
+  protected void a(Canvas paramCanvas)
+  {
+    int i2 = getMonthHeaderSize();
+    int i3 = M / 2;
+    int i4 = (m - d * 2) / (s * 2);
+    int i1 = 0;
+    for (;;)
+    {
+      int i5 = s;
+      if (i1 >= i5) {
+        break;
+      }
+      int i6 = r;
+      int i7 = d;
+      v.set(7, (i6 + i1) % i5);
+      paramCanvas.drawText(v.g().substring(0, 1), (i1 * 2 + 1) * i4 + i7, i2 - i3, i);
+      i1 += 1;
+    }
+  }
+  
+  public abstract void a(Canvas paramCanvas, int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5, int paramInt6, int paramInt7, int paramInt8, int paramInt9);
+  
+  protected boolean a(int paramInt1, int paramInt2, int paramInt3)
+  {
+    com.mohamadamin.persianmaterialdatetimepicker.j.b[] arrayOfB = c.g();
+    if (arrayOfB == null) {
+      return false;
+    }
+    int i2 = arrayOfB.length;
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      com.mohamadamin.persianmaterialdatetimepicker.j.b localB = arrayOfB[i1];
+      if (paramInt1 < localB.h()) {
+        return false;
+      }
+      if (paramInt1 <= localB.h())
+      {
+        if (paramInt2 < localB.d()) {
+          return false;
+        }
+        if (paramInt2 <= localB.d())
+        {
+          if (paramInt3 < localB.b()) {
+            return false;
+          }
+          if (paramInt3 <= localB.b()) {
+            break label115;
+          }
+        }
+      }
+      i1 += 1;
+      continue;
+      label115:
+      return true;
+    }
+    return false;
+  }
+  
+  public boolean a(d.a paramA)
+  {
+    if ((b == l) && (c == k))
+    {
+      int i1 = d;
+      if (i1 <= t)
+      {
+        w.e(i1);
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  protected int b()
+  {
+    int i2 = G;
+    int i1 = i2;
+    if (i2 < r) {
+      i1 = i2 + s;
+    }
+    return i1 - r;
+  }
+  
+  protected int b(float paramFloat1, float paramFloat2)
+  {
+    int i1 = d;
+    if ((paramFloat1 >= i1) && (paramFloat1 <= m - d))
+    {
+      int i2 = (int)(paramFloat2 - getMonthHeaderSize()) / n;
+      return (int)((paramFloat1 - i1) * s / (m - i1 - d)) - b() + 1 + s * i2;
+    }
+    return -1;
+  }
+  
+  protected void b(Canvas paramCanvas)
+  {
+    int i2 = (n + K) / 2;
+    int i3 = J;
+    int i4 = getMonthHeaderSize();
+    float f1 = (m - d * 2) / (s * 2.0F);
+    int i1 = b();
+    i3 = i2 - i3 + i4;
+    i2 = 1;
+    while (i2 <= t)
+    {
+      i4 = (int)((i1 * 2 + 1) * f1 + d);
+      int i5 = n;
+      int i8 = (K + i5) / 2;
+      int i9 = J;
+      int i6 = (int)(i4 - f1);
+      int i7 = (int)(i4 + f1);
+      i8 = i3 - (i8 - i9);
+      a(paramCanvas, l, k, i2, i4, i3, i6, i7, i8, i8 + i5);
+      i5 = i1 + 1;
+      i4 = i3;
+      i1 = i5;
+      if (i5 == s)
+      {
+        i4 = i3 + n;
+        i1 = 0;
+      }
+      i2 += 1;
+      i3 = i4;
+    }
+  }
+  
+  protected boolean b(int paramInt1, int paramInt2, int paramInt3)
+  {
+    if (c.d() != null) {
+      return e(paramInt1, paramInt2, paramInt3) ^ true;
+    }
+    if (d(paramInt1, paramInt2, paramInt3)) {
+      return true;
+    }
+    return c(paramInt1, paramInt2, paramInt3);
+  }
+  
+  protected void c()
+  {
+    g = new Paint();
+    g.setFakeBoldText(true);
+    g.setAntiAlias(true);
+    g.setTextSize(L);
+    g.setTypeface(Typeface.create(e, 1));
+    g.setColor(A);
+    g.setTextAlign(Paint.Align.CENTER);
+    g.setStyle(Paint.Style.FILL);
+    h = new Paint();
+    h.setFakeBoldText(true);
+    h.setAntiAlias(true);
+    h.setColor(D);
+    h.setTextAlign(Paint.Align.CENTER);
+    h.setStyle(Paint.Style.FILL);
+    h.setAlpha(255);
+    i = new Paint();
+    i.setAntiAlias(true);
+    i.setTextSize(M);
+    i.setColor(C);
+    i.setTypeface(com.mohamadamin.persianmaterialdatetimepicker.h.a(getContext(), "Roboto-Medium"));
+    i.setStyle(Paint.Style.FILL);
+    i.setTextAlign(Paint.Align.CENTER);
+    i.setFakeBoldText(true);
+    f = new Paint();
+    f.setAntiAlias(true);
+    f.setTextSize(K);
+    f.setStyle(Paint.Style.FILL);
+    f.setTextAlign(Paint.Align.CENTER);
+    f.setFakeBoldText(false);
+  }
+  
+  protected void c(Canvas paramCanvas)
+  {
+    int i1 = (m + d * 2) / 2;
+    int i2 = (getMonthHeaderSize() - M) / 2;
+    paramCanvas.drawText(getMonthAndYearString(), i1, i2, g);
+  }
+  
+  public void d()
+  {
+    x = 6;
+    requestLayout();
+  }
+  
+  public boolean dispatchHoverEvent(MotionEvent paramMotionEvent)
+  {
+    if (w.a(paramMotionEvent)) {
+      return true;
+    }
+    return super.dispatchHoverEvent(paramMotionEvent);
+  }
+  
+  public d.a getAccessibilityFocus()
+  {
+    int i1 = w.c();
+    if (i1 >= 0) {
+      return new d.a(l, k, i1);
+    }
+    return null;
+  }
+  
+  public int getMonth()
+  {
+    return k;
+  }
+  
+  protected int getMonthHeaderSize()
+  {
+    return N;
+  }
+  
+  protected a getMonthViewTouchHelper()
+  {
+    return new a(this);
+  }
+  
+  public int getYear()
+  {
+    return l;
+  }
+  
+  protected void onDraw(Canvas paramCanvas)
+  {
+    c(paramCanvas);
+    a(paramCanvas);
+    b(paramCanvas);
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    setMeasuredDimension(View.MeasureSpec.getSize(paramInt1), n * x + getMonthHeaderSize() + 5);
+  }
+  
+  protected void onSizeChanged(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    m = paramInt1;
+    w.d();
+  }
+  
+  public boolean onTouchEvent(MotionEvent paramMotionEvent)
+  {
+    if (paramMotionEvent.getAction() != 1) {
+      return true;
+    }
+    int i1 = a(paramMotionEvent.getX(), paramMotionEvent.getY());
+    if (i1 >= 0) {
+      a(i1);
+    }
+    return true;
+  }
+  
+  public void setAccessibilityDelegate(View.AccessibilityDelegate paramAccessibilityDelegate)
+  {
+    if (!z) {
+      super.setAccessibilityDelegate(paramAccessibilityDelegate);
+    }
+  }
+  
+  public void setDatePickerController(a paramA)
+  {
+    c = paramA;
+  }
+  
+  public void setMonthParams(HashMap<String, Integer> paramHashMap)
+  {
+    if ((!paramHashMap.containsKey("month")) && (!paramHashMap.containsKey("year"))) {
+      throw new InvalidParameterException("You must specify month and year for this view");
+    }
+    setTag(paramHashMap);
+    int i2;
+    if (paramHashMap.containsKey("height"))
+    {
+      n = ((Integer)paramHashMap.get("height")).intValue();
+      i1 = n;
+      i2 = I;
+      if (i1 < i2) {
+        n = i2;
+      }
+    }
+    if (paramHashMap.containsKey("selected_day")) {
+      p = ((Integer)paramHashMap.get("selected_day")).intValue();
+    }
+    k = ((Integer)paramHashMap.get("month")).intValue();
+    l = ((Integer)paramHashMap.get("year")).intValue();
+    com.mohamadamin.persianmaterialdatetimepicker.j.b localB = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    o = false;
+    q = -1;
+    u.a(l, k, 1);
+    G = u.get(7);
+    if (paramHashMap.containsKey("week_start")) {
+      r = ((Integer)paramHashMap.get("week_start")).intValue();
+    } else {
+      r = 7;
+    }
+    t = i.a(k, l);
+    int i1 = 0;
+    while (i1 < t)
+    {
+      i2 = i1 + 1;
+      if (a(i2, localB))
+      {
+        o = true;
+        q = i2;
+      }
+      i1 += 1;
+    }
+    x = e();
+    w.d();
+  }
+  
+  public void setOnDayClickListener(b paramB)
+  {
+    y = paramB;
+  }
+  
+  public void setSelectedDay(int paramInt)
+  {
+    p = paramInt;
+  }
+  
+  protected class a
+    extends android.support.v4.widget.h
+  {
+    private final Rect n = new Rect();
+    private final com.mohamadamin.persianmaterialdatetimepicker.j.b o = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    
+    public a(View paramView)
+    {
+      super();
+    }
+    
+    protected int a(float paramFloat1, float paramFloat2)
+    {
+      int i = e.this.a(paramFloat1, paramFloat2);
+      if (i >= 0) {
+        return i;
+      }
+      return Integer.MIN_VALUE;
+    }
+    
+    protected void a(int paramInt, Rect paramRect)
+    {
+      e localE = e.this;
+      int m = d;
+      int k = localE.getMonthHeaderSize();
+      localE = e.this;
+      int i = n;
+      int j = (m - d * 2) / s;
+      int i1 = paramInt - 1 + localE.b();
+      int i2 = s;
+      paramInt = i1 / i2;
+      m = i1 % i2 * j + m;
+      paramInt = paramInt * i + k;
+      paramRect.set(m, paramInt, m + j, paramInt + i);
+    }
+    
+    protected void a(int paramInt, android.support.v4.view.d0.c paramC)
+    {
+      a(paramInt, n);
+      paramC.b(d(paramInt));
+      paramC.c(n);
+      paramC.a(16);
+      if (paramInt == p) {
+        paramC.l(true);
+      }
+    }
+    
+    protected void a(int paramInt, AccessibilityEvent paramAccessibilityEvent)
+    {
+      paramAccessibilityEvent.setContentDescription(d(paramInt));
+    }
+    
+    protected void a(List<Integer> paramList)
+    {
+      int i = 1;
+      while (i <= t)
+      {
+        paramList.add(Integer.valueOf(i));
+        i += 1;
+      }
+    }
+    
+    protected boolean a(int paramInt1, int paramInt2, Bundle paramBundle)
+    {
+      if (paramInt2 != 16) {
+        return false;
+      }
+      e.a(e.this, paramInt1);
+      return true;
+    }
+    
+    protected CharSequence d(int paramInt)
+    {
+      Object localObject = o;
+      e localE = e.this;
+      ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).a(l, k, paramInt);
+      localObject = com.mohamadamin.persianmaterialdatetimepicker.j.a.b(o.c());
+      localE = e.this;
+      if (paramInt == p) {
+        return localE.getContext().getString(g.mdtp_item_is_selected, new Object[] { localObject });
+      }
+      return localObject;
+    }
+    
+    public void e()
+    {
+      int i = c();
+      if (i != Integer.MIN_VALUE) {
+        a(e.this).a(i, 128, null);
+      }
+    }
+    
+    public void e(int paramInt)
+    {
+      a(e.this).a(paramInt, 64, null);
+    }
+  }
+  
+  public static abstract interface b
+  {
+    public abstract void a(e paramE, d.a paramA);
+  }
+}

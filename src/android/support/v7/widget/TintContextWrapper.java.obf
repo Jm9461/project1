@@ -1,0 +1,135 @@
+package android.support.v7.widget;
+
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.content.res.Resources.Theme;
+import android.os.Build.VERSION;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+
+public class g1
+  extends ContextWrapper
+{
+  private static final Object c = new Object();
+  private static ArrayList<WeakReference<g1>> d;
+  private final Resources a;
+  private final Resources.Theme b;
+  
+  private g1(Context paramContext)
+  {
+    super(paramContext);
+    if (o1.b())
+    {
+      a = new o1(this, paramContext.getResources());
+      b = a.newTheme();
+      b.setTo(paramContext.getTheme());
+      return;
+    }
+    a = new i1(this, paramContext.getResources());
+    b = null;
+  }
+  
+  private static boolean a(Context paramContext)
+  {
+    boolean bool2 = paramContext instanceof g1;
+    boolean bool1 = false;
+    if ((!bool2) && (!(paramContext.getResources() instanceof i1)))
+    {
+      if ((paramContext.getResources() instanceof o1)) {
+        return false;
+      }
+      if ((Build.VERSION.SDK_INT < 21) || (o1.b())) {
+        bool1 = true;
+      }
+      return bool1;
+    }
+    return false;
+  }
+  
+  public static Context b(Context paramContext)
+  {
+    if (a(paramContext)) {}
+    for (;;)
+    {
+      int i;
+      synchronized (c)
+      {
+        if (d == null)
+        {
+          d = new ArrayList();
+        }
+        else
+        {
+          i = d.size() - 1;
+          if (i >= 0)
+          {
+            localObject1 = (WeakReference)d.get(i);
+            if ((localObject1 != null) && (((WeakReference)localObject1).get() != null)) {
+              break label168;
+            }
+            d.remove(i);
+            break label168;
+          }
+          i = d.size() - 1;
+          if (i >= 0)
+          {
+            localObject1 = (WeakReference)d.get(i);
+            if (localObject1 == null) {
+              break label175;
+            }
+            localObject1 = (g1)((WeakReference)localObject1).get();
+            if ((localObject1 == null) || (((ContextWrapper)localObject1).getBaseContext() != paramContext)) {
+              break label180;
+            }
+            return localObject1;
+          }
+        }
+        paramContext = new g1(paramContext);
+        d.add(new WeakReference(paramContext));
+        return paramContext;
+      }
+      return paramContext;
+      label168:
+      i -= 1;
+      continue;
+      label175:
+      Object localObject1 = null;
+      continue;
+      label180:
+      i -= 1;
+    }
+  }
+  
+  public AssetManager getAssets()
+  {
+    return a.getAssets();
+  }
+  
+  public Resources getResources()
+  {
+    return a;
+  }
+  
+  public Resources.Theme getTheme()
+  {
+    Resources.Theme localTheme2 = b;
+    Resources.Theme localTheme1 = localTheme2;
+    if (localTheme2 == null) {
+      localTheme1 = super.getTheme();
+    }
+    return localTheme1;
+  }
+  
+  public void setTheme(int paramInt)
+  {
+    Resources.Theme localTheme = b;
+    if (localTheme == null)
+    {
+      super.setTheme(paramInt);
+      return;
+    }
+    localTheme.applyStyle(paramInt, true);
+  }
+}

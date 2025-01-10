@@ -1,0 +1,6 @@
+package b.f.a.f;
+
+public abstract interface a
+{
+  public abstract void a(int paramInt);
+}

@@ -1,0 +1,53 @@
+package com.lawyer_smartCalendar.d;
+
+public class e
+{
+  private int a;
+  private String b;
+  private String c;
+  private String d;
+  
+  public e() {}
+  
+  public String a()
+  {
+    return d;
+  }
+  
+  public void a(int paramInt)
+  {
+    a = paramInt;
+  }
+  
+  public void a(String paramString)
+  {
+    d = paramString;
+  }
+  
+  public String b()
+  {
+    return c;
+  }
+  
+  public void b(int paramInt) {}
+  
+  public void b(String paramString)
+  {
+    c = paramString;
+  }
+  
+  public int c()
+  {
+    return a;
+  }
+  
+  public void c(String paramString)
+  {
+    b = paramString;
+  }
+  
+  public String d()
+  {
+    return b;
+  }
+}

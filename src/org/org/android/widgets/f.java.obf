@@ -1,0 +1,58 @@
+package a.b.c.o;
+
+import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.view.View;
+import android.view.ViewParent;
+
+public final class c
+{
+  private final View a;
+  private boolean b = false;
+  private int c = 0;
+  
+  public c(b paramB)
+  {
+    a = ((View)paramB);
+  }
+  
+  private void d()
+  {
+    ViewParent localViewParent = a.getParent();
+    if ((localViewParent instanceof CoordinatorLayout)) {
+      ((CoordinatorLayout)localViewParent).a(a);
+    }
+  }
+  
+  public int a()
+  {
+    return c;
+  }
+  
+  public void a(int paramInt)
+  {
+    c = paramInt;
+  }
+  
+  public void a(Bundle paramBundle)
+  {
+    b = paramBundle.getBoolean("expanded", false);
+    c = paramBundle.getInt("expandedComponentIdHint", 0);
+    if (b) {
+      d();
+    }
+  }
+  
+  public boolean b()
+  {
+    return b;
+  }
+  
+  public Bundle c()
+  {
+    Bundle localBundle = new Bundle();
+    localBundle.putBoolean("expanded", b);
+    localBundle.putInt("expandedComponentIdHint", c);
+    return localBundle;
+  }
+}

@@ -1,0 +1,54 @@
+package e.f0.f;
+
+import e.c0;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public final class d
+{
+  private final Set<c0> a = new LinkedHashSet();
+  
+  public d() {}
+  
+  public void a(c0 paramC0)
+  {
+    try
+    {
+      a.remove(paramC0);
+      return;
+    }
+    finally
+    {
+      paramC0 = finally;
+      throw paramC0;
+    }
+  }
+  
+  public void b(c0 paramC0)
+  {
+    try
+    {
+      a.add(paramC0);
+      return;
+    }
+    finally
+    {
+      paramC0 = finally;
+      throw paramC0;
+    }
+  }
+  
+  public boolean c(c0 paramC0)
+  {
+    try
+    {
+      boolean bool = a.contains(paramC0);
+      return bool;
+    }
+    finally
+    {
+      paramC0 = finally;
+      throw paramC0;
+    }
+  }
+}

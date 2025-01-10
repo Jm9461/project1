@@ -1,0 +1,65 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.app.e;
+import b.e.a.a.b;
+import com.lawyer_smartCalendar.utils.c;
+import com.lawyer_smartCalendar.utils.l;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class SplashActivity
+  extends b.l.a.a.e.a
+{
+  public SplashActivity() {}
+  
+  public void a(b.l.a.a.f.a paramA)
+  {
+    paramA.f(c.e());
+    paramA.a(1500);
+    paramA.m(3);
+    paramA.n(2);
+    paramA.g(2131230894);
+    paramA.a(b.B);
+    paramA.b(1500);
+    paramA.h(400);
+    paramA.i(400);
+    paramA.d(3000);
+    paramA.l(3);
+    paramA.k(2131099879);
+    paramA.c(3000);
+    paramA.j(2131099879);
+    paramA.b(getResources().getString(2131755084));
+    paramA.o(2131099898);
+    paramA.a(15.0F);
+    paramA.e(2000);
+    paramA.b(b.Y);
+    paramA.a("fonts/IRANSansMobile_Medium.ttf");
+  }
+  
+  protected void attachBaseContext(Context paramContext)
+  {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(paramContext));
+  }
+  
+  public void m()
+  {
+    finish();
+    if (!b.i.a.a.a.a("Profile_has_info", false))
+    {
+      startActivity(new Intent(this, FirstProfileActivity.class));
+      return;
+    }
+    startActivity(new Intent(this, MainActivity.class));
+  }
+  
+  protected void onCreate(Bundle paramBundle)
+  {
+    super.onCreate(paramBundle);
+    new l().a(this, Color.parseColor(c.d()));
+  }
+}

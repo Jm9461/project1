@@ -1,0 +1,84 @@
+package d.a.a;
+
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.annotation.TargetApi;
+import android.view.animation.Interpolator;
+import java.lang.ref.WeakReference;
+
+@TargetApi(11)
+final class c
+  extends b
+{
+  WeakReference<Animator> a;
+  
+  c(Animator paramAnimator, a paramA)
+  {
+    super(paramA);
+    a = new WeakReference(paramAnimator);
+  }
+  
+  public void a()
+  {
+    Animator localAnimator = (Animator)a.get();
+    if (localAnimator != null) {
+      localAnimator.start();
+    }
+  }
+  
+  public void a(int paramInt)
+  {
+    Animator localAnimator = (Animator)a.get();
+    if (localAnimator != null) {
+      localAnimator.setDuration(paramInt);
+    }
+  }
+  
+  public void a(Interpolator paramInterpolator)
+  {
+    Animator localAnimator = (Animator)a.get();
+    if (localAnimator != null) {
+      localAnimator.setInterpolator(paramInterpolator);
+    }
+  }
+  
+  public void a(final b.a paramA)
+  {
+    Animator localAnimator = (Animator)a.get();
+    if (localAnimator == null) {
+      return;
+    }
+    if (paramA == null)
+    {
+      localAnimator.addListener(null);
+      return;
+    }
+    localAnimator.addListener(new a(paramA));
+  }
+  
+  class a
+    implements Animator.AnimatorListener
+  {
+    a(b.a paramA) {}
+    
+    public void onAnimationCancel(Animator paramAnimator)
+    {
+      paramA.b();
+    }
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      paramA.a();
+    }
+    
+    public void onAnimationRepeat(Animator paramAnimator)
+    {
+      paramA.c();
+    }
+    
+    public void onAnimationStart(Animator paramAnimator)
+    {
+      paramA.d();
+    }
+  }
+}

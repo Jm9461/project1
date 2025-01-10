@@ -1,0 +1,365 @@
+package a.a.a.b;
+
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.WeakHashMap;
+
+public class b<K, V>
+  implements Iterable<Map.Entry<K, V>>
+{
+  private d<K, V> c;
+  private d<K, V> d;
+  private WeakHashMap<g<K, V>, Boolean> e = new WeakHashMap();
+  private int f = 0;
+  
+  public b() {}
+  
+  protected d<K, V> a(K paramK)
+  {
+    for (d localD = c; localD != null; localD = e) {
+      if (c.equals(paramK)) {
+        return localD;
+      }
+    }
+    return localD;
+  }
+  
+  protected d<K, V> a(K paramK, V paramV)
+  {
+    paramK = new d(paramK, paramV);
+    f += 1;
+    paramV = d;
+    if (paramV == null)
+    {
+      c = paramK;
+      d = c;
+      return paramK;
+    }
+    e = paramK;
+    f = paramV;
+    d = paramK;
+    return paramK;
+  }
+  
+  public Iterator<Map.Entry<K, V>> a()
+  {
+    c localC = new c(d, c);
+    e.put(localC, Boolean.valueOf(false));
+    return localC;
+  }
+  
+  public V b(K paramK, V paramV)
+  {
+    d localD = a(paramK);
+    if (localD != null) {
+      return d;
+    }
+    a(paramK, paramV);
+    return null;
+  }
+  
+  public Map.Entry<K, V> b()
+  {
+    return c;
+  }
+  
+  public b<K, V>.e c()
+  {
+    e localE = new e(null);
+    e.put(localE, Boolean.valueOf(false));
+    return localE;
+  }
+  
+  public Map.Entry<K, V> d()
+  {
+    return d;
+  }
+  
+  public boolean equals(Object paramObject)
+  {
+    if (paramObject == this) {
+      return true;
+    }
+    if (!(paramObject instanceof b)) {
+      return false;
+    }
+    Object localObject1 = (b)paramObject;
+    if (size() != ((b)localObject1).size()) {
+      return false;
+    }
+    paramObject = iterator();
+    localObject1 = ((b)localObject1).iterator();
+    while ((paramObject.hasNext()) && (((Iterator)localObject1).hasNext()))
+    {
+      Map.Entry localEntry = (Map.Entry)paramObject.next();
+      Object localObject2 = ((Iterator)localObject1).next();
+      if (((localEntry == null) && (localObject2 != null)) || ((localEntry != null) && (!localEntry.equals(localObject2)))) {
+        return false;
+      }
+    }
+    return (!paramObject.hasNext()) && (!((Iterator)localObject1).hasNext());
+  }
+  
+  public Iterator<Map.Entry<K, V>> iterator()
+  {
+    b localB = new b(c, d);
+    e.put(localB, Boolean.valueOf(false));
+    return localB;
+  }
+  
+  public V remove(K paramK)
+  {
+    paramK = a(paramK);
+    if (paramK == null) {
+      return null;
+    }
+    f -= 1;
+    if (!e.isEmpty())
+    {
+      localObject = e.keySet().iterator();
+      while (((Iterator)localObject).hasNext()) {
+        ((g)((Iterator)localObject).next()).a(paramK);
+      }
+    }
+    Object localObject = f;
+    if (localObject != null) {
+      e = e;
+    } else {
+      c = e;
+    }
+    localObject = e;
+    if (localObject != null) {
+      f = f;
+    } else {
+      d = f;
+    }
+    e = null;
+    f = null;
+    return d;
+  }
+  
+  public int size()
+  {
+    return f;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("[");
+    Iterator localIterator = iterator();
+    while (localIterator.hasNext())
+    {
+      localStringBuilder.append(((Map.Entry)localIterator.next()).toString());
+      if (localIterator.hasNext()) {
+        localStringBuilder.append(", ");
+      }
+    }
+    localStringBuilder.append("]");
+    return localStringBuilder.toString();
+  }
+  
+  static class b<K, V>
+    extends b.f<K, V>
+  {
+    b(b.d<K, V> paramD1, b.d<K, V> paramD2)
+    {
+      super(paramD2);
+    }
+    
+    b.d<K, V> b(b.d<K, V> paramD)
+    {
+      return f;
+    }
+    
+    b.d<K, V> c(b.d<K, V> paramD)
+    {
+      return e;
+    }
+  }
+  
+  private static class c<K, V>
+    extends b.f<K, V>
+  {
+    c(b.d<K, V> paramD1, b.d<K, V> paramD2)
+    {
+      super(paramD2);
+    }
+    
+    b.d<K, V> b(b.d<K, V> paramD)
+    {
+      return e;
+    }
+    
+    b.d<K, V> c(b.d<K, V> paramD)
+    {
+      return f;
+    }
+  }
+  
+  static class d<K, V>
+    implements Map.Entry<K, V>
+  {
+    final K c;
+    final V d;
+    d<K, V> e;
+    d<K, V> f;
+    
+    d(K paramK, V paramV)
+    {
+      c = paramK;
+      d = paramV;
+    }
+    
+    public boolean equals(Object paramObject)
+    {
+      if (paramObject == this) {
+        return true;
+      }
+      if (!(paramObject instanceof d)) {
+        return false;
+      }
+      paramObject = (d)paramObject;
+      return (c.equals(c)) && (d.equals(d));
+    }
+    
+    public K getKey()
+    {
+      return c;
+    }
+    
+    public V getValue()
+    {
+      return d;
+    }
+    
+    public V setValue(V paramV)
+    {
+      throw new UnsupportedOperationException("An entry modification is not supported");
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(c);
+      localStringBuilder.append("=");
+      localStringBuilder.append(d);
+      return localStringBuilder.toString();
+    }
+  }
+  
+  private class e
+    implements Iterator<Map.Entry<K, V>>, b.g<K, V>
+  {
+    private b.d<K, V> c;
+    private boolean d = true;
+    
+    private e() {}
+    
+    public void a(b.d<K, V> paramD)
+    {
+      b.d localD = c;
+      if (paramD == localD)
+      {
+        c = f;
+        boolean bool;
+        if (c == null) {
+          bool = true;
+        } else {
+          bool = false;
+        }
+        d = bool;
+      }
+    }
+    
+    public boolean hasNext()
+    {
+      if (d) {
+        return b.a(b.this) != null;
+      }
+      b.d localD = c;
+      return (localD != null) && (e != null);
+    }
+    
+    public Map.Entry<K, V> next()
+    {
+      if (d)
+      {
+        d = false;
+        c = b.a(b.this);
+      }
+      else
+      {
+        b.d localD = c;
+        if (localD != null) {
+          localD = e;
+        } else {
+          localD = null;
+        }
+        c = localD;
+      }
+      return c;
+    }
+  }
+  
+  private static abstract class f<K, V>
+    implements Iterator<Map.Entry<K, V>>, b.g<K, V>
+  {
+    b.d<K, V> c;
+    b.d<K, V> d;
+    
+    f(b.d<K, V> paramD1, b.d<K, V> paramD2)
+    {
+      c = paramD2;
+      d = paramD1;
+    }
+    
+    private b.d<K, V> a()
+    {
+      b.d localD1 = d;
+      b.d localD2 = c;
+      if ((localD1 != localD2) && (localD2 != null)) {
+        return c(localD1);
+      }
+      return null;
+    }
+    
+    public void a(b.d<K, V> paramD)
+    {
+      if ((c == paramD) && (paramD == d))
+      {
+        d = null;
+        c = null;
+      }
+      b.d localD = c;
+      if (localD == paramD) {
+        c = b(localD);
+      }
+      if (d == paramD) {
+        d = a();
+      }
+    }
+    
+    abstract b.d<K, V> b(b.d<K, V> paramD);
+    
+    abstract b.d<K, V> c(b.d<K, V> paramD);
+    
+    public boolean hasNext()
+    {
+      return d != null;
+    }
+    
+    public Map.Entry<K, V> next()
+    {
+      b.d localD = d;
+      d = a();
+      return localD;
+    }
+  }
+  
+  static abstract interface g<K, V>
+  {
+    public abstract void a(b.d<K, V> paramD);
+  }
+}

@@ -1,0 +1,1115 @@
+package e.f0.f;
+
+import e.a0;
+import e.a0.a;
+import e.c0;
+import e.f0.i.f;
+import e.f0.i.g.g;
+import e.f0.i.g.h;
+import e.j;
+import e.p;
+import e.q;
+import e.t.a;
+import e.v;
+import e.w;
+import e.y;
+import e.y.a;
+import f.r;
+import f.t;
+import java.io.IOException;
+import java.lang.ref.Reference;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.net.ssl.SSLPeerUnverifiedException;
+import javax.net.ssl.SSLSession;
+
+public final class c
+  extends g.h
+  implements e.i
+{
+  private final j b;
+  private final c0 c;
+  private Socket d;
+  private Socket e;
+  private q f;
+  private w g;
+  private e.f0.i.g h;
+  private f.e i;
+  private f.d j;
+  public boolean k;
+  public int l;
+  public int m = 1;
+  public final List<Reference<g>> n = new ArrayList();
+  public long o = Long.MAX_VALUE;
+  
+  public c(j paramJ, c0 paramC0)
+  {
+    b = paramJ;
+    c = paramC0;
+  }
+  
+  private y a(int paramInt1, int paramInt2, y paramY, e.s paramS)
+  {
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("CONNECT ");
+    ((StringBuilder)localObject).append(e.f0.c.a(paramS, true));
+    ((StringBuilder)localObject).append(" HTTP/1.1");
+    paramS = ((StringBuilder)localObject).toString();
+    for (;;)
+    {
+      e.f0.h.a localA = new e.f0.h.a(null, null, i, j);
+      i.b().a(paramInt1, TimeUnit.MILLISECONDS);
+      j.b().a(paramInt2, TimeUnit.MILLISECONDS);
+      localA.a(paramY.c(), paramS);
+      localA.a();
+      localObject = localA.a(false);
+      ((a0.a)localObject).a(paramY);
+      localObject = ((a0.a)localObject).a();
+      long l2 = e.f0.g.e.a((a0)localObject);
+      long l1 = l2;
+      if (l2 == -1L) {
+        l1 = 0L;
+      }
+      paramY = localA.b(l1);
+      e.f0.c.b(paramY, Integer.MAX_VALUE, TimeUnit.MILLISECONDS);
+      paramY.close();
+      int i1 = ((a0)localObject).o();
+      if (i1 == 200) {
+        break label300;
+      }
+      if (i1 != 407) {
+        break label263;
+      }
+      paramY = c.a().g().a(c, (a0)localObject);
+      if (paramY == null) {
+        break;
+      }
+      if ("close".equalsIgnoreCase(((a0)localObject).b("Connection"))) {
+        return paramY;
+      }
+    }
+    throw new IOException("Failed to authenticate with proxy");
+    label263:
+    paramY = new StringBuilder();
+    paramY.append("Unexpected response code for CONNECT: ");
+    paramY.append(((a0)localObject).o());
+    throw new IOException(paramY.toString());
+    label300:
+    if ((i.a().i()) && (j.a().i())) {
+      return null;
+    }
+    paramY = new IOException("TLS tunnel buffered too many bytes!");
+    for (;;)
+    {
+      throw paramY;
+    }
+  }
+  
+  private void a(int paramInt1, int paramInt2, int paramInt3, e.e paramE, p paramP)
+  {
+    y localY = e();
+    e.s localS = localY.g();
+    int i1 = 0;
+    while (i1 < 21)
+    {
+      a(paramInt1, paramInt2, paramE, paramP);
+      localY = a(paramInt2, paramInt3, localY, localS);
+      if (localY == null) {
+        return;
+      }
+      e.f0.c.a(d);
+      d = null;
+      j = null;
+      i = null;
+      paramP.a(paramE, c.d(), c.b(), null);
+      i1 += 1;
+    }
+  }
+  
+  /* Error */
+  private void a(int paramInt1, int paramInt2, e.e paramE, p paramP)
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: getfield 53	e/f0/f/c:c	Le/c0;
+    //   4: invokevirtual 224	e/c0:b	()Ljava/net/Proxy;
+    //   7: astore 6
+    //   9: aload_0
+    //   10: getfield 53	e/f0/f/c:c	Le/c0;
+    //   13: invokevirtual 152	e/c0:a	()Le/a;
+    //   16: astore 5
+    //   18: aload 6
+    //   20: invokevirtual 239	java/net/Proxy:type	()Ljava/net/Proxy$Type;
+    //   23: getstatic 245	java/net/Proxy$Type:DIRECT	Ljava/net/Proxy$Type;
+    //   26: if_acmpeq +31 -> 57
+    //   29: aload 6
+    //   31: invokevirtual 239	java/net/Proxy:type	()Ljava/net/Proxy$Type;
+    //   34: getstatic 248	java/net/Proxy$Type:HTTP	Ljava/net/Proxy$Type;
+    //   37: if_acmpne +6 -> 43
+    //   40: goto +17 -> 57
+    //   43: new 250	java/net/Socket
+    //   46: dup
+    //   47: aload 6
+    //   49: invokespecial 253	java/net/Socket:<init>	(Ljava/net/Proxy;)V
+    //   52: astore 5
+    //   54: goto +13 -> 67
+    //   57: aload 5
+    //   59: invokevirtual 256	e/a:i	()Ljavax/net/SocketFactory;
+    //   62: invokevirtual 262	javax/net/SocketFactory:createSocket	()Ljava/net/Socket;
+    //   65: astore 5
+    //   67: aload_0
+    //   68: aload 5
+    //   70: putfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   73: aload 4
+    //   75: aload_3
+    //   76: aload_0
+    //   77: getfield 53	e/f0/f/c:c	Le/c0;
+    //   80: invokevirtual 221	e/c0:d	()Ljava/net/InetSocketAddress;
+    //   83: aload 6
+    //   85: invokevirtual 265	e/p:a	(Le/e;Ljava/net/InetSocketAddress;Ljava/net/Proxy;)V
+    //   88: aload_0
+    //   89: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   92: iload_2
+    //   93: invokevirtual 269	java/net/Socket:setSoTimeout	(I)V
+    //   96: invokestatic 274	e/f0/k/f:d	()Le/f0/k/f;
+    //   99: aload_0
+    //   100: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   103: aload_0
+    //   104: getfield 53	e/f0/f/c:c	Le/c0;
+    //   107: invokevirtual 221	e/c0:d	()Ljava/net/InetSocketAddress;
+    //   110: iload_1
+    //   111: invokevirtual 277	e/f0/k/f:a	(Ljava/net/Socket;Ljava/net/InetSocketAddress;I)V
+    //   114: aload_0
+    //   115: aload_0
+    //   116: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   119: invokestatic 282	f/l:b	(Ljava/net/Socket;)Lf/s;
+    //   122: invokestatic 285	f/l:a	(Lf/s;)Lf/e;
+    //   125: putfield 80	e/f0/f/c:i	Lf/e;
+    //   128: aload_0
+    //   129: aload_0
+    //   130: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   133: invokestatic 288	f/l:a	(Ljava/net/Socket;)Lf/r;
+    //   136: invokestatic 291	f/l:a	(Lf/r;)Lf/d;
+    //   139: putfield 82	e/f0/f/c:j	Lf/d;
+    //   142: return
+    //   143: astore_3
+    //   144: ldc_w 293
+    //   147: aload_3
+    //   148: invokevirtual 296	java/lang/NullPointerException:getMessage	()Ljava/lang/String;
+    //   151: invokevirtual 300	java/lang/String:equals	(Ljava/lang/Object;)Z
+    //   154: ifne +4 -> 158
+    //   157: return
+    //   158: new 176	java/io/IOException
+    //   161: dup
+    //   162: aload_3
+    //   163: invokespecial 303	java/io/IOException:<init>	(Ljava/lang/Throwable;)V
+    //   166: athrow
+    //   167: astore_3
+    //   168: new 58	java/lang/StringBuilder
+    //   171: dup
+    //   172: invokespecial 59	java/lang/StringBuilder:<init>	()V
+    //   175: astore 4
+    //   177: aload 4
+    //   179: ldc_w 305
+    //   182: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   185: pop
+    //   186: aload 4
+    //   188: aload_0
+    //   189: getfield 53	e/f0/f/c:c	Le/c0;
+    //   192: invokevirtual 221	e/c0:d	()Ljava/net/InetSocketAddress;
+    //   195: invokevirtual 308	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    //   198: pop
+    //   199: new 231	java/net/ConnectException
+    //   202: dup
+    //   203: aload 4
+    //   205: invokevirtual 76	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   208: invokespecial 309	java/net/ConnectException:<init>	(Ljava/lang/String;)V
+    //   211: astore 4
+    //   213: aload 4
+    //   215: aload_3
+    //   216: invokevirtual 313	java/net/ConnectException:initCause	(Ljava/lang/Throwable;)Ljava/lang/Throwable;
+    //   219: pop
+    //   220: aload 4
+    //   222: athrow
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	223	0	this	c
+    //   0	223	1	paramInt1	int
+    //   0	223	2	paramInt2	int
+    //   0	223	3	paramE	e.e
+    //   0	223	4	paramP	p
+    //   16	53	5	localObject	Object
+    //   7	77	6	localProxy	Proxy
+    // Exception table:
+    //   from	to	target	type
+    //   114	142	143	java/lang/NullPointerException
+    //   96	114	167	java/net/ConnectException
+  }
+  
+  /* Error */
+  private void a(b paramB)
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: getfield 53	e/f0/f/c:c	Le/c0;
+    //   4: invokevirtual 152	e/c0:a	()Le/a;
+    //   7: astore 5
+    //   9: aload 5
+    //   11: invokevirtual 319	e/a:j	()Ljavax/net/ssl/SSLSocketFactory;
+    //   14: astore 4
+    //   16: aconst_null
+    //   17: astore_3
+    //   18: aconst_null
+    //   19: astore_2
+    //   20: aload 4
+    //   22: aload_0
+    //   23: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   26: aload 5
+    //   28: invokevirtual 321	e/a:k	()Le/s;
+    //   31: invokevirtual 325	e/s:g	()Ljava/lang/String;
+    //   34: aload 5
+    //   36: invokevirtual 321	e/a:k	()Le/s;
+    //   39: invokevirtual 327	e/s:j	()I
+    //   42: iconst_1
+    //   43: invokevirtual 332	javax/net/ssl/SSLSocketFactory:createSocket	(Ljava/net/Socket;Ljava/lang/String;IZ)Ljava/net/Socket;
+    //   46: checkcast 334	javax/net/ssl/SSLSocket
+    //   49: astore 4
+    //   51: aload 4
+    //   53: astore_2
+    //   54: aload 4
+    //   56: astore_3
+    //   57: aload_1
+    //   58: aload 4
+    //   60: invokevirtual 339	e/f0/f/b:a	(Ljavax/net/ssl/SSLSocket;)Le/k;
+    //   63: astore_1
+    //   64: aload 4
+    //   66: astore_2
+    //   67: aload 4
+    //   69: astore_3
+    //   70: aload_1
+    //   71: invokevirtual 343	e/k:c	()Z
+    //   74: ifeq +30 -> 104
+    //   77: aload 4
+    //   79: astore_2
+    //   80: aload 4
+    //   82: astore_3
+    //   83: invokestatic 274	e/f0/k/f:d	()Le/f0/k/f;
+    //   86: aload 4
+    //   88: aload 5
+    //   90: invokevirtual 321	e/a:k	()Le/s;
+    //   93: invokevirtual 325	e/s:g	()Ljava/lang/String;
+    //   96: aload 5
+    //   98: invokevirtual 346	e/a:e	()Ljava/util/List;
+    //   101: invokevirtual 349	e/f0/k/f:a	(Ljavax/net/ssl/SSLSocket;Ljava/lang/String;Ljava/util/List;)V
+    //   104: aload 4
+    //   106: astore_2
+    //   107: aload 4
+    //   109: astore_3
+    //   110: aload 4
+    //   112: invokevirtual 352	javax/net/ssl/SSLSocket:startHandshake	()V
+    //   115: aload 4
+    //   117: astore_2
+    //   118: aload 4
+    //   120: astore_3
+    //   121: aload 4
+    //   123: invokevirtual 356	javax/net/ssl/SSLSocket:getSession	()Ljavax/net/ssl/SSLSession;
+    //   126: astore 7
+    //   128: aload 4
+    //   130: astore_2
+    //   131: aload 4
+    //   133: astore_3
+    //   134: aload_0
+    //   135: aload 7
+    //   137: invokespecial 359	e/f0/f/c:a	(Ljavax/net/ssl/SSLSession;)Z
+    //   140: ifeq +417 -> 557
+    //   143: aload 4
+    //   145: astore_2
+    //   146: aload 4
+    //   148: astore_3
+    //   149: aload 7
+    //   151: invokestatic 364	e/q:a	(Ljavax/net/ssl/SSLSession;)Le/q;
+    //   154: astore 6
+    //   156: aload 4
+    //   158: astore_2
+    //   159: aload 4
+    //   161: astore_3
+    //   162: aload 5
+    //   164: invokevirtual 367	e/a:d	()Ljavax/net/ssl/HostnameVerifier;
+    //   167: aload 5
+    //   169: invokevirtual 321	e/a:k	()Le/s;
+    //   172: invokevirtual 325	e/s:g	()Ljava/lang/String;
+    //   175: aload 7
+    //   177: invokeinterface 373 3 0
+    //   182: ifeq +187 -> 369
+    //   185: aload 4
+    //   187: astore_2
+    //   188: aload 4
+    //   190: astore_3
+    //   191: aload 5
+    //   193: invokevirtual 376	e/a:a	()Le/g;
+    //   196: aload 5
+    //   198: invokevirtual 321	e/a:k	()Le/s;
+    //   201: invokevirtual 325	e/s:g	()Ljava/lang/String;
+    //   204: aload 6
+    //   206: invokevirtual 378	e/q:c	()Ljava/util/List;
+    //   209: invokevirtual 383	e/g:a	(Ljava/lang/String;Ljava/util/List;)V
+    //   212: aload 4
+    //   214: astore_2
+    //   215: aload 4
+    //   217: astore_3
+    //   218: aload_1
+    //   219: invokevirtual 343	e/k:c	()Z
+    //   222: ifeq +402 -> 624
+    //   225: aload 4
+    //   227: astore_2
+    //   228: aload 4
+    //   230: astore_3
+    //   231: invokestatic 274	e/f0/k/f:d	()Le/f0/k/f;
+    //   234: aload 4
+    //   236: invokevirtual 386	e/f0/k/f:b	(Ljavax/net/ssl/SSLSocket;)Ljava/lang/String;
+    //   239: astore_1
+    //   240: goto +3 -> 243
+    //   243: aload 4
+    //   245: astore_2
+    //   246: aload 4
+    //   248: astore_3
+    //   249: aload_0
+    //   250: aload 4
+    //   252: putfield 388	e/f0/f/c:e	Ljava/net/Socket;
+    //   255: aload 4
+    //   257: astore_2
+    //   258: aload 4
+    //   260: astore_3
+    //   261: aload_0
+    //   262: aload_0
+    //   263: getfield 388	e/f0/f/c:e	Ljava/net/Socket;
+    //   266: invokestatic 282	f/l:b	(Ljava/net/Socket;)Lf/s;
+    //   269: invokestatic 285	f/l:a	(Lf/s;)Lf/e;
+    //   272: putfield 80	e/f0/f/c:i	Lf/e;
+    //   275: aload 4
+    //   277: astore_2
+    //   278: aload 4
+    //   280: astore_3
+    //   281: aload_0
+    //   282: aload_0
+    //   283: getfield 388	e/f0/f/c:e	Ljava/net/Socket;
+    //   286: invokestatic 288	f/l:a	(Ljava/net/Socket;)Lf/r;
+    //   289: invokestatic 291	f/l:a	(Lf/r;)Lf/d;
+    //   292: putfield 82	e/f0/f/c:j	Lf/d;
+    //   295: aload 4
+    //   297: astore_2
+    //   298: aload 4
+    //   300: astore_3
+    //   301: aload_0
+    //   302: aload 6
+    //   304: putfield 390	e/f0/f/c:f	Le/q;
+    //   307: aload_1
+    //   308: ifnull +17 -> 325
+    //   311: aload 4
+    //   313: astore_2
+    //   314: aload 4
+    //   316: astore_3
+    //   317: aload_1
+    //   318: invokestatic 395	e/w:a	(Ljava/lang/String;)Le/w;
+    //   321: astore_1
+    //   322: goto +13 -> 335
+    //   325: aload 4
+    //   327: astore_2
+    //   328: aload 4
+    //   330: astore_3
+    //   331: getstatic 397	e/w:e	Le/w;
+    //   334: astore_1
+    //   335: aload 4
+    //   337: astore_2
+    //   338: aload 4
+    //   340: astore_3
+    //   341: aload_0
+    //   342: aload_1
+    //   343: putfield 399	e/f0/f/c:g	Le/w;
+    //   346: aload 4
+    //   348: ifnull +11 -> 359
+    //   351: invokestatic 274	e/f0/k/f:d	()Le/f0/k/f;
+    //   354: aload 4
+    //   356: invokevirtual 402	e/f0/k/f:a	(Ljavax/net/ssl/SSLSocket;)V
+    //   359: iconst_1
+    //   360: ifne +8 -> 368
+    //   363: aload 4
+    //   365: invokestatic 218	e/f0/c:a	(Ljava/net/Socket;)V
+    //   368: return
+    //   369: aload 4
+    //   371: astore_2
+    //   372: aload 4
+    //   374: astore_3
+    //   375: aload 6
+    //   377: invokevirtual 378	e/q:c	()Ljava/util/List;
+    //   380: iconst_0
+    //   381: invokeinterface 408 2 0
+    //   386: checkcast 410	java/security/cert/X509Certificate
+    //   389: astore_1
+    //   390: aload 4
+    //   392: astore_2
+    //   393: aload 4
+    //   395: astore_3
+    //   396: new 58	java/lang/StringBuilder
+    //   399: dup
+    //   400: invokespecial 59	java/lang/StringBuilder:<init>	()V
+    //   403: astore 6
+    //   405: aload 4
+    //   407: astore_2
+    //   408: aload 4
+    //   410: astore_3
+    //   411: aload 6
+    //   413: ldc_w 412
+    //   416: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   419: pop
+    //   420: aload 4
+    //   422: astore_2
+    //   423: aload 4
+    //   425: astore_3
+    //   426: aload 6
+    //   428: aload 5
+    //   430: invokevirtual 321	e/a:k	()Le/s;
+    //   433: invokevirtual 325	e/s:g	()Ljava/lang/String;
+    //   436: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   439: pop
+    //   440: aload 4
+    //   442: astore_2
+    //   443: aload 4
+    //   445: astore_3
+    //   446: aload 6
+    //   448: ldc_w 414
+    //   451: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   454: pop
+    //   455: aload 4
+    //   457: astore_2
+    //   458: aload 4
+    //   460: astore_3
+    //   461: aload 6
+    //   463: aload_1
+    //   464: invokestatic 417	e/g:a	(Ljava/security/cert/Certificate;)Ljava/lang/String;
+    //   467: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   470: pop
+    //   471: aload 4
+    //   473: astore_2
+    //   474: aload 4
+    //   476: astore_3
+    //   477: aload 6
+    //   479: ldc_w 419
+    //   482: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   485: pop
+    //   486: aload 4
+    //   488: astore_2
+    //   489: aload 4
+    //   491: astore_3
+    //   492: aload 6
+    //   494: aload_1
+    //   495: invokevirtual 423	java/security/cert/X509Certificate:getSubjectDN	()Ljava/security/Principal;
+    //   498: invokeinterface 428 1 0
+    //   503: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   506: pop
+    //   507: aload 4
+    //   509: astore_2
+    //   510: aload 4
+    //   512: astore_3
+    //   513: aload 6
+    //   515: ldc_w 430
+    //   518: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   521: pop
+    //   522: aload 4
+    //   524: astore_2
+    //   525: aload 4
+    //   527: astore_3
+    //   528: aload 6
+    //   530: aload_1
+    //   531: invokestatic 435	e/f0/l/d:a	(Ljava/security/cert/X509Certificate;)Ljava/util/List;
+    //   534: invokevirtual 308	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    //   537: pop
+    //   538: aload 4
+    //   540: astore_2
+    //   541: aload 4
+    //   543: astore_3
+    //   544: new 437	javax/net/ssl/SSLPeerUnverifiedException
+    //   547: dup
+    //   548: aload 6
+    //   550: invokevirtual 76	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   553: invokespecial 438	javax/net/ssl/SSLPeerUnverifiedException:<init>	(Ljava/lang/String;)V
+    //   556: athrow
+    //   557: aload 4
+    //   559: astore_2
+    //   560: aload 4
+    //   562: astore_3
+    //   563: new 176	java/io/IOException
+    //   566: dup
+    //   567: ldc_w 440
+    //   570: invokespecial 181	java/io/IOException:<init>	(Ljava/lang/String;)V
+    //   573: athrow
+    //   574: astore_1
+    //   575: goto +28 -> 603
+    //   578: astore_1
+    //   579: aload_3
+    //   580: astore_2
+    //   581: aload_1
+    //   582: invokestatic 443	e/f0/c:a	(Ljava/lang/AssertionError;)Z
+    //   585: ifeq +14 -> 599
+    //   588: aload_3
+    //   589: astore_2
+    //   590: new 176	java/io/IOException
+    //   593: dup
+    //   594: aload_1
+    //   595: invokespecial 303	java/io/IOException:<init>	(Ljava/lang/Throwable;)V
+    //   598: athrow
+    //   599: aload_3
+    //   600: astore_2
+    //   601: aload_1
+    //   602: athrow
+    //   603: aload_2
+    //   604: ifnull +10 -> 614
+    //   607: invokestatic 274	e/f0/k/f:d	()Le/f0/k/f;
+    //   610: aload_2
+    //   611: invokevirtual 402	e/f0/k/f:a	(Ljavax/net/ssl/SSLSocket;)V
+    //   614: iconst_0
+    //   615: ifne +7 -> 622
+    //   618: aload_2
+    //   619: invokestatic 218	e/f0/c:a	(Ljava/net/Socket;)V
+    //   622: aload_1
+    //   623: athrow
+    //   624: aconst_null
+    //   625: astore_1
+    //   626: goto -383 -> 243
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	629	0	this	c
+    //   0	629	1	paramB	b
+    //   19	600	2	localObject1	Object
+    //   17	583	3	localObject2	Object
+    //   14	547	4	localObject3	Object
+    //   7	422	5	localA	e.a
+    //   154	395	6	localObject4	Object
+    //   126	50	7	localSSLSession	SSLSession
+    // Exception table:
+    //   from	to	target	type
+    //   20	51	574	finally
+    //   57	64	574	finally
+    //   70	77	574	finally
+    //   83	104	574	finally
+    //   110	115	574	finally
+    //   121	128	574	finally
+    //   134	143	574	finally
+    //   149	156	574	finally
+    //   162	185	574	finally
+    //   191	212	574	finally
+    //   218	225	574	finally
+    //   231	240	574	finally
+    //   249	255	574	finally
+    //   261	275	574	finally
+    //   281	295	574	finally
+    //   301	307	574	finally
+    //   317	322	574	finally
+    //   331	335	574	finally
+    //   341	346	574	finally
+    //   375	390	574	finally
+    //   396	405	574	finally
+    //   411	420	574	finally
+    //   426	440	574	finally
+    //   446	455	574	finally
+    //   461	471	574	finally
+    //   477	486	574	finally
+    //   492	507	574	finally
+    //   513	522	574	finally
+    //   528	538	574	finally
+    //   544	557	574	finally
+    //   563	574	574	finally
+    //   581	588	574	finally
+    //   590	599	574	finally
+    //   601	603	574	finally
+    //   20	51	578	java/lang/AssertionError
+    //   57	64	578	java/lang/AssertionError
+    //   70	77	578	java/lang/AssertionError
+    //   83	104	578	java/lang/AssertionError
+    //   110	115	578	java/lang/AssertionError
+    //   121	128	578	java/lang/AssertionError
+    //   134	143	578	java/lang/AssertionError
+    //   149	156	578	java/lang/AssertionError
+    //   162	185	578	java/lang/AssertionError
+    //   191	212	578	java/lang/AssertionError
+    //   218	225	578	java/lang/AssertionError
+    //   231	240	578	java/lang/AssertionError
+    //   249	255	578	java/lang/AssertionError
+    //   261	275	578	java/lang/AssertionError
+    //   281	295	578	java/lang/AssertionError
+    //   301	307	578	java/lang/AssertionError
+    //   317	322	578	java/lang/AssertionError
+    //   331	335	578	java/lang/AssertionError
+    //   341	346	578	java/lang/AssertionError
+    //   375	390	578	java/lang/AssertionError
+    //   396	405	578	java/lang/AssertionError
+    //   411	420	578	java/lang/AssertionError
+    //   426	440	578	java/lang/AssertionError
+    //   446	455	578	java/lang/AssertionError
+    //   461	471	578	java/lang/AssertionError
+    //   477	486	578	java/lang/AssertionError
+    //   492	507	578	java/lang/AssertionError
+    //   513	522	578	java/lang/AssertionError
+    //   528	538	578	java/lang/AssertionError
+    //   544	557	578	java/lang/AssertionError
+    //   563	574	578	java/lang/AssertionError
+  }
+  
+  private void a(b paramB, int paramInt, e.e paramE, p paramP)
+  {
+    if (c.a().j() == null)
+    {
+      g = w.e;
+      e = d;
+      return;
+    }
+    paramP.g(paramE);
+    a(paramB);
+    paramP.a(paramE, f);
+    if (g == w.g)
+    {
+      e.setSoTimeout(0);
+      paramB = new g.g(true);
+      paramB.a(e, c.a().k().g(), i, j);
+      paramB.a(this);
+      paramB.a(paramInt);
+      h = paramB.a();
+      h.n();
+    }
+  }
+  
+  private boolean a(SSLSession paramSSLSession)
+  {
+    return (!"NONE".equals(paramSSLSession.getProtocol())) && (!"SSL_NULL_WITH_NULL_NULL".equals(paramSSLSession.getCipherSuite()));
+  }
+  
+  private y e()
+  {
+    y.a localA = new y.a();
+    localA.a(c.a().k());
+    localA.a("Host", e.f0.c.a(c.a().k(), true));
+    localA.a("Proxy-Connection", "Keep-Alive");
+    localA.a("User-Agent", e.f0.d.a());
+    return localA.a();
+  }
+  
+  public e.f0.g.c a(v paramV, t.a paramA, g paramG)
+  {
+    e.f0.i.g localG = h;
+    if (localG != null) {
+      return new f(paramV, paramA, paramG, localG);
+    }
+    e.setSoTimeout(paramA.d());
+    i.b().a(paramA.d(), TimeUnit.MILLISECONDS);
+    j.b().a(paramA.a(), TimeUnit.MILLISECONDS);
+    return new e.f0.h.a(paramV, paramG, i, j);
+  }
+  
+  public q a()
+  {
+    return f;
+  }
+  
+  /* Error */
+  public void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, boolean paramBoolean, e.e arg6, p paramP)
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: getfield 399	e/f0/f/c:g	Le/w;
+    //   4: ifnonnull +452 -> 456
+    //   7: aload_0
+    //   8: getfield 53	e/f0/f/c:c	Le/c0;
+    //   11: invokevirtual 152	e/c0:a	()Le/a;
+    //   14: invokevirtual 527	e/a:b	()Ljava/util/List;
+    //   17: astore 8
+    //   19: new 336	e/f0/f/b
+    //   22: dup
+    //   23: aload 8
+    //   25: invokespecial 530	e/f0/f/b:<init>	(Ljava/util/List;)V
+    //   28: astore 10
+    //   30: aload_0
+    //   31: getfield 53	e/f0/f/c:c	Le/c0;
+    //   34: invokevirtual 152	e/c0:a	()Le/a;
+    //   37: invokevirtual 319	e/a:j	()Ljavax/net/ssl/SSLSocketFactory;
+    //   40: ifnonnull +118 -> 158
+    //   43: aload 8
+    //   45: getstatic 533	e/k:g	Le/k;
+    //   48: invokeinterface 536 2 0
+    //   53: ifeq +87 -> 140
+    //   56: aload_0
+    //   57: getfield 53	e/f0/f/c:c	Le/c0;
+    //   60: invokevirtual 152	e/c0:a	()Le/a;
+    //   63: invokevirtual 321	e/a:k	()Le/s;
+    //   66: invokevirtual 325	e/s:g	()Ljava/lang/String;
+    //   69: astore 8
+    //   71: invokestatic 274	e/f0/k/f:d	()Le/f0/k/f;
+    //   74: aload 8
+    //   76: invokevirtual 538	e/f0/k/f:b	(Ljava/lang/String;)Z
+    //   79: ifeq +6 -> 85
+    //   82: goto +76 -> 158
+    //   85: new 58	java/lang/StringBuilder
+    //   88: dup
+    //   89: invokespecial 59	java/lang/StringBuilder:<init>	()V
+    //   92: astore 6
+    //   94: aload 6
+    //   96: ldc_w 540
+    //   99: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   102: pop
+    //   103: aload 6
+    //   105: aload 8
+    //   107: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   110: pop
+    //   111: aload 6
+    //   113: ldc_w 542
+    //   116: invokevirtual 65	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   119: pop
+    //   120: new 544	e/f0/f/e
+    //   123: dup
+    //   124: new 546	java/net/UnknownServiceException
+    //   127: dup
+    //   128: aload 6
+    //   130: invokevirtual 76	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   133: invokespecial 547	java/net/UnknownServiceException:<init>	(Ljava/lang/String;)V
+    //   136: invokespecial 550	e/f0/f/e:<init>	(Ljava/io/IOException;)V
+    //   139: athrow
+    //   140: new 544	e/f0/f/e
+    //   143: dup
+    //   144: new 546	java/net/UnknownServiceException
+    //   147: dup
+    //   148: ldc_w 552
+    //   151: invokespecial 547	java/net/UnknownServiceException:<init>	(Ljava/lang/String;)V
+    //   154: invokespecial 550	e/f0/f/e:<init>	(Ljava/io/IOException;)V
+    //   157: athrow
+    //   158: aconst_null
+    //   159: astore 9
+    //   161: aload_0
+    //   162: getfield 53	e/f0/f/c:c	Le/c0;
+    //   165: invokevirtual 553	e/c0:c	()Z
+    //   168: ifeq +31 -> 199
+    //   171: aload_0
+    //   172: iload_1
+    //   173: iload_2
+    //   174: iload_3
+    //   175: aload 6
+    //   177: aload 7
+    //   179: invokespecial 555	e/f0/f/c:a	(IIILe/e;Le/p;)V
+    //   182: aload_0
+    //   183: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   186: astore 8
+    //   188: aload 8
+    //   190: ifnonnull +6 -> 196
+    //   193: goto +53 -> 246
+    //   196: goto +13 -> 209
+    //   199: aload_0
+    //   200: iload_1
+    //   201: iload_2
+    //   202: aload 6
+    //   204: aload 7
+    //   206: invokespecial 211	e/f0/f/c:a	(IILe/e;Le/p;)V
+    //   209: aload_0
+    //   210: aload 10
+    //   212: iload 4
+    //   214: aload 6
+    //   216: aload 7
+    //   218: invokespecial 557	e/f0/f/c:a	(Le/f0/f/b;ILe/e;Le/p;)V
+    //   221: aload 7
+    //   223: aload 6
+    //   225: aload_0
+    //   226: getfield 53	e/f0/f/c:c	Le/c0;
+    //   229: invokevirtual 221	e/c0:d	()Ljava/net/InetSocketAddress;
+    //   232: aload_0
+    //   233: getfield 53	e/f0/f/c:c	Le/c0;
+    //   236: invokevirtual 224	e/c0:b	()Ljava/net/Proxy;
+    //   239: aload_0
+    //   240: getfield 399	e/f0/f/c:g	Le/w;
+    //   243: invokevirtual 229	e/p:a	(Le/e;Ljava/net/InetSocketAddress;Ljava/net/Proxy;Le/w;)V
+    //   246: aload_0
+    //   247: getfield 53	e/f0/f/c:c	Le/c0;
+    //   250: invokevirtual 553	e/c0:c	()Z
+    //   253: ifeq +31 -> 284
+    //   256: aload_0
+    //   257: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   260: ifnull +6 -> 266
+    //   263: goto +21 -> 284
+    //   266: new 544	e/f0/f/e
+    //   269: dup
+    //   270: new 559	java/net/ProtocolException
+    //   273: dup
+    //   274: ldc_w 561
+    //   277: invokespecial 562	java/net/ProtocolException:<init>	(Ljava/lang/String;)V
+    //   280: invokespecial 550	e/f0/f/e:<init>	(Ljava/io/IOException;)V
+    //   283: athrow
+    //   284: aload_0
+    //   285: getfield 472	e/f0/f/c:h	Le/f0/i/g;
+    //   288: ifnull +35 -> 323
+    //   291: aload_0
+    //   292: getfield 51	e/f0/f/c:b	Le/j;
+    //   295: astore 6
+    //   297: aload 6
+    //   299: monitorenter
+    //   300: aload_0
+    //   301: aload_0
+    //   302: getfield 472	e/f0/f/c:h	Le/f0/i/g;
+    //   305: invokevirtual 564	e/f0/i/g:m	()I
+    //   308: putfield 40	e/f0/f/c:m	I
+    //   311: aload 6
+    //   313: monitorexit
+    //   314: return
+    //   315: astore 7
+    //   317: aload 6
+    //   319: monitorexit
+    //   320: aload 7
+    //   322: athrow
+    //   323: return
+    //   324: astore 8
+    //   326: goto +10 -> 336
+    //   329: astore 8
+    //   331: goto +5 -> 336
+    //   334: astore 8
+    //   336: aload_0
+    //   337: getfield 388	e/f0/f/c:e	Ljava/net/Socket;
+    //   340: invokestatic 218	e/f0/c:a	(Ljava/net/Socket;)V
+    //   343: aload_0
+    //   344: getfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   347: invokestatic 218	e/f0/c:a	(Ljava/net/Socket;)V
+    //   350: aload_0
+    //   351: aconst_null
+    //   352: putfield 388	e/f0/f/c:e	Ljava/net/Socket;
+    //   355: aload_0
+    //   356: aconst_null
+    //   357: putfield 215	e/f0/f/c:d	Ljava/net/Socket;
+    //   360: aload_0
+    //   361: aconst_null
+    //   362: putfield 80	e/f0/f/c:i	Lf/e;
+    //   365: aload_0
+    //   366: aconst_null
+    //   367: putfield 82	e/f0/f/c:j	Lf/d;
+    //   370: aload_0
+    //   371: aconst_null
+    //   372: putfield 390	e/f0/f/c:f	Le/q;
+    //   375: aload_0
+    //   376: aconst_null
+    //   377: putfield 399	e/f0/f/c:g	Le/w;
+    //   380: aload_0
+    //   381: aconst_null
+    //   382: putfield 472	e/f0/f/c:h	Le/f0/i/g;
+    //   385: aload 7
+    //   387: aload 6
+    //   389: aload_0
+    //   390: getfield 53	e/f0/f/c:c	Le/c0;
+    //   393: invokevirtual 221	e/c0:d	()Ljava/net/InetSocketAddress;
+    //   396: aload_0
+    //   397: getfield 53	e/f0/f/c:c	Le/c0;
+    //   400: invokevirtual 224	e/c0:b	()Ljava/net/Proxy;
+    //   403: aconst_null
+    //   404: aload 8
+    //   406: invokevirtual 567	e/p:a	(Le/e;Ljava/net/InetSocketAddress;Ljava/net/Proxy;Le/w;Ljava/io/IOException;)V
+    //   409: aload 9
+    //   411: ifnonnull +17 -> 428
+    //   414: new 544	e/f0/f/e
+    //   417: dup
+    //   418: aload 8
+    //   420: invokespecial 550	e/f0/f/e:<init>	(Ljava/io/IOException;)V
+    //   423: astore 9
+    //   425: goto +10 -> 435
+    //   428: aload 9
+    //   430: aload 8
+    //   432: invokevirtual 569	e/f0/f/e:a	(Ljava/io/IOException;)V
+    //   435: iload 5
+    //   437: ifeq +16 -> 453
+    //   440: aload 10
+    //   442: aload 8
+    //   444: invokevirtual 572	e/f0/f/b:a	(Ljava/io/IOException;)Z
+    //   447: ifeq +6 -> 453
+    //   450: goto -289 -> 161
+    //   453: aload 9
+    //   455: athrow
+    //   456: new 574	java/lang/IllegalStateException
+    //   459: dup
+    //   460: ldc_w 576
+    //   463: invokespecial 577	java/lang/IllegalStateException:<init>	(Ljava/lang/String;)V
+    //   466: astore 6
+    //   468: goto +6 -> 474
+    //   471: aload 6
+    //   473: athrow
+    //   474: goto -3 -> 471
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	477	0	this	c
+    //   0	477	1	paramInt1	int
+    //   0	477	2	paramInt2	int
+    //   0	477	3	paramInt3	int
+    //   0	477	4	paramInt4	int
+    //   0	477	5	paramBoolean	boolean
+    //   0	477	7	paramP	p
+    //   17	172	8	localObject	Object
+    //   324	1	8	localIOException1	IOException
+    //   329	1	8	localIOException2	IOException
+    //   334	109	8	localIOException3	IOException
+    //   159	295	9	localE	e
+    //   28	413	10	localB	b
+    // Exception table:
+    //   from	to	target	type
+    //   300	314	315	finally
+    //   317	320	315	finally
+    //   209	246	324	java/io/IOException
+    //   199	209	329	java/io/IOException
+    //   161	188	334	java/io/IOException
+  }
+  
+  public void a(e.f0.i.g paramG)
+  {
+    synchronized (b)
+    {
+      m = paramG.m();
+      return;
+    }
+  }
+  
+  public void a(e.f0.i.i paramI)
+  {
+    paramI.a(e.f0.i.b.h);
+  }
+  
+  public boolean a(e.a paramA, c0 paramC0)
+  {
+    if (n.size() < m)
+    {
+      if (k) {
+        return false;
+      }
+      if (!e.f0.a.a.a(c.a(), paramA)) {
+        return false;
+      }
+      if (paramA.k().g().equals(c().a().k().g())) {
+        return true;
+      }
+      if (h == null) {
+        return false;
+      }
+      if (paramC0 == null) {
+        return false;
+      }
+      if (paramC0.b().type() != Proxy.Type.DIRECT) {
+        return false;
+      }
+      if (c.b().type() != Proxy.Type.DIRECT) {
+        return false;
+      }
+      if (!c.d().equals(paramC0.d())) {
+        return false;
+      }
+      if (paramC0.a().d() != e.f0.l.d.a) {
+        return false;
+      }
+      if (!a(paramA.k())) {
+        return false;
+      }
+      try
+      {
+        paramA.a().a(paramA.k().g(), a().c());
+        return true;
+      }
+      catch (SSLPeerUnverifiedException paramA)
+      {
+        return false;
+      }
+    }
+    return false;
+  }
+  
+  public boolean a(e.s paramS)
+  {
+    if (paramS.j() != c.a().k().j()) {
+      return false;
+    }
+    if (!paramS.g().equals(c.a().k().g())) {
+      return (f != null) && (e.f0.l.d.a.a(paramS.g(), (X509Certificate)f.c().get(0)));
+    }
+    return true;
+  }
+  
+  public boolean a(boolean paramBoolean)
+  {
+    if ((!e.isClosed()) && (!e.isInputShutdown()))
+    {
+      if (e.isOutputShutdown()) {
+        return false;
+      }
+      e.f0.i.g localG = h;
+      if (localG != null) {
+        return localG.l() ^ true;
+      }
+      if (paramBoolean) {
+        try
+        {
+          int i1 = e.getSoTimeout();
+          try
+          {
+            e.setSoTimeout(1);
+            paramBoolean = i.i();
+            return !paramBoolean;
+          }
+          finally
+          {
+            e.setSoTimeout(i1);
+          }
+          return true;
+        }
+        catch (IOException localIOException)
+        {
+          return false;
+        }
+        catch (SocketTimeoutException localSocketTimeoutException) {}
+      }
+    }
+    return false;
+  }
+  
+  public boolean b()
+  {
+    return h != null;
+  }
+  
+  public c0 c()
+  {
+    return c;
+  }
+  
+  public Socket d()
+  {
+    return e;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Connection{");
+    localStringBuilder.append(c.a().k().g());
+    localStringBuilder.append(":");
+    localStringBuilder.append(c.a().k().j());
+    localStringBuilder.append(", proxy=");
+    localStringBuilder.append(c.b());
+    localStringBuilder.append(" hostAddress=");
+    localStringBuilder.append(c.d());
+    localStringBuilder.append(" cipherSuite=");
+    Object localObject = f;
+    if (localObject != null) {
+      localObject = ((q)localObject).a();
+    } else {
+      localObject = "none";
+    }
+    localStringBuilder.append(localObject);
+    localStringBuilder.append(" protocol=");
+    localStringBuilder.append(g);
+    localStringBuilder.append('}');
+    return localStringBuilder.toString();
+  }
+}

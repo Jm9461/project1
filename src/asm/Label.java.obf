@@ -1,0 +1,56 @@
+package g;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.ShortBuffer;
+
+public abstract interface b
+{
+  public abstract double a();
+  
+  public abstract byte[] b();
+  
+  public static final class a
+    implements b
+  {
+    final byte[] a;
+    
+    a(byte[] paramArrayOfByte)
+    {
+      a = paramArrayOfByte;
+    }
+    
+    public double a()
+    {
+      short[] arrayOfShort = c();
+      int j = 0;
+      int m = arrayOfShort.length;
+      int i = 0;
+      while (i < m)
+      {
+        int k = j;
+        if (arrayOfShort[i] >= j) {
+          k = arrayOfShort[i];
+        }
+        i += 1;
+        j = k;
+      }
+      double d = j;
+      Double.isNaN(d);
+      return (int)(Math.log10(d / 0.6D) * 20.0D);
+    }
+    
+    public byte[] b()
+    {
+      return a;
+    }
+    
+    public short[] c()
+    {
+      byte[] arrayOfByte = a;
+      short[] arrayOfShort = new short[arrayOfByte.length / 2];
+      ByteBuffer.wrap(arrayOfByte).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(arrayOfShort);
+      return arrayOfShort;
+    }
+  }
+}

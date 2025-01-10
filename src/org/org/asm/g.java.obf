@@ -1,0 +1,11 @@
+package a.b.f;
+
+import android.view.View;
+
+abstract interface w
+  extends c0
+{
+  public abstract void a(View paramView);
+  
+  public abstract void b(View paramView);
+}

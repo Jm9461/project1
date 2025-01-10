@@ -1,0 +1,29 @@
+package e.f0;
+
+public abstract class b
+  implements Runnable
+{
+  protected final String c;
+  
+  public b(String paramString, Object... paramVarArgs)
+  {
+    c = c.a(paramString, paramVarArgs);
+  }
+  
+  protected abstract void b();
+  
+  public final void run()
+  {
+    String str = Thread.currentThread().getName();
+    Thread.currentThread().setName(c);
+    try
+    {
+      b();
+      return;
+    }
+    finally
+    {
+      Thread.currentThread().setName(str);
+    }
+  }
+}

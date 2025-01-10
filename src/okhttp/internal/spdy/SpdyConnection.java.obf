@@ -1,0 +1,1271 @@
+package e.f0.i;
+
+import f.d;
+import f.e;
+import f.s;
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+public final class g
+  implements Closeable
+{
+  private static final ExecutorService w = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue(), e.f0.c.a("OkHttp Http2Connection", true));
+  final boolean c;
+  final h d;
+  final Map<Integer, i> e = new LinkedHashMap();
+  final String f;
+  int g;
+  int h;
+  boolean i;
+  private final ScheduledExecutorService j;
+  private final ExecutorService k;
+  final l l;
+  private boolean m;
+  long n = 0L;
+  long o;
+  m p = new m();
+  final m q = new m();
+  boolean r = false;
+  final Socket s;
+  final j t;
+  final j u;
+  final Set<Integer> v = new LinkedHashSet();
+  
+  g(g paramG)
+  {
+    l = f;
+    boolean bool = g;
+    c = bool;
+    d = e;
+    int i1;
+    if (bool) {
+      i1 = 1;
+    } else {
+      i1 = 2;
+    }
+    h = i1;
+    if (g) {
+      h += 2;
+    }
+    if (g) {
+      p.a(7, 16777216);
+    }
+    f = b;
+    j = new ScheduledThreadPoolExecutor(1, e.f0.c.a(e.f0.c.a("OkHttp %s Writer", new Object[] { f }), false));
+    if (h != 0)
+    {
+      ScheduledExecutorService localScheduledExecutorService = j;
+      i localI = new i(false, 0, 0);
+      i1 = h;
+      localScheduledExecutorService.scheduleAtFixedRate(localI, i1, i1, TimeUnit.MILLISECONDS);
+    }
+    k = new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue(), e.f0.c.a(e.f0.c.a("OkHttp %s Push Observer", new Object[] { f }), true));
+    q.a(7, 65535);
+    q.a(5, 16384);
+    o = q.c();
+    s = a;
+    t = new j(d, c);
+    u = new j(new h(c, c));
+  }
+  
+  private i b(int paramInt, List<c> paramList, boolean paramBoolean)
+  {
+    boolean bool = paramBoolean ^ true;
+    for (;;)
+    {
+      synchronized (t)
+      {
+        try
+        {
+          if (h > 1073741823) {
+            a(b.h);
+          }
+          if (!i)
+          {
+            int i2 = h;
+            h += 2;
+            i localI = new i(i2, this, bool, false, paramList);
+            if ((!paramBoolean) || (o == 0L)) {
+              break label216;
+            }
+            if (b == 0L)
+            {
+              break label216;
+              if (localI.g()) {
+                e.put(Integer.valueOf(i2), localI);
+              }
+              if (paramInt == 0)
+              {
+                t.a(bool, i2, paramInt, paramList);
+              }
+              else
+              {
+                if (c) {
+                  continue;
+                }
+                t.a(paramInt, i2, paramList);
+              }
+              if (i1 != 0) {
+                t.flush();
+              }
+              return localI;
+              throw new IllegalArgumentException("client streams shouldn't have associated stream IDs");
+            }
+          }
+          else
+          {
+            throw new a();
+          }
+        }
+        finally {}
+      }
+      int i1 = 0;
+      continue;
+      label216:
+      i1 = 1;
+    }
+  }
+  
+  private void p()
+  {
+    try
+    {
+      a(b.e, b.e);
+      return;
+    }
+    catch (IOException localIOException) {}
+  }
+  
+  i a(int paramInt)
+  {
+    try
+    {
+      i localI = (i)e.get(Integer.valueOf(paramInt));
+      return localI;
+    }
+    finally
+    {
+      localObject = finally;
+      throw localObject;
+    }
+  }
+  
+  public i a(List<c> paramList, boolean paramBoolean)
+  {
+    return b(0, paramList, paramBoolean);
+  }
+  
+  void a(final int paramInt, final long paramLong)
+  {
+    try
+    {
+      j.execute(new b("OkHttp Window Update %s stream %d", new Object[] { f, Integer.valueOf(paramInt) }, paramInt, paramLong));
+      return;
+    }
+    catch (RejectedExecutionException localRejectedExecutionException) {}
+  }
+  
+  void a(final int paramInt, final b paramB)
+  {
+    k.execute(new f("OkHttp %s Push Reset[%s]", new Object[] { f, Integer.valueOf(paramInt) }, paramInt, paramB));
+  }
+  
+  void a(final int paramInt1, e paramE, final int paramInt2, final boolean paramBoolean)
+  {
+    final f.c localC = new f.c();
+    paramE.d(paramInt2);
+    paramE.b(localC, paramInt2);
+    if (localC.q() == paramInt2)
+    {
+      k.execute(new e("OkHttp %s Push Data[%s]", new Object[] { f, Integer.valueOf(paramInt1) }, paramInt1, localC, paramInt2, paramBoolean));
+      return;
+    }
+    paramE = new StringBuilder();
+    paramE.append(localC.q());
+    paramE.append(" != ");
+    paramE.append(paramInt2);
+    throw new IOException(paramE.toString());
+  }
+  
+  /* Error */
+  void a(final int paramInt, final List<c> paramList)
+  {
+    // Byte code:
+    //   0: aload_0
+    //   1: monitorenter
+    //   2: aload_0
+    //   3: getfield 126	e/f0/i/g:v	Ljava/util/Set;
+    //   6: iload_1
+    //   7: invokestatic 248	java/lang/Integer:valueOf	(I)Ljava/lang/Integer;
+    //   10: invokeinterface 363 2 0
+    //   15: ifeq +14 -> 29
+    //   18: aload_0
+    //   19: iload_1
+    //   20: getstatic 281	e/f0/i/b:e	Le/f0/i/b;
+    //   23: invokevirtual 365	e/f0/i/g:c	(ILe/f0/i/b;)V
+    //   26: aload_0
+    //   27: monitorexit
+    //   28: return
+    //   29: aload_0
+    //   30: getfield 126	e/f0/i/g:v	Ljava/util/Set;
+    //   33: iload_1
+    //   34: invokestatic 248	java/lang/Integer:valueOf	(I)Ljava/lang/Integer;
+    //   37: invokeinterface 368 2 0
+    //   42: pop
+    //   43: aload_0
+    //   44: monitorexit
+    //   45: aload_0
+    //   46: getfield 181	e/f0/i/g:k	Ljava/util/concurrent/ExecutorService;
+    //   49: new 12	e/f0/i/g$c
+    //   52: dup
+    //   53: aload_0
+    //   54: ldc_w 370
+    //   57: iconst_2
+    //   58: anewarray 4	java/lang/Object
+    //   61: dup
+    //   62: iconst_0
+    //   63: aload_0
+    //   64: getfield 149	e/f0/i/g:f	Ljava/lang/String;
+    //   67: aastore
+    //   68: dup
+    //   69: iconst_1
+    //   70: iload_1
+    //   71: invokestatic 248	java/lang/Integer:valueOf	(I)Ljava/lang/Integer;
+    //   74: aastore
+    //   75: iload_1
+    //   76: aload_2
+    //   77: invokespecial 373	e/f0/i/g$c:<init>	(Le/f0/i/g;Ljava/lang/String;[Ljava/lang/Object;ILjava/util/List;)V
+    //   80: invokeinterface 314 2 0
+    //   85: return
+    //   86: astore_2
+    //   87: return
+    //   88: astore_2
+    //   89: aload_0
+    //   90: monitorexit
+    //   91: aload_2
+    //   92: athrow
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	93	0	this	g
+    //   0	93	1	paramInt	int
+    //   0	93	2	paramList	List<c>
+    // Exception table:
+    //   from	to	target	type
+    //   45	85	86	java/util/concurrent/RejectedExecutionException
+    //   2	28	88	finally
+    //   29	45	88	finally
+    //   89	91	88	finally
+  }
+  
+  void a(final int paramInt, final List<c> paramList, final boolean paramBoolean)
+  {
+    try
+    {
+      k.execute(new d("OkHttp %s Push Headers[%s]", new Object[] { f, Integer.valueOf(paramInt) }, paramInt, paramList, paramBoolean));
+      return;
+    }
+    catch (RejectedExecutionException paramList) {}
+  }
+  
+  /* Error */
+  public void a(int paramInt, boolean paramBoolean, f.c paramC, long paramLong)
+  {
+    // Byte code:
+    //   0: lload 4
+    //   2: lstore 8
+    //   4: lload 4
+    //   6: lconst_0
+    //   7: lcmp
+    //   8: ifne +15 -> 23
+    //   11: aload_0
+    //   12: getfield 201	e/f0/i/g:t	Le/f0/i/j;
+    //   15: iload_2
+    //   16: iload_1
+    //   17: aload_3
+    //   18: iconst_0
+    //   19: invokevirtual 387	e/f0/i/j:a	(ZILf/c;I)V
+    //   22: return
+    //   23: lload 8
+    //   25: lconst_0
+    //   26: lcmp
+    //   27: ifle +149 -> 176
+    //   30: aload_0
+    //   31: monitorenter
+    //   32: aload_0
+    //   33: getfield 187	e/f0/i/g:o	J
+    //   36: lconst_0
+    //   37: lcmp
+    //   38: ifgt +37 -> 75
+    //   41: aload_0
+    //   42: getfield 110	e/f0/i/g:e	Ljava/util/Map;
+    //   45: iload_1
+    //   46: invokestatic 248	java/lang/Integer:valueOf	(I)Ljava/lang/Integer;
+    //   49: invokeinterface 390 2 0
+    //   54: ifeq +10 -> 64
+    //   57: aload_0
+    //   58: invokevirtual 393	java/lang/Object:wait	()V
+    //   61: goto -29 -> 32
+    //   64: new 279	java/io/IOException
+    //   67: dup
+    //   68: ldc_w 395
+    //   71: invokespecial 356	java/io/IOException:<init>	(Ljava/lang/String;)V
+    //   74: athrow
+    //   75: lload 8
+    //   77: aload_0
+    //   78: getfield 187	e/f0/i/g:o	J
+    //   81: invokestatic 401	java/lang/Math:min	(JJ)J
+    //   84: l2i
+    //   85: aload_0
+    //   86: getfield 201	e/f0/i/g:t	Le/f0/i/j;
+    //   89: invokevirtual 403	e/f0/i/j:m	()I
+    //   92: invokestatic 406	java/lang/Math:min	(II)I
+    //   95: istore 6
+    //   97: aload_0
+    //   98: aload_0
+    //   99: getfield 187	e/f0/i/g:o	J
+    //   102: iload 6
+    //   104: i2l
+    //   105: lsub
+    //   106: putfield 187	e/f0/i/g:o	J
+    //   109: aload_0
+    //   110: monitorexit
+    //   111: lload 8
+    //   113: iload 6
+    //   115: i2l
+    //   116: lsub
+    //   117: lstore 8
+    //   119: aload_0
+    //   120: getfield 201	e/f0/i/g:t	Le/f0/i/j;
+    //   123: astore 10
+    //   125: iload_2
+    //   126: ifeq +16 -> 142
+    //   129: lload 8
+    //   131: lconst_0
+    //   132: lcmp
+    //   133: ifne +9 -> 142
+    //   136: iconst_1
+    //   137: istore 7
+    //   139: goto +6 -> 145
+    //   142: iconst_0
+    //   143: istore 7
+    //   145: aload 10
+    //   147: iload 7
+    //   149: iload_1
+    //   150: aload_3
+    //   151: iload 6
+    //   153: invokevirtual 387	e/f0/i/j:a	(ZILf/c;I)V
+    //   156: goto -133 -> 23
+    //   159: astore_3
+    //   160: goto +12 -> 172
+    //   163: astore_3
+    //   164: new 408	java/io/InterruptedIOException
+    //   167: dup
+    //   168: invokespecial 409	java/io/InterruptedIOException:<init>	()V
+    //   171: athrow
+    //   172: aload_0
+    //   173: monitorexit
+    //   174: aload_3
+    //   175: athrow
+    //   176: return
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	177	0	this	g
+    //   0	177	1	paramInt	int
+    //   0	177	2	paramBoolean	boolean
+    //   0	177	3	paramC	f.c
+    //   0	177	4	paramLong	long
+    //   95	57	6	i1	int
+    //   137	11	7	bool	boolean
+    //   2	128	8	l1	long
+    //   123	23	10	localJ	j
+    // Exception table:
+    //   from	to	target	type
+    //   32	61	159	finally
+    //   64	75	159	finally
+    //   75	111	159	finally
+    //   164	172	159	finally
+    //   172	174	159	finally
+    //   32	61	163	java/lang/InterruptedException
+    //   64	75	163	java/lang/InterruptedException
+  }
+  
+  public void a(b paramB)
+  {
+    synchronized (t)
+    {
+      try
+      {
+        if (i) {
+          return;
+        }
+        i = true;
+        int i1 = g;
+        t.a(i1, paramB, e.f0.c.a);
+        return;
+      }
+      finally {}
+    }
+  }
+  
+  void a(b paramB1, b paramB2)
+  {
+    Object localObject = null;
+    try
+    {
+      a(paramB1);
+      paramB1 = (b)localObject;
+    }
+    catch (IOException paramB1) {}
+    i[] arrayOfI = null;
+    try
+    {
+      if (!e.isEmpty())
+      {
+        arrayOfI = (i[])e.values().toArray(new i[e.size()]);
+        e.clear();
+      }
+      localObject = paramB1;
+      if (arrayOfI != null)
+      {
+        int i2 = arrayOfI.length;
+        int i1 = 0;
+        for (;;)
+        {
+          localObject = paramB1;
+          if (i1 >= i2) {
+            break;
+          }
+          localObject = arrayOfI[i1];
+          try
+          {
+            ((i)localObject).a(paramB2);
+            localObject = paramB1;
+          }
+          catch (IOException localIOException)
+          {
+            localObject = paramB1;
+            if (paramB1 != null) {
+              localObject = localIOException;
+            }
+          }
+          i1 += 1;
+          paramB1 = (b)localObject;
+        }
+      }
+      try
+      {
+        t.close();
+        paramB1 = (b)localObject;
+      }
+      catch (IOException paramB2)
+      {
+        paramB1 = (b)localObject;
+        if (localObject == null) {
+          paramB1 = paramB2;
+        }
+      }
+      try
+      {
+        s.close();
+      }
+      catch (IOException paramB1) {}
+      j.shutdown();
+      k.shutdown();
+      if (paramB1 == null) {
+        return;
+      }
+      throw paramB1;
+    }
+    finally {}
+    for (;;)
+    {
+      throw paramB1;
+    }
+  }
+  
+  void a(boolean paramBoolean)
+  {
+    if (paramBoolean)
+    {
+      t.l();
+      t.b(p);
+      int i1 = p.c();
+      if (i1 != 65535) {
+        t.a(0, i1 - 65535);
+      }
+    }
+    new Thread(u).start();
+  }
+  
+  void a(boolean paramBoolean, int paramInt1, int paramInt2)
+  {
+    if (!paramBoolean) {
+      try
+      {
+        boolean bool = m;
+        m = true;
+        if (bool)
+        {
+          p();
+          return;
+        }
+      }
+      finally {}
+    }
+    try
+    {
+      t.a(paramBoolean, paramInt1, paramInt2);
+      return;
+    }
+    catch (IOException localIOException)
+    {
+      p();
+    }
+  }
+  
+  void b(int paramInt, b paramB)
+  {
+    t.a(paramInt, paramB);
+  }
+  
+  boolean b(int paramInt)
+  {
+    return (paramInt != 0) && ((paramInt & 0x1) == 0);
+  }
+  
+  i c(int paramInt)
+  {
+    try
+    {
+      i localI = (i)e.remove(Integer.valueOf(paramInt));
+      notifyAll();
+      return localI;
+    }
+    finally
+    {
+      localObject = finally;
+      throw localObject;
+    }
+  }
+  
+  void c(final int paramInt, final b paramB)
+  {
+    try
+    {
+      j.execute(new a("OkHttp %s stream %d", new Object[] { f, Integer.valueOf(paramInt) }, paramInt, paramB));
+      return;
+    }
+    catch (RejectedExecutionException paramB) {}
+  }
+  
+  public void close()
+  {
+    a(b.d, b.i);
+  }
+  
+  public void flush()
+  {
+    t.flush();
+  }
+  
+  void g(long paramLong)
+  {
+    o += paramLong;
+    if (paramLong > 0L) {
+      notifyAll();
+    }
+  }
+  
+  public boolean l()
+  {
+    try
+    {
+      boolean bool = i;
+      return bool;
+    }
+    finally
+    {
+      localObject = finally;
+      throw localObject;
+    }
+  }
+  
+  public int m()
+  {
+    try
+    {
+      int i1 = q.b(Integer.MAX_VALUE);
+      return i1;
+    }
+    finally
+    {
+      localObject = finally;
+      throw localObject;
+    }
+  }
+  
+  public void n()
+  {
+    a(true);
+  }
+  
+  class a
+    extends e.f0.b
+  {
+    a(String paramString, Object[] paramArrayOfObject, int paramInt, b paramVarArgs)
+    {
+      super(paramArrayOfObject);
+    }
+    
+    public void b()
+    {
+      try
+      {
+        b(paramInt, paramB);
+        return;
+      }
+      catch (IOException localIOException)
+      {
+        g.a(g.this);
+      }
+    }
+  }
+  
+  class b
+    extends e.f0.b
+  {
+    b(String paramString, Object[] paramArrayOfObject, int paramInt, long paramVarArgs)
+    {
+      super(paramArrayOfObject);
+    }
+    
+    public void b()
+    {
+      try
+      {
+        t.a(paramInt, paramLong);
+        return;
+      }
+      catch (IOException localIOException)
+      {
+        g.a(g.this);
+      }
+    }
+  }
+  
+  class c
+    extends e.f0.b
+  {
+    c(String paramString, Object[] paramArrayOfObject, int paramInt, List paramVarArgs)
+    {
+      super(paramArrayOfObject);
+    }
+    
+    public void b()
+    {
+      if (l.a(paramInt, paramList)) {
+        try
+        {
+          t.a(paramInt, b.i);
+          synchronized (g.this)
+          {
+            v.remove(Integer.valueOf(paramInt));
+          }
+          return;
+        }
+        catch (IOException localIOException) {}
+      }
+    }
+  }
+  
+  class d
+    extends e.f0.b
+  {
+    d(String paramString, Object[] paramArrayOfObject, int paramInt, List paramList, boolean paramVarArgs)
+    {
+      super(paramArrayOfObject);
+    }
+    
+    public void b()
+    {
+      boolean bool = l.a(paramInt, paramList, paramBoolean);
+      if (bool) {}
+      try
+      {
+        t.a(paramInt, b.i);
+        if ((bool) || (paramBoolean)) {
+          synchronized (g.this)
+          {
+            v.remove(Integer.valueOf(paramInt));
+          }
+        }
+        return;
+      }
+      catch (IOException localIOException)
+      {
+        return;
+      }
+    }
+  }
+  
+  class e
+    extends e.f0.b
+  {
+    e(String paramString, Object[] paramArrayOfObject, int paramInt1, f.c paramC, int paramInt2, boolean paramVarArgs)
+    {
+      super(paramArrayOfObject);
+    }
+    
+    public void b()
+    {
+      try
+      {
+        boolean bool = l.a(paramInt1, localC, paramInt2, paramBoolean);
+        if (bool) {
+          t.a(paramInt1, b.i);
+        }
+        if ((bool) || (paramBoolean)) {
+          synchronized (g.this)
+          {
+            v.remove(Integer.valueOf(paramInt1));
+          }
+        }
+        return;
+      }
+      catch (IOException localIOException)
+      {
+        return;
+      }
+    }
+  }
+  
+  class f
+    extends e.f0.b
+  {
+    f(String paramString, Object[] paramArrayOfObject, int paramInt, b paramVarArgs)
+    {
+      super(paramArrayOfObject);
+    }
+    
+    public void b()
+    {
+      l.a(paramInt, paramB);
+      synchronized (g.this)
+      {
+        v.remove(Integer.valueOf(paramInt));
+        return;
+      }
+    }
+  }
+  
+  public static class g
+  {
+    Socket a;
+    String b;
+    e c;
+    d d;
+    g.h e = g.h.a;
+    l f = l.a;
+    boolean g;
+    int h;
+    
+    public g(boolean paramBoolean)
+    {
+      g = paramBoolean;
+    }
+    
+    public g a(int paramInt)
+    {
+      h = paramInt;
+      return this;
+    }
+    
+    public g a(g.h paramH)
+    {
+      e = paramH;
+      return this;
+    }
+    
+    public g a(Socket paramSocket, String paramString, e paramE, d paramD)
+    {
+      a = paramSocket;
+      b = paramString;
+      c = paramE;
+      d = paramD;
+      return this;
+    }
+    
+    public g a()
+    {
+      return new g(this);
+    }
+  }
+  
+  public static abstract class h
+  {
+    public static final h a = new a();
+    
+    public h() {}
+    
+    public void a(g paramG) {}
+    
+    public abstract void a(i paramI);
+    
+    final class a
+      extends g.h
+    {
+      a() {}
+      
+      public void a(i paramI)
+      {
+        paramI.a(b.h);
+      }
+    }
+  }
+  
+  final class i
+    extends e.f0.b
+  {
+    final boolean d;
+    final int e;
+    final int f;
+    
+    i(boolean paramBoolean, int paramInt1, int paramInt2)
+    {
+      super(new Object[] { f, Integer.valueOf(paramInt1), Integer.valueOf(paramInt2) });
+      d = paramBoolean;
+      e = paramInt1;
+      f = paramInt2;
+    }
+    
+    public void b()
+    {
+      a(d, e, f);
+    }
+  }
+  
+  class j
+    extends e.f0.b
+    implements h.b
+  {
+    final h d;
+    
+    j(h paramH)
+    {
+      super(new Object[] { f });
+      d = paramH;
+    }
+    
+    private void a(final m paramM)
+    {
+      try
+      {
+        g.b(g.this).execute(new c("OkHttp %s ACK Settings", new Object[] { f }, paramM));
+        return;
+      }
+      catch (RejectedExecutionException paramM) {}
+    }
+    
+    public void a() {}
+    
+    public void a(int paramInt1, int paramInt2, int paramInt3, boolean paramBoolean) {}
+    
+    public void a(int paramInt1, int paramInt2, List<c> paramList)
+    {
+      a(paramInt2, paramList);
+    }
+    
+    public void a(int paramInt, long paramLong)
+    {
+      if (paramInt == 0) {
+        synchronized (g.this)
+        {
+          g localG = g.this;
+          o += paramLong;
+          notifyAll();
+          return;
+        }
+      }
+      ??? = a(paramInt);
+      if (??? != null) {
+        try
+        {
+          ((i)???).a(paramLong);
+          return;
+        }
+        finally {}
+      }
+    }
+    
+    public void a(int paramInt, b paramB)
+    {
+      if (b(paramInt))
+      {
+        g.this.a(paramInt, paramB);
+        return;
+      }
+      i localI = c(paramInt);
+      if (localI != null) {
+        localI.c(paramB);
+      }
+    }
+    
+    public void a(int paramInt, b arg2, f.f paramF)
+    {
+      paramF.f();
+      synchronized (g.this)
+      {
+        paramF = (i[])e.values().toArray(new i[e.size()]);
+        g.this.i = true;
+        int j = paramF.length;
+        int i = 0;
+        while (i < j)
+        {
+          ??? = paramF[i];
+          if ((???.c() > paramInt) && (???.f()))
+          {
+            ???.c(b.h);
+            c(???.c());
+          }
+          i += 1;
+        }
+        return;
+      }
+      for (;;)
+      {
+        throw paramF;
+      }
+    }
+    
+    public void a(boolean paramBoolean, int paramInt1, int paramInt2)
+    {
+      if (paramBoolean) {
+        synchronized (g.this)
+        {
+          g.a(g.this, false);
+          notifyAll();
+          return;
+        }
+      }
+      try
+      {
+        g.b(g.this).execute(new g.i(g.this, true, paramInt1, paramInt2));
+        return;
+      }
+      catch (RejectedExecutionException localRejectedExecutionException) {}
+    }
+    
+    public void a(boolean paramBoolean, int paramInt1, int paramInt2, final List<c> paramList)
+    {
+      if (b(paramInt1))
+      {
+        a(paramInt1, paramList, paramBoolean);
+        return;
+      }
+      synchronized (g.this)
+      {
+        i localI = a(paramInt1);
+        if (localI == null)
+        {
+          if (i) {
+            return;
+          }
+          if (paramInt1 <= g) {
+            return;
+          }
+          if (paramInt1 % 2 == h % 2) {
+            return;
+          }
+          paramList = new i(paramInt1, g.this, false, paramBoolean, paramList);
+          g = paramInt1;
+          e.put(Integer.valueOf(paramInt1), paramList);
+          g.o().execute(new a("OkHttp %s stream %d", new Object[] { f, Integer.valueOf(paramInt1) }, paramList));
+          return;
+        }
+        localI.a(paramList);
+        if (paramBoolean) {
+          localI.i();
+        }
+        return;
+      }
+    }
+    
+    public void a(boolean paramBoolean, int paramInt1, e paramE, int paramInt2)
+    {
+      if (b(paramInt1))
+      {
+        a(paramInt1, paramE, paramInt2, paramBoolean);
+        return;
+      }
+      i localI = a(paramInt1);
+      if (localI == null)
+      {
+        c(paramInt1, b.e);
+        paramE.skip(paramInt2);
+        return;
+      }
+      localI.a(paramE, paramInt2);
+      if (paramBoolean) {
+        localI.i();
+      }
+    }
+    
+    public void a(boolean paramBoolean, m paramM)
+    {
+      long l2 = 0L;
+      ??? = null;
+      synchronized (g.this)
+      {
+        int i = q.c();
+        if (paramBoolean) {
+          q.a();
+        }
+        q.a(paramM);
+        a(paramM);
+        int j = q.c();
+        long l1 = l2;
+        paramM = ???;
+        if (j != -1)
+        {
+          l1 = l2;
+          paramM = ???;
+          if (j != i)
+          {
+            l2 = j - i;
+            if (!r)
+            {
+              g(l2);
+              r = true;
+            }
+            l1 = l2;
+            paramM = ???;
+            if (!e.isEmpty())
+            {
+              paramM = (i[])e.values().toArray(new i[e.size()]);
+              l1 = l2;
+            }
+          }
+        }
+        ??? = g.o();
+        String str = f;
+        i = 0;
+        ???.execute(new b("OkHttp %s settings", new Object[] { str }));
+        if ((paramM != null) && (l1 != 0L))
+        {
+          j = paramM.length;
+          while (i < j) {
+            synchronized (paramM[i])
+            {
+              ???.a(l1);
+              i += 1;
+            }
+          }
+        }
+        return;
+      }
+      for (;;)
+      {
+        throw paramM;
+      }
+    }
+    
+    /* Error */
+    protected void b()
+    {
+      // Byte code:
+      //   0: getstatic 228	e/f0/i/b:f	Le/f0/i/b;
+      //   3: astore_3
+      //   4: getstatic 228	e/f0/i/b:f	Le/f0/i/b;
+      //   7: astore 4
+      //   9: aload_3
+      //   10: astore_1
+      //   11: aload_3
+      //   12: astore_2
+      //   13: aload_0
+      //   14: getfield 36	e/f0/i/g$j:d	Le/f0/i/h;
+      //   17: aload_0
+      //   18: invokevirtual 233	e/f0/i/h:a	(Le/f0/i/h$b;)V
+      //   21: aload_3
+      //   22: astore_1
+      //   23: aload_3
+      //   24: astore_2
+      //   25: aload_0
+      //   26: getfield 36	e/f0/i/g$j:d	Le/f0/i/h;
+      //   29: iconst_0
+      //   30: aload_0
+      //   31: invokevirtual 236	e/f0/i/h:a	(ZLe/f0/i/h$b;)Z
+      //   34: ifeq +6 -> 40
+      //   37: goto -16 -> 21
+      //   40: aload_3
+      //   41: astore_1
+      //   42: aload_3
+      //   43: astore_2
+      //   44: getstatic 238	e/f0/i/b:d	Le/f0/i/b;
+      //   47: astore_3
+      //   48: aload_3
+      //   49: astore_1
+      //   50: aload_3
+      //   51: astore_2
+      //   52: getstatic 240	e/f0/i/b:i	Le/f0/i/b;
+      //   55: astore 5
+      //   57: aload_0
+      //   58: getfield 23	e/f0/i/g$j:e	Le/f0/i/g;
+      //   61: aload_3
+      //   62: aload 5
+      //   64: invokevirtual 243	e/f0/i/g:a	(Le/f0/i/b;Le/f0/i/b;)V
+      //   67: goto +33 -> 100
+      //   70: astore_1
+      //   71: goto +33 -> 104
+      //   74: astore_2
+      //   75: goto +37 -> 112
+      //   78: astore_1
+      //   79: aload_2
+      //   80: astore_1
+      //   81: getstatic 188	e/f0/i/b:e	Le/f0/i/b;
+      //   84: astore_2
+      //   85: aload_2
+      //   86: astore_1
+      //   87: getstatic 188	e/f0/i/b:e	Le/f0/i/b;
+      //   90: astore_3
+      //   91: aload_0
+      //   92: getfield 23	e/f0/i/g$j:e	Le/f0/i/g;
+      //   95: aload_2
+      //   96: aload_3
+      //   97: invokevirtual 243	e/f0/i/g:a	(Le/f0/i/b;Le/f0/i/b;)V
+      //   100: goto +4 -> 104
+      //   103: astore_1
+      //   104: aload_0
+      //   105: getfield 36	e/f0/i/g$j:d	Le/f0/i/h;
+      //   108: invokestatic 248	e/f0/c:a	(Ljava/io/Closeable;)V
+      //   111: return
+      //   112: aload_0
+      //   113: getfield 23	e/f0/i/g$j:e	Le/f0/i/g;
+      //   116: aload_1
+      //   117: aload 4
+      //   119: invokevirtual 243	e/f0/i/g:a	(Le/f0/i/b;Le/f0/i/b;)V
+      //   122: goto +4 -> 126
+      //   125: astore_1
+      //   126: aload_0
+      //   127: getfield 36	e/f0/i/g$j:d	Le/f0/i/h;
+      //   130: invokestatic 248	e/f0/c:a	(Ljava/io/Closeable;)V
+      //   133: goto +5 -> 138
+      //   136: aload_2
+      //   137: athrow
+      //   138: goto -2 -> 136
+      // Local variable table:
+      //   start	length	slot	name	signature
+      //   0	141	0	this	j
+      //   10	40	1	localB1	b
+      //   70	1	1	localIOException1	IOException
+      //   78	1	1	localIOException2	IOException
+      //   80	7	1	localObject1	Object
+      //   103	14	1	localIOException3	IOException
+      //   125	1	1	localIOException4	IOException
+      //   12	40	2	localB2	b
+      //   74	6	2	localObject2	Object
+      //   84	53	2	localB3	b
+      //   3	94	3	localB4	b
+      //   7	111	4	localB5	b
+      //   55	8	5	localB6	b
+      // Exception table:
+      //   from	to	target	type
+      //   57	67	70	java/io/IOException
+      //   13	21	74	finally
+      //   25	37	74	finally
+      //   44	48	74	finally
+      //   52	57	74	finally
+      //   81	85	74	finally
+      //   87	91	74	finally
+      //   13	21	78	java/io/IOException
+      //   25	37	78	java/io/IOException
+      //   44	48	78	java/io/IOException
+      //   52	57	78	java/io/IOException
+      //   91	100	103	java/io/IOException
+      //   112	122	125	java/io/IOException
+    }
+    
+    class a
+      extends e.f0.b
+    {
+      a(String paramString, Object[] paramArrayOfObject, i paramVarArgs)
+      {
+        super(paramArrayOfObject);
+      }
+      
+      public void b()
+      {
+        try
+        {
+          d.a(paramList);
+          return;
+        }
+        catch (IOException localIOException1)
+        {
+          e.f0.k.f localF = e.f0.k.f.d();
+          StringBuilder localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Http2Connection.Listener failure for ");
+          localStringBuilder.append(f);
+          localF.a(4, localStringBuilder.toString(), localIOException1);
+          try
+          {
+            paramList.a(b.e);
+            return;
+          }
+          catch (IOException localIOException2) {}
+        }
+      }
+    }
+    
+    class b
+      extends e.f0.b
+    {
+      b(String paramString, Object... paramVarArgs)
+      {
+        super(paramVarArgs);
+      }
+      
+      public void b()
+      {
+        g localG = g.this;
+        d.a(localG);
+      }
+    }
+    
+    class c
+      extends e.f0.b
+    {
+      c(String paramString, Object[] paramArrayOfObject, m paramVarArgs)
+      {
+        super(paramArrayOfObject);
+      }
+      
+      public void b()
+      {
+        try
+        {
+          t.a(paramM);
+          return;
+        }
+        catch (IOException localIOException)
+        {
+          g.a(g.this);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import butterknife.Unbinder;
+import butterknife.a.a;
+import com.rey.material.widget.Button;
+
+public class AddClientDocumentsActivity_ViewBinding
+  implements Unbinder
+{
+  public AddClientDocumentsActivity_ViewBinding(AddClientDocumentsActivity paramAddClientDocumentsActivity, View paramView)
+  {
+    input_client_name = ((EditText)a.b(paramView, 2131296504, "field 'input_client_name'", EditText.class));
+    input_case = ((EditText)a.b(paramView, 2131296493, "field 'input_case'", EditText.class));
+    input_document_type = ((EditText)a.b(paramView, 2131296518, "field 'input_document_type'", EditText.class));
+    input_date_received = ((EditText)a.b(paramView, 2131296515, "field 'input_date_received'", EditText.class));
+    input_date_delivered = ((EditText)a.b(paramView, 2131296513, "field 'input_date_delivered'", EditText.class));
+    input_document_note = ((EditText)a.b(paramView, 2131296517, "field 'input_document_note'", EditText.class));
+    img_clear_date = ((ImageView)a.b(paramView, 2131296476, "field 'img_clear_date'", ImageView.class));
+    btn_add_document = ((Button)a.b(paramView, 2131296342, "field 'btn_add_document'", Button.class));
+    btn_add_image = ((Button)a.b(paramView, 2131296344, "field 'btn_add_image'", Button.class));
+    recyclerView = ((RecyclerView)a.b(paramView, 2131296684, "field 'recyclerView'", RecyclerView.class));
+  }
+}

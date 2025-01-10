@@ -1,0 +1,331 @@
+package android.support.v4.app;
+
+import a.b.a.b;
+import android.app.Notification;
+import android.app.Notification.BigTextStyle;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.widget.RemoteViews;
+import java.util.ArrayList;
+
+public class x
+{
+  public static Bundle a(Notification paramNotification)
+  {
+    int i = Build.VERSION.SDK_INT;
+    if (i >= 19) {
+      return extras;
+    }
+    if (i >= 16) {
+      return z.a(paramNotification);
+    }
+    return null;
+  }
+  
+  public static class a
+  {
+    final Bundle a;
+    private final b0[] b;
+    private final b0[] c;
+    private boolean d;
+    boolean e;
+    private final int f;
+    public int g;
+    public CharSequence h;
+    public PendingIntent i;
+    
+    public PendingIntent a()
+    {
+      return i;
+    }
+    
+    public boolean b()
+    {
+      return d;
+    }
+    
+    public b0[] c()
+    {
+      return c;
+    }
+    
+    public Bundle d()
+    {
+      return a;
+    }
+    
+    public int e()
+    {
+      return g;
+    }
+    
+    public b0[] f()
+    {
+      return b;
+    }
+    
+    public int g()
+    {
+      return f;
+    }
+    
+    public boolean h()
+    {
+      return e;
+    }
+    
+    public CharSequence i()
+    {
+      return h;
+    }
+  }
+  
+  public static class b
+    extends x.d
+  {
+    private CharSequence e;
+    
+    public b() {}
+    
+    public b a(CharSequence paramCharSequence)
+    {
+      e = x.c.c(paramCharSequence);
+      return this;
+    }
+    
+    public void a(w paramW)
+    {
+      if (Build.VERSION.SDK_INT >= 16)
+      {
+        paramW = new Notification.BigTextStyle(paramW.a()).setBigContentTitle(b).bigText(e);
+        if (d) {
+          paramW.setSummaryText(c);
+        }
+      }
+    }
+  }
+  
+  public static class c
+  {
+    String A;
+    Bundle B;
+    int C = 0;
+    int D = 0;
+    Notification E;
+    RemoteViews F;
+    RemoteViews G;
+    RemoteViews H;
+    String I;
+    int J = 0;
+    String K;
+    long L;
+    int M = 0;
+    Notification N = new Notification();
+    @Deprecated
+    public ArrayList<String> O;
+    public Context a;
+    public ArrayList<x.a> b = new ArrayList();
+    ArrayList<x.a> c = new ArrayList();
+    CharSequence d;
+    CharSequence e;
+    PendingIntent f;
+    PendingIntent g;
+    RemoteViews h;
+    Bitmap i;
+    CharSequence j;
+    int k;
+    int l;
+    boolean m = true;
+    boolean n;
+    x.d o;
+    CharSequence p;
+    CharSequence[] q;
+    int r;
+    int s;
+    boolean t;
+    String u;
+    boolean v;
+    String w;
+    boolean x = false;
+    boolean y;
+    boolean z;
+    
+    public c(Context paramContext, String paramString)
+    {
+      a = paramContext;
+      I = paramString;
+      N.when = System.currentTimeMillis();
+      N.audioStreamType = -1;
+      l = 0;
+      O = new ArrayList();
+    }
+    
+    private Bitmap b(Bitmap paramBitmap)
+    {
+      if (paramBitmap != null)
+      {
+        if (Build.VERSION.SDK_INT >= 27) {
+          return paramBitmap;
+        }
+        Resources localResources = a.getResources();
+        int i1 = localResources.getDimensionPixelSize(b.compat_notification_large_icon_max_width);
+        int i2 = localResources.getDimensionPixelSize(b.compat_notification_large_icon_max_height);
+        if ((paramBitmap.getWidth() <= i1) && (paramBitmap.getHeight() <= i2)) {
+          return paramBitmap;
+        }
+        double d1 = i1;
+        double d2 = Math.max(1, paramBitmap.getWidth());
+        Double.isNaN(d1);
+        Double.isNaN(d2);
+        d1 /= d2;
+        d2 = i2;
+        double d3 = Math.max(1, paramBitmap.getHeight());
+        Double.isNaN(d2);
+        Double.isNaN(d3);
+        d1 = Math.min(d1, d2 / d3);
+        d2 = paramBitmap.getWidth();
+        Double.isNaN(d2);
+        i1 = (int)Math.ceil(d2 * d1);
+        d2 = paramBitmap.getHeight();
+        Double.isNaN(d2);
+        return Bitmap.createScaledBitmap(paramBitmap, i1, (int)Math.ceil(d2 * d1), true);
+      }
+      return paramBitmap;
+    }
+    
+    protected static CharSequence c(CharSequence paramCharSequence)
+    {
+      if (paramCharSequence == null) {
+        return paramCharSequence;
+      }
+      CharSequence localCharSequence = paramCharSequence;
+      if (paramCharSequence.length() > 5120) {
+        localCharSequence = paramCharSequence.subSequence(0, 5120);
+      }
+      return localCharSequence;
+    }
+    
+    public Notification a()
+    {
+      return new y(this).b();
+    }
+    
+    public c a(int paramInt)
+    {
+      Notification localNotification = N;
+      defaults = paramInt;
+      if ((paramInt & 0x4) != 0) {
+        flags |= 0x1;
+      }
+      return this;
+    }
+    
+    public c a(long paramLong)
+    {
+      N.when = paramLong;
+      return this;
+    }
+    
+    public c a(PendingIntent paramPendingIntent)
+    {
+      f = paramPendingIntent;
+      return this;
+    }
+    
+    public c a(Bitmap paramBitmap)
+    {
+      i = b(paramBitmap);
+      return this;
+    }
+    
+    public c a(x.d paramD)
+    {
+      if (o != paramD)
+      {
+        o = paramD;
+        paramD = o;
+        if (paramD != null) {
+          paramD.a(this);
+        }
+      }
+      return this;
+    }
+    
+    public c a(CharSequence paramCharSequence)
+    {
+      e = c(paramCharSequence);
+      return this;
+    }
+    
+    public Bundle b()
+    {
+      if (B == null) {
+        B = new Bundle();
+      }
+      return B;
+    }
+    
+    public c b(int paramInt)
+    {
+      l = paramInt;
+      return this;
+    }
+    
+    public c b(CharSequence paramCharSequence)
+    {
+      d = c(paramCharSequence);
+      return this;
+    }
+    
+    public c c(int paramInt)
+    {
+      N.icon = paramInt;
+      return this;
+    }
+  }
+  
+  public static abstract class d
+  {
+    protected x.c a;
+    CharSequence b;
+    CharSequence c;
+    boolean d = false;
+    
+    public d() {}
+    
+    public void a(Bundle paramBundle) {}
+    
+    public abstract void a(w paramW);
+    
+    public void a(x.c paramC)
+    {
+      if (a != paramC)
+      {
+        a = paramC;
+        paramC = a;
+        if (paramC != null) {
+          paramC.a(this);
+        }
+      }
+    }
+    
+    public RemoteViews b(w paramW)
+    {
+      return null;
+    }
+    
+    public RemoteViews c(w paramW)
+    {
+      return null;
+    }
+    
+    public RemoteViews d(w paramW)
+    {
+      return null;
+    }
+  }
+}

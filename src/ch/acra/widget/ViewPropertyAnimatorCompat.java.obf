@@ -1,0 +1,76 @@
+package d.a.a;
+
+import android.view.animation.Interpolator;
+import b.h.a.a.a;
+import java.lang.ref.WeakReference;
+
+final class d
+  extends b
+{
+  WeakReference<b.h.a.a> a;
+  
+  d(b.h.a.a paramA, a paramA1)
+  {
+    super(paramA1);
+    a = new WeakReference(paramA);
+  }
+  
+  public void a()
+  {
+    b.h.a.a localA = (b.h.a.a)a.get();
+    if (localA != null) {
+      localA.b();
+    }
+  }
+  
+  public void a(int paramInt)
+  {
+    b.h.a.a localA = (b.h.a.a)a.get();
+    if (localA != null) {
+      localA.a(paramInt);
+    }
+  }
+  
+  public void a(Interpolator paramInterpolator)
+  {
+    b.h.a.a localA = (b.h.a.a)a.get();
+    if (localA != null) {
+      localA.a(paramInterpolator);
+    }
+  }
+  
+  public void a(final b.a paramA)
+  {
+    b.h.a.a localA = (b.h.a.a)a.get();
+    if (localA == null) {
+      return;
+    }
+    if (paramA == null)
+    {
+      localA.a(null);
+      return;
+    }
+    localA.a(new a(paramA));
+  }
+  
+  class a
+    implements a.a
+  {
+    a(b.a paramA) {}
+    
+    public void a(b.h.a.a paramA)
+    {
+      paramA.a();
+    }
+    
+    public void b(b.h.a.a paramA)
+    {
+      paramA.c();
+    }
+    
+    public void c(b.h.a.a paramA)
+    {
+      paramA.d();
+    }
+  }
+}

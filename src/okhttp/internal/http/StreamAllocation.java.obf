@@ -1,0 +1,576 @@
+package e.f0.f;
+
+import e.c0;
+import e.e;
+import e.f0.i.b;
+import e.f0.i.n;
+import e.i;
+import e.j;
+import e.p;
+import java.io.IOException;
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+import java.net.Socket;
+import java.util.List;
+
+public final class g
+{
+  public final e.a a;
+  private f.a b;
+  private c0 c;
+  private final j d;
+  public final e e;
+  public final p f;
+  private final Object g;
+  private final f h;
+  private int i;
+  private c j;
+  private boolean k;
+  private boolean l;
+  private boolean m;
+  private e.f0.g.c n;
+  
+  public g(j paramJ, e.a paramA, e paramE, p paramP, Object paramObject)
+  {
+    d = paramJ;
+    a = paramA;
+    e = paramE;
+    f = paramP;
+    h = new f(paramA, h(), paramE, paramP);
+    g = paramObject;
+  }
+  
+  private c a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, boolean paramBoolean)
+  {
+    int i2 = 0;
+    Object localObject5 = null;
+    List localList = null;
+    int i3;
+    label247:
+    label646:
+    synchronized (d)
+    {
+      if (!l)
+      {
+        if (n == null)
+        {
+          if (!m)
+          {
+            Object localObject1 = j;
+            Socket localSocket = g();
+            if (j != null)
+            {
+              localObject5 = j;
+              localObject1 = null;
+            }
+            if (!k)
+            {
+              ??? = null;
+              int i1 = i2;
+              Object localObject6 = localObject5;
+              localObject1 = localList;
+              if (localObject5 == null)
+              {
+                e.f0.a.a.a(d, a, this, null);
+                if (j != null)
+                {
+                  i1 = 1;
+                  localObject6 = j;
+                  localObject1 = localList;
+                }
+                else
+                {
+                  localObject1 = c;
+                  localObject6 = localObject5;
+                  i1 = i2;
+                }
+              }
+              e.f0.c.a(localSocket);
+              if (??? != null) {
+                f.b(e, (i)???);
+              }
+              if (i1 != 0) {
+                f.a(e, (i)localObject6);
+              }
+              if (localObject6 != null) {
+                return localObject6;
+              }
+              if (localObject1 == null)
+              {
+                localObject5 = b;
+                if ((localObject5 == null) || (!((f.a)localObject5).b()))
+                {
+                  b = h.b();
+                  i3 = 1;
+                  break label247;
+                }
+              }
+              i3 = 0;
+              synchronized (d)
+              {
+                if (!m)
+                {
+                  i2 = i1;
+                  localObject5 = localObject6;
+                  if (i3 != 0)
+                  {
+                    localList = b.a();
+                    i3 = 0;
+                    int i4 = localList.size();
+                    i2 = i1;
+                    localObject5 = localObject6;
+                    if (i3 < i4)
+                    {
+                      ??? = (c0)localList.get(i3);
+                      e.f0.a.a.a(d, a, this, (c0)???);
+                      if (j == null) {
+                        break label646;
+                      }
+                      i2 = 1;
+                      localObject5 = j;
+                      c = ((c0)???);
+                    }
+                  }
+                  if (i2 == 0)
+                  {
+                    localObject5 = localObject1;
+                    if (localObject1 == null) {
+                      localObject5 = b.c();
+                    }
+                    c = ((c0)localObject5);
+                    i = 0;
+                    localObject5 = new c(d, (c0)localObject5);
+                    a((c)localObject5, false);
+                  }
+                  if (i2 != 0)
+                  {
+                    f.a(e, (i)localObject5);
+                    return localObject5;
+                  }
+                  ((c)localObject5).a(paramInt1, paramInt2, paramInt3, paramInt4, paramBoolean, e, f);
+                  h().a(((c)localObject5).c());
+                  localObject6 = null;
+                  synchronized (d)
+                  {
+                    k = true;
+                    e.f0.a.a.b(d, (c)localObject5);
+                    localObject1 = localObject5;
+                    if (((c)localObject5).b())
+                    {
+                      localObject6 = e.f0.a.a.a(d, a, this);
+                      localObject1 = j;
+                    }
+                    e.f0.c.a((Socket)localObject6);
+                    f.a(e, (i)localObject1);
+                    return localObject1;
+                  }
+                }
+                throw new IOException("Canceled");
+              }
+            }
+          }
+          else
+          {
+            throw new IOException("Canceled");
+          }
+        }
+        else {
+          throw new IllegalStateException("codec != null");
+        }
+      }
+      else {
+        throw new IllegalStateException("released");
+      }
+    }
+  }
+  
+  private c a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, boolean paramBoolean1, boolean paramBoolean2)
+  {
+    for (;;)
+    {
+      c localC = a(paramInt1, paramInt2, paramInt3, paramInt4, paramBoolean1);
+      synchronized (d)
+      {
+        if (l == 0) {
+          return localC;
+        }
+        if (!localC.a(paramBoolean2)) {
+          d();
+        } else {
+          return localC;
+        }
+      }
+    }
+    for (;;)
+    {
+      throw localObject;
+    }
+  }
+  
+  private Socket a(boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3)
+  {
+    if (paramBoolean3) {
+      n = null;
+    }
+    if (paramBoolean2) {
+      l = true;
+    }
+    Object localObject3 = null;
+    Object localObject2 = null;
+    c localC = j;
+    Object localObject1 = localObject3;
+    if (localC != null)
+    {
+      if (paramBoolean1) {
+        k = true;
+      }
+      localObject1 = localObject3;
+      if (n == null) {
+        if (!l)
+        {
+          localObject1 = localObject3;
+          if (!j.k) {}
+        }
+        else
+        {
+          b(j);
+          localObject1 = localObject2;
+          if (j.n.isEmpty())
+          {
+            j.o = System.nanoTime();
+            localObject1 = localObject2;
+            if (e.f0.a.a.a(d, j)) {
+              localObject1 = j.d();
+            }
+          }
+          j = null;
+        }
+      }
+    }
+    return localObject1;
+  }
+  
+  private void b(c paramC)
+  {
+    int i1 = 0;
+    int i2 = n.size();
+    while (i1 < i2)
+    {
+      if (((Reference)n.get(i1)).get() == this)
+      {
+        n.remove(i1);
+        return;
+      }
+      i1 += 1;
+    }
+    paramC = new IllegalStateException();
+    for (;;)
+    {
+      throw paramC;
+    }
+  }
+  
+  private Socket g()
+  {
+    c localC = j;
+    if ((localC != null) && (k)) {
+      return a(false, false, true);
+    }
+    return null;
+  }
+  
+  private d h()
+  {
+    return e.f0.a.a.a(d);
+  }
+  
+  public e.f0.g.c a()
+  {
+    synchronized (d)
+    {
+      e.f0.g.c localC = n;
+      return localC;
+    }
+  }
+  
+  /* Error */
+  public e.f0.g.c a(e.v arg1, e.t.a paramA, boolean paramBoolean)
+  {
+    // Byte code:
+    //   0: aload_2
+    //   1: invokeinterface 218 1 0
+    //   6: istore 4
+    //   8: aload_2
+    //   9: invokeinterface 220 1 0
+    //   14: istore 5
+    //   16: aload_2
+    //   17: invokeinterface 222 1 0
+    //   22: istore 6
+    //   24: aload_1
+    //   25: invokevirtual 227	e/v:r	()I
+    //   28: istore 7
+    //   30: aload_1
+    //   31: invokevirtual 230	e/v:x	()Z
+    //   34: istore 8
+    //   36: aload_0
+    //   37: iload 4
+    //   39: iload 5
+    //   41: iload 6
+    //   43: iload 7
+    //   45: iload 8
+    //   47: iload_3
+    //   48: invokespecial 232	e/f0/f/g:a	(IIIIZZ)Le/f0/f/c;
+    //   51: aload_1
+    //   52: aload_2
+    //   53: aload_0
+    //   54: invokevirtual 235	e/f0/f/c:a	(Le/v;Le/t$a;Le/f0/f/g;)Le/f0/g/c;
+    //   57: astore_2
+    //   58: aload_0
+    //   59: getfield 39	e/f0/f/g:d	Le/j;
+    //   62: astore_1
+    //   63: aload_1
+    //   64: monitorenter
+    //   65: aload_0
+    //   66: aload_2
+    //   67: putfield 63	e/f0/f/g:n	Le/f0/g/c;
+    //   70: aload_1
+    //   71: monitorexit
+    //   72: aload_2
+    //   73: areturn
+    //   74: astore_2
+    //   75: aload_1
+    //   76: monitorexit
+    //   77: aload_2
+    //   78: athrow
+    //   79: astore_1
+    //   80: new 237	e/f0/f/e
+    //   83: dup
+    //   84: aload_1
+    //   85: invokespecial 240	e/f0/f/e:<init>	(Ljava/io/IOException;)V
+    //   88: athrow
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	89	0	this	g
+    //   0	89	2	paramA	e.t.a
+    //   0	89	3	paramBoolean	boolean
+    //   6	32	4	i1	int
+    //   14	26	5	i2	int
+    //   22	20	6	i3	int
+    //   28	16	7	i4	int
+    //   34	12	8	bool	boolean
+    // Exception table:
+    //   from	to	target	type
+    //   65	72	74	finally
+    //   75	77	74	finally
+    //   36	65	79	java/io/IOException
+    //   77	79	79	java/io/IOException
+  }
+  
+  public Socket a(c paramC)
+  {
+    if ((n == null) && (j.n.size() == 1))
+    {
+      Reference localReference = (Reference)j.n.get(0);
+      Socket localSocket = a(true, false, false);
+      j = paramC;
+      n.add(localReference);
+      return localSocket;
+    }
+    throw new IllegalStateException();
+  }
+  
+  public void a(c paramC, boolean paramBoolean)
+  {
+    if (j == null)
+    {
+      j = paramC;
+      k = paramBoolean;
+      n.add(new a(this, g));
+      return;
+    }
+    throw new IllegalStateException();
+  }
+  
+  public void a(IOException paramIOException)
+  {
+    boolean bool1 = false;
+    boolean bool2 = false;
+    label214:
+    synchronized (d)
+    {
+      if ((paramIOException instanceof n))
+      {
+        paramIOException = (n)paramIOException;
+        if (c == b.h) {
+          i += 1;
+        }
+        if ((c != b.h) || (i > 1))
+        {
+          bool1 = true;
+          c = null;
+        }
+      }
+      else if (j != null)
+      {
+        if (j.b())
+        {
+          bool1 = bool2;
+          if (!(paramIOException instanceof e.f0.i.a)) {}
+        }
+        else
+        {
+          bool2 = true;
+          bool1 = bool2;
+          if (j.l == 0)
+          {
+            if ((c != null) && (paramIOException != null)) {
+              h.a(c, paramIOException);
+            }
+            c = null;
+            bool1 = bool2;
+          }
+        }
+        paramIOException = j;
+        Socket localSocket = a(bool1, false, true);
+        if ((j != null) || (!k)) {
+          break label214;
+        }
+        e.f0.c.a(localSocket);
+        if (paramIOException != null) {
+          f.b(e, paramIOException);
+        }
+        return;
+      }
+    }
+  }
+  
+  public void a(boolean paramBoolean, e.f0.g.c paramC, long paramLong, IOException paramIOException)
+  {
+    f.b(e, paramLong);
+    j localJ = d;
+    if (paramC != null) {}
+    try
+    {
+      if (paramC == n)
+      {
+        if (!paramBoolean)
+        {
+          paramC = j;
+          l += 1;
+        }
+        paramC = j;
+        Socket localSocket = a(paramBoolean, false, true);
+        if (j != null) {
+          paramC = null;
+        }
+        paramBoolean = l;
+        e.f0.c.a(localSocket);
+        if (paramC != null) {
+          f.b(e, paramC);
+        }
+        if (paramIOException != null)
+        {
+          f.a(e, paramIOException);
+          return;
+        }
+        if (paramBoolean) {
+          f.a(e);
+        }
+        return;
+      }
+      paramIOException = new StringBuilder();
+      paramIOException.append("expected ");
+      paramIOException.append(n);
+      paramIOException.append(" but was ");
+      paramIOException.append(paramC);
+      throw new IllegalStateException(paramIOException.toString());
+    }
+    finally {}
+  }
+  
+  public c b()
+  {
+    try
+    {
+      c localC = j;
+      return localC;
+    }
+    finally
+    {
+      localObject = finally;
+      throw localObject;
+    }
+  }
+  
+  public boolean c()
+  {
+    if (c == null)
+    {
+      f.a localA = b;
+      if (((localA == null) || (!localA.b())) && (!h.a())) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public void d()
+  {
+    synchronized (d)
+    {
+      c localC = j;
+      Socket localSocket = a(true, false, false);
+      if (j != null) {
+        localC = null;
+      }
+      e.f0.c.a(localSocket);
+      if (localC != null) {
+        f.b(e, localC);
+      }
+      return;
+    }
+  }
+  
+  public void e()
+  {
+    synchronized (d)
+    {
+      c localC = j;
+      Socket localSocket = a(false, true, false);
+      if (j != null) {
+        localC = null;
+      }
+      e.f0.c.a(localSocket);
+      if (localC != null) {
+        f.b(e, localC);
+      }
+      return;
+    }
+  }
+  
+  public c0 f()
+  {
+    return c;
+  }
+  
+  public String toString()
+  {
+    c localC = b();
+    if (localC != null) {
+      return localC.toString();
+    }
+    return a.toString();
+  }
+  
+  public static final class a
+    extends WeakReference<g>
+  {
+    public final Object a;
+    
+    a(g paramG, Object paramObject)
+    {
+      super();
+      a = paramObject;
+    }
+  }
+}

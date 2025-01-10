@@ -1,0 +1,36 @@
+package android.support.v7.view.menu;
+
+import android.content.Context;
+import android.os.Parcelable;
+
+public abstract interface p
+{
+  public abstract int a();
+  
+  public abstract void a(Context paramContext, h paramH);
+  
+  public abstract void a(Parcelable paramParcelable);
+  
+  public abstract void a(h paramH, boolean paramBoolean);
+  
+  public abstract void a(a paramA);
+  
+  public abstract void a(boolean paramBoolean);
+  
+  public abstract boolean a(h paramH, k paramK);
+  
+  public abstract boolean a(v paramV);
+  
+  public abstract boolean b();
+  
+  public abstract boolean b(h paramH, k paramK);
+  
+  public abstract Parcelable c();
+  
+  public static abstract interface a
+  {
+    public abstract void a(h paramH, boolean paramBoolean);
+    
+    public abstract boolean a(h paramH);
+  }
+}

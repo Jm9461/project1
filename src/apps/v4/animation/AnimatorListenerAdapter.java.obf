@@ -1,0 +1,11 @@
+package b.h.a;
+
+public abstract class b
+  implements a.a
+{
+  public b() {}
+  
+  public void b(a paramA) {}
+  
+  public void c(a paramA) {}
+}

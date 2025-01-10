@@ -1,0 +1,99 @@
+package e;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public enum d0
+{
+  final String c;
+  
+  private d0(String paramString)
+  {
+    c = paramString;
+  }
+  
+  public static d0 a(String paramString)
+  {
+    int j = paramString.hashCode();
+    if (j != 79201641) {
+      if (j != 79923350) {
+        switch (j)
+        {
+        }
+      }
+    }
+    for (;;)
+    {
+      break;
+      if (paramString.equals("TLSv1.3"))
+      {
+        j = 0;
+        break label119;
+        if (paramString.equals("TLSv1.2"))
+        {
+          j = 1;
+          break label119;
+          if (paramString.equals("TLSv1.1"))
+          {
+            j = 2;
+            break label119;
+            if (paramString.equals("TLSv1"))
+            {
+              j = 3;
+              break label119;
+              if (paramString.equals("SSLv3"))
+              {
+                j = 4;
+                break label119;
+              }
+            }
+          }
+        }
+      }
+    }
+    j = -1;
+    label119:
+    if (j != 0)
+    {
+      if (j != 1)
+      {
+        if (j != 2)
+        {
+          if (j != 3)
+          {
+            if (j == 4) {
+              return h;
+            }
+            StringBuilder localStringBuilder = new StringBuilder();
+            localStringBuilder.append("Unexpected TLS version: ");
+            localStringBuilder.append(paramString);
+            throw new IllegalArgumentException(localStringBuilder.toString());
+          }
+          return g;
+        }
+        return f;
+      }
+      return e;
+    }
+    return d;
+  }
+  
+  static List<d0> a(String... paramVarArgs)
+  {
+    ArrayList localArrayList = new ArrayList(paramVarArgs.length);
+    int k = paramVarArgs.length;
+    int j = 0;
+    while (j < k)
+    {
+      localArrayList.add(a(paramVarArgs[j]));
+      j += 1;
+    }
+    return Collections.unmodifiableList(localArrayList);
+  }
+  
+  public String a()
+  {
+    return c;
+  }
+}

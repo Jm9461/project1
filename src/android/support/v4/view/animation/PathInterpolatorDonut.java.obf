@@ -1,0 +1,60 @@
+package android.support.v4.view.e0;
+
+import android.graphics.Path;
+import android.graphics.PathMeasure;
+import android.view.animation.Interpolator;
+
+class e
+  implements Interpolator
+{
+  private final float[] a;
+  private final float[] b;
+  
+  e(Path paramPath)
+  {
+    paramPath = new PathMeasure(paramPath, false);
+    float f = paramPath.getLength();
+    int j = (int)(f / 0.002F) + 1;
+    a = new float[j];
+    b = new float[j];
+    float[] arrayOfFloat = new float[2];
+    int i = 0;
+    while (i < j)
+    {
+      paramPath.getPosTan(i * f / (j - 1), arrayOfFloat, null);
+      a[i] = arrayOfFloat[0];
+      b[i] = arrayOfFloat[1];
+      i += 1;
+    }
+  }
+  
+  public float getInterpolation(float paramFloat)
+  {
+    if (paramFloat <= 0.0F) {
+      return 0.0F;
+    }
+    if (paramFloat >= 1.0F) {
+      return 1.0F;
+    }
+    int i = 0;
+    int j = a.length - 1;
+    while (j - i > 1)
+    {
+      int k = (i + j) / 2;
+      if (paramFloat < a[k]) {
+        j = k;
+      } else {
+        i = k;
+      }
+    }
+    float[] arrayOfFloat = a;
+    float f = arrayOfFloat[j] - arrayOfFloat[i];
+    if (f == 0.0F) {
+      return b[i];
+    }
+    paramFloat = (paramFloat - arrayOfFloat[i]) / f;
+    arrayOfFloat = b;
+    f = arrayOfFloat[i];
+    return (arrayOfFloat[j] - f) * paramFloat + f;
+  }
+}

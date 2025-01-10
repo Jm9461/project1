@@ -1,0 +1,98 @@
+package com.lawyer_smartCalendar.a;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.lawyer_smartCalendar.d.h;
+import com.lawyer_smartCalendar.utils.c;
+import com.lawyer_smartCalendar.utils.i;
+import com.mohamadamin.persianmaterialdatetimepicker.j.b;
+import java.text.DecimalFormat;
+import java.util.List;
+
+public class t
+  extends RecyclerView.g<a>
+{
+  private Context c;
+  private List<h> d;
+  DecimalFormat e;
+  
+  public t(Context paramContext, List<h> paramList)
+  {
+    c = paramContext;
+    d = paramList;
+    new i(paramContext);
+    e = new DecimalFormat("#,###,###,###,###,###,###");
+  }
+  
+  public int a()
+  {
+    return d.size();
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    Object localObject = new b();
+    ((b)localObject).setTimeInMillis(Long.parseLong(((h)d.get(paramInt)).b()));
+    TextView localTextView = v;
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("????? : ");
+    localStringBuilder.append(((b)localObject).c());
+    localTextView.setText(localStringBuilder.toString());
+    v.setTextColor(c.c());
+    localObject = e.format(Long.parseLong(((h)d.get(paramInt)).a()));
+    localTextView = w;
+    localStringBuilder = new StringBuilder();
+    localStringBuilder.append("???? : ");
+    localStringBuilder.append((String)localObject);
+    localStringBuilder.append(" ?????");
+    localTextView.setText(localStringBuilder.toString());
+    paramA = x;
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("????? ??/???? : ");
+    ((StringBuilder)localObject).append(((h)d.get(paramInt)).c());
+    paramA.setText(((StringBuilder)localObject).toString());
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(c).inflate(2131492979, paramViewGroup, false));
+  }
+  
+  protected class a
+    extends RecyclerView.d0
+  {
+    public TextView v;
+    public TextView w;
+    public TextView x;
+    public ImageView y;
+    
+    public a(View paramView)
+    {
+      super();
+      x = ((TextView)paramView.findViewById(2131296803));
+      w = ((TextView)paramView.findViewById(2131296816));
+      v = ((TextView)paramView.findViewById(2131296792));
+      y = ((ImageView)paramView.findViewById(2131296260));
+      y.setOnClickListener(new a(t.this));
+    }
+    
+    class a
+      implements View.OnClickListener
+    {
+      a(t paramT) {}
+      
+      public void onClick(View paramView)
+      {
+        t.a(t.this).remove(f());
+        d();
+      }
+    }
+  }
+}

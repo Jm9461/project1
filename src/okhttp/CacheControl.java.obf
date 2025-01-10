@@ -1,0 +1,343 @@
+package e;
+
+import e.f0.g.e;
+import java.util.concurrent.TimeUnit;
+
+public final class d
+{
+  public static final d n;
+  private final boolean a;
+  private final boolean b;
+  private final int c;
+  private final int d;
+  private final boolean e;
+  private final boolean f;
+  private final boolean g;
+  private final int h;
+  private final int i;
+  private final boolean j;
+  private final boolean k;
+  private final boolean l;
+  String m;
+  
+  static
+  {
+    a localA = new a();
+    localA.b();
+    localA.a();
+    localA = new a();
+    localA.d();
+    localA.a(Integer.MAX_VALUE, TimeUnit.SECONDS);
+    n = localA.a();
+  }
+  
+  d(a paramA)
+  {
+    a = a;
+    b = b;
+    c = c;
+    d = -1;
+    e = false;
+    f = false;
+    g = false;
+    h = d;
+    i = e;
+    j = f;
+    k = g;
+    l = h;
+  }
+  
+  private d(boolean paramBoolean1, boolean paramBoolean2, int paramInt1, int paramInt2, boolean paramBoolean3, boolean paramBoolean4, boolean paramBoolean5, int paramInt3, int paramInt4, boolean paramBoolean6, boolean paramBoolean7, boolean paramBoolean8, String paramString)
+  {
+    a = paramBoolean1;
+    b = paramBoolean2;
+    c = paramInt1;
+    d = paramInt2;
+    e = paramBoolean3;
+    f = paramBoolean4;
+    g = paramBoolean5;
+    h = paramInt3;
+    i = paramInt4;
+    j = paramBoolean6;
+    k = paramBoolean7;
+    l = paramBoolean8;
+    m = paramString;
+  }
+  
+  public static d a(r paramR)
+  {
+    int i4 = -1;
+    int i3 = -1;
+    boolean bool5 = false;
+    boolean bool4 = false;
+    boolean bool7 = false;
+    int i1 = 1;
+    Object localObject1 = null;
+    int i7 = 0;
+    int i8 = paramR.b();
+    boolean bool3 = false;
+    boolean bool6 = false;
+    boolean bool8 = false;
+    int i5 = -1;
+    int i6 = -1;
+    boolean bool2 = false;
+    boolean bool1 = false;
+    for (;;)
+    {
+      Object localObject2 = paramR;
+      if (i7 >= i8) {
+        break;
+      }
+      String str1 = ((r)localObject2).a(i7);
+      String str2 = ((r)localObject2).b(i7);
+      if (str1.equalsIgnoreCase("Cache-Control"))
+      {
+        if (localObject1 != null) {
+          i1 = 0;
+        } else {
+          localObject1 = str2;
+        }
+      }
+      else
+      {
+        if (!str1.equalsIgnoreCase("Pragma")) {
+          break label505;
+        }
+        i1 = 0;
+      }
+      int i2 = 0;
+      while (i2 < str2.length())
+      {
+        int i9 = e.a(str2, i2, "=,;");
+        String str3 = str2.substring(i2, i9).trim();
+        if ((i9 != str2.length()) && (str2.charAt(i9) != ',') && (str2.charAt(i9) != ';'))
+        {
+          i9 = e.b(str2, i9 + 1);
+          if ((i9 < str2.length()) && (str2.charAt(i9) == '"'))
+          {
+            i2 = i9 + 1;
+            i9 = e.a(str2, i2, "\"");
+            localObject2 = str2.substring(i2, i9);
+            i2 = i9 + 1;
+          }
+          else
+          {
+            i2 = e.a(str2, i9, ",;");
+            localObject2 = str2.substring(i9, i2).trim();
+          }
+        }
+        else
+        {
+          i2 = i9 + 1;
+          localObject2 = null;
+        }
+        if ("no-cache".equalsIgnoreCase(str3)) {
+          bool1 = true;
+        } else if ("no-store".equalsIgnoreCase(str3)) {
+          bool2 = true;
+        } else if ("max-age".equalsIgnoreCase(str3)) {
+          i6 = e.a((String)localObject2, -1);
+        } else if ("s-maxage".equalsIgnoreCase(str3)) {
+          i5 = e.a((String)localObject2, -1);
+        } else if ("private".equalsIgnoreCase(str3)) {
+          bool8 = true;
+        } else if ("public".equalsIgnoreCase(str3)) {
+          bool6 = true;
+        } else if ("must-revalidate".equalsIgnoreCase(str3)) {
+          bool3 = true;
+        } else if ("max-stale".equalsIgnoreCase(str3)) {
+          i4 = e.a((String)localObject2, Integer.MAX_VALUE);
+        } else if ("min-fresh".equalsIgnoreCase(str3)) {
+          i3 = e.a((String)localObject2, -1);
+        } else if ("only-if-cached".equalsIgnoreCase(str3)) {
+          bool5 = true;
+        } else if ("no-transform".equalsIgnoreCase(str3)) {
+          bool4 = true;
+        } else if ("immutable".equalsIgnoreCase(str3)) {
+          bool7 = true;
+        }
+      }
+      label505:
+      i7 += 1;
+    }
+    if (i1 == 0) {
+      localObject1 = null;
+    }
+    return new d(bool1, bool2, i6, i5, bool8, bool6, bool3, i4, i3, bool5, bool4, bool7, localObject1);
+  }
+  
+  private String k()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    if (a) {
+      localStringBuilder.append("no-cache, ");
+    }
+    if (b) {
+      localStringBuilder.append("no-store, ");
+    }
+    if (c != -1)
+    {
+      localStringBuilder.append("max-age=");
+      localStringBuilder.append(c);
+      localStringBuilder.append(", ");
+    }
+    if (d != -1)
+    {
+      localStringBuilder.append("s-maxage=");
+      localStringBuilder.append(d);
+      localStringBuilder.append(", ");
+    }
+    if (e) {
+      localStringBuilder.append("private, ");
+    }
+    if (f) {
+      localStringBuilder.append("public, ");
+    }
+    if (g) {
+      localStringBuilder.append("must-revalidate, ");
+    }
+    if (h != -1)
+    {
+      localStringBuilder.append("max-stale=");
+      localStringBuilder.append(h);
+      localStringBuilder.append(", ");
+    }
+    if (i != -1)
+    {
+      localStringBuilder.append("min-fresh=");
+      localStringBuilder.append(i);
+      localStringBuilder.append(", ");
+    }
+    if (j) {
+      localStringBuilder.append("only-if-cached, ");
+    }
+    if (k) {
+      localStringBuilder.append("no-transform, ");
+    }
+    if (l) {
+      localStringBuilder.append("immutable, ");
+    }
+    if (localStringBuilder.length() == 0) {
+      return "";
+    }
+    localStringBuilder.delete(localStringBuilder.length() - 2, localStringBuilder.length());
+    return localStringBuilder.toString();
+  }
+  
+  public boolean a()
+  {
+    return l;
+  }
+  
+  public boolean b()
+  {
+    return e;
+  }
+  
+  public boolean c()
+  {
+    return f;
+  }
+  
+  public int d()
+  {
+    return c;
+  }
+  
+  public int e()
+  {
+    return h;
+  }
+  
+  public int f()
+  {
+    return i;
+  }
+  
+  public boolean g()
+  {
+    return g;
+  }
+  
+  public boolean h()
+  {
+    return a;
+  }
+  
+  public boolean i()
+  {
+    return b;
+  }
+  
+  public boolean j()
+  {
+    return j;
+  }
+  
+  public String toString()
+  {
+    String str = m;
+    if (str != null) {
+      return str;
+    }
+    str = k();
+    m = str;
+    return str;
+  }
+  
+  public static final class a
+  {
+    boolean a;
+    boolean b;
+    int c = -1;
+    int d = -1;
+    int e = -1;
+    boolean f;
+    boolean g;
+    boolean h;
+    
+    public a() {}
+    
+    public a a(int paramInt, TimeUnit paramTimeUnit)
+    {
+      if (paramInt >= 0)
+      {
+        long l = paramTimeUnit.toSeconds(paramInt);
+        if (l > 2147483647L) {
+          paramInt = Integer.MAX_VALUE;
+        } else {
+          paramInt = (int)l;
+        }
+        d = paramInt;
+        return this;
+      }
+      paramTimeUnit = new StringBuilder();
+      paramTimeUnit.append("maxStale < 0: ");
+      paramTimeUnit.append(paramInt);
+      throw new IllegalArgumentException(paramTimeUnit.toString());
+    }
+    
+    public d a()
+    {
+      return new d(this);
+    }
+    
+    public a b()
+    {
+      a = true;
+      return this;
+    }
+    
+    public a c()
+    {
+      b = true;
+      return this;
+    }
+    
+    public a d()
+    {
+      f = true;
+      return this;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+package android.arch.lifecycle;
+
+public class CompositeGeneratedAdaptersObserver
+  implements GenericLifecycleObserver
+{
+  private final b[] a;
+  
+  CompositeGeneratedAdaptersObserver(b[] paramArrayOfB)
+  {
+    a = paramArrayOfB;
+  }
+  
+  public void a(e paramE, c.a paramA)
+  {
+    i localI = new i();
+    b[] arrayOfB = a;
+    int k = arrayOfB.length;
+    int j = 0;
+    int i = 0;
+    while (i < k)
+    {
+      arrayOfB[i].a(paramE, paramA, false, localI);
+      i += 1;
+    }
+    arrayOfB = a;
+    k = arrayOfB.length;
+    i = j;
+    while (i < k)
+    {
+      arrayOfB[i].a(paramE, paramA, true, localI);
+      i += 1;
+    }
+  }
+}

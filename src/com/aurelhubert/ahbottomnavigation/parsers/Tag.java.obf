@@ -1,0 +1,86 @@
+package com.aurelhubert.ahbottomnavigation.i;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import android.text.TextUtils;
+import java.util.ArrayList;
+import java.util.List;
+
+public class a
+  implements Parcelable
+{
+  public static final Parcelable.Creator<a> CREATOR = new a();
+  private String c;
+  private int d;
+  private int e;
+  
+  public a() {}
+  
+  private a(Parcel paramParcel)
+  {
+    c = paramParcel.readString();
+    d = paramParcel.readInt();
+    e = paramParcel.readInt();
+  }
+  
+  public static List<a> a(int paramInt)
+  {
+    ArrayList localArrayList = new ArrayList();
+    int i = 0;
+    while (i < paramInt)
+    {
+      localArrayList.add(new a());
+      i += 1;
+    }
+    return localArrayList;
+  }
+  
+  public int a()
+  {
+    return e;
+  }
+  
+  public String b()
+  {
+    return c;
+  }
+  
+  public int c()
+  {
+    return d;
+  }
+  
+  public boolean d()
+  {
+    return TextUtils.isEmpty(c);
+  }
+  
+  public int describeContents()
+  {
+    return 0;
+  }
+  
+  public void writeToParcel(Parcel paramParcel, int paramInt)
+  {
+    paramParcel.writeString(c);
+    paramParcel.writeInt(d);
+    paramParcel.writeInt(e);
+  }
+  
+  static final class a
+    implements Parcelable.Creator<a>
+  {
+    a() {}
+    
+    public a createFromParcel(Parcel paramParcel)
+    {
+      return new a(paramParcel, null);
+    }
+    
+    public a[] newArray(int paramInt)
+    {
+      return new a[paramInt];
+    }
+  }
+}

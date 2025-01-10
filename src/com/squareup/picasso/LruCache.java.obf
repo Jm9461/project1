@@ -1,0 +1,82 @@
+package com.squareup.picasso;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
+
+public final class m
+  implements d
+{
+  final LruCache<String, b> a;
+  
+  public m(int paramInt)
+  {
+    a = new a(paramInt);
+  }
+  
+  public m(Context paramContext)
+  {
+    this(d0.a(paramContext));
+  }
+  
+  public int a()
+  {
+    return a.maxSize();
+  }
+  
+  public Bitmap a(String paramString)
+  {
+    paramString = (b)a.get(paramString);
+    if (paramString != null) {
+      return a;
+    }
+    return null;
+  }
+  
+  public void a(String paramString, Bitmap paramBitmap)
+  {
+    if ((paramString != null) && (paramBitmap != null))
+    {
+      int i = d0.a(paramBitmap);
+      if (i > a())
+      {
+        a.remove(paramString);
+        return;
+      }
+      a.put(paramString, new b(paramBitmap, i));
+      return;
+    }
+    throw new NullPointerException("key == null || bitmap == null");
+  }
+  
+  public int size()
+  {
+    return a.size();
+  }
+  
+  class a
+    extends LruCache<String, m.b>
+  {
+    a(int paramInt)
+    {
+      super();
+    }
+    
+    protected int a(String paramString, m.b paramB)
+    {
+      return b;
+    }
+  }
+  
+  static final class b
+  {
+    final Bitmap a;
+    final int b;
+    
+    b(Bitmap paramBitmap, int paramInt)
+    {
+      a = paramBitmap;
+      b = paramInt;
+    }
+  }
+}

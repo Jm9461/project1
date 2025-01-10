@@ -1,0 +1,195 @@
+package com.squareup.picasso;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+final class n
+  extends InputStream
+{
+  private final InputStream c;
+  private long d;
+  private long e;
+  private long f;
+  private long g = -1L;
+  private boolean h = true;
+  private int i = -1;
+  
+  n(InputStream paramInputStream)
+  {
+    this(paramInputStream, 4096);
+  }
+  
+  n(InputStream paramInputStream, int paramInt)
+  {
+    this(paramInputStream, paramInt, 1024);
+  }
+  
+  private n(InputStream paramInputStream, int paramInt1, int paramInt2)
+  {
+    Object localObject = paramInputStream;
+    if (!paramInputStream.markSupported()) {
+      localObject = new BufferedInputStream(paramInputStream, paramInt1);
+    }
+    c = ((InputStream)localObject);
+    i = paramInt2;
+  }
+  
+  private void a(long paramLong1, long paramLong2)
+  {
+    while (paramLong1 < paramLong2)
+    {
+      long l2 = c.skip(paramLong2 - paramLong1);
+      long l1 = l2;
+      if (l2 == 0L)
+      {
+        if (read() == -1) {
+          return;
+        }
+        l1 = 1L;
+      }
+      paramLong1 += l1;
+    }
+  }
+  
+  private void h(long paramLong)
+  {
+    try
+    {
+      if ((e < d) && (d <= f))
+      {
+        c.reset();
+        c.mark((int)(paramLong - e));
+        a(e, d);
+      }
+      else
+      {
+        e = d;
+        c.mark((int)(paramLong - d));
+      }
+      f = paramLong;
+      return;
+    }
+    catch (IOException localIOException)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Unable to mark: ");
+      localStringBuilder.append(localIOException);
+      throw new IllegalStateException(localStringBuilder.toString());
+    }
+  }
+  
+  public long a(int paramInt)
+  {
+    long l = d + paramInt;
+    if (f < l) {
+      h(l);
+    }
+    return d;
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    h = paramBoolean;
+  }
+  
+  public int available()
+  {
+    return c.available();
+  }
+  
+  public void close()
+  {
+    c.close();
+  }
+  
+  public void g(long paramLong)
+  {
+    if ((d <= f) && (paramLong >= e))
+    {
+      c.reset();
+      a(e, paramLong);
+      d = paramLong;
+      return;
+    }
+    throw new IOException("Cannot reset");
+  }
+  
+  public void mark(int paramInt)
+  {
+    g = a(paramInt);
+  }
+  
+  public boolean markSupported()
+  {
+    return c.markSupported();
+  }
+  
+  public int read()
+  {
+    if (!h)
+    {
+      long l1 = d;
+      long l2 = f;
+      if (l1 + 1L > l2) {
+        h(l2 + i);
+      }
+    }
+    int j = c.read();
+    if (j != -1) {
+      d += 1L;
+    }
+    return j;
+  }
+  
+  public int read(byte[] paramArrayOfByte)
+  {
+    if (!h)
+    {
+      long l = d;
+      if (paramArrayOfByte.length + l > f) {
+        h(l + paramArrayOfByte.length + i);
+      }
+    }
+    int j = c.read(paramArrayOfByte);
+    if (j != -1) {
+      d += j;
+    }
+    return j;
+  }
+  
+  public int read(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
+  {
+    if (!h)
+    {
+      long l = d;
+      if (paramInt2 + l > f) {
+        h(l + paramInt2 + i);
+      }
+    }
+    paramInt1 = c.read(paramArrayOfByte, paramInt1, paramInt2);
+    if (paramInt1 != -1) {
+      d += paramInt1;
+    }
+    return paramInt1;
+  }
+  
+  public void reset()
+  {
+    g(g);
+  }
+  
+  public long skip(long paramLong)
+  {
+    if (!h)
+    {
+      long l = d;
+      if (l + paramLong > f) {
+        h(l + paramLong + i);
+      }
+    }
+    paramLong = c.skip(paramLong);
+    d += paramLong;
+    return paramLong;
+  }
+}

@@ -1,0 +1,9 @@
+package com.squareup.picasso;
+
+import e.a0;
+import e.y;
+
+public abstract interface j
+{
+  public abstract a0 a(y paramY);
+}

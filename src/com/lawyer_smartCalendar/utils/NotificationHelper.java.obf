@@ -1,0 +1,51 @@
+package com.lawyer_smartCalendar.utils;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build.VERSION;
+import android.support.v4.app.x.b;
+import android.support.v4.app.x.c;
+import com.lawyer_smartCalendar.activity.ScheduleDetailActivity;
+
+public class g
+{
+  public static void a(Context paramContext, int paramInt)
+  {
+    ((NotificationManager)paramContext.getSystemService("notification")).cancel(paramInt);
+  }
+  
+  public static void a(Context paramContext, int paramInt, String paramString1, String paramString2)
+  {
+    Bitmap localBitmap = BitmapFactory.decodeResource(paramContext.getResources(), 2131230894);
+    NotificationManager localNotificationManager = (NotificationManager)paramContext.getSystemService("notification");
+    if (Build.VERSION.SDK_INT >= 26)
+    {
+      localObject = new NotificationChannel("channel_id", "my_channel", 3);
+      ((NotificationChannel)localObject).setDescription("channel description");
+      localNotificationManager.createNotificationChannel((NotificationChannel)localObject);
+    }
+    Object localObject = new Intent(paramContext, ScheduleDetailActivity.class);
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(paramInt);
+    localStringBuilder.append("");
+    ((Intent)localObject).putExtra("id", localStringBuilder.toString());
+    localObject = PendingIntent.getActivity(paramContext, paramInt, (Intent)localObject, 134217728);
+    paramContext = new x.c(paramContext, "channel_id");
+    paramContext.c(2131230894);
+    paramContext.a(localBitmap);
+    paramContext.b(paramString1);
+    paramContext.a(System.currentTimeMillis());
+    paramContext.a(paramString2);
+    paramString1 = new x.b();
+    paramString1.a(paramString2);
+    paramContext.a(paramString1);
+    paramContext.a(-1);
+    paramContext.a((PendingIntent)localObject);
+    localNotificationManager.notify(paramInt, paramContext.b(0).a());
+  }
+}

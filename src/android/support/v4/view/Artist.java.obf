@@ -1,0 +1,89 @@
+package android.support.v4.view;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.ClassLoaderCreator;
+import android.os.Parcelable.Creator;
+
+public abstract class a
+  implements Parcelable
+{
+  public static final Parcelable.Creator<a> CREATOR = new b();
+  public static final a d = new a();
+  private final Parcelable c;
+  
+  private a()
+  {
+    c = null;
+  }
+  
+  protected a(Parcel paramParcel, ClassLoader paramClassLoader)
+  {
+    paramParcel = paramParcel.readParcelable(paramClassLoader);
+    if (paramParcel == null) {
+      paramParcel = d;
+    }
+    c = paramParcel;
+  }
+  
+  protected a(Parcelable paramParcelable)
+  {
+    if (paramParcelable != null)
+    {
+      if (paramParcelable == d) {
+        paramParcelable = null;
+      }
+      c = paramParcelable;
+      return;
+    }
+    throw new IllegalArgumentException("superState must not be null");
+  }
+  
+  public final Parcelable a()
+  {
+    return c;
+  }
+  
+  public int describeContents()
+  {
+    return 0;
+  }
+  
+  public void writeToParcel(Parcel paramParcel, int paramInt)
+  {
+    paramParcel.writeParcelable(c, paramInt);
+  }
+  
+  static final class a
+    extends a
+  {
+    a()
+    {
+      super();
+    }
+  }
+  
+  static final class b
+    implements Parcelable.ClassLoaderCreator<a>
+  {
+    b() {}
+    
+    public a createFromParcel(Parcel paramParcel)
+    {
+      return createFromParcel(paramParcel, null);
+    }
+    
+    public a createFromParcel(Parcel paramParcel, ClassLoader paramClassLoader)
+    {
+      if (paramParcel.readParcelable(paramClassLoader) == null) {
+        return a.d;
+      }
+      throw new IllegalStateException("superState must be null");
+    }
+    
+    public a[] newArray(int paramInt)
+    {
+      return new a[paramInt];
+    }
+  }
+}

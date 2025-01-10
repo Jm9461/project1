@@ -1,0 +1,31 @@
+package a.b.f;
+
+import android.view.View;
+import android.view.ViewGroup;
+
+public class l
+{
+  private ViewGroup a;
+  private Runnable b;
+  
+  static l a(View paramView)
+  {
+    return (l)paramView.getTag(j.transition_current_scene);
+  }
+  
+  static void a(View paramView, l paramL)
+  {
+    paramView.setTag(j.transition_current_scene, paramL);
+  }
+  
+  public void a()
+  {
+    if (a(a) == this)
+    {
+      Runnable localRunnable = b;
+      if (localRunnable != null) {
+        localRunnable.run();
+      }
+    }
+  }
+}

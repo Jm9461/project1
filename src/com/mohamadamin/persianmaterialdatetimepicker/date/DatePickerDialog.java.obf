@@ -1,0 +1,459 @@
+package com.mohamadamin.persianmaterialdatetimepicker.date;
+
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnDismissListener;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.ViewAnimator;
+import com.mohamadamin.persianmaterialdatetimepicker.e;
+import com.mohamadamin.persianmaterialdatetimepicker.g;
+import com.mohamadamin.persianmaterialdatetimepicker.h;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Iterator;
+
+public class b
+  extends DialogFragment
+  implements View.OnClickListener, a
+{
+  private String A;
+  private String B;
+  private String C;
+  private String D;
+  private final com.mohamadamin.persianmaterialdatetimepicker.j.b c = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+  private d d;
+  private HashSet<c> e = new HashSet();
+  private DialogInterface.OnCancelListener f;
+  private DialogInterface.OnDismissListener g;
+  private AccessibleDateAnimator h;
+  private TextView i;
+  private LinearLayout j;
+  private TextView k;
+  private TextView l;
+  private TextView m;
+  private c n;
+  private i o;
+  private int p = -1;
+  private int q = 7;
+  private int r = 1350;
+  private int s = 1450;
+  private com.mohamadamin.persianmaterialdatetimepicker.j.b t;
+  private com.mohamadamin.persianmaterialdatetimepicker.j.b u;
+  private com.mohamadamin.persianmaterialdatetimepicker.j.b[] v;
+  private com.mohamadamin.persianmaterialdatetimepicker.j.b[] w;
+  private boolean x;
+  private com.mohamadamin.persianmaterialdatetimepicker.a y;
+  private boolean z = true;
+  
+  public b() {}
+  
+  private void a(int paramInt1, int paramInt2) {}
+  
+  private void a(boolean paramBoolean)
+  {
+    Object localObject = i;
+    if (localObject != null) {
+      ((TextView)localObject).setText(c.g());
+    }
+    k.setText(com.mohamadamin.persianmaterialdatetimepicker.j.a.b(c.e()));
+    l.setText(com.mohamadamin.persianmaterialdatetimepicker.j.a.b(String.valueOf(c.b())));
+    m.setText(com.mohamadamin.persianmaterialdatetimepicker.j.a.b(String.valueOf(c.h())));
+    long l1 = c.getTimeInMillis();
+    h.setDateMillis(l1);
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append(c.e());
+    ((StringBuilder)localObject).append(" ");
+    ((StringBuilder)localObject).append(c.b());
+    localObject = com.mohamadamin.persianmaterialdatetimepicker.j.a.b(((StringBuilder)localObject).toString());
+    j.setContentDescription((CharSequence)localObject);
+    if (paramBoolean)
+    {
+      localObject = com.mohamadamin.persianmaterialdatetimepicker.j.a.b(c.c());
+      com.mohamadamin.persianmaterialdatetimepicker.i.a(h, (CharSequence)localObject);
+    }
+  }
+  
+  public static b b(d paramD, int paramInt1, int paramInt2, int paramInt3)
+  {
+    b localB = new b();
+    localB.a(paramD, paramInt1, paramInt2, paramInt3);
+    return localB;
+  }
+  
+  private void b(int paramInt)
+  {
+    if (paramInt != 0)
+    {
+      if (paramInt != 1) {
+        return;
+      }
+      localObject = com.mohamadamin.persianmaterialdatetimepicker.i.a(m, 0.85F, 1.1F);
+      if (z)
+      {
+        ((ObjectAnimator)localObject).setStartDelay(500L);
+        z = false;
+      }
+      o.a();
+      if (p != paramInt)
+      {
+        j.setSelected(false);
+        m.setSelected(true);
+        h.setDisplayedChild(1);
+        p = paramInt;
+      }
+      ((ObjectAnimator)localObject).start();
+      localObject = com.mohamadamin.persianmaterialdatetimepicker.j.a.b(String.valueOf(c.h()));
+      localAccessibleDateAnimator = h;
+      localStringBuilder = new StringBuilder();
+      localStringBuilder.append(C);
+      localStringBuilder.append(": ");
+      localStringBuilder.append((String)localObject);
+      localAccessibleDateAnimator.setContentDescription(localStringBuilder.toString());
+      com.mohamadamin.persianmaterialdatetimepicker.i.a(h, D);
+      return;
+    }
+    Object localObject = com.mohamadamin.persianmaterialdatetimepicker.i.a(j, 0.9F, 1.05F);
+    if (z)
+    {
+      ((ObjectAnimator)localObject).setStartDelay(500L);
+      z = false;
+    }
+    n.a();
+    if (p != paramInt)
+    {
+      j.setSelected(true);
+      m.setSelected(false);
+      h.setDisplayedChild(0);
+      p = paramInt;
+    }
+    ((ObjectAnimator)localObject).start();
+    localObject = com.mohamadamin.persianmaterialdatetimepicker.j.a.b(c.c());
+    AccessibleDateAnimator localAccessibleDateAnimator = h;
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(A);
+    localStringBuilder.append(": ");
+    localStringBuilder.append((String)localObject);
+    localAccessibleDateAnimator.setContentDescription(localStringBuilder.toString());
+    com.mohamadamin.persianmaterialdatetimepicker.i.a(h, B);
+  }
+  
+  private void k()
+  {
+    Iterator localIterator = e.iterator();
+    while (localIterator.hasNext()) {
+      ((c)localIterator.next()).a();
+    }
+  }
+  
+  public int a()
+  {
+    Object localObject = w;
+    if (localObject != null) {
+      return localObject[0].h();
+    }
+    localObject = t;
+    if ((localObject != null) && (((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).h() > r)) {
+      return t.h();
+    }
+    return r;
+  }
+  
+  public void a(int paramInt)
+  {
+    a(c.d(), paramInt);
+    com.mohamadamin.persianmaterialdatetimepicker.j.b localB = c;
+    localB.a(paramInt, localB.d(), c.b());
+    k();
+    b(0);
+    a(true);
+  }
+  
+  public void a(int paramInt1, int paramInt2, int paramInt3)
+  {
+    c.a(paramInt1, paramInt2, paramInt3);
+    k();
+    a(true);
+  }
+  
+  public void a(c paramC)
+  {
+    e.add(paramC);
+  }
+  
+  public void a(d paramD, int paramInt1, int paramInt2, int paramInt3)
+  {
+    d = paramD;
+    c.a(paramInt1, paramInt2, paramInt3);
+    x = false;
+  }
+  
+  public int b()
+  {
+    return q;
+  }
+  
+  public com.mohamadamin.persianmaterialdatetimepicker.j.b c()
+  {
+    return u;
+  }
+  
+  public com.mohamadamin.persianmaterialdatetimepicker.j.b[] d()
+  {
+    return w;
+  }
+  
+  public d.a e()
+  {
+    return new d.a(c);
+  }
+  
+  public boolean f()
+  {
+    return x;
+  }
+  
+  public com.mohamadamin.persianmaterialdatetimepicker.j.b[] g()
+  {
+    return v;
+  }
+  
+  public void h()
+  {
+    y.c();
+  }
+  
+  public int i()
+  {
+    Object localObject = w;
+    if (localObject != null) {
+      return localObject[(localObject.length - 1)].h();
+    }
+    localObject = u;
+    if ((localObject != null) && (((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject).h() < s)) {
+      return u.h();
+    }
+    return s;
+  }
+  
+  public com.mohamadamin.persianmaterialdatetimepicker.j.b j()
+  {
+    return t;
+  }
+  
+  public void onCancel(DialogInterface paramDialogInterface)
+  {
+    super.onCancel(paramDialogInterface);
+    DialogInterface.OnCancelListener localOnCancelListener = f;
+    if (localOnCancelListener != null) {
+      localOnCancelListener.onCancel(paramDialogInterface);
+    }
+  }
+  
+  public void onClick(View paramView)
+  {
+    h();
+    if (paramView.getId() == e.date_picker_year)
+    {
+      b(1);
+      return;
+    }
+    if (paramView.getId() == e.date_picker_month_and_day) {
+      b(0);
+    }
+  }
+  
+  public void onCreate(Bundle paramBundle)
+  {
+    super.onCreate(paramBundle);
+    getActivity().getWindow().setSoftInputMode(3);
+    if (paramBundle != null) {
+      c.a(paramBundle.getInt("year"), paramBundle.getInt("month"), paramBundle.getInt("day"));
+    }
+  }
+  
+  public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+  {
+    Log.d("DatePickerDialog", "onCreateView: ");
+    getDialog().getWindow().requestFeature(1);
+    paramLayoutInflater = paramLayoutInflater.inflate(com.mohamadamin.persianmaterialdatetimepicker.f.mdtp_date_picker_dialog, null);
+    i = ((TextView)paramLayoutInflater.findViewById(e.date_picker_header));
+    j = ((LinearLayout)paramLayoutInflater.findViewById(e.date_picker_month_and_day));
+    j.setOnClickListener(this);
+    k = ((TextView)paramLayoutInflater.findViewById(e.date_picker_month));
+    l = ((TextView)paramLayoutInflater.findViewById(e.date_picker_day));
+    m = ((TextView)paramLayoutInflater.findViewById(e.date_picker_year));
+    m.setOnClickListener(this);
+    int i1 = -1;
+    int i2 = 0;
+    int i3 = 0;
+    if (paramBundle != null)
+    {
+      q = paramBundle.getInt("week_start");
+      r = paramBundle.getInt("year_start");
+      s = paramBundle.getInt("year_end");
+      i3 = paramBundle.getInt("current_view");
+      i1 = paramBundle.getInt("list_position");
+      i2 = paramBundle.getInt("list_position_offset");
+      t = ((com.mohamadamin.persianmaterialdatetimepicker.j.b)paramBundle.getSerializable("min_date"));
+      u = ((com.mohamadamin.persianmaterialdatetimepicker.j.b)paramBundle.getSerializable("max_date"));
+      v = ((com.mohamadamin.persianmaterialdatetimepicker.j.b[])paramBundle.getSerializable("highlighted_days"));
+      w = ((com.mohamadamin.persianmaterialdatetimepicker.j.b[])paramBundle.getSerializable("selectable_days"));
+      x = paramBundle.getBoolean("theme_dark");
+    }
+    paramViewGroup = getActivity();
+    n = new f(paramViewGroup, this);
+    o = new i(paramViewGroup, this);
+    paramBundle = getResources();
+    A = paramBundle.getString(g.mdtp_day_picker_description);
+    B = paramBundle.getString(g.mdtp_select_day);
+    C = paramBundle.getString(g.mdtp_year_picker_description);
+    D = paramBundle.getString(g.mdtp_select_year);
+    int i4;
+    if (x) {
+      i4 = com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_view_animator_dark_theme;
+    } else {
+      i4 = com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_date_picker_view_animator;
+    }
+    paramLayoutInflater.setBackgroundColor(paramViewGroup.getResources().getColor(i4));
+    h = ((AccessibleDateAnimator)paramLayoutInflater.findViewById(e.animator));
+    h.addView(n);
+    h.addView(o);
+    h.setDateMillis(c.getTimeInMillis());
+    paramBundle = new AlphaAnimation(0.0F, 1.0F);
+    paramBundle.setDuration(300L);
+    h.setInAnimation(paramBundle);
+    paramBundle = new AlphaAnimation(1.0F, 0.0F);
+    paramBundle.setDuration(300L);
+    h.setOutAnimation(paramBundle);
+    paramBundle = (Button)paramLayoutInflater.findViewById(e.ok);
+    paramBundle.setOnClickListener(new a());
+    paramBundle.setTypeface(h.a(paramViewGroup, "Roboto-Medium"));
+    paramBundle = (Button)paramLayoutInflater.findViewById(e.cancel);
+    paramBundle.setOnClickListener(new b());
+    paramBundle.setTypeface(h.a(paramViewGroup, "Roboto-Medium"));
+    if (isCancelable()) {
+      i4 = 0;
+    } else {
+      i4 = 8;
+    }
+    paramBundle.setVisibility(i4);
+    a(false);
+    b(i3);
+    if (i1 != -1) {
+      if (i3 == 0) {
+        n.a(i1);
+      } else if (i3 == 1) {
+        o.a(i1, i2);
+      }
+    }
+    y = new com.mohamadamin.persianmaterialdatetimepicker.a(paramViewGroup);
+    return paramLayoutInflater;
+  }
+  
+  public void onDismiss(DialogInterface paramDialogInterface)
+  {
+    super.onDismiss(paramDialogInterface);
+    DialogInterface.OnDismissListener localOnDismissListener = g;
+    if (localOnDismissListener != null) {
+      localOnDismissListener.onDismiss(paramDialogInterface);
+    }
+  }
+  
+  public void onPause()
+  {
+    super.onPause();
+    y.b();
+  }
+  
+  public void onResume()
+  {
+    super.onResume();
+    y.a();
+  }
+  
+  public void onSaveInstanceState(Bundle paramBundle)
+  {
+    super.onSaveInstanceState(paramBundle);
+    paramBundle.putInt("year", c.h());
+    paramBundle.putInt("month", c.d());
+    paramBundle.putInt("day", c.b());
+    paramBundle.putInt("week_start", q);
+    paramBundle.putInt("year_start", r);
+    paramBundle.putInt("year_end", s);
+    paramBundle.putInt("current_view", p);
+    int i1 = -1;
+    int i2 = p;
+    if (i2 == 0)
+    {
+      i1 = n.getMostVisiblePosition();
+    }
+    else if (i2 == 1)
+    {
+      i1 = o.getFirstVisiblePosition();
+      paramBundle.putInt("list_position_offset", o.getFirstPositionOffset());
+    }
+    paramBundle.putInt("list_position", i1);
+    paramBundle.putSerializable("min_date", t);
+    paramBundle.putSerializable("max_date", u);
+    paramBundle.putSerializable("highlighted_days", v);
+    paramBundle.putSerializable("selectable_days", w);
+    paramBundle.putBoolean("theme_dark", x);
+  }
+  
+  class a
+    implements View.OnClickListener
+  {
+    a() {}
+    
+    public void onClick(View paramView)
+    {
+      h();
+      if (b.a(b.this) != null)
+      {
+        paramView = b.a(b.this);
+        b localB = b.this;
+        paramView.a(localB, b.b(localB).h(), b.b(b.this).d(), b.b(b.this).b());
+      }
+      dismiss();
+    }
+  }
+  
+  class b
+    implements View.OnClickListener
+  {
+    b() {}
+    
+    public void onClick(View paramView)
+    {
+      h();
+      getDialog().cancel();
+    }
+  }
+  
+  public static abstract interface c
+  {
+    public abstract void a();
+  }
+  
+  public static abstract interface d
+  {
+    public abstract void a(b paramB, int paramInt1, int paramInt2, int paramInt3);
+  }
+}

@@ -1,0 +1,10 @@
+package e;
+
+import java.io.IOException;
+
+public abstract interface f
+{
+  public abstract void a(e paramE, a0 paramA0);
+  
+  public abstract void a(e paramE, IOException paramIOException);
+}

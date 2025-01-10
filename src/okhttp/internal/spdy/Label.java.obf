@@ -1,0 +1,53 @@
+package e.f0.i;
+
+import f.f;
+
+public final class c
+{
+  public static final f d = f.d(":");
+  public static final f e = f.d(":status");
+  public static final f f = f.d(":method");
+  public static final f g = f.d(":path");
+  public static final f h = f.d(":scheme");
+  public static final f i = f.d(":authority");
+  public final f a;
+  public final f b;
+  final int c;
+  
+  public c(f paramF1, f paramF2)
+  {
+    a = paramF1;
+    b = paramF2;
+    c = (paramF1.f() + 32 + paramF2.f());
+  }
+  
+  public c(f paramF, String paramString)
+  {
+    this(paramF, f.d(paramString));
+  }
+  
+  public c(String paramString1, String paramString2)
+  {
+    this(f.d(paramString1), f.d(paramString2));
+  }
+  
+  public boolean equals(Object paramObject)
+  {
+    if ((paramObject instanceof c))
+    {
+      paramObject = (c)paramObject;
+      return (a.equals(a)) && (b.equals(b));
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    return (17 * 31 + a.hashCode()) * 31 + b.hashCode();
+  }
+  
+  public String toString()
+  {
+    return e.f0.c.a("%s: %s", new Object[] { a.i(), b.i() });
+  }
+}

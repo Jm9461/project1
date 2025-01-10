@@ -1,0 +1,182 @@
+package android.support.v7.view.menu;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import java.util.ArrayList;
+
+public abstract class b
+  implements p
+{
+  protected Context c;
+  protected Context d;
+  protected h e;
+  protected LayoutInflater f;
+  private p.a g;
+  private int h;
+  private int i;
+  protected q j;
+  private int k;
+  
+  public b(Context paramContext, int paramInt1, int paramInt2)
+  {
+    c = paramContext;
+    f = LayoutInflater.from(paramContext);
+    h = paramInt1;
+    i = paramInt2;
+  }
+  
+  public int a()
+  {
+    return k;
+  }
+  
+  public q.a a(ViewGroup paramViewGroup)
+  {
+    return (q.a)f.inflate(i, paramViewGroup, false);
+  }
+  
+  public View a(k paramK, View paramView, ViewGroup paramViewGroup)
+  {
+    if ((paramView instanceof q.a)) {
+      paramView = (q.a)paramView;
+    } else {
+      paramView = a(paramViewGroup);
+    }
+    a(paramK, paramView);
+    return (View)paramView;
+  }
+  
+  public void a(int paramInt)
+  {
+    k = paramInt;
+  }
+  
+  public void a(Context paramContext, h paramH)
+  {
+    d = paramContext;
+    LayoutInflater.from(d);
+    e = paramH;
+  }
+  
+  public void a(h paramH, boolean paramBoolean)
+  {
+    p.a localA = g;
+    if (localA != null) {
+      localA.a(paramH, paramBoolean);
+    }
+  }
+  
+  public abstract void a(k paramK, q.a paramA);
+  
+  public void a(p.a paramA)
+  {
+    g = paramA;
+  }
+  
+  protected void a(View paramView, int paramInt)
+  {
+    ViewGroup localViewGroup = (ViewGroup)paramView.getParent();
+    if (localViewGroup != null) {
+      localViewGroup.removeView(paramView);
+    }
+    ((ViewGroup)j).addView(paramView, paramInt);
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    ViewGroup localViewGroup = (ViewGroup)j;
+    if (localViewGroup == null) {
+      return;
+    }
+    int n = 0;
+    int m = 0;
+    Object localObject = e;
+    if (localObject != null)
+    {
+      ((h)localObject).b();
+      ArrayList localArrayList = e.n();
+      int i2 = localArrayList.size();
+      int i1 = 0;
+      for (;;)
+      {
+        n = m;
+        if (i1 >= i2) {
+          break;
+        }
+        k localK = (k)localArrayList.get(i1);
+        n = m;
+        if (a(m, localK))
+        {
+          View localView1 = localViewGroup.getChildAt(m);
+          if ((localView1 instanceof q.a)) {
+            localObject = ((q.a)localView1).getItemData();
+          } else {
+            localObject = null;
+          }
+          View localView2 = a(localK, localView1, localViewGroup);
+          if (localK != localObject)
+          {
+            localView2.setPressed(false);
+            localView2.jumpDrawablesToCurrentState();
+          }
+          if (localView2 != localView1) {
+            a(localView2, m);
+          }
+          n = m + 1;
+        }
+        i1 += 1;
+        m = n;
+      }
+    }
+    while (n < localViewGroup.getChildCount()) {
+      if (!a(localViewGroup, n)) {
+        n += 1;
+      }
+    }
+  }
+  
+  public abstract boolean a(int paramInt, k paramK);
+  
+  public boolean a(h paramH, k paramK)
+  {
+    return false;
+  }
+  
+  public boolean a(v paramV)
+  {
+    p.a localA = g;
+    if (localA != null) {
+      return localA.a(paramV);
+    }
+    return false;
+  }
+  
+  protected boolean a(ViewGroup paramViewGroup, int paramInt)
+  {
+    paramViewGroup.removeViewAt(paramInt);
+    return true;
+  }
+  
+  public q b(ViewGroup paramViewGroup)
+  {
+    if (j == null)
+    {
+      j = ((q)f.inflate(h, paramViewGroup, false));
+      j.a(e);
+      a(true);
+    }
+    return j;
+  }
+  
+  public boolean b(h paramH, k paramK)
+  {
+    return false;
+  }
+  
+  public p.a d()
+  {
+    return g;
+  }
+}

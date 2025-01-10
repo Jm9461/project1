@@ -1,0 +1,76 @@
+package apps.objectweb.asm;
+
+import android.graphics.Color;
+import java.util.Random;
+
+class Label
+{
+  public static float a(float paramFloat)
+  {
+    if (paramFloat == 0.0F) {
+      return 0.0F;
+    }
+    return (float)(Math.log10(paramFloat) * 20.0D);
+  }
+  
+  public static float a(float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    return a(paramFloat1, -1.0F, 1.0F, paramFloat2, paramFloat3);
+  }
+  
+  public static float a(float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4)
+  {
+    double d1 = paramFloat2;
+    double d2 = Math.pow(1.0F - paramFloat1, 2.0D);
+    Double.isNaN(d1);
+    double d3 = 2.0F * paramFloat3 * paramFloat1 * (1.0F - paramFloat1);
+    Double.isNaN(d3);
+    double d4 = paramFloat4 * paramFloat1 * paramFloat1;
+    Double.isNaN(d4);
+    return (float)(d1 * d2 + d3 + d4);
+  }
+  
+  public static float a(float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5)
+  {
+    return (paramFloat5 - paramFloat4) * ((paramFloat1 - paramFloat2) / (paramFloat3 - paramFloat2)) + paramFloat4;
+  }
+  
+  public static float a(float paramFloat, Random paramRandom)
+  {
+    return set((paramRandom.nextInt(100) + 70) / 100, 0.7F, 1.3F) * paramFloat;
+  }
+  
+  public static int a(int paramInt1, int paramInt2, int paramInt3)
+  {
+    return Math.max(Math.min(paramInt1, paramInt3), paramInt2);
+  }
+  
+  public static boolean a(byte[] paramArrayOfByte)
+  {
+    int j = paramArrayOfByte.length;
+    int i = 0;
+    while (i < j)
+    {
+      if (paramArrayOfByte[i] != 0) {
+        return false;
+      }
+      i += 1;
+    }
+    return true;
+  }
+  
+  public static float[] getColor(int paramInt)
+  {
+    return new float[] { Color.red(paramInt) / 255.0F, Color.green(paramInt) / 255.0F, Color.blue(paramInt) / 255.0F, Color.alpha(paramInt) / 255.0F };
+  }
+  
+  public static float put(float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    return paramFloat3 * paramFloat2 + (1.0F - paramFloat3) * paramFloat1;
+  }
+  
+  public static float set(float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    return Math.max(Math.min(paramFloat1, paramFloat3), paramFloat2);
+  }
+}

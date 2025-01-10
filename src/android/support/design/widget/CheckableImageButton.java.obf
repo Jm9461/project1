@@ -1,0 +1,84 @@
+package android.support.design.widget;
+
+import a.b.h.a.a;
+import android.content.Context;
+import android.support.v4.view.b;
+import android.support.v4.view.d0.c;
+import android.support.v4.view.u;
+import android.support.v7.widget.m;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.widget.Checkable;
+import android.widget.ImageButton;
+
+public class CheckableImageButton
+  extends m
+  implements Checkable
+{
+  private static final int[] f = { 16842912 };
+  private boolean e;
+  
+  public CheckableImageButton(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public CheckableImageButton(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, a.imageButtonStyle);
+  }
+  
+  public CheckableImageButton(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    u.a(this, new a());
+  }
+  
+  public boolean isChecked()
+  {
+    return e;
+  }
+  
+  public int[] onCreateDrawableState(int paramInt)
+  {
+    if (e) {
+      return ImageButton.mergeDrawableStates(super.onCreateDrawableState(f.length + paramInt), f);
+    }
+    return super.onCreateDrawableState(paramInt);
+  }
+  
+  public void setChecked(boolean paramBoolean)
+  {
+    if (e != paramBoolean)
+    {
+      e = paramBoolean;
+      refreshDrawableState();
+      sendAccessibilityEvent(2048);
+    }
+  }
+  
+  public void toggle()
+  {
+    setChecked(e ^ true);
+  }
+  
+  class a
+    extends b
+  {
+    a() {}
+    
+    public void a(View paramView, c paramC)
+    {
+      super.a(paramView, paramC);
+      paramC.b(true);
+      paramC.c(isChecked());
+    }
+    
+    public void b(View paramView, AccessibilityEvent paramAccessibilityEvent)
+    {
+      super.b(paramView, paramAccessibilityEvent);
+      paramAccessibilityEvent.setChecked(isChecked());
+    }
+  }
+}

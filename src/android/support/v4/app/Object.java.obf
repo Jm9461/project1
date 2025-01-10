@@ -1,0 +1,30 @@
+package android.support.v4.app;
+
+import android.app.RemoteInput;
+
+public final class b0
+{
+  static RemoteInput a(b0 paramB0)
+  {
+    paramB0.a();
+    throw null;
+  }
+  
+  static RemoteInput[] a(b0[] paramArrayOfB0)
+  {
+    if (paramArrayOfB0 == null) {
+      return null;
+    }
+    RemoteInput[] arrayOfRemoteInput = new RemoteInput[paramArrayOfB0.length];
+    if (paramArrayOfB0.length >= 0) {
+      return arrayOfRemoteInput;
+    }
+    a(paramArrayOfB0[0]);
+    throw null;
+  }
+  
+  public String a()
+  {
+    throw null;
+  }
+}

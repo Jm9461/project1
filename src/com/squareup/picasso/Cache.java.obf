@@ -1,0 +1,42 @@
+package com.squareup.picasso;
+
+import android.graphics.Bitmap;
+
+public abstract interface d
+{
+  static
+  {
+    new a();
+  }
+  
+  public abstract int a();
+  
+  public abstract Bitmap a(String paramString);
+  
+  public abstract void a(String paramString, Bitmap paramBitmap);
+  
+  public abstract int size();
+  
+  static final class a
+    implements d
+  {
+    a() {}
+    
+    public int a()
+    {
+      return 0;
+    }
+    
+    public Bitmap a(String paramString)
+    {
+      return null;
+    }
+    
+    public void a(String paramString, Bitmap paramBitmap) {}
+    
+    public int size()
+    {
+      return 0;
+    }
+  }
+}

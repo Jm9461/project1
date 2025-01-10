@@ -1,0 +1,1012 @@
+package com.github.clans.fab;
+
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
+import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class FloatingActionMenu
+  extends ViewGroup
+{
+  private int A;
+  private boolean B;
+  private int C;
+  private float D = 4.0F;
+  private float E = 1.0F;
+  private float F = 3.0F;
+  private int G;
+  private int H;
+  private int I;
+  private Drawable J;
+  private int K;
+  private Interpolator L;
+  private Interpolator M;
+  private boolean N = true;
+  private boolean O;
+  private int P;
+  private int Q;
+  private int R;
+  private int S;
+  private Typeface T;
+  private boolean U = true;
+  private ImageView V;
+  private boolean W;
+  private int a0;
+  private h b0;
+  private AnimatorSet c = new AnimatorSet();
+  private ValueAnimator c0;
+  private AnimatorSet d = new AnimatorSet();
+  private ValueAnimator d0;
+  private AnimatorSet e;
+  private int e0;
+  private int f = g.a(getContext(), 0.0F);
+  private int f0;
+  private FloatingActionButton g;
+  private Context g0;
+  private int h;
+  private String h0;
+  private int i = g.a(getContext(), 0.0F);
+  private boolean i0;
+  private int j = g.a(getContext(), 0.0F);
+  private int k;
+  private boolean l;
+  private boolean m;
+  private Handler n = new Handler();
+  private int o;
+  private int p;
+  private int q = g.a(getContext(), 4.0F);
+  private int r = g.a(getContext(), 8.0F);
+  private int s = g.a(getContext(), 4.0F);
+  private int t = g.a(getContext(), 8.0F);
+  private ColorStateList u;
+  private float v;
+  private int w = g.a(getContext(), 3.0F);
+  private boolean x;
+  private int y;
+  private int z;
+  
+  public FloatingActionMenu(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public FloatingActionMenu(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, 0);
+  }
+  
+  public FloatingActionMenu(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    a(paramContext, paramAttributeSet);
+  }
+  
+  private int a(int paramInt)
+  {
+    double d1 = paramInt;
+    Double.isNaN(d1);
+    double d2 = paramInt;
+    Double.isNaN(d2);
+    return (int)(d1 * 0.03D + d2);
+  }
+  
+  private void a(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    paramAttributeSet = paramContext.obtainStyledAttributes(paramAttributeSet, f.FloatingActionMenu, 0, 0);
+    f = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_buttonSpacing, f);
+    i = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_margin, i);
+    f0 = paramAttributeSet.getInt(f.FloatingActionMenu_menu_labels_position, 0);
+    int i2 = f.FloatingActionMenu_menu_labels_showAnimation;
+    int i1;
+    if (f0 == 0) {
+      i1 = b.fab_slide_in_from_right;
+    } else {
+      i1 = b.fab_slide_in_from_left;
+    }
+    o = paramAttributeSet.getResourceId(i2, i1);
+    i2 = f.FloatingActionMenu_menu_labels_hideAnimation;
+    if (f0 == 0) {
+      i1 = b.fab_slide_out_to_right;
+    } else {
+      i1 = b.fab_slide_out_to_left;
+    }
+    p = paramAttributeSet.getResourceId(i2, i1);
+    q = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_paddingTop, q);
+    r = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_paddingRight, r);
+    s = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_paddingBottom, s);
+    t = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_paddingLeft, t);
+    u = paramAttributeSet.getColorStateList(f.FloatingActionMenu_menu_labels_textColor);
+    if (u == null) {
+      u = ColorStateList.valueOf(-1);
+    }
+    v = paramAttributeSet.getDimension(f.FloatingActionMenu_menu_labels_textSize, getResources().getDimension(c.labels_text_size));
+    w = paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_cornerRadius, w);
+    x = paramAttributeSet.getBoolean(f.FloatingActionMenu_menu_labels_showShadow, true);
+    y = paramAttributeSet.getColor(f.FloatingActionMenu_menu_labels_colorNormal, -13421773);
+    z = paramAttributeSet.getColor(f.FloatingActionMenu_menu_labels_colorPressed, -12303292);
+    A = paramAttributeSet.getColor(f.FloatingActionMenu_menu_labels_colorRipple, 1728053247);
+    B = paramAttributeSet.getBoolean(f.FloatingActionMenu_menu_showShadow, true);
+    C = paramAttributeSet.getColor(f.FloatingActionMenu_menu_shadowColor, 1711276032);
+    D = paramAttributeSet.getDimension(f.FloatingActionMenu_menu_shadowRadius, D);
+    E = paramAttributeSet.getDimension(f.FloatingActionMenu_menu_shadowXOffset, E);
+    F = paramAttributeSet.getDimension(f.FloatingActionMenu_menu_shadowYOffset, F);
+    G = paramAttributeSet.getColor(f.FloatingActionMenu_menu_colorNormal, -2473162);
+    H = paramAttributeSet.getColor(f.FloatingActionMenu_menu_colorPressed, -1617853);
+    I = paramAttributeSet.getColor(f.FloatingActionMenu_menu_colorRipple, -1711276033);
+    K = paramAttributeSet.getInt(f.FloatingActionMenu_menu_animationDelayPerItem, 50);
+    J = paramAttributeSet.getDrawable(f.FloatingActionMenu_menu_icon);
+    if (J == null) {
+      J = getResources().getDrawable(d.fab_add);
+    }
+    O = paramAttributeSet.getBoolean(f.FloatingActionMenu_menu_labels_singleLine, false);
+    P = paramAttributeSet.getInt(f.FloatingActionMenu_menu_labels_ellipsize, 0);
+    Q = paramAttributeSet.getInt(f.FloatingActionMenu_menu_labels_maxLines, -1);
+    R = paramAttributeSet.getInt(f.FloatingActionMenu_menu_fab_size, 0);
+    S = paramAttributeSet.getResourceId(f.FloatingActionMenu_menu_labels_style, 0);
+    paramContext = paramAttributeSet.getString(f.FloatingActionMenu_menu_labels_customFont);
+    try
+    {
+      if (!TextUtils.isEmpty(paramContext)) {
+        T = Typeface.createFromAsset(getContext().getAssets(), paramContext);
+      }
+      a0 = paramAttributeSet.getInt(f.FloatingActionMenu_menu_openDirection, 0);
+      e0 = paramAttributeSet.getColor(f.FloatingActionMenu_menu_backgroundColor, 0);
+      if (paramAttributeSet.hasValue(f.FloatingActionMenu_menu_fab_label))
+      {
+        i0 = true;
+        h0 = paramAttributeSet.getString(f.FloatingActionMenu_menu_fab_label);
+      }
+      if (paramAttributeSet.hasValue(f.FloatingActionMenu_menu_labels_padding)) {
+        b(paramAttributeSet.getDimensionPixelSize(f.FloatingActionMenu_menu_labels_padding, 0));
+      }
+      L = new OvershootInterpolator();
+      M = new AnticipateInterpolator();
+      g0 = new ContextThemeWrapper(getContext(), S);
+      e();
+      d();
+      a(paramAttributeSet);
+      paramAttributeSet.recycle();
+      return;
+    }
+    catch (RuntimeException paramAttributeSet)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Unable to load specified custom font: ");
+      localStringBuilder.append(paramContext);
+      throw new IllegalArgumentException(localStringBuilder.toString(), paramAttributeSet);
+    }
+  }
+  
+  private void a(TypedArray paramTypedArray)
+  {
+    int i1 = paramTypedArray.getResourceId(f.FloatingActionMenu_menu_fab_show_animation, b.fab_scale_up);
+    setMenuButtonShowAnimation(AnimationUtils.loadAnimation(getContext(), i1));
+    AnimationUtils.loadAnimation(getContext(), i1);
+    i1 = paramTypedArray.getResourceId(f.FloatingActionMenu_menu_fab_hide_animation, b.fab_scale_down);
+    setMenuButtonHideAnimation(AnimationUtils.loadAnimation(getContext(), i1));
+    AnimationUtils.loadAnimation(getContext(), i1);
+  }
+  
+  private void a(FloatingActionButton paramFloatingActionButton)
+  {
+    String str = paramFloatingActionButton.getLabelText();
+    if (TextUtils.isEmpty(str)) {
+      return;
+    }
+    a localA = new a(g0);
+    localA.setClickable(true);
+    localA.setFab(paramFloatingActionButton);
+    localA.setShowAnimation(AnimationUtils.loadAnimation(getContext(), o));
+    localA.setHideAnimation(AnimationUtils.loadAnimation(getContext(), p));
+    if (S > 0)
+    {
+      localA.setTextAppearance(getContext(), S);
+      localA.setShowShadow(false);
+      localA.setUsingStyle(true);
+    }
+    else
+    {
+      localA.a(y, z, A);
+      localA.setShowShadow(x);
+      localA.setCornerRadius(w);
+      if (P > 0) {
+        setLabelEllipsize(localA);
+      }
+      localA.setMaxLines(Q);
+      localA.f();
+      localA.setTextSize(0, v);
+      localA.setTextColor(u);
+      int i4 = t;
+      int i3 = q;
+      int i2 = i4;
+      int i1 = i3;
+      if (x)
+      {
+        i2 = i4 + (paramFloatingActionButton.getShadowRadius() + Math.abs(paramFloatingActionButton.getShadowXOffset()));
+        i1 = i3 + (paramFloatingActionButton.getShadowRadius() + Math.abs(paramFloatingActionButton.getShadowYOffset()));
+      }
+      localA.setPadding(i2, i1, t, q);
+      if ((Q < 0) || (O)) {
+        localA.setSingleLine(O);
+      }
+    }
+    Typeface localTypeface = T;
+    if (localTypeface != null) {
+      localA.setTypeface(localTypeface);
+    }
+    localA.setText(str);
+    localA.setOnClickListener(paramFloatingActionButton.getOnClickListener());
+    addView(localA);
+    paramFloatingActionButton.setTag(e.fab_label, localA);
+  }
+  
+  private void b()
+  {
+    int i1 = a0;
+    float f2 = 135.0F;
+    float f1;
+    if (i1 == 0)
+    {
+      if (f0 == 0) {
+        f1 = -135.0F;
+      } else {
+        f1 = 135.0F;
+      }
+      if (f0 == 0) {
+        f2 = -135.0F;
+      }
+    }
+    else
+    {
+      if (f0 == 0) {
+        f1 = 135.0F;
+      } else {
+        f1 = -135.0F;
+      }
+      if (f0 != 0) {
+        f2 = -135.0F;
+      }
+    }
+    ObjectAnimator localObjectAnimator1 = ObjectAnimator.ofFloat(V, "rotation", new float[] { f1, 0.0F });
+    ObjectAnimator localObjectAnimator2 = ObjectAnimator.ofFloat(V, "rotation", new float[] { 0.0F, f2 });
+    c.play(localObjectAnimator2);
+    d.play(localObjectAnimator1);
+    c.setInterpolator(L);
+    d.setInterpolator(M);
+    c.setDuration(300L);
+    d.setDuration(300L);
+  }
+  
+  private void b(int paramInt)
+  {
+    q = paramInt;
+    r = paramInt;
+    s = paramInt;
+    t = paramInt;
+  }
+  
+  private void c()
+  {
+    int i1 = 0;
+    while (i1 < k)
+    {
+      if (getChildAt(i1) != V)
+      {
+        FloatingActionButton localFloatingActionButton1 = (FloatingActionButton)getChildAt(i1);
+        if (localFloatingActionButton1.getTag(e.fab_label) == null)
+        {
+          a(localFloatingActionButton1);
+          FloatingActionButton localFloatingActionButton2 = g;
+          if (localFloatingActionButton1 == localFloatingActionButton2) {
+            localFloatingActionButton2.setOnClickListener(new c());
+          }
+        }
+      }
+      i1 += 1;
+    }
+  }
+  
+  private void d()
+  {
+    g = new FloatingActionButton(getContext());
+    FloatingActionButton localFloatingActionButton = g;
+    boolean bool = B;
+    d = bool;
+    if (bool)
+    {
+      f = g.a(getContext(), D);
+      g.g = g.a(getContext(), E);
+      g.h = g.a(getContext(), F);
+    }
+    g.a(G, H, I);
+    localFloatingActionButton = g;
+    e = C;
+    c = R;
+    localFloatingActionButton.i();
+    g.setLabelText(h0);
+    V = new ImageView(getContext());
+    V.setImageDrawable(J);
+    addView(g, super.generateDefaultLayoutParams());
+    addView(V);
+    b();
+  }
+  
+  private void e()
+  {
+    int i1 = Color.alpha(e0);
+    final int i2 = Color.red(e0);
+    final int i3 = Color.green(e0);
+    final int i4 = Color.blue(e0);
+    c0 = ValueAnimator.ofInt(new int[] { 0, i1 });
+    c0.setDuration(300L);
+    c0.addUpdateListener(new a(i2, i3, i4));
+    d0 = ValueAnimator.ofInt(new int[] { i1, 0 });
+    d0.setDuration(300L);
+    d0.addUpdateListener(new b(i2, i3, i4));
+  }
+  
+  private boolean f()
+  {
+    return e0 != 0;
+  }
+  
+  private void setLabelEllipsize(a paramA)
+  {
+    int i1 = P;
+    if (i1 != 1)
+    {
+      if (i1 != 2)
+      {
+        if (i1 != 3)
+        {
+          if (i1 != 4) {
+            return;
+          }
+          paramA.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+          return;
+        }
+        paramA.setEllipsize(TextUtils.TruncateAt.END);
+        return;
+      }
+      paramA.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+      return;
+    }
+    paramA.setEllipsize(TextUtils.TruncateAt.START);
+  }
+  
+  public void a(final boolean paramBoolean)
+  {
+    if (a())
+    {
+      if (f()) {
+        d0.start();
+      }
+      Object localObject;
+      if (U)
+      {
+        localObject = e;
+        if (localObject != null)
+        {
+          ((AnimatorSet)localObject).start();
+        }
+        else
+        {
+          d.start();
+          c.cancel();
+        }
+      }
+      int i2 = 0;
+      int i3 = 0;
+      m = false;
+      int i1 = 0;
+      while (i1 < getChildCount())
+      {
+        localObject = getChildAt(i1);
+        int i5 = i2;
+        int i4 = i3;
+        if ((localObject instanceof FloatingActionButton))
+        {
+          i5 = i2;
+          i4 = i3;
+          if (((View)localObject).getVisibility() != 8)
+          {
+            i4 = i3 + 1;
+            localObject = (FloatingActionButton)localObject;
+            n.postDelayed(new f((FloatingActionButton)localObject, paramBoolean), i2);
+            i5 = i2 + K;
+          }
+        }
+        i1 += 1;
+        i2 = i5;
+        i3 = i4;
+      }
+      n.postDelayed(new g(), K * (i3 + 1));
+    }
+  }
+  
+  public boolean a()
+  {
+    return l;
+  }
+  
+  public void b(final boolean paramBoolean)
+  {
+    if (!a())
+    {
+      if (f()) {
+        c0.start();
+      }
+      Object localObject;
+      if (U)
+      {
+        localObject = e;
+        if (localObject != null)
+        {
+          ((AnimatorSet)localObject).start();
+        }
+        else
+        {
+          d.cancel();
+          c.start();
+        }
+      }
+      int i2 = 0;
+      int i3 = 0;
+      m = true;
+      int i1 = getChildCount() - 1;
+      while (i1 >= 0)
+      {
+        localObject = getChildAt(i1);
+        int i5 = i2;
+        int i4 = i3;
+        if ((localObject instanceof FloatingActionButton))
+        {
+          i5 = i2;
+          i4 = i3;
+          if (((View)localObject).getVisibility() != 8)
+          {
+            i4 = i3 + 1;
+            localObject = (FloatingActionButton)localObject;
+            n.postDelayed(new d((FloatingActionButton)localObject, paramBoolean), i2);
+            i5 = i2 + K;
+          }
+        }
+        i1 -= 1;
+        i2 = i5;
+        i3 = i4;
+      }
+      n.postDelayed(new e(), K * (i3 + 1));
+    }
+  }
+  
+  public void c(boolean paramBoolean)
+  {
+    if (a())
+    {
+      a(paramBoolean);
+      return;
+    }
+    b(paramBoolean);
+  }
+  
+  protected boolean checkLayoutParams(ViewGroup.LayoutParams paramLayoutParams)
+  {
+    return paramLayoutParams instanceof ViewGroup.MarginLayoutParams;
+  }
+  
+  protected ViewGroup.MarginLayoutParams generateDefaultLayoutParams()
+  {
+    return new ViewGroup.MarginLayoutParams(-2, -2);
+  }
+  
+  public ViewGroup.MarginLayoutParams generateLayoutParams(AttributeSet paramAttributeSet)
+  {
+    return new ViewGroup.MarginLayoutParams(getContext(), paramAttributeSet);
+  }
+  
+  protected ViewGroup.MarginLayoutParams generateLayoutParams(ViewGroup.LayoutParams paramLayoutParams)
+  {
+    return new ViewGroup.MarginLayoutParams(paramLayoutParams);
+  }
+  
+  public int getAnimationDelayPerItem()
+  {
+    return K;
+  }
+  
+  public AnimatorSet getIconToggleAnimatorSet()
+  {
+    return e;
+  }
+  
+  public int getMenuButtonColorNormal()
+  {
+    return G;
+  }
+  
+  public int getMenuButtonColorPressed()
+  {
+    return H;
+  }
+  
+  public int getMenuButtonColorRipple()
+  {
+    return I;
+  }
+  
+  public String getMenuButtonLabelText()
+  {
+    return h0;
+  }
+  
+  public ImageView getMenuIconView()
+  {
+    return V;
+  }
+  
+  protected void onFinishInflate()
+  {
+    super.onFinishInflate();
+    bringChildToFront(g);
+    bringChildToFront(V);
+    k = getChildCount();
+    c();
+  }
+  
+  protected void onLayout(boolean paramBoolean, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    if (f0 == 0) {
+      paramInt3 = paramInt3 - paramInt1 - h / 2 - getPaddingRight();
+    } else {
+      paramInt3 = h / 2 + getPaddingLeft();
+    }
+    int i1;
+    if (a0 == 0) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    if (i1 != 0) {
+      paramInt1 = paramInt4 - paramInt2 - g.getMeasuredHeight() - getPaddingBottom();
+    } else {
+      paramInt1 = getPaddingTop();
+    }
+    paramInt4 = paramInt3 - g.getMeasuredWidth() / 2;
+    Object localObject = g;
+    ((ImageButton)localObject).layout(paramInt4, paramInt1, ((ImageButton)localObject).getMeasuredWidth() + paramInt4, g.getMeasuredHeight() + paramInt1);
+    paramInt2 = paramInt3 - V.getMeasuredWidth() / 2;
+    int i2 = g.getMeasuredHeight() / 2 + paramInt1 - V.getMeasuredHeight() / 2;
+    localObject = V;
+    ((ImageView)localObject).layout(paramInt2, i2, ((ImageView)localObject).getMeasuredWidth() + paramInt2, V.getMeasuredHeight() + i2);
+    if (i1 != 0) {
+      paramInt2 = g.getMeasuredHeight() + paramInt1 + f;
+    } else {
+      paramInt2 = paramInt1;
+    }
+    int i3 = k - 1;
+    i2 = paramInt1;
+    while (i3 >= 0)
+    {
+      localObject = getChildAt(i3);
+      FloatingActionButton localFloatingActionButton;
+      if (localObject != V)
+      {
+        localFloatingActionButton = (FloatingActionButton)localObject;
+        if (localFloatingActionButton.getVisibility() == 8) {}
+      }
+      else
+      {
+        paramInt1 = paramInt3 - localFloatingActionButton.getMeasuredWidth() / 2;
+        int i4;
+        if (i1 != 0) {
+          i4 = paramInt2 - localFloatingActionButton.getMeasuredHeight() - f;
+        } else {
+          i4 = paramInt2;
+        }
+        if (localFloatingActionButton != g)
+        {
+          localFloatingActionButton.layout(paramInt1, i4, localFloatingActionButton.getMeasuredWidth() + paramInt1, localFloatingActionButton.getMeasuredHeight() + i4);
+          if (!m) {
+            localFloatingActionButton.a(false);
+          }
+        }
+        View localView = (View)localFloatingActionButton.getTag(e.fab_label);
+        if (localView != null)
+        {
+          if (i0) {
+            paramInt1 = h;
+          } else {
+            paramInt1 = localFloatingActionButton.getMeasuredWidth();
+          }
+          paramInt1 = paramInt1 / 2 + i;
+          if (f0 == 0) {
+            paramInt1 = paramInt3 - paramInt1;
+          } else {
+            paramInt1 = paramInt3 + paramInt1;
+          }
+          if (f0 == 0) {
+            paramInt2 = paramInt1 - localView.getMeasuredWidth();
+          } else {
+            paramInt2 = localView.getMeasuredWidth() + paramInt1;
+          }
+          int i5;
+          if (f0 == 0) {
+            i5 = paramInt2;
+          } else {
+            i5 = paramInt1;
+          }
+          if (f0 != 0) {
+            paramInt1 = paramInt2;
+          }
+          paramInt2 = i4 - j + (localFloatingActionButton.getMeasuredHeight() - localView.getMeasuredHeight()) / 2;
+          localView.layout(i5, paramInt2, paramInt1, paramInt2 + localView.getMeasuredHeight());
+          if (!m) {
+            localView.setVisibility(4);
+          }
+        }
+        if (i1 != 0) {
+          paramInt1 = i4 - f;
+        } else {
+          paramInt1 = ((View)localObject).getMeasuredHeight() + i4 + f;
+        }
+        paramInt2 = paramInt1;
+      }
+      i3 -= 1;
+    }
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    h = 0;
+    int i3 = 0;
+    measureChildWithMargins(V, paramInt1, 0, paramInt2, 0);
+    int i1 = 0;
+    View localView;
+    while (i1 < k)
+    {
+      localView = getChildAt(i1);
+      if ((localView.getVisibility() != 8) && (localView != V))
+      {
+        measureChildWithMargins(localView, paramInt1, 0, paramInt2, 0);
+        h = Math.max(h, localView.getMeasuredWidth());
+      }
+      i1 += 1;
+    }
+    int i2 = 0;
+    int i4 = 0;
+    for (;;)
+    {
+      i1 = k;
+      int i6 = 1;
+      if (i2 >= i1) {
+        break;
+      }
+      localView = getChildAt(i2);
+      i1 = i4;
+      int i5 = i3;
+      if (localView.getVisibility() != 8) {
+        if (localView == V)
+        {
+          i1 = i4;
+          i5 = i3;
+        }
+        else
+        {
+          i5 = localView.getMeasuredWidth();
+          i1 = i4 + localView.getMeasuredHeight();
+          a localA = (a)localView.getTag(e.fab_label);
+          if (localA != null)
+          {
+            int i7 = h;
+            int i8 = localView.getMeasuredWidth();
+            if (i0) {
+              i4 = i6;
+            } else {
+              i4 = 2;
+            }
+            i4 = (i7 - i8) / i4;
+            measureChildWithMargins(localA, paramInt1, localView.getMeasuredWidth() + localA.b() + i + i4, paramInt2, 0);
+            i5 = Math.max(i3, 0 + i5 + localA.getMeasuredWidth() + i4);
+          }
+          else
+          {
+            i5 = i3;
+          }
+        }
+      }
+      i2 += 1;
+      i4 = i1;
+      i3 = i5;
+    }
+    i2 = Math.max(h, i + i3) + getPaddingLeft() + getPaddingRight();
+    i1 = a(i4 + (f * (k - 1) + getPaddingTop() + getPaddingBottom()));
+    if (getLayoutParamswidth == -1) {
+      paramInt1 = ViewGroup.getDefaultSize(getSuggestedMinimumWidth(), paramInt1);
+    } else {
+      paramInt1 = i2;
+    }
+    if (getLayoutParamsheight == -1) {
+      paramInt2 = ViewGroup.getDefaultSize(getSuggestedMinimumHeight(), paramInt2);
+    } else {
+      paramInt2 = i1;
+    }
+    setMeasuredDimension(paramInt1, paramInt2);
+  }
+  
+  public boolean onTouchEvent(MotionEvent paramMotionEvent)
+  {
+    if (W)
+    {
+      int i1 = paramMotionEvent.getAction();
+      if (i1 != 0)
+      {
+        if (i1 != 1) {
+          return false;
+        }
+        a(N);
+        return true;
+      }
+      return a();
+    }
+    return super.onTouchEvent(paramMotionEvent);
+  }
+  
+  public void setAnimated(boolean paramBoolean)
+  {
+    N = paramBoolean;
+    AnimatorSet localAnimatorSet = c;
+    long l2 = 300L;
+    long l1;
+    if (paramBoolean) {
+      l1 = 300L;
+    } else {
+      l1 = 0L;
+    }
+    localAnimatorSet.setDuration(l1);
+    localAnimatorSet = d;
+    if (paramBoolean) {
+      l1 = l2;
+    } else {
+      l1 = 0L;
+    }
+    localAnimatorSet.setDuration(l1);
+  }
+  
+  public void setAnimationDelayPerItem(int paramInt)
+  {
+    K = paramInt;
+  }
+  
+  public void setClosedOnTouchOutside(boolean paramBoolean)
+  {
+    W = paramBoolean;
+  }
+  
+  public void setIconAnimated(boolean paramBoolean)
+  {
+    U = paramBoolean;
+  }
+  
+  public void setIconAnimationCloseInterpolator(Interpolator paramInterpolator)
+  {
+    d.setInterpolator(paramInterpolator);
+  }
+  
+  public void setIconAnimationInterpolator(Interpolator paramInterpolator)
+  {
+    c.setInterpolator(paramInterpolator);
+    d.setInterpolator(paramInterpolator);
+  }
+  
+  public void setIconAnimationOpenInterpolator(Interpolator paramInterpolator)
+  {
+    c.setInterpolator(paramInterpolator);
+  }
+  
+  public void setIconToggleAnimatorSet(AnimatorSet paramAnimatorSet)
+  {
+    e = paramAnimatorSet;
+  }
+  
+  public void setMenuButtonColorNormal(int paramInt)
+  {
+    G = paramInt;
+    g.setColorNormal(paramInt);
+  }
+  
+  public void setMenuButtonColorNormalResId(int paramInt)
+  {
+    G = getResources().getColor(paramInt);
+    g.setColorNormalResId(paramInt);
+  }
+  
+  public void setMenuButtonColorPressed(int paramInt)
+  {
+    H = paramInt;
+    g.setColorPressed(paramInt);
+  }
+  
+  public void setMenuButtonColorPressedResId(int paramInt)
+  {
+    H = getResources().getColor(paramInt);
+    g.setColorPressedResId(paramInt);
+  }
+  
+  public void setMenuButtonColorRipple(int paramInt)
+  {
+    I = paramInt;
+    g.setColorRipple(paramInt);
+  }
+  
+  public void setMenuButtonColorRippleResId(int paramInt)
+  {
+    I = getResources().getColor(paramInt);
+    g.setColorRippleResId(paramInt);
+  }
+  
+  public void setMenuButtonHideAnimation(Animation paramAnimation)
+  {
+    g.setHideAnimation(paramAnimation);
+  }
+  
+  public void setMenuButtonLabelText(String paramString)
+  {
+    g.setLabelText(paramString);
+  }
+  
+  public void setMenuButtonShowAnimation(Animation paramAnimation)
+  {
+    g.setShowAnimation(paramAnimation);
+  }
+  
+  public void setOnMenuButtonClickListener(View.OnClickListener paramOnClickListener)
+  {
+    g.setOnClickListener(paramOnClickListener);
+  }
+  
+  public void setOnMenuButtonLongClickListener(View.OnLongClickListener paramOnLongClickListener)
+  {
+    g.setOnLongClickListener(paramOnLongClickListener);
+  }
+  
+  public void setOnMenuToggleListener(h paramH)
+  {
+    b0 = paramH;
+  }
+  
+  class a
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    a(int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      paramValueAnimator = (Integer)paramValueAnimator.getAnimatedValue();
+      setBackgroundColor(Color.argb(paramValueAnimator.intValue(), i2, i3, i4));
+    }
+  }
+  
+  class b
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    b(int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      paramValueAnimator = (Integer)paramValueAnimator.getAnimatedValue();
+      setBackgroundColor(Color.argb(paramValueAnimator.intValue(), i2, i3, i4));
+    }
+  }
+  
+  class c
+    implements View.OnClickListener
+  {
+    c() {}
+    
+    public void onClick(View paramView)
+    {
+      paramView = FloatingActionMenu.this;
+      paramView.c(FloatingActionMenu.a(paramView));
+    }
+  }
+  
+  class d
+    implements Runnable
+  {
+    d(FloatingActionButton paramFloatingActionButton, boolean paramBoolean) {}
+    
+    public void run()
+    {
+      if (a()) {
+        return;
+      }
+      if (c != FloatingActionMenu.b(FloatingActionMenu.this)) {
+        c.b(paramBoolean);
+      }
+      a localA = (a)c.getTag(e.fab_label);
+      if ((localA != null) && (localA.c())) {
+        localA.b(paramBoolean);
+      }
+    }
+  }
+  
+  class e
+    implements Runnable
+  {
+    e() {}
+    
+    public void run()
+    {
+      FloatingActionMenu.a(FloatingActionMenu.this, true);
+      if (FloatingActionMenu.c(FloatingActionMenu.this) != null) {
+        FloatingActionMenu.c(FloatingActionMenu.this).a(true);
+      }
+    }
+  }
+  
+  class f
+    implements Runnable
+  {
+    f(FloatingActionButton paramFloatingActionButton, boolean paramBoolean) {}
+    
+    public void run()
+    {
+      if (!a()) {
+        return;
+      }
+      if (c != FloatingActionMenu.b(FloatingActionMenu.this)) {
+        c.a(paramBoolean);
+      }
+      a localA = (a)c.getTag(e.fab_label);
+      if ((localA != null) && (localA.c())) {
+        localA.a(paramBoolean);
+      }
+    }
+  }
+  
+  class g
+    implements Runnable
+  {
+    g() {}
+    
+    public void run()
+    {
+      FloatingActionMenu.a(FloatingActionMenu.this, false);
+      if (FloatingActionMenu.c(FloatingActionMenu.this) != null) {
+        FloatingActionMenu.c(FloatingActionMenu.this).a(false);
+      }
+    }
+  }
+  
+  public static abstract interface h
+  {
+    public abstract void a(boolean paramBoolean);
+  }
+}

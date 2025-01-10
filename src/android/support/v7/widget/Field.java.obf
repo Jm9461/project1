@@ -1,0 +1,6 @@
+package android.support.v7.widget;
+
+public abstract interface s1
+{
+  public abstract CharSequence a();
+}

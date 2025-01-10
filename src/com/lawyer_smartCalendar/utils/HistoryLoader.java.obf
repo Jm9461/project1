@@ -1,0 +1,8 @@
+package com.lawyer_smartCalendar.utils;
+
+import com.lawyer_smartCalendar.activity.MainActivity;
+
+public class b
+{
+  public static MainActivity a;
+}

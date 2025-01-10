@@ -1,0 +1,90 @@
+package b.e.a.a;
+
+import android.view.View;
+import android.view.animation.Interpolator;
+import b.h.a.a.a;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class c
+{
+  private a a;
+  private long b;
+  private long c;
+  private Interpolator d;
+  private List<a.a> e;
+  private View f;
+  
+  private c(b paramB)
+  {
+    a = b.a(paramB);
+    b = b.b(paramB);
+    c = b.c(paramB);
+    d = b.d(paramB);
+    e = b.e(paramB);
+    f = b.f(paramB);
+  }
+  
+  private a a()
+  {
+    Object localObject = a;
+    ((a)localObject).a(b);
+    ((a)localObject).a(d);
+    ((a)localObject).b(c);
+    if (e.size() > 0)
+    {
+      localObject = e.iterator();
+      while (((Iterator)localObject).hasNext())
+      {
+        a.a localA = (a.a)((Iterator)localObject).next();
+        a.a(localA);
+      }
+    }
+    a.a(f);
+    return a;
+  }
+  
+  public static b a(b paramB)
+  {
+    return new b(paramB, null);
+  }
+  
+  public static final class b
+  {
+    private List<a.a> a = new ArrayList();
+    private a b;
+    private long c = 1000L;
+    private long d = 0L;
+    private Interpolator e;
+    private View f;
+    
+    private b(b paramB)
+    {
+      b = paramB.a();
+    }
+    
+    public b a(long paramLong)
+    {
+      c = paramLong;
+      return this;
+    }
+    
+    public b a(a.a paramA)
+    {
+      a.add(paramA);
+      return this;
+    }
+    
+    public c.c a(View paramView)
+    {
+      f = paramView;
+      return new c.c(c.a(new c(this, null)), f, null);
+    }
+  }
+  
+  public static final class c
+  {
+    private c(a paramA, View paramView) {}
+  }
+}

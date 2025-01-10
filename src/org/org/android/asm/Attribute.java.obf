@@ -1,0 +1,148 @@
+package a.b.c.l;
+
+import a.b.g.g.n;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.Log;
+import java.util.ArrayList;
+import java.util.List;
+
+public class h
+{
+  private final n<String, i> a = new n();
+  
+  public h() {}
+  
+  public static h a(Context paramContext, int paramInt)
+  {
+    try
+    {
+      paramContext = AnimatorInflater.loadAnimator(paramContext, paramInt);
+      if ((paramContext instanceof AnimatorSet)) {
+        return a(((AnimatorSet)paramContext).getChildAnimations());
+      }
+      if (paramContext != null)
+      {
+        localObject = new ArrayList();
+        ((List)localObject).add(paramContext);
+        paramContext = a((List)localObject);
+        return paramContext;
+      }
+      return null;
+    }
+    catch (Exception paramContext)
+    {
+      Object localObject = new StringBuilder();
+      ((StringBuilder)localObject).append("Can't load animation resource ID #0x");
+      ((StringBuilder)localObject).append(Integer.toHexString(paramInt));
+      Log.w("MotionSpec", ((StringBuilder)localObject).toString(), paramContext);
+    }
+    return null;
+  }
+  
+  public static h a(Context paramContext, TypedArray paramTypedArray, int paramInt)
+  {
+    if (paramTypedArray.hasValue(paramInt))
+    {
+      paramInt = paramTypedArray.getResourceId(paramInt, 0);
+      if (paramInt != 0) {
+        return a(paramContext, paramInt);
+      }
+    }
+    return null;
+  }
+  
+  private static h a(List<Animator> paramList)
+  {
+    h localH = new h();
+    int i = 0;
+    int j = paramList.size();
+    while (i < j)
+    {
+      a(localH, (Animator)paramList.get(i));
+      i += 1;
+    }
+    return localH;
+  }
+  
+  private static void a(h paramH, Animator paramAnimator)
+  {
+    if ((paramAnimator instanceof ObjectAnimator))
+    {
+      paramAnimator = (ObjectAnimator)paramAnimator;
+      paramH.a(paramAnimator.getPropertyName(), i.a(paramAnimator));
+      return;
+    }
+    paramH = new StringBuilder();
+    paramH.append("Animator must be an ObjectAnimator: ");
+    paramH.append(paramAnimator);
+    throw new IllegalArgumentException(paramH.toString());
+  }
+  
+  public long a()
+  {
+    long l = 0L;
+    int i = 0;
+    int j = a.size();
+    while (i < j)
+    {
+      i localI = (i)a.d(i);
+      l = Math.max(l, localI.a() + localI.b());
+      i += 1;
+    }
+    return l;
+  }
+  
+  public i a(String paramString)
+  {
+    if (b(paramString)) {
+      return (i)a.get(paramString);
+    }
+    throw new IllegalArgumentException();
+  }
+  
+  public void a(String paramString, i paramI)
+  {
+    a.put(paramString, paramI);
+  }
+  
+  public boolean b(String paramString)
+  {
+    return a.get(paramString) != null;
+  }
+  
+  public boolean equals(Object paramObject)
+  {
+    if (this == paramObject) {
+      return true;
+    }
+    if ((paramObject != null) && (getClass() == paramObject.getClass()))
+    {
+      paramObject = (h)paramObject;
+      return a.equals(a);
+    }
+    return false;
+  }
+  
+  public int hashCode()
+  {
+    return a.hashCode();
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append('\n');
+    localStringBuilder.append(getClass().getName());
+    localStringBuilder.append('{');
+    localStringBuilder.append(Integer.toHexString(System.identityHashCode(this)));
+    localStringBuilder.append(" timings: ");
+    localStringBuilder.append(a);
+    localStringBuilder.append("}\n");
+    return localStringBuilder.toString();
+  }
+}

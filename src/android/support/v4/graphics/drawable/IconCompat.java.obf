@@ -1,0 +1,300 @@
+package android.support.v4.graphics.drawable;
+
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Icon;
+import android.os.Build.VERSION;
+import android.os.Parcelable;
+import android.util.Log;
+import androidx.versionedparcelable.CustomVersionedParcelable;
+import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+
+public class IconCompat
+  extends CustomVersionedParcelable
+{
+  static final PorterDuff.Mode j = PorterDuff.Mode.SRC_IN;
+  public int a;
+  Object b;
+  public byte[] c;
+  public Parcelable d;
+  public int e;
+  public int f;
+  public ColorStateList g = null;
+  PorterDuff.Mode h = j;
+  public String i;
+  
+  public IconCompat() {}
+  
+  private static int a(Icon paramIcon)
+  {
+    if (Build.VERSION.SDK_INT >= 28) {
+      return paramIcon.getResId();
+    }
+    try
+    {
+      int k = ((Integer)paramIcon.getClass().getMethod("getResId", new Class[0]).invoke(paramIcon, new Object[0])).intValue();
+      return k;
+    }
+    catch (NoSuchMethodException paramIcon)
+    {
+      Log.e("IconCompat", "Unable to get icon resource", paramIcon);
+      return 0;
+    }
+    catch (InvocationTargetException paramIcon)
+    {
+      Log.e("IconCompat", "Unable to get icon resource", paramIcon);
+      return 0;
+    }
+    catch (IllegalAccessException paramIcon)
+    {
+      Log.e("IconCompat", "Unable to get icon resource", paramIcon);
+    }
+    return 0;
+  }
+  
+  private static String a(int paramInt)
+  {
+    if (paramInt != 1)
+    {
+      if (paramInt != 2)
+      {
+        if (paramInt != 3)
+        {
+          if (paramInt != 4)
+          {
+            if (paramInt != 5) {
+              return "UNKNOWN";
+            }
+            return "BITMAP_MASKABLE";
+          }
+          return "URI";
+        }
+        return "DATA";
+      }
+      return "RESOURCE";
+    }
+    return "BITMAP";
+  }
+  
+  private static String b(Icon paramIcon)
+  {
+    if (Build.VERSION.SDK_INT >= 28) {
+      return paramIcon.getResPackage();
+    }
+    try
+    {
+      paramIcon = (String)paramIcon.getClass().getMethod("getResPackage", new Class[0]).invoke(paramIcon, new Object[0]);
+      return paramIcon;
+    }
+    catch (NoSuchMethodException paramIcon)
+    {
+      Log.e("IconCompat", "Unable to get icon package", paramIcon);
+      return null;
+    }
+    catch (InvocationTargetException paramIcon)
+    {
+      Log.e("IconCompat", "Unable to get icon package", paramIcon);
+      return null;
+    }
+    catch (IllegalAccessException paramIcon)
+    {
+      Log.e("IconCompat", "Unable to get icon package", paramIcon);
+    }
+    return null;
+  }
+  
+  public int a()
+  {
+    if ((a == -1) && (Build.VERSION.SDK_INT >= 23)) {
+      return a((Icon)b);
+    }
+    if (a == 2) {
+      return e;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("called getResId() on ");
+    localStringBuilder.append(this);
+    throw new IllegalStateException(localStringBuilder.toString());
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    i = h.name();
+    int k = a;
+    if (k != -1)
+    {
+      if (k != 1) {
+        if (k != 2)
+        {
+          if (k != 3)
+          {
+            if (k != 4)
+            {
+              if (k == 5) {}
+            }
+            else {
+              c = b.toString().getBytes(Charset.forName("UTF-16"));
+            }
+          }
+          else {
+            c = ((byte[])b);
+          }
+        }
+        else
+        {
+          c = ((String)b).getBytes(Charset.forName("UTF-16"));
+          return;
+        }
+      }
+      if (paramBoolean)
+      {
+        Bitmap localBitmap = (Bitmap)b;
+        ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream();
+        localBitmap.compress(Bitmap.CompressFormat.PNG, 90, localByteArrayOutputStream);
+        c = localByteArrayOutputStream.toByteArray();
+        return;
+      }
+      d = ((Parcelable)b);
+      return;
+    }
+    if (!paramBoolean)
+    {
+      d = ((Parcelable)b);
+      return;
+    }
+    throw new IllegalArgumentException("Can't serialize Icon created with IconCompat#createFromIcon");
+  }
+  
+  public String b()
+  {
+    if ((a == -1) && (Build.VERSION.SDK_INT >= 23)) {
+      return b((Icon)b);
+    }
+    if (a == 2) {
+      return ((String)b).split(":", -1)[0];
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("called getResPackage() on ");
+    localStringBuilder.append(this);
+    throw new IllegalStateException(localStringBuilder.toString());
+  }
+  
+  public void c()
+  {
+    h = PorterDuff.Mode.valueOf(i);
+    int k = a;
+    if (k != -1)
+    {
+      if (k != 1)
+      {
+        if (k != 2) {
+          if (k != 3)
+          {
+            if (k != 4) {
+              if (k == 5) {
+                break label77;
+              }
+            }
+          }
+          else
+          {
+            b = c;
+            return;
+          }
+        }
+        b = new String(c, Charset.forName("UTF-16"));
+        return;
+      }
+      label77:
+      localObject = d;
+      if (localObject != null)
+      {
+        b = localObject;
+        return;
+      }
+      localObject = c;
+      b = localObject;
+      a = 3;
+      e = 0;
+      f = localObject.length;
+      return;
+    }
+    Object localObject = d;
+    if (localObject != null)
+    {
+      b = localObject;
+      return;
+    }
+    throw new IllegalArgumentException("Invalid icon");
+  }
+  
+  public String toString()
+  {
+    if (a == -1) {
+      return String.valueOf(b);
+    }
+    StringBuilder localStringBuilder = new StringBuilder("Icon(typ=").append(a(a));
+    int k = a;
+    if (k != 1) {
+      if (k != 2)
+      {
+        if (k != 3)
+        {
+          if (k != 4)
+          {
+            if (k != 5) {
+              break label224;
+            }
+          }
+          else
+          {
+            localStringBuilder.append(" uri=");
+            localStringBuilder.append(b);
+            break label224;
+          }
+        }
+        else
+        {
+          localStringBuilder.append(" len=");
+          localStringBuilder.append(e);
+          if (f == 0) {
+            break label224;
+          }
+          localStringBuilder.append(" off=");
+          localStringBuilder.append(f);
+          break label224;
+        }
+      }
+      else
+      {
+        localStringBuilder.append(" pkg=");
+        localStringBuilder.append(b());
+        localStringBuilder.append(" id=");
+        localStringBuilder.append(String.format("0x%08x", new Object[] { Integer.valueOf(a()) }));
+        break label224;
+      }
+    }
+    localStringBuilder.append(" size=");
+    localStringBuilder.append(((Bitmap)b).getWidth());
+    localStringBuilder.append("x");
+    localStringBuilder.append(((Bitmap)b).getHeight());
+    label224:
+    if (g != null)
+    {
+      localStringBuilder.append(" tint=");
+      localStringBuilder.append(g);
+    }
+    if (h != j)
+    {
+      localStringBuilder.append(" mode=");
+      localStringBuilder.append(h);
+    }
+    localStringBuilder.append(")");
+    return localStringBuilder.toString();
+  }
+}

@@ -1,0 +1,90 @@
+package com.lawyer_smartCalendar.a;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import com.lawyer_smartCalendar.activity.ImageActivity;
+import com.rey.material.widget.Button;
+import com.squareup.picasso.t;
+import com.squareup.picasso.x;
+import java.io.File;
+import java.util.List;
+
+public class p
+  extends RecyclerView.g<a>
+{
+  private Context c;
+  private List<File> d;
+  
+  public p(Context paramContext, RecyclerView paramRecyclerView, List<File> paramList)
+  {
+    c = paramContext;
+    d = paramList;
+  }
+  
+  public int a()
+  {
+    return d.size();
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    x localX = t.b().a((File)d.get(paramInt));
+    localX.c();
+    localX.a();
+    localX.a(v);
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(c).inflate(2131493053, paramViewGroup, false));
+  }
+  
+  protected class a
+    extends RecyclerView.d0
+  {
+    public ImageView v;
+    public Button w;
+    
+    public a(View paramView)
+    {
+      super();
+      paramView.setOnClickListener(new a(p.this));
+      v = ((ImageView)paramView.findViewById(2131296472));
+      w = ((Button)paramView.findViewById(2131296351));
+      w.setOnClickListener(new b(p.this));
+    }
+    
+    class a
+      implements View.OnClickListener
+    {
+      a(p paramP) {}
+      
+      public void onClick(View paramView)
+      {
+        paramView = new Intent(p.a(p.this), ImageActivity.class);
+        paramView.putExtra("image", ((File)p.b(p.this).get(f())).getPath());
+        p.a(p.this).startActivity(paramView);
+      }
+    }
+    
+    class b
+      implements View.OnClickListener
+    {
+      b(p paramP) {}
+      
+      public void onClick(View paramView)
+      {
+        p.b(p.this).remove(f());
+        d();
+      }
+    }
+  }
+}

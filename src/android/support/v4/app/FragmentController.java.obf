@@ -1,0 +1,151 @@
+package android.support.v4.app;
+
+import android.content.Context;
+import android.content.res.Configuration;
+import android.os.Parcelable;
+import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+
+public class i
+{
+  private final j<?> a;
+  
+  private i(j<?> paramJ)
+  {
+    a = paramJ;
+  }
+  
+  public static i a(j<?> paramJ)
+  {
+    return new i(paramJ);
+  }
+  
+  public f a(String paramString)
+  {
+    return a.d.b(paramString);
+  }
+  
+  public View a(View paramView, String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    return a.d.onCreateView(paramView, paramString, paramContext, paramAttributeSet);
+  }
+  
+  public void a()
+  {
+    a.d.e();
+  }
+  
+  public void a(Configuration paramConfiguration)
+  {
+    a.d.a(paramConfiguration);
+  }
+  
+  public void a(Parcelable paramParcelable, m paramM)
+  {
+    a.d.a(paramParcelable, paramM);
+  }
+  
+  public void a(f paramF)
+  {
+    j localJ = a;
+    d.a(localJ, localJ, paramF);
+  }
+  
+  public void a(Menu paramMenu)
+  {
+    a.d.a(paramMenu);
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    a.d.a(paramBoolean);
+  }
+  
+  public boolean a(Menu paramMenu, MenuInflater paramMenuInflater)
+  {
+    return a.d.a(paramMenu, paramMenuInflater);
+  }
+  
+  public boolean a(MenuItem paramMenuItem)
+  {
+    return a.d.a(paramMenuItem);
+  }
+  
+  public void b()
+  {
+    a.d.f();
+  }
+  
+  public void b(boolean paramBoolean)
+  {
+    a.d.b(paramBoolean);
+  }
+  
+  public boolean b(Menu paramMenu)
+  {
+    return a.d.b(paramMenu);
+  }
+  
+  public boolean b(MenuItem paramMenuItem)
+  {
+    return a.d.b(paramMenuItem);
+  }
+  
+  public void c()
+  {
+    a.d.g();
+  }
+  
+  public void d()
+  {
+    a.d.i();
+  }
+  
+  public void e()
+  {
+    a.d.j();
+  }
+  
+  public void f()
+  {
+    a.d.k();
+  }
+  
+  public void g()
+  {
+    a.d.l();
+  }
+  
+  public void h()
+  {
+    a.d.m();
+  }
+  
+  public boolean i()
+  {
+    return a.d.o();
+  }
+  
+  public k j()
+  {
+    return a.d();
+  }
+  
+  public void k()
+  {
+    a.d.r();
+  }
+  
+  public m l()
+  {
+    return a.d.t();
+  }
+  
+  public Parcelable m()
+  {
+    return a.d.u();
+  }
+}

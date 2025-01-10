@@ -1,0 +1,60 @@
+package android.support.design.widget;
+
+import android.support.v4.view.u;
+import android.view.View;
+
+class y
+{
+  private final View a;
+  private int b;
+  private int c;
+  private int d;
+  private int e;
+  
+  public y(View paramView)
+  {
+    a = paramView;
+  }
+  
+  private void c()
+  {
+    View localView = a;
+    u.d(localView, d - (localView.getTop() - b));
+    localView = a;
+    u.c(localView, e - (localView.getLeft() - c));
+  }
+  
+  public int a()
+  {
+    return d;
+  }
+  
+  public boolean a(int paramInt)
+  {
+    if (e != paramInt)
+    {
+      e = paramInt;
+      c();
+      return true;
+    }
+    return false;
+  }
+  
+  public void b()
+  {
+    b = a.getTop();
+    c = a.getLeft();
+    c();
+  }
+  
+  public boolean b(int paramInt)
+  {
+    if (d != paramInt)
+    {
+      d = paramInt;
+      c();
+      return true;
+    }
+    return false;
+  }
+}

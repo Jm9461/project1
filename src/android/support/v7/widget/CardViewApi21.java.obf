@@ -1,0 +1,102 @@
+package android.support.v7.widget;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.view.View;
+
+class z
+  implements c0
+{
+  z() {}
+  
+  private x0 j(b0 paramB0)
+  {
+    return (x0)paramB0.c();
+  }
+  
+  public float a(b0 paramB0)
+  {
+    return g(paramB0) * 2.0F;
+  }
+  
+  public void a() {}
+  
+  public void a(b0 paramB0, float paramFloat)
+  {
+    j(paramB0).a(paramFloat);
+  }
+  
+  public void a(b0 paramB0, Context paramContext, ColorStateList paramColorStateList, float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    paramB0.a(new x0(paramColorStateList, paramFloat1));
+    paramContext = paramB0.a();
+    paramContext.setClipToOutline(true);
+    paramContext.setElevation(paramFloat2);
+    c(paramB0, paramFloat3);
+  }
+  
+  public void a(b0 paramB0, ColorStateList paramColorStateList)
+  {
+    j(paramB0).a(paramColorStateList);
+  }
+  
+  public float b(b0 paramB0)
+  {
+    return g(paramB0) * 2.0F;
+  }
+  
+  public void b(b0 paramB0, float paramFloat)
+  {
+    paramB0.a().setElevation(paramFloat);
+  }
+  
+  public void c(b0 paramB0)
+  {
+    c(paramB0, h(paramB0));
+  }
+  
+  public void c(b0 paramB0, float paramFloat)
+  {
+    j(paramB0).a(paramFloat, paramB0.b(), paramB0.d());
+    i(paramB0);
+  }
+  
+  public float d(b0 paramB0)
+  {
+    return paramB0.a().getElevation();
+  }
+  
+  public ColorStateList e(b0 paramB0)
+  {
+    return j(paramB0).a();
+  }
+  
+  public void f(b0 paramB0)
+  {
+    c(paramB0, h(paramB0));
+  }
+  
+  public float g(b0 paramB0)
+  {
+    return j(paramB0).c();
+  }
+  
+  public float h(b0 paramB0)
+  {
+    return j(paramB0).b();
+  }
+  
+  public void i(b0 paramB0)
+  {
+    if (!paramB0.b())
+    {
+      paramB0.a(0, 0, 0, 0);
+      return;
+    }
+    float f1 = h(paramB0);
+    float f2 = g(paramB0);
+    int i = (int)Math.ceil(y0.a(f1, f2, paramB0.d()));
+    int j = (int)Math.ceil(y0.b(f1, f2, paramB0.d()));
+    paramB0.a(i, j, i, j);
+  }
+}

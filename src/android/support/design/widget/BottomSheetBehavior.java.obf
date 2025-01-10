@@ -1,0 +1,968 @@
+package android.support.design.widget;
+
+import a.b.c.d;
+import a.b.c.k;
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.os.Build.VERSION;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.ClassLoaderCreator;
+import android.os.Parcelable.Creator;
+import android.support.v4.view.u;
+import android.support.v4.widget.s;
+import android.support.v4.widget.s.c;
+import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
+
+public class BottomSheetBehavior<V extends View>
+  extends CoordinatorLayout.c<V>
+{
+  private boolean a = true;
+  private float b;
+  private int c;
+  private boolean d;
+  private int e;
+  private int f;
+  int g;
+  int h;
+  int i;
+  boolean j;
+  private boolean k;
+  int l = 4;
+  s m;
+  private boolean n;
+  private int o;
+  private boolean p;
+  int q;
+  WeakReference<V> r;
+  WeakReference<View> s;
+  private c t;
+  private VelocityTracker u;
+  int v;
+  private int w;
+  boolean x;
+  private Map<View, Integer> y;
+  private final s.c z = new b();
+  
+  public BottomSheetBehavior() {}
+  
+  public BottomSheetBehavior(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+    paramAttributeSet = paramContext.obtainStyledAttributes(paramAttributeSet, k.BottomSheetBehavior_Layout);
+    TypedValue localTypedValue = paramAttributeSet.peekValue(k.BottomSheetBehavior_Layout_behavior_peekHeight);
+    if (localTypedValue != null)
+    {
+      int i1 = data;
+      if (i1 == -1)
+      {
+        b(i1);
+        break label82;
+      }
+    }
+    b(paramAttributeSet.getDimensionPixelSize(k.BottomSheetBehavior_Layout_behavior_peekHeight, -1));
+    label82:
+    b(paramAttributeSet.getBoolean(k.BottomSheetBehavior_Layout_behavior_hideable, false));
+    a(paramAttributeSet.getBoolean(k.BottomSheetBehavior_Layout_behavior_fitToContents, true));
+    c(paramAttributeSet.getBoolean(k.BottomSheetBehavior_Layout_behavior_skipCollapsed, false));
+    paramAttributeSet.recycle();
+    b = ViewConfiguration.get(paramContext).getScaledMaximumFlingVelocity();
+  }
+  
+  public static <V extends View> BottomSheetBehavior<V> b(V paramV)
+  {
+    paramV = paramV.getLayoutParams();
+    if ((paramV instanceof CoordinatorLayout.f))
+    {
+      paramV = ((CoordinatorLayout.f)paramV).d();
+      if ((paramV instanceof BottomSheetBehavior)) {
+        return (BottomSheetBehavior)paramV;
+      }
+      throw new IllegalArgumentException("The view is not associated with BottomSheetBehavior");
+    }
+    throw new IllegalArgumentException("The view is not a child of CoordinatorLayout");
+  }
+  
+  private void c()
+  {
+    if (a)
+    {
+      i = Math.max(q - f, g);
+      return;
+    }
+    i = (q - f);
+  }
+  
+  private int d()
+  {
+    if (a) {
+      return g;
+    }
+    return 0;
+  }
+  
+  private void d(boolean paramBoolean)
+  {
+    Object localObject = r;
+    if (localObject == null) {
+      return;
+    }
+    localObject = ((View)((WeakReference)localObject).get()).getParent();
+    if (!(localObject instanceof CoordinatorLayout)) {
+      return;
+    }
+    localObject = (CoordinatorLayout)localObject;
+    int i2 = ((ViewGroup)localObject).getChildCount();
+    if ((Build.VERSION.SDK_INT >= 16) && (paramBoolean)) {
+      if (y == null) {
+        y = new HashMap(i2);
+      } else {
+        return;
+      }
+    }
+    int i1 = 0;
+    while (i1 < i2)
+    {
+      View localView = ((ViewGroup)localObject).getChildAt(i1);
+      if (localView != r.get()) {
+        if (!paramBoolean)
+        {
+          Map localMap = y;
+          if ((localMap != null) && (localMap.containsKey(localView))) {
+            u.f(localView, ((Integer)y.get(localView)).intValue());
+          }
+        }
+        else
+        {
+          if (Build.VERSION.SDK_INT >= 16) {
+            y.put(localView, Integer.valueOf(localView.getImportantForAccessibility()));
+          }
+          u.f(localView, 4);
+        }
+      }
+      i1 += 1;
+    }
+    if (!paramBoolean) {
+      y = null;
+    }
+  }
+  
+  private float e()
+  {
+    VelocityTracker localVelocityTracker = u;
+    if (localVelocityTracker == null) {
+      return 0.0F;
+    }
+    localVelocityTracker.computeCurrentVelocity(1000, b);
+    return u.getYVelocity(v);
+  }
+  
+  private void f()
+  {
+    v = -1;
+    VelocityTracker localVelocityTracker = u;
+    if (localVelocityTracker != null)
+    {
+      localVelocityTracker.recycle();
+      u = null;
+    }
+  }
+  
+  View a(View paramView)
+  {
+    if (u.z(paramView)) {
+      return paramView;
+    }
+    if ((paramView instanceof ViewGroup))
+    {
+      paramView = (ViewGroup)paramView;
+      int i1 = 0;
+      int i2 = paramView.getChildCount();
+      while (i1 < i2)
+      {
+        View localView = a(paramView.getChildAt(i1));
+        if (localView != null) {
+          return localView;
+        }
+        i1 += 1;
+      }
+    }
+    return null;
+  }
+  
+  void a(int paramInt)
+  {
+    View localView = (View)r.get();
+    if (localView != null)
+    {
+      c localC = t;
+      if (localC != null)
+      {
+        int i1 = i;
+        if (paramInt > i1)
+        {
+          localC.a(localView, (i1 - paramInt) / (q - i1));
+          return;
+        }
+        localC.a(localView, (i1 - paramInt) / (i1 - d()));
+      }
+    }
+  }
+  
+  public void a(c paramC)
+  {
+    t = paramC;
+  }
+  
+  public void a(CoordinatorLayout paramCoordinatorLayout, V paramV, Parcelable paramParcelable)
+  {
+    paramParcelable = (d)paramParcelable;
+    super.a(paramCoordinatorLayout, paramV, paramParcelable.a());
+    int i1 = e;
+    if ((i1 != 1) && (i1 != 2))
+    {
+      l = i1;
+      return;
+    }
+    l = 4;
+  }
+  
+  public void a(CoordinatorLayout paramCoordinatorLayout, V paramV, View paramView, int paramInt)
+  {
+    if (paramV.getTop() == d())
+    {
+      d(3);
+      return;
+    }
+    if (paramView == s.get())
+    {
+      if (!p) {
+        return;
+      }
+      int i1;
+      if (o > 0)
+      {
+        paramInt = d();
+        i1 = 3;
+      }
+      else if ((j) && (a(paramV, e())))
+      {
+        paramInt = q;
+        i1 = 5;
+      }
+      else if (o == 0)
+      {
+        paramInt = paramV.getTop();
+        if (a)
+        {
+          if (Math.abs(paramInt - g) < Math.abs(paramInt - i))
+          {
+            paramInt = g;
+            i1 = 3;
+          }
+          else
+          {
+            paramInt = i;
+            i1 = 4;
+          }
+        }
+        else
+        {
+          i1 = h;
+          if (paramInt < i1)
+          {
+            if (paramInt < Math.abs(paramInt - i))
+            {
+              paramInt = 0;
+              i1 = 3;
+            }
+            else
+            {
+              paramInt = h;
+              i1 = 6;
+            }
+          }
+          else if (Math.abs(paramInt - i1) < Math.abs(paramInt - i))
+          {
+            paramInt = h;
+            i1 = 6;
+          }
+          else
+          {
+            paramInt = i;
+            i1 = 4;
+          }
+        }
+      }
+      else
+      {
+        paramInt = i;
+        i1 = 4;
+      }
+      if (m.b(paramV, paramV.getLeft(), paramInt))
+      {
+        d(2);
+        u.a(paramV, new e(paramV, i1));
+      }
+      else
+      {
+        d(i1);
+      }
+      p = false;
+      return;
+    }
+  }
+  
+  public void a(CoordinatorLayout paramCoordinatorLayout, V paramV, View paramView, int paramInt1, int paramInt2, int[] paramArrayOfInt, int paramInt3)
+  {
+    if (paramInt3 == 1) {
+      return;
+    }
+    if (paramView != (View)s.get()) {
+      return;
+    }
+    paramInt1 = paramV.getTop();
+    paramInt3 = paramInt1 - paramInt2;
+    if (paramInt2 > 0)
+    {
+      if (paramInt3 < d())
+      {
+        paramArrayOfInt[1] = (paramInt1 - d());
+        u.d(paramV, -paramArrayOfInt[1]);
+        d(3);
+      }
+      else
+      {
+        paramArrayOfInt[1] = paramInt2;
+        u.d(paramV, -paramInt2);
+        d(1);
+      }
+    }
+    else if ((paramInt2 < 0) && (!paramView.canScrollVertically(-1)))
+    {
+      int i1 = i;
+      if ((paramInt3 > i1) && (!j))
+      {
+        paramArrayOfInt[1] = (paramInt1 - i1);
+        u.d(paramV, -paramArrayOfInt[1]);
+        d(4);
+      }
+      else
+      {
+        paramArrayOfInt[1] = paramInt2;
+        u.d(paramV, -paramInt2);
+        d(1);
+      }
+    }
+    a(paramV.getTop());
+    o = paramInt2;
+    p = true;
+  }
+  
+  void a(View paramView, int paramInt)
+  {
+    int i1;
+    int i2;
+    if (paramInt == 4)
+    {
+      i1 = i;
+      i2 = paramInt;
+    }
+    else if (paramInt == 6)
+    {
+      int i3 = h;
+      i1 = i3;
+      i2 = paramInt;
+      if (a)
+      {
+        i1 = i3;
+        i2 = paramInt;
+        if (i3 <= g)
+        {
+          i2 = 3;
+          i1 = g;
+        }
+      }
+    }
+    else if (paramInt == 3)
+    {
+      i1 = d();
+      i2 = paramInt;
+    }
+    else
+    {
+      if ((!j) || (paramInt != 5)) {
+        break label147;
+      }
+      i1 = q;
+      i2 = paramInt;
+    }
+    if (m.b(paramView, paramView.getLeft(), i1))
+    {
+      d(2);
+      u.a(paramView, new e(paramView, i2));
+      return;
+    }
+    d(i2);
+    return;
+    label147:
+    paramView = new StringBuilder();
+    paramView.append("Illegal state argument: ");
+    paramView.append(paramInt);
+    throw new IllegalArgumentException(paramView.toString());
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    if (a == paramBoolean) {
+      return;
+    }
+    a = paramBoolean;
+    if (r != null) {
+      c();
+    }
+    int i1;
+    if ((a) && (l == 6)) {
+      i1 = 3;
+    } else {
+      i1 = l;
+    }
+    d(i1);
+  }
+  
+  public boolean a(CoordinatorLayout paramCoordinatorLayout, V paramV, int paramInt)
+  {
+    if ((u.h(paramCoordinatorLayout)) && (!u.h(paramV))) {
+      paramV.setFitsSystemWindows(true);
+    }
+    int i1 = paramV.getTop();
+    paramCoordinatorLayout.c(paramV, paramInt);
+    q = paramCoordinatorLayout.getHeight();
+    if (d)
+    {
+      if (e == 0) {
+        e = paramCoordinatorLayout.getResources().getDimensionPixelSize(d.design_bottom_sheet_peek_height_min);
+      }
+      f = Math.max(e, q - paramCoordinatorLayout.getWidth() * 9 / 16);
+    }
+    else
+    {
+      f = c;
+    }
+    g = Math.max(0, q - paramV.getHeight());
+    h = (q / 2);
+    c();
+    paramInt = l;
+    if (paramInt == 3)
+    {
+      u.d(paramV, d());
+    }
+    else if (paramInt == 6)
+    {
+      u.d(paramV, h);
+    }
+    else if ((j) && (paramInt == 5))
+    {
+      u.d(paramV, q);
+    }
+    else
+    {
+      paramInt = l;
+      if (paramInt == 4) {
+        u.d(paramV, i);
+      } else if ((paramInt == 1) || (paramInt == 2)) {
+        u.d(paramV, i1 - paramV.getTop());
+      }
+    }
+    if (m == null) {
+      m = s.a(paramCoordinatorLayout, z);
+    }
+    r = new WeakReference(paramV);
+    s = new WeakReference(a(paramV));
+    return true;
+  }
+  
+  public boolean a(CoordinatorLayout paramCoordinatorLayout, V paramV, MotionEvent paramMotionEvent)
+  {
+    if (!paramV.isShown())
+    {
+      n = true;
+      return false;
+    }
+    int i1 = paramMotionEvent.getActionMasked();
+    if (i1 == 0) {
+      f();
+    }
+    if (u == null) {
+      u = VelocityTracker.obtain();
+    }
+    u.addMovement(paramMotionEvent);
+    Object localObject2 = null;
+    if (i1 != 0)
+    {
+      if ((i1 == 1) || (i1 == 3))
+      {
+        x = false;
+        v = -1;
+        if (n)
+        {
+          n = false;
+          return false;
+        }
+      }
+    }
+    else
+    {
+      int i2 = (int)paramMotionEvent.getX();
+      w = ((int)paramMotionEvent.getY());
+      localObject1 = s;
+      if (localObject1 != null) {
+        localObject1 = (View)((WeakReference)localObject1).get();
+      } else {
+        localObject1 = null;
+      }
+      if ((localObject1 != null) && (paramCoordinatorLayout.a((View)localObject1, i2, w)))
+      {
+        v = paramMotionEvent.getPointerId(paramMotionEvent.getActionIndex());
+        x = true;
+      }
+      boolean bool;
+      if ((v == -1) && (!paramCoordinatorLayout.a(paramV, i2, w))) {
+        bool = true;
+      } else {
+        bool = false;
+      }
+      n = bool;
+    }
+    if (!n)
+    {
+      paramV = m;
+      if ((paramV != null) && (paramV.b(paramMotionEvent))) {
+        return true;
+      }
+    }
+    Object localObject1 = s;
+    paramV = localObject2;
+    if (localObject1 != null) {
+      paramV = (View)((WeakReference)localObject1).get();
+    }
+    return (i1 == 2) && (paramV != null) && (!n) && (l != 1) && (!paramCoordinatorLayout.a(paramV, (int)paramMotionEvent.getX(), (int)paramMotionEvent.getY())) && (m != null) && (Math.abs(w - paramMotionEvent.getY()) > m.d());
+  }
+  
+  public boolean a(CoordinatorLayout paramCoordinatorLayout, V paramV, View paramView, float paramFloat1, float paramFloat2)
+  {
+    return (paramView == s.get()) && ((l != 3) || (super.a(paramCoordinatorLayout, paramV, paramView, paramFloat1, paramFloat2)));
+  }
+  
+  boolean a(View paramView, float paramFloat)
+  {
+    if (k) {
+      return true;
+    }
+    if (paramView.getTop() < i) {
+      return false;
+    }
+    return Math.abs(paramView.getTop() + 0.1F * paramFloat - i) / c > 0.5F;
+  }
+  
+  public final int b()
+  {
+    return l;
+  }
+  
+  public final void b(int paramInt)
+  {
+    int i1 = 0;
+    if (paramInt == -1)
+    {
+      if (!d)
+      {
+        d = true;
+        i1 = 1;
+      }
+    }
+    else if ((d) || (c != paramInt))
+    {
+      d = false;
+      c = Math.max(0, paramInt);
+      i = (q - paramInt);
+      i1 = 1;
+    }
+    if ((i1 != 0) && (l == 4))
+    {
+      Object localObject = r;
+      if (localObject != null)
+      {
+        localObject = (View)((WeakReference)localObject).get();
+        if (localObject != null) {
+          ((View)localObject).requestLayout();
+        }
+      }
+    }
+  }
+  
+  public void b(boolean paramBoolean)
+  {
+    j = paramBoolean;
+  }
+  
+  public boolean b(CoordinatorLayout paramCoordinatorLayout, V paramV, MotionEvent paramMotionEvent)
+  {
+    if (!paramV.isShown()) {
+      return false;
+    }
+    int i1 = paramMotionEvent.getActionMasked();
+    if ((l == 1) && (i1 == 0)) {
+      return true;
+    }
+    paramCoordinatorLayout = m;
+    if (paramCoordinatorLayout != null) {
+      paramCoordinatorLayout.a(paramMotionEvent);
+    }
+    if (i1 == 0) {
+      f();
+    }
+    if (u == null) {
+      u = VelocityTracker.obtain();
+    }
+    u.addMovement(paramMotionEvent);
+    if ((i1 == 2) && (!n) && (Math.abs(w - paramMotionEvent.getY()) > m.d())) {
+      m.a(paramV, paramMotionEvent.getPointerId(paramMotionEvent.getActionIndex()));
+    }
+    return n ^ true;
+  }
+  
+  public boolean b(CoordinatorLayout paramCoordinatorLayout, V paramV, View paramView1, View paramView2, int paramInt1, int paramInt2)
+  {
+    boolean bool = false;
+    o = 0;
+    p = false;
+    if ((paramInt1 & 0x2) != 0) {
+      bool = true;
+    }
+    return bool;
+  }
+  
+  public final void c(final int paramInt)
+  {
+    if (paramInt == l) {
+      return;
+    }
+    Object localObject = r;
+    if (localObject == null)
+    {
+      if ((paramInt == 4) || (paramInt == 3) || (paramInt == 6) || ((j) && (paramInt == 5))) {
+        l = paramInt;
+      }
+      return;
+    }
+    localObject = (View)((WeakReference)localObject).get();
+    if (localObject == null) {
+      return;
+    }
+    ViewParent localViewParent = ((View)localObject).getParent();
+    if ((localViewParent != null) && (localViewParent.isLayoutRequested()) && (u.x((View)localObject)))
+    {
+      ((View)localObject).post(new a((View)localObject, paramInt));
+      return;
+    }
+    a((View)localObject, paramInt);
+  }
+  
+  public void c(boolean paramBoolean)
+  {
+    k = paramBoolean;
+  }
+  
+  public Parcelable d(CoordinatorLayout paramCoordinatorLayout, V paramV)
+  {
+    return new d(super.d(paramCoordinatorLayout, paramV), l);
+  }
+  
+  void d(int paramInt)
+  {
+    if (l == paramInt) {
+      return;
+    }
+    l = paramInt;
+    if ((paramInt != 6) && (paramInt != 3))
+    {
+      if ((paramInt == 5) || (paramInt == 4)) {
+        d(false);
+      }
+    }
+    else {
+      d(true);
+    }
+    View localView = (View)r.get();
+    if (localView != null)
+    {
+      c localC = t;
+      if (localC != null) {
+        localC.a(localView, paramInt);
+      }
+    }
+  }
+  
+  class a
+    implements Runnable
+  {
+    a(View paramView, int paramInt) {}
+    
+    public void run()
+    {
+      a(c, paramInt);
+    }
+  }
+  
+  class b
+    extends s.c
+  {
+    b() {}
+    
+    public int a(View paramView, int paramInt1, int paramInt2)
+    {
+      return paramView.getLeft();
+    }
+    
+    public void a(View paramView, float paramFloat1, float paramFloat2)
+    {
+      int i;
+      int j;
+      BottomSheetBehavior localBottomSheetBehavior;
+      if (paramFloat2 < 0.0F)
+      {
+        if (BottomSheetBehavior.a(BottomSheetBehavior.this))
+        {
+          i = g;
+          j = 3;
+        }
+        else
+        {
+          i = paramView.getTop();
+          localBottomSheetBehavior = BottomSheetBehavior.this;
+          if (i > h)
+          {
+            i = h;
+            j = 6;
+          }
+          else
+          {
+            j = 3;
+            i = 0;
+          }
+        }
+      }
+      else
+      {
+        localBottomSheetBehavior = BottomSheetBehavior.this;
+        if ((j) && (localBottomSheetBehavior.a(paramView, paramFloat2)) && ((paramView.getTop() > BottomSheetBehavior.this.i) || (Math.abs(paramFloat1) < Math.abs(paramFloat2))))
+        {
+          i = q;
+          j = 5;
+        }
+        else if ((paramFloat2 != 0.0F) && (Math.abs(paramFloat1) <= Math.abs(paramFloat2)))
+        {
+          i = BottomSheetBehavior.this.i;
+          j = 4;
+        }
+        else
+        {
+          i = paramView.getTop();
+          if (BottomSheetBehavior.a(BottomSheetBehavior.this))
+          {
+            if (Math.abs(i - g) < Math.abs(i - BottomSheetBehavior.this.i))
+            {
+              i = g;
+              j = 3;
+            }
+            else
+            {
+              i = BottomSheetBehavior.this.i;
+              j = 4;
+            }
+          }
+          else
+          {
+            localBottomSheetBehavior = BottomSheetBehavior.this;
+            j = h;
+            if (i < j)
+            {
+              if (i < Math.abs(i - i))
+              {
+                i = 0;
+                j = 3;
+              }
+              else
+              {
+                i = h;
+                j = 6;
+              }
+            }
+            else if (Math.abs(i - j) < Math.abs(i - BottomSheetBehavior.this.i))
+            {
+              i = h;
+              j = 6;
+            }
+            else
+            {
+              i = BottomSheetBehavior.this.i;
+              j = 4;
+            }
+          }
+        }
+      }
+      if (m.d(paramView.getLeft(), i))
+      {
+        d(2);
+        u.a(paramView, new BottomSheetBehavior.e(BottomSheetBehavior.this, paramView, j));
+        return;
+      }
+      d(j);
+    }
+    
+    public void a(View paramView, int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+    {
+      a(paramInt2);
+    }
+    
+    public int b(View paramView)
+    {
+      paramView = BottomSheetBehavior.this;
+      if (j) {
+        return q;
+      }
+      return i;
+    }
+    
+    public int b(View paramView, int paramInt1, int paramInt2)
+    {
+      int i = BottomSheetBehavior.b(BottomSheetBehavior.this);
+      paramView = BottomSheetBehavior.this;
+      if (j) {
+        paramInt2 = q;
+      } else {
+        paramInt2 = i;
+      }
+      return a.b.g.c.a.a(paramInt1, i, paramInt2);
+    }
+    
+    public boolean b(View paramView, int paramInt)
+    {
+      Object localObject = BottomSheetBehavior.this;
+      int i = l;
+      if (i == 1) {
+        return false;
+      }
+      if (x) {
+        return false;
+      }
+      if ((i == 3) && (v == paramInt))
+      {
+        localObject = (View)s.get();
+        if ((localObject != null) && (((View)localObject).canScrollVertically(-1))) {
+          return false;
+        }
+      }
+      localObject = r;
+      return (localObject != null) && (((WeakReference)localObject).get() == paramView);
+    }
+    
+    public void c(int paramInt)
+    {
+      if (paramInt == 1) {
+        d(1);
+      }
+    }
+  }
+  
+  public static abstract class c
+  {
+    public c() {}
+    
+    public abstract void a(View paramView, float paramFloat);
+    
+    public abstract void a(View paramView, int paramInt);
+  }
+  
+  protected static class d
+    extends android.support.v4.view.a
+  {
+    public static final Parcelable.Creator<d> CREATOR = new a();
+    final int e;
+    
+    public d(Parcel paramParcel, ClassLoader paramClassLoader)
+    {
+      super(paramClassLoader);
+      e = paramParcel.readInt();
+    }
+    
+    public d(Parcelable paramParcelable, int paramInt)
+    {
+      super();
+      e = paramInt;
+    }
+    
+    public void writeToParcel(Parcel paramParcel, int paramInt)
+    {
+      super.writeToParcel(paramParcel, paramInt);
+      paramParcel.writeInt(e);
+    }
+    
+    static final class a
+      implements Parcelable.ClassLoaderCreator<BottomSheetBehavior.d>
+    {
+      a() {}
+      
+      public BottomSheetBehavior.d createFromParcel(Parcel paramParcel)
+      {
+        return new BottomSheetBehavior.d(paramParcel, null);
+      }
+      
+      public BottomSheetBehavior.d createFromParcel(Parcel paramParcel, ClassLoader paramClassLoader)
+      {
+        return new BottomSheetBehavior.d(paramParcel, paramClassLoader);
+      }
+      
+      public BottomSheetBehavior.d[] newArray(int paramInt)
+      {
+        return new BottomSheetBehavior.d[paramInt];
+      }
+    }
+  }
+  
+  private class e
+    implements Runnable
+  {
+    private final View c;
+    private final int d;
+    
+    e(View paramView, int paramInt)
+    {
+      c = paramView;
+      d = paramInt;
+    }
+    
+    public void run()
+    {
+      s localS = m;
+      if ((localS != null) && (localS.a(true)))
+      {
+        u.a(c, this);
+        return;
+      }
+      d(d);
+    }
+  }
+}

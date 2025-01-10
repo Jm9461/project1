@@ -1,0 +1,70 @@
+package android.support.v7.view.menu;
+
+import a.b.g.b.a.b;
+import android.content.Context;
+import android.support.v4.view.c.b;
+import android.view.ActionProvider;
+import android.view.ActionProvider.VisibilityListener;
+import android.view.MenuItem;
+import android.view.View;
+
+class m
+  extends l
+{
+  m(Context paramContext, b paramB)
+  {
+    super(paramContext, paramB);
+  }
+  
+  l.a a(ActionProvider paramActionProvider)
+  {
+    return new a(b, paramActionProvider);
+  }
+  
+  class a
+    extends l.a
+    implements ActionProvider.VisibilityListener
+  {
+    c.b d;
+    
+    public a(Context paramContext, ActionProvider paramActionProvider)
+    {
+      super(paramContext, paramActionProvider);
+    }
+    
+    public View a(MenuItem paramMenuItem)
+    {
+      return b.onCreateActionView(paramMenuItem);
+    }
+    
+    public void a(c.b paramB)
+    {
+      d = paramB;
+      ActionProvider localActionProvider = b;
+      if (paramB != null) {
+        paramB = this;
+      } else {
+        paramB = null;
+      }
+      localActionProvider.setVisibilityListener(paramB);
+    }
+    
+    public boolean b()
+    {
+      return b.isVisible();
+    }
+    
+    public boolean e()
+    {
+      return b.overridesItemVisibility();
+    }
+    
+    public void onActionProviderVisibilityChanged(boolean paramBoolean)
+    {
+      c.b localB = d;
+      if (localB != null) {
+        localB.onActionProviderVisibilityChanged(paramBoolean);
+      }
+    }
+  }
+}

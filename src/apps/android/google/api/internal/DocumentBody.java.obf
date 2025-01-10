@@ -1,0 +1,16 @@
+package b.e.a.a.l;
+
+import android.view.View;
+import b.h.a.c;
+import b.h.a.i;
+
+public class b
+  extends b.e.a.a.a
+{
+  public b() {}
+  
+  public void b(View paramView)
+  {
+    a().a(new b.h.a.a[] { i.a(paramView, "alpha", new float[] { 0.0F, 1.0F }), i.a(paramView, "translationX", new float[] { -(paramView.getWidth() - paramView.getPaddingLeft() - paramView.getPaddingRight()), 0.0F }), i.a(paramView, "rotation", new float[] { -120.0F, 0.0F }) });
+  }
+}

@@ -1,0 +1,30 @@
+package android.support.constraint.i.j;
+
+import java.util.Arrays;
+
+public class h
+  extends e
+{
+  protected e[] e0 = new e[4];
+  protected int f0 = 0;
+  
+  public h() {}
+  
+  public void H()
+  {
+    f0 = 0;
+  }
+  
+  public void b(e paramE)
+  {
+    int i = f0;
+    e[] arrayOfE = e0;
+    if (i + 1 > arrayOfE.length) {
+      e0 = ((e[])Arrays.copyOf(arrayOfE, arrayOfE.length * 2));
+    }
+    arrayOfE = e0;
+    i = f0;
+    arrayOfE[i] = paramE;
+    f0 = (i + 1);
+  }
+}

@@ -1,0 +1,1026 @@
+package e.f0.e;
+
+import e.f0.c;
+import e.f0.j.a;
+import e.f0.k.f;
+import f.l;
+import f.r;
+import f.s;
+import java.io.Closeable;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Flushable;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public final class d
+  implements Closeable, Flushable
+{
+  static final Pattern w = Pattern.compile("[a-z0-9_-]{1,120}");
+  final a c;
+  final File d;
+  private final File e;
+  private final File f;
+  private final File g;
+  private final int h;
+  private long i;
+  final int j;
+  private long k = 0L;
+  f.d l;
+  final LinkedHashMap<String, d> m = new LinkedHashMap(0, 0.75F, true);
+  int n;
+  boolean o;
+  boolean p;
+  boolean q;
+  boolean r;
+  boolean s;
+  private long t = 0L;
+  private final Executor u;
+  private final Runnable v = new a();
+  
+  d(a paramA, File paramFile, int paramInt1, int paramInt2, long paramLong, Executor paramExecutor)
+  {
+    c = paramA;
+    d = paramFile;
+    h = paramInt1;
+    e = new File(paramFile, "journal");
+    f = new File(paramFile, "journal.tmp");
+    g = new File(paramFile, "journal.bkp");
+    j = paramInt2;
+    i = paramLong;
+    u = paramExecutor;
+  }
+  
+  public static d a(a paramA, File paramFile, int paramInt1, int paramInt2, long paramLong)
+  {
+    if (paramLong > 0L)
+    {
+      if (paramInt2 > 0) {
+        return new d(paramA, paramFile, paramInt1, paramInt2, paramLong, new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue(), c.a("OkHttp DiskLruCache", true)));
+      }
+      throw new IllegalArgumentException("valueCount <= 0");
+    }
+    throw new IllegalArgumentException("maxSize <= 0");
+  }
+  
+  private void e(String paramString)
+  {
+    int i1 = paramString.indexOf(' ');
+    if (i1 != -1)
+    {
+      int i2 = i1 + 1;
+      int i3 = paramString.indexOf(' ', i2);
+      if (i3 == -1)
+      {
+        localObject2 = paramString.substring(i2);
+        localObject1 = localObject2;
+        if (i1 == "REMOVE".length())
+        {
+          localObject1 = localObject2;
+          if (paramString.startsWith("REMOVE")) {
+            m.remove(localObject2);
+          }
+        }
+      }
+      else
+      {
+        localObject1 = paramString.substring(i2, i3);
+      }
+      d localD = (d)m.get(localObject1);
+      Object localObject2 = localD;
+      if (localD == null)
+      {
+        localObject2 = new d((String)localObject1);
+        m.put(localObject1, localObject2);
+      }
+      if ((i3 != -1) && (i1 == "CLEAN".length()) && (paramString.startsWith("CLEAN")))
+      {
+        paramString = paramString.substring(i3 + 1).split(" ");
+        e = true;
+        f = null;
+        ((d)localObject2).a(paramString);
+        return;
+      }
+      if ((i3 == -1) && (i1 == "DIRTY".length()) && (paramString.startsWith("DIRTY")))
+      {
+        f = new c((d)localObject2);
+        return;
+      }
+      if ((i3 == -1) && (i1 == "READ".length()) && (paramString.startsWith("READ"))) {
+        return;
+      }
+      localObject1 = new StringBuilder();
+      ((StringBuilder)localObject1).append("unexpected journal line: ");
+      ((StringBuilder)localObject1).append(paramString);
+      throw new IOException(((StringBuilder)localObject1).toString());
+    }
+    Object localObject1 = new StringBuilder();
+    ((StringBuilder)localObject1).append("unexpected journal line: ");
+    ((StringBuilder)localObject1).append(paramString);
+    throw new IOException(((StringBuilder)localObject1).toString());
+  }
+  
+  private void f(String paramString)
+  {
+    if (w.matcher(paramString).matches()) {
+      return;
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("keys must match regex [a-z0-9_-]{1,120}: \"");
+    localStringBuilder.append(paramString);
+    localStringBuilder.append("\"");
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  private void r()
+  {
+    try
+    {
+      boolean bool = n();
+      if (!bool) {
+        return;
+      }
+      throw new IllegalStateException("cache is closed");
+    }
+    finally {}
+  }
+  
+  private f.d s()
+  {
+    return l.a(new b(c.e(e)));
+  }
+  
+  private void t()
+  {
+    c.a(f);
+    Iterator localIterator = m.values().iterator();
+    while (localIterator.hasNext())
+    {
+      d localD = (d)localIterator.next();
+      int i1;
+      if (f == null)
+      {
+        i1 = 0;
+        while (i1 < j)
+        {
+          k += b[i1];
+          i1 += 1;
+        }
+      }
+      else
+      {
+        f = null;
+        i1 = 0;
+        while (i1 < j)
+        {
+          c.a(c[i1]);
+          c.a(d[i1]);
+          i1 += 1;
+        }
+        localIterator.remove();
+      }
+    }
+  }
+  
+  private void u()
+  {
+    f.e localE = l.a(c.b(e));
+    try
+    {
+      String str1 = localE.f();
+      String str2 = localE.f();
+      Object localObject2 = localE.f();
+      String str3 = localE.f();
+      String str4 = localE.f();
+      if (("libcore.io.DiskLruCache".equals(str1)) && ("1".equals(str2)) && (Integer.toString(h).equals(localObject2)) && (Integer.toString(j).equals(str3)))
+      {
+        boolean bool = "".equals(str4);
+        if (bool)
+        {
+          int i1 = 0;
+          try
+          {
+            for (;;)
+            {
+              e(localE.f());
+              i1 += 1;
+            }
+            localObject2 = new StringBuilder();
+          }
+          catch (EOFException localEOFException)
+          {
+            n = (i1 - m.size());
+            if (!localE.i()) {
+              p();
+            } else {
+              l = s();
+            }
+            c.a(localE);
+            return;
+          }
+        }
+      }
+      ((StringBuilder)localObject2).append("unexpected journal header: [");
+      ((StringBuilder)localObject2).append(localEOFException);
+      ((StringBuilder)localObject2).append(", ");
+      ((StringBuilder)localObject2).append(str2);
+      ((StringBuilder)localObject2).append(", ");
+      ((StringBuilder)localObject2).append(str3);
+      ((StringBuilder)localObject2).append(", ");
+      ((StringBuilder)localObject2).append(str4);
+      ((StringBuilder)localObject2).append("]");
+      throw new IOException(((StringBuilder)localObject2).toString());
+    }
+    finally
+    {
+      c.a(localE);
+    }
+    for (;;)
+    {
+      throw localObject1;
+    }
+  }
+  
+  c a(String paramString, long paramLong)
+  {
+    try
+    {
+      m();
+      r();
+      f(paramString);
+      d localD = (d)m.get(paramString);
+      if (paramLong != -1L) {
+        if (localD != null)
+        {
+          long l1 = g;
+          if (l1 == paramLong) {}
+        }
+        else
+        {
+          return null;
+        }
+      }
+      Object localObject;
+      if (localD != null)
+      {
+        localObject = f;
+        if (localObject != null) {
+          return null;
+        }
+      }
+      if ((!r) && (!s))
+      {
+        l.a("DIRTY").writeByte(32).a(paramString).writeByte(10);
+        l.flush();
+        boolean bool = o;
+        if (bool) {
+          return null;
+        }
+        localObject = localD;
+        if (localD == null)
+        {
+          localObject = new d(paramString);
+          m.put(paramString, localObject);
+        }
+        paramString = new c((d)localObject);
+        f = paramString;
+        return paramString;
+      }
+      u.execute(v);
+      return null;
+    }
+    finally {}
+  }
+  
+  void a(c paramC, boolean paramBoolean)
+  {
+    try
+    {
+      localD = a;
+      if (f != paramC) {
+        break label455;
+      }
+      i2 = 0;
+      if ((!paramBoolean) || (e)) {
+        break label474;
+      }
+      i1 = 0;
+      for (;;)
+      {
+        if (i1 >= j) {
+          break label474;
+        }
+        if (b[i1] == 0) {
+          break;
+        }
+        if (!c.f(d[i1]))
+        {
+          paramC.a();
+          return;
+        }
+        i1 += 1;
+      }
+      paramC.a();
+      paramC = new StringBuilder();
+      paramC.append("Newly created entry didn't create value for index ");
+      paramC.append(i1);
+      throw new IllegalStateException(paramC.toString());
+    }
+    finally
+    {
+      for (;;)
+      {
+        d localD;
+        int i2;
+        File localFile;
+        long l1;
+        long l2;
+        for (;;)
+        {
+          label455:
+          throw paramC;
+        }
+        label474:
+        int i1 = i2;
+        continue;
+        i1 += 1;
+      }
+    }
+    if (i1 < j)
+    {
+      paramC = d[i1];
+      if (paramBoolean)
+      {
+        if (c.f(paramC))
+        {
+          localFile = c[i1];
+          c.a(paramC, localFile);
+          l1 = b[i1];
+          l2 = c.g(localFile);
+          b[i1] = l2;
+          k = (k - l1 + l2);
+        }
+      }
+      else {
+        c.a(paramC);
+      }
+    }
+    else
+    {
+      n += 1;
+      f = null;
+      if ((e | paramBoolean))
+      {
+        e = true;
+        l.a("CLEAN").writeByte(32);
+        l.a(a);
+        localD.a(l);
+        l.writeByte(10);
+        if (paramBoolean)
+        {
+          l1 = t;
+          t = (1L + l1);
+          g = l1;
+        }
+      }
+      else
+      {
+        m.remove(a);
+        l.a("REMOVE").writeByte(32);
+        l.a(a);
+        l.writeByte(10);
+      }
+      l.flush();
+      if ((k > i) || (o())) {
+        u.execute(v);
+      }
+      return;
+      throw new IllegalStateException();
+    }
+  }
+  
+  boolean a(d paramD)
+  {
+    Object localObject = f;
+    if (localObject != null) {
+      ((c)localObject).c();
+    }
+    int i1 = 0;
+    while (i1 < j)
+    {
+      c.a(c[i1]);
+      long l1 = k;
+      localObject = b;
+      k = (l1 - localObject[i1]);
+      localObject[i1] = 0L;
+      i1 += 1;
+    }
+    n += 1;
+    l.a("REMOVE").writeByte(32).a(a).writeByte(10);
+    m.remove(a);
+    if (o()) {
+      u.execute(v);
+    }
+    return true;
+  }
+  
+  public c b(String paramString)
+  {
+    return a(paramString, -1L);
+  }
+  
+  public e c(String paramString)
+  {
+    try
+    {
+      m();
+      r();
+      f(paramString);
+      Object localObject = (d)m.get(paramString);
+      if ((localObject != null) && (e))
+      {
+        localObject = ((d)localObject).a();
+        if (localObject == null) {
+          return null;
+        }
+        n += 1;
+        l.a("READ").writeByte(32).a(paramString).writeByte(10);
+        if (o()) {
+          u.execute(v);
+        }
+        return localObject;
+      }
+      return null;
+    }
+    finally {}
+  }
+  
+  public void close()
+  {
+    try
+    {
+      if ((!p) || (q)) {
+        break label105;
+      }
+      arrayOfD = (d[])m.values().toArray(new d[m.size()]);
+      i2 = arrayOfD.length;
+      i1 = 0;
+    }
+    finally
+    {
+      for (;;)
+      {
+        d[] arrayOfD;
+        int i2;
+        int i1;
+        d localD;
+        for (;;)
+        {
+          label105:
+          throw localObject;
+        }
+        i1 += 1;
+      }
+    }
+    if (i1 < i2)
+    {
+      localD = arrayOfD[i1];
+      if (f != null) {
+        f.a();
+      }
+    }
+    else
+    {
+      q();
+      l.close();
+      l = null;
+      q = true;
+      return;
+      q = true;
+      return;
+    }
+  }
+  
+  public boolean d(String paramString)
+  {
+    try
+    {
+      m();
+      r();
+      f(paramString);
+      paramString = (d)m.get(paramString);
+      if (paramString == null) {
+        return false;
+      }
+      boolean bool = a(paramString);
+      if ((bool) && (k <= i)) {
+        r = false;
+      }
+      return bool;
+    }
+    finally {}
+  }
+  
+  public void flush()
+  {
+    try
+    {
+      boolean bool = p;
+      if (!bool) {
+        return;
+      }
+      r();
+      q();
+      l.flush();
+      return;
+    }
+    finally {}
+  }
+  
+  public void l()
+  {
+    close();
+    c.d(d);
+  }
+  
+  public void m()
+  {
+    try
+    {
+      boolean bool = p;
+      if (bool) {
+        return;
+      }
+      if (c.f(g)) {
+        if (c.f(e)) {
+          c.a(g);
+        } else {
+          c.a(g, e);
+        }
+      }
+      bool = c.f(e);
+      if (bool) {
+        try
+        {
+          u();
+          t();
+          p = true;
+          return;
+        }
+        catch (IOException localIOException)
+        {
+          f localF = f.d();
+          StringBuilder localStringBuilder = new StringBuilder();
+          localStringBuilder.append("DiskLruCache ");
+          localStringBuilder.append(d);
+          localStringBuilder.append(" is corrupt: ");
+          localStringBuilder.append(localIOException.getMessage());
+          localStringBuilder.append(", removing");
+          localF.a(5, localStringBuilder.toString(), localIOException);
+        }
+      }
+      try
+      {
+        l();
+        q = false;
+      }
+      finally
+      {
+        q = false;
+      }
+      p = true;
+      return;
+    }
+    finally {}
+  }
+  
+  public boolean n()
+  {
+    try
+    {
+      boolean bool = q;
+      return bool;
+    }
+    finally
+    {
+      localObject = finally;
+      throw localObject;
+    }
+  }
+  
+  boolean o()
+  {
+    int i1 = n;
+    return (i1 >= 2000) && (i1 >= m.size());
+  }
+  
+  void p()
+  {
+    try
+    {
+      if (l != null) {
+        l.close();
+      }
+      f.d localD = l.a(c.c(f));
+      try
+      {
+        localD.a("libcore.io.DiskLruCache").writeByte(10);
+        localD.a("1").writeByte(10);
+        localD.e(h).writeByte(10);
+        localD.e(j).writeByte(10);
+        localD.writeByte(10);
+        Iterator localIterator = m.values().iterator();
+        while (localIterator.hasNext())
+        {
+          d localD1 = (d)localIterator.next();
+          if (f != null)
+          {
+            localD.a("DIRTY").writeByte(32);
+            localD.a(a);
+            localD.writeByte(10);
+          }
+          else
+          {
+            localD.a("CLEAN").writeByte(32);
+            localD.a(a);
+            localD1.a(localD);
+            localD.writeByte(10);
+          }
+        }
+        localD.close();
+        if (c.f(e)) {
+          c.a(e, g);
+        }
+        c.a(f, e);
+        c.a(g);
+        l = s();
+        o = false;
+        s = false;
+        return;
+      }
+      finally
+      {
+        localD.close();
+      }
+      throw localObject1;
+    }
+    finally {}
+    for (;;) {}
+  }
+  
+  void q()
+  {
+    while (k > i) {
+      a((d)m.values().iterator().next());
+    }
+    r = false;
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      for (;;)
+      {
+        synchronized (d.this)
+        {
+          if (!p)
+          {
+            i = 1;
+            if ((i | q) != 0) {
+              return;
+            }
+            try
+            {
+              q();
+            }
+            catch (IOException localIOException1)
+            {
+              r = true;
+            }
+            try
+            {
+              if (o())
+              {
+                p();
+                n = 0;
+              }
+            }
+            catch (IOException localIOException2)
+            {
+              s = true;
+              l = l.a(l.a());
+            }
+            return;
+          }
+        }
+        int i = 0;
+      }
+    }
+  }
+  
+  class b
+    extends e
+  {
+    b(r paramR)
+    {
+      super();
+    }
+    
+    protected void a(IOException paramIOException)
+    {
+      o = true;
+    }
+  }
+  
+  public final class c
+  {
+    final d.d a;
+    final boolean[] b;
+    private boolean c;
+    
+    c(d.d paramD)
+    {
+      a = paramD;
+      if (e) {
+        this$1 = null;
+      } else {
+        this$1 = new boolean[j];
+      }
+      b = d.this;
+    }
+    
+    public r a(int paramInt)
+    {
+      synchronized (d.this)
+      {
+        if (!c)
+        {
+          if (a.f != this)
+          {
+            localObject1 = l.a();
+            return localObject1;
+          }
+          if (!a.e) {
+            b[paramInt] = true;
+          }
+          Object localObject1 = a.d[paramInt];
+          try
+          {
+            localObject1 = c.c((File)localObject1);
+            localObject1 = new a((r)localObject1);
+            return localObject1;
+          }
+          catch (FileNotFoundException localFileNotFoundException)
+          {
+            r localR = l.a();
+            return localR;
+          }
+        }
+        throw new IllegalStateException();
+      }
+    }
+    
+    public void a()
+    {
+      synchronized (d.this)
+      {
+        if (!c)
+        {
+          if (a.f == this) {
+            a(this, false);
+          }
+          c = true;
+          return;
+        }
+        throw new IllegalStateException();
+      }
+    }
+    
+    public void b()
+    {
+      synchronized (d.this)
+      {
+        if (!c)
+        {
+          if (a.f == this) {
+            a(this, true);
+          }
+          c = true;
+          return;
+        }
+        throw new IllegalStateException();
+      }
+    }
+    
+    void c()
+    {
+      if (a.f == this)
+      {
+        int i = 0;
+        for (;;)
+        {
+          d localD = d.this;
+          if (i >= j) {
+            break;
+          }
+          try
+          {
+            c.a(a.d[i]);
+          }
+          catch (IOException localIOException) {}
+          i += 1;
+        }
+        a.f = null;
+      }
+    }
+    
+    class a
+      extends e
+    {
+      a(r paramR)
+      {
+        super();
+      }
+      
+      protected void a(IOException arg1)
+      {
+        synchronized (d.this)
+        {
+          c();
+          return;
+        }
+      }
+    }
+  }
+  
+  private final class d
+  {
+    final String a;
+    final long[] b;
+    final File[] c;
+    final File[] d;
+    boolean e;
+    d.c f;
+    long g;
+    
+    d(String paramString)
+    {
+      a = paramString;
+      int i = d.this.j;
+      b = new long[i];
+      c = new File[i];
+      d = new File[i];
+      paramString = new StringBuilder(paramString).append('.');
+      int j = paramString.length();
+      i = 0;
+      while (i < d.this.j)
+      {
+        paramString.append(i);
+        c[i] = new File(d, paramString.toString());
+        paramString.append(".tmp");
+        d[i] = new File(d, paramString.toString());
+        paramString.setLength(j);
+        i += 1;
+      }
+    }
+    
+    private IOException b(String[] paramArrayOfString)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("unexpected journal line: ");
+      localStringBuilder.append(Arrays.toString(paramArrayOfString));
+      throw new IOException(localStringBuilder.toString());
+    }
+    
+    d.e a()
+    {
+      if (Thread.holdsLock(d.this))
+      {
+        s[] arrayOfS = new s[j];
+        Object localObject = (long[])b.clone();
+        int i = 0;
+        try
+        {
+          while (i < j)
+          {
+            arrayOfS[i] = c.b(c[i]);
+            i += 1;
+          }
+          localObject = new d.e(d.this, a, g, arrayOfS, (long[])localObject);
+          return localObject;
+        }
+        catch (FileNotFoundException localFileNotFoundException)
+        {
+          i = 0;
+          while ((i < j) && (arrayOfS[i] != null))
+          {
+            c.a(arrayOfS[i]);
+            i += 1;
+          }
+          try
+          {
+            a(this);
+          }
+          catch (IOException localIOException) {}
+          return null;
+        }
+      }
+      AssertionError localAssertionError = new AssertionError();
+      for (;;)
+      {
+        throw localAssertionError;
+      }
+    }
+    
+    void a(f.d paramD)
+    {
+      long[] arrayOfLong = b;
+      int j = arrayOfLong.length;
+      int i = 0;
+      while (i < j)
+      {
+        long l = arrayOfLong[i];
+        paramD.writeByte(32).e(l);
+        i += 1;
+      }
+    }
+    
+    void a(String[] paramArrayOfString)
+    {
+      if (paramArrayOfString.length == j)
+      {
+        int i = 0;
+        try
+        {
+          while (i < paramArrayOfString.length)
+          {
+            b[i] = Long.parseLong(paramArrayOfString[i]);
+            i += 1;
+          }
+          return;
+        }
+        catch (NumberFormatException localNumberFormatException)
+        {
+          b(paramArrayOfString);
+          throw null;
+        }
+      }
+      b(paramArrayOfString);
+      for (;;)
+      {
+        throw null;
+      }
+    }
+  }
+  
+  public final class e
+    implements Closeable
+  {
+    private final String c;
+    private final long d;
+    private final s[] e;
+    
+    e(String paramString, long paramLong, s[] paramArrayOfS, long[] paramArrayOfLong)
+    {
+      c = paramString;
+      d = paramLong;
+      e = paramArrayOfS;
+    }
+    
+    public s a(int paramInt)
+    {
+      return e[paramInt];
+    }
+    
+    public void close()
+    {
+      s[] arrayOfS = e;
+      int j = arrayOfS.length;
+      int i = 0;
+      while (i < j)
+      {
+        c.a(arrayOfS[i]);
+        i += 1;
+      }
+    }
+    
+    public d.c l()
+    {
+      return a(c, d);
+    }
+  }
+}

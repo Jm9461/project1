@@ -1,0 +1,778 @@
+package android.support.constraint.i;
+
+import java.util.Arrays;
+
+public class a
+{
+  int a = 0;
+  private final b b;
+  private final c c;
+  private int d = 8;
+  private i e = null;
+  private int[] f;
+  private int[] g;
+  private float[] h;
+  private int i;
+  private int j;
+  private boolean k;
+  
+  a(b paramB, c paramC)
+  {
+    int m = d;
+    f = new int[m];
+    g = new int[m];
+    h = new float[m];
+    i = -1;
+    j = -1;
+    k = false;
+    b = paramB;
+    c = paramC;
+  }
+  
+  private boolean a(i paramI, e paramE)
+  {
+    return j <= 1;
+  }
+  
+  public final float a(i paramI, boolean paramBoolean)
+  {
+    if (e == paramI) {
+      e = null;
+    }
+    if (i == -1) {
+      return 0.0F;
+    }
+    int m = i;
+    int i1 = -1;
+    int n = 0;
+    while ((m != -1) && (n < a))
+    {
+      if (f[m] == b)
+      {
+        if (m == i)
+        {
+          i = g[m];
+        }
+        else
+        {
+          int[] arrayOfInt = g;
+          arrayOfInt[i1] = arrayOfInt[m];
+        }
+        if (paramBoolean) {
+          paramI.b(b);
+        }
+        j -= 1;
+        a -= 1;
+        f[m] = -1;
+        if (k) {
+          j = m;
+        }
+        return h[m];
+      }
+      i1 = m;
+      m = g[m];
+      n += 1;
+    }
+    return 0.0F;
+  }
+  
+  final i a(int paramInt)
+  {
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      if (m == paramInt) {
+        return c.c[f[n]];
+      }
+      n = g[n];
+      m += 1;
+    }
+    return null;
+  }
+  
+  i a(e paramE)
+  {
+    Object localObject4 = null;
+    Object localObject3 = null;
+    float f5 = 0.0F;
+    float f4 = 0.0F;
+    boolean bool4 = false;
+    boolean bool3 = false;
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      Object localObject1 = h;
+      float f1 = localObject1[n];
+      i localI = c.c[f[n]];
+      if (f1 < 0.0F)
+      {
+        if (f1 > -0.001F)
+        {
+          localObject1[n] = 0.0F;
+          f1 = 0.0F;
+          localI.b(b);
+        }
+      }
+      else if (f1 < 0.001F)
+      {
+        localObject1[n] = 0.0F;
+        f1 = 0.0F;
+        localI.b(b);
+      }
+      localObject1 = localObject4;
+      Object localObject2 = localObject3;
+      float f2 = f5;
+      float f3 = f4;
+      boolean bool1 = bool4;
+      boolean bool2 = bool3;
+      if (f1 != 0.0F) {
+        if (g == i.a.c)
+        {
+          if (localObject3 == null)
+          {
+            localObject2 = localI;
+            bool1 = a(localI, paramE);
+            localObject1 = localObject4;
+            f2 = f1;
+            f3 = f4;
+            bool2 = bool3;
+          }
+          else if (f5 > f1)
+          {
+            localObject2 = localI;
+            bool1 = a(localI, paramE);
+            localObject1 = localObject4;
+            f2 = f1;
+            f3 = f4;
+            bool2 = bool3;
+          }
+          else
+          {
+            localObject1 = localObject4;
+            localObject2 = localObject3;
+            f2 = f5;
+            f3 = f4;
+            bool1 = bool4;
+            bool2 = bool3;
+            if (!bool4)
+            {
+              localObject1 = localObject4;
+              localObject2 = localObject3;
+              f2 = f5;
+              f3 = f4;
+              bool1 = bool4;
+              bool2 = bool3;
+              if (a(localI, paramE))
+              {
+                bool1 = true;
+                localObject1 = localObject4;
+                localObject2 = localI;
+                f2 = f1;
+                f3 = f4;
+                bool2 = bool3;
+              }
+            }
+          }
+        }
+        else
+        {
+          localObject1 = localObject4;
+          localObject2 = localObject3;
+          f2 = f5;
+          f3 = f4;
+          bool1 = bool4;
+          bool2 = bool3;
+          if (localObject3 == null)
+          {
+            localObject1 = localObject4;
+            localObject2 = localObject3;
+            f2 = f5;
+            f3 = f4;
+            bool1 = bool4;
+            bool2 = bool3;
+            if (f1 < 0.0F) {
+              if (localObject4 == null)
+              {
+                localObject1 = localI;
+                bool2 = a(localI, paramE);
+                localObject2 = localObject3;
+                f2 = f5;
+                f3 = f1;
+                bool1 = bool4;
+              }
+              else if (f4 > f1)
+              {
+                localObject1 = localI;
+                bool2 = a(localI, paramE);
+                localObject2 = localObject3;
+                f2 = f5;
+                f3 = f1;
+                bool1 = bool4;
+              }
+              else
+              {
+                localObject1 = localObject4;
+                localObject2 = localObject3;
+                f2 = f5;
+                f3 = f4;
+                bool1 = bool4;
+                bool2 = bool3;
+                if (!bool3)
+                {
+                  localObject1 = localObject4;
+                  localObject2 = localObject3;
+                  f2 = f5;
+                  f3 = f4;
+                  bool1 = bool4;
+                  bool2 = bool3;
+                  if (a(localI, paramE))
+                  {
+                    bool2 = true;
+                    bool1 = bool4;
+                    f3 = f1;
+                    f2 = f5;
+                    localObject2 = localObject3;
+                    localObject1 = localI;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      n = g[n];
+      m += 1;
+      localObject4 = localObject1;
+      localObject3 = localObject2;
+      f5 = f2;
+      f4 = f3;
+      bool4 = bool1;
+      bool3 = bool2;
+    }
+    if (localObject3 != null) {
+      return localObject3;
+    }
+    return localObject4;
+  }
+  
+  i a(boolean[] paramArrayOfBoolean, i paramI)
+  {
+    int n = i;
+    int m = 0;
+    Object localObject1 = null;
+    float f2;
+    for (float f1 = 0.0F; (n != -1) && (m < a); f1 = f2)
+    {
+      Object localObject2 = localObject1;
+      f2 = f1;
+      if (h[n] < 0.0F)
+      {
+        i localI = c.c[f[n]];
+        if (paramArrayOfBoolean != null)
+        {
+          localObject2 = localObject1;
+          f2 = f1;
+          if (paramArrayOfBoolean[b] != 0) {}
+        }
+        else
+        {
+          localObject2 = localObject1;
+          f2 = f1;
+          if (localI != paramI)
+          {
+            i.a localA = g;
+            if (localA != i.a.e)
+            {
+              localObject2 = localObject1;
+              f2 = f1;
+              if (localA != i.a.f) {}
+            }
+            else
+            {
+              float f3 = h[n];
+              localObject2 = localObject1;
+              f2 = f1;
+              if (f3 < f1)
+              {
+                f2 = f3;
+                localObject2 = localI;
+              }
+            }
+          }
+        }
+      }
+      n = g[n];
+      m += 1;
+      localObject1 = localObject2;
+    }
+    return localObject1;
+  }
+  
+  public final void a()
+  {
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      i localI = c.c[f[n]];
+      if (localI != null) {
+        localI.b(b);
+      }
+      n = g[n];
+      m += 1;
+    }
+    i = -1;
+    j = -1;
+    k = false;
+    a = 0;
+  }
+  
+  void a(float paramFloat)
+  {
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      float[] arrayOfFloat = h;
+      arrayOfFloat[n] /= paramFloat;
+      n = g[n];
+      m += 1;
+    }
+  }
+  
+  final void a(b paramB1, b paramB2, boolean paramBoolean)
+  {
+    int m = i;
+    int n = 0;
+    while ((m != -1) && (n < a))
+    {
+      int i1 = f[m];
+      Object localObject = a;
+      if (i1 == b)
+      {
+        float f1 = h[m];
+        a((i)localObject, paramBoolean);
+        localObject = d;
+        n = i;
+        m = 0;
+        while ((n != -1) && (m < a))
+        {
+          a(c.c[f[n]], h[n] * f1, paramBoolean);
+          n = g[n];
+          m += 1;
+        }
+        b += b * f1;
+        if (paramBoolean) {
+          a.b(paramB1);
+        }
+        m = i;
+        n = 0;
+      }
+      else
+      {
+        m = g[m];
+        n += 1;
+      }
+    }
+  }
+  
+  void a(b paramB, b[] paramArrayOfB)
+  {
+    int m = i;
+    int n = 0;
+    while ((m != -1) && (n < a))
+    {
+      Object localObject = c.c[f[m]];
+      if (c != -1)
+      {
+        float f1 = h[m];
+        a((i)localObject, true);
+        localObject = paramArrayOfB[c];
+        if (!e)
+        {
+          a localA = d;
+          n = i;
+          m = 0;
+          while ((n != -1) && (m < a))
+          {
+            a(c.c[f[n]], h[n] * f1, true);
+            n = g[n];
+            m += 1;
+          }
+        }
+        b += b * f1;
+        a.b(paramB);
+        m = i;
+        n = 0;
+      }
+      else
+      {
+        m = g[m];
+        n += 1;
+      }
+    }
+  }
+  
+  public final void a(i paramI, float paramFloat)
+  {
+    if (paramFloat == 0.0F)
+    {
+      a(paramI, true);
+      return;
+    }
+    if (i == -1)
+    {
+      i = 0;
+      localObject = h;
+      m = i;
+      localObject[m] = paramFloat;
+      f[m] = b;
+      g[m] = -1;
+      j += 1;
+      paramI.a(b);
+      a += 1;
+      if (!k)
+      {
+        j += 1;
+        m = j;
+        paramI = f;
+        if (m >= paramI.length)
+        {
+          k = true;
+          j = (paramI.length - 1);
+        }
+      }
+      return;
+    }
+    int m = i;
+    int i2 = -1;
+    int n = 0;
+    int i1;
+    while ((m != -1) && (n < a))
+    {
+      localObject = f;
+      int i3 = localObject[m];
+      i1 = b;
+      if (i3 == i1)
+      {
+        h[m] = paramFloat;
+        return;
+      }
+      if (localObject[m] < i1) {
+        i2 = m;
+      }
+      m = g[m];
+      n += 1;
+    }
+    n = j;
+    m = n + 1;
+    if (k)
+    {
+      localObject = f;
+      if (localObject[n] == -1) {
+        m = j;
+      } else {
+        m = localObject.length;
+      }
+    }
+    Object localObject = f;
+    n = m;
+    if (m >= localObject.length)
+    {
+      n = m;
+      if (a < localObject.length)
+      {
+        i1 = 0;
+        for (;;)
+        {
+          localObject = f;
+          n = m;
+          if (i1 >= localObject.length) {
+            break;
+          }
+          if (localObject[i1] == -1)
+          {
+            n = i1;
+            break;
+          }
+          i1 += 1;
+        }
+      }
+    }
+    localObject = f;
+    m = n;
+    if (n >= localObject.length)
+    {
+      m = localObject.length;
+      d *= 2;
+      k = false;
+      j = (m - 1);
+      h = Arrays.copyOf(h, d);
+      f = Arrays.copyOf(f, d);
+      g = Arrays.copyOf(g, d);
+    }
+    f[m] = b;
+    h[m] = paramFloat;
+    if (i2 != -1)
+    {
+      localObject = g;
+      localObject[m] = localObject[i2];
+      localObject[i2] = m;
+    }
+    else
+    {
+      g[m] = i;
+      i = m;
+    }
+    j += 1;
+    paramI.a(b);
+    a += 1;
+    if (!k) {
+      j += 1;
+    }
+    if (a >= f.length) {
+      k = true;
+    }
+    m = j;
+    paramI = f;
+    if (m >= paramI.length)
+    {
+      k = true;
+      j = (paramI.length - 1);
+    }
+  }
+  
+  final void a(i paramI, float paramFloat, boolean paramBoolean)
+  {
+    if (paramFloat == 0.0F) {
+      return;
+    }
+    if (i == -1)
+    {
+      i = 0;
+      localObject = h;
+      m = i;
+      localObject[m] = paramFloat;
+      f[m] = b;
+      g[m] = -1;
+      j += 1;
+      paramI.a(b);
+      a += 1;
+      if (!k)
+      {
+        j += 1;
+        m = j;
+        paramI = f;
+        if (m >= paramI.length)
+        {
+          k = true;
+          j = (paramI.length - 1);
+        }
+      }
+      return;
+    }
+    int m = i;
+    int i2 = -1;
+    int n = 0;
+    int i1;
+    while ((m != -1) && (n < a))
+    {
+      localObject = f;
+      int i3 = localObject[m];
+      i1 = b;
+      if (i3 == i1)
+      {
+        localObject = h;
+        localObject[m] += paramFloat;
+        if (localObject[m] == 0.0F)
+        {
+          if (m == i)
+          {
+            i = g[m];
+          }
+          else
+          {
+            localObject = g;
+            localObject[i2] = localObject[m];
+          }
+          if (paramBoolean) {
+            paramI.b(b);
+          }
+          if (k) {
+            j = m;
+          }
+          j -= 1;
+          a -= 1;
+        }
+        return;
+      }
+      if (localObject[m] < i1) {
+        i2 = m;
+      }
+      m = g[m];
+      n += 1;
+    }
+    n = j;
+    m = n + 1;
+    if (k)
+    {
+      localObject = f;
+      if (localObject[n] == -1) {
+        m = j;
+      } else {
+        m = localObject.length;
+      }
+    }
+    Object localObject = f;
+    n = m;
+    if (m >= localObject.length)
+    {
+      n = m;
+      if (a < localObject.length)
+      {
+        i1 = 0;
+        for (;;)
+        {
+          localObject = f;
+          n = m;
+          if (i1 >= localObject.length) {
+            break;
+          }
+          if (localObject[i1] == -1)
+          {
+            n = i1;
+            break;
+          }
+          i1 += 1;
+        }
+      }
+    }
+    localObject = f;
+    m = n;
+    if (n >= localObject.length)
+    {
+      m = localObject.length;
+      d *= 2;
+      k = false;
+      j = (m - 1);
+      h = Arrays.copyOf(h, d);
+      f = Arrays.copyOf(f, d);
+      g = Arrays.copyOf(g, d);
+    }
+    f[m] = b;
+    h[m] = paramFloat;
+    if (i2 != -1)
+    {
+      localObject = g;
+      localObject[m] = localObject[i2];
+      localObject[i2] = m;
+    }
+    else
+    {
+      g[m] = i;
+      i = m;
+    }
+    j += 1;
+    paramI.a(b);
+    a += 1;
+    if (!k) {
+      j += 1;
+    }
+    m = j;
+    paramI = f;
+    if (m >= paramI.length)
+    {
+      k = true;
+      j = (paramI.length - 1);
+    }
+  }
+  
+  final boolean a(i paramI)
+  {
+    if (i == -1) {
+      return false;
+    }
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      if (f[n] == b) {
+        return true;
+      }
+      n = g[n];
+      m += 1;
+    }
+    return false;
+  }
+  
+  final float b(int paramInt)
+  {
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      if (m == paramInt) {
+        return h[n];
+      }
+      n = g[n];
+      m += 1;
+    }
+    return 0.0F;
+  }
+  
+  public final float b(i paramI)
+  {
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      if (f[n] == b) {
+        return h[n];
+      }
+      n = g[n];
+      m += 1;
+    }
+    return 0.0F;
+  }
+  
+  void b()
+  {
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      float[] arrayOfFloat = h;
+      arrayOfFloat[n] *= -1.0F;
+      n = g[n];
+      m += 1;
+    }
+  }
+  
+  public String toString()
+  {
+    String str = "";
+    int n = i;
+    int m = 0;
+    while ((n != -1) && (m < a))
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(str);
+      localStringBuilder.append(" -> ");
+      str = localStringBuilder.toString();
+      localStringBuilder = new StringBuilder();
+      localStringBuilder.append(str);
+      localStringBuilder.append(h[n]);
+      localStringBuilder.append(" : ");
+      str = localStringBuilder.toString();
+      localStringBuilder = new StringBuilder();
+      localStringBuilder.append(str);
+      localStringBuilder.append(c.c[f[n]]);
+      str = localStringBuilder.toString();
+      n = g[n];
+      m += 1;
+    }
+    return str;
+  }
+}

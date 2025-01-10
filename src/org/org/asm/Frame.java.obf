@@ -1,0 +1,94 @@
+package a.b.f;
+
+import android.util.Log;
+import android.view.View;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+class e0
+  extends h0
+{
+  private static Method a;
+  private static boolean b;
+  private static Method c;
+  private static boolean d;
+  
+  e0() {}
+  
+  private void a()
+  {
+    if (!d)
+    {
+      try
+      {
+        c = View.class.getDeclaredMethod("getTransitionAlpha", new Class[0]);
+        c.setAccessible(true);
+      }
+      catch (NoSuchMethodException localNoSuchMethodException)
+      {
+        Log.i("ViewUtilsApi19", "Failed to retrieve getTransitionAlpha method", localNoSuchMethodException);
+      }
+      d = true;
+    }
+  }
+  
+  private void b()
+  {
+    if (!b)
+    {
+      try
+      {
+        a = View.class.getDeclaredMethod("setTransitionAlpha", new Class[] { Float.TYPE });
+        a.setAccessible(true);
+      }
+      catch (NoSuchMethodException localNoSuchMethodException)
+      {
+        Log.i("ViewUtilsApi19", "Failed to retrieve setTransitionAlpha method", localNoSuchMethodException);
+      }
+      b = true;
+    }
+  }
+  
+  public void a(View paramView) {}
+  
+  public void a(View paramView, float paramFloat)
+  {
+    b();
+    Method localMethod = a;
+    if (localMethod != null)
+    {
+      try
+      {
+        localMethod.invoke(paramView, new Object[] { Float.valueOf(paramFloat) });
+      }
+      catch (InvocationTargetException paramView)
+      {
+        throw new RuntimeException(paramView.getCause());
+      }
+      catch (IllegalAccessException paramView) {}
+      return;
+    }
+    paramView.setAlpha(paramFloat);
+  }
+  
+  public float b(View paramView)
+  {
+    a();
+    Method localMethod = c;
+    if (localMethod != null) {
+      try
+      {
+        float f = ((Float)localMethod.invoke(paramView, new Object[0])).floatValue();
+        return f;
+      }
+      catch (InvocationTargetException paramView)
+      {
+        throw new RuntimeException(paramView.getCause());
+      }
+      catch (IllegalAccessException localIllegalAccessException) {}
+    }
+    return super.b(paramView);
+  }
+  
+  public void c(View paramView) {}
+}

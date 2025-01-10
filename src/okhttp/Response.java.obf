@@ -1,0 +1,346 @@
+package e;
+
+import java.io.Closeable;
+
+public final class a0
+  implements Closeable
+{
+  final y c;
+  final w d;
+  final int e;
+  final String f;
+  final q g;
+  final r h;
+  final b0 i;
+  final a0 j;
+  final a0 k;
+  final a0 l;
+  final long m;
+  final long n;
+  private volatile d o;
+  
+  a0(a paramA)
+  {
+    c = a;
+    d = b;
+    e = c;
+    f = d;
+    g = e;
+    h = f.a();
+    i = g;
+    j = h;
+    k = i;
+    l = j;
+    m = k;
+    n = l;
+  }
+  
+  public String a(String paramString1, String paramString2)
+  {
+    paramString1 = h.a(paramString1);
+    if (paramString1 != null) {
+      return paramString1;
+    }
+    return paramString2;
+  }
+  
+  public String b(String paramString)
+  {
+    return a(paramString, null);
+  }
+  
+  public void close()
+  {
+    b0 localB0 = i;
+    if (localB0 != null)
+    {
+      localB0.close();
+      return;
+    }
+    throw new IllegalStateException("response is not eligible for a body and must not be closed");
+  }
+  
+  public b0 l()
+  {
+    return i;
+  }
+  
+  public d m()
+  {
+    d localD = o;
+    if (localD != null) {
+      return localD;
+    }
+    localD = d.a(h);
+    o = localD;
+    return localD;
+  }
+  
+  public a0 n()
+  {
+    return k;
+  }
+  
+  public int o()
+  {
+    return e;
+  }
+  
+  public q p()
+  {
+    return g;
+  }
+  
+  public r q()
+  {
+    return h;
+  }
+  
+  public boolean r()
+  {
+    int i1 = e;
+    return (i1 >= 200) && (i1 < 300);
+  }
+  
+  public String s()
+  {
+    return f;
+  }
+  
+  public a0 t()
+  {
+    return j;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Response{protocol=");
+    localStringBuilder.append(d);
+    localStringBuilder.append(", code=");
+    localStringBuilder.append(e);
+    localStringBuilder.append(", message=");
+    localStringBuilder.append(f);
+    localStringBuilder.append(", url=");
+    localStringBuilder.append(c.g());
+    localStringBuilder.append('}');
+    return localStringBuilder.toString();
+  }
+  
+  public a u()
+  {
+    return new a(this);
+  }
+  
+  public a0 v()
+  {
+    return l;
+  }
+  
+  public w w()
+  {
+    return d;
+  }
+  
+  public long x()
+  {
+    return n;
+  }
+  
+  public y y()
+  {
+    return c;
+  }
+  
+  public long z()
+  {
+    return m;
+  }
+  
+  public static class a
+  {
+    y a;
+    w b;
+    int c = -1;
+    String d;
+    q e;
+    r.a f;
+    b0 g;
+    a0 h;
+    a0 i;
+    a0 j;
+    long k;
+    long l;
+    
+    public a()
+    {
+      f = new r.a();
+    }
+    
+    a(a0 paramA0)
+    {
+      a = c;
+      b = d;
+      c = e;
+      d = f;
+      e = g;
+      f = h.a();
+      g = i;
+      h = j;
+      i = k;
+      j = l;
+      k = m;
+      l = n;
+    }
+    
+    private void a(String paramString, a0 paramA0)
+    {
+      if (i == null)
+      {
+        if (j == null)
+        {
+          if (k == null)
+          {
+            if (l == null) {
+              return;
+            }
+            paramA0 = new StringBuilder();
+            paramA0.append(paramString);
+            paramA0.append(".priorResponse != null");
+            throw new IllegalArgumentException(paramA0.toString());
+          }
+          paramA0 = new StringBuilder();
+          paramA0.append(paramString);
+          paramA0.append(".cacheResponse != null");
+          throw new IllegalArgumentException(paramA0.toString());
+        }
+        paramA0 = new StringBuilder();
+        paramA0.append(paramString);
+        paramA0.append(".networkResponse != null");
+        throw new IllegalArgumentException(paramA0.toString());
+      }
+      paramA0 = new StringBuilder();
+      paramA0.append(paramString);
+      paramA0.append(".body != null");
+      throw new IllegalArgumentException(paramA0.toString());
+    }
+    
+    private void d(a0 paramA0)
+    {
+      if (i == null) {
+        return;
+      }
+      throw new IllegalArgumentException("priorResponse.body != null");
+    }
+    
+    public a a(int paramInt)
+    {
+      c = paramInt;
+      return this;
+    }
+    
+    public a a(long paramLong)
+    {
+      l = paramLong;
+      return this;
+    }
+    
+    public a a(a0 paramA0)
+    {
+      if (paramA0 != null) {
+        a("cacheResponse", paramA0);
+      }
+      i = paramA0;
+      return this;
+    }
+    
+    public a a(b0 paramB0)
+    {
+      g = paramB0;
+      return this;
+    }
+    
+    public a a(q paramQ)
+    {
+      e = paramQ;
+      return this;
+    }
+    
+    public a a(r paramR)
+    {
+      f = paramR.a();
+      return this;
+    }
+    
+    public a a(w paramW)
+    {
+      b = paramW;
+      return this;
+    }
+    
+    public a a(y paramY)
+    {
+      a = paramY;
+      return this;
+    }
+    
+    public a a(String paramString)
+    {
+      d = paramString;
+      return this;
+    }
+    
+    public a a(String paramString1, String paramString2)
+    {
+      f.a(paramString1, paramString2);
+      return this;
+    }
+    
+    public a0 a()
+    {
+      if (a != null)
+      {
+        if (b != null)
+        {
+          if (c >= 0)
+          {
+            if (d != null) {
+              return new a0(this);
+            }
+            throw new IllegalStateException("message == null");
+          }
+          StringBuilder localStringBuilder = new StringBuilder();
+          localStringBuilder.append("code < 0: ");
+          localStringBuilder.append(c);
+          throw new IllegalStateException(localStringBuilder.toString());
+        }
+        throw new IllegalStateException("protocol == null");
+      }
+      throw new IllegalStateException("request == null");
+    }
+    
+    public a b(long paramLong)
+    {
+      k = paramLong;
+      return this;
+    }
+    
+    public a b(a0 paramA0)
+    {
+      if (paramA0 != null) {
+        a("networkResponse", paramA0);
+      }
+      h = paramA0;
+      return this;
+    }
+    
+    public a c(a0 paramA0)
+    {
+      if (paramA0 != null) {
+        d(paramA0);
+      }
+      j = paramA0;
+      return this;
+    }
+  }
+}

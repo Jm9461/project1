@@ -1,0 +1,279 @@
+package b.d.a;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.opengl.GLSurfaceView;
+import android.opengl.GLSurfaceView.Renderer;
+import android.util.DisplayMetrics;
+
+public class c
+  extends GLSurfaceView
+  implements a, j
+{
+  private final f c;
+  private b<?> d;
+  private final e e;
+  private j.a f;
+  
+  private c(c paramC)
+  {
+    super(c.a(paramC));
+    e = new e(paramC, null);
+    c = new f(getContext(), e);
+    d();
+  }
+  
+  private void d()
+  {
+    setEGLContextClientVersion(2);
+    setRenderer(c);
+    c.a(new a());
+  }
+  
+  public void a()
+  {
+    if (getRenderMode() != 1) {
+      setRenderMode(1);
+    }
+  }
+  
+  public <T> void a(b<T> paramB)
+  {
+    b localB = d;
+    if (localB != null) {
+      localB.d();
+    }
+    d = paramB;
+    d.a(this, e.b);
+  }
+  
+  public void a(j.a paramA)
+  {
+    f = paramA;
+  }
+  
+  public void a(float[] paramArrayOfFloat1, float[] paramArrayOfFloat2)
+  {
+    c.a(paramArrayOfFloat1, paramArrayOfFloat2);
+  }
+  
+  public void b()
+  {
+    if (getRenderMode() != 0) {
+      setRenderMode(0);
+    }
+  }
+  
+  public void c()
+  {
+    b localB = d;
+    if (localB != null)
+    {
+      localB.d();
+      d = null;
+    }
+  }
+  
+  public void onPause()
+  {
+    b localB = d;
+    if (localB != null) {
+      localB.b();
+    }
+    super.onPause();
+  }
+  
+  public void onResume()
+  {
+    super.onResume();
+    b localB = d;
+    if (localB != null) {
+      localB.c();
+    }
+  }
+  
+  class a
+    implements j.a
+  {
+    a() {}
+    
+    public void a()
+    {
+      b();
+      if (c.a(c.this) != null) {
+        c.a(c.this).a();
+      }
+    }
+  }
+  
+  public static abstract interface b
+    extends GLSurfaceView.Renderer
+  {}
+  
+  public static class c
+    extends c.d<c>
+  {
+    private Context c;
+    private int d;
+    private int e;
+    private float f;
+    private float g;
+    private float h;
+    private boolean i;
+    private int j;
+    
+    public c(Context paramContext)
+    {
+      super();
+      c = paramContext;
+    }
+    
+    public c a(float paramFloat)
+    {
+      f = paramFloat;
+      return this;
+    }
+    
+    public c a(boolean paramBoolean)
+    {
+      i = paramBoolean;
+      return this;
+    }
+    
+    protected c b()
+    {
+      return this;
+    }
+    
+    public c b(float paramFloat)
+    {
+      h = paramFloat;
+      return this;
+    }
+    
+    public c b(int paramInt)
+    {
+      j = paramInt;
+      return this;
+    }
+    
+    public c c(float paramFloat)
+    {
+      g = paramFloat;
+      return this;
+    }
+    
+    public c c(int paramInt)
+    {
+      a(c.getResources().getDimensionPixelSize(paramInt));
+      return this;
+    }
+    
+    public c d(int paramInt)
+    {
+      e = paramInt;
+      return this;
+    }
+    
+    public c d()
+    {
+      return new c(this, null);
+    }
+    
+    public c e(int paramInt)
+    {
+      d = paramInt;
+      return this;
+    }
+    
+    public c f(int paramInt)
+    {
+      b(c.getResources().getDimensionPixelSize(paramInt));
+      return this;
+    }
+    
+    public c g(int paramInt)
+    {
+      c(c.getResources().getDimensionPixelSize(paramInt));
+      return this;
+    }
+  }
+  
+  public static class d<T extends d>
+  {
+    private float[] a;
+    private float[][] b;
+    
+    public d(Context paramContext) {}
+    
+    public T a(int paramInt)
+    {
+      a = l.a(paramInt);
+      return b();
+    }
+    
+    public T a(int[] paramArrayOfInt)
+    {
+      b = new float[paramArrayOfInt.length][];
+      int i = 0;
+      while (i < paramArrayOfInt.length)
+      {
+        b[i] = l.a(paramArrayOfInt[i]);
+        i += 1;
+      }
+      return b();
+    }
+    
+    float[] a()
+    {
+      return a;
+    }
+    
+    protected T b()
+    {
+      throw null;
+    }
+    
+    float[][] c()
+    {
+      return b;
+    }
+  }
+  
+  static class e
+  {
+    int a;
+    int b;
+    int c;
+    float d;
+    float e;
+    float f;
+    boolean g;
+    float[] h;
+    float[][] i;
+    
+    private e(c.c paramC)
+    {
+      e = c.c.b(paramC);
+      e = l.a(e, 10.0F, 1920.0F);
+      a = c.c.c(paramC);
+      a = l.a(a, 1, 16);
+      i = paramC.c();
+      d = c.c.d(paramC);
+      d = l.a(d, 10.0F, 200.0F);
+      d /= agetResourcesgetDisplayMetricswidthPixels;
+      f = c.c.e(paramC);
+      f = l.a(f, 20.0F, 1080.0F);
+      g = c.c.f(paramC);
+      h = paramC.a();
+      b = c.c.g(paramC);
+      c = c.c.h(paramC);
+      l.a(c, 1, 36);
+      b = l.a(b, 1, 4);
+      if (i.length >= b) {
+        return;
+      }
+      throw new IllegalArgumentException("You specified more layers than colors.");
+    }
+  }
+}

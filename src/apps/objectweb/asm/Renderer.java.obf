@@ -1,0 +1,142 @@
+package b.d.a;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.opengl.GLES20;
+import android.util.DisplayMetrics;
+import java.util.Random;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+class f
+  implements c.b
+{
+  private final c.e a;
+  private i[] b;
+  private long c;
+  private final float d;
+  private final Random e;
+  private float f = 1.0F;
+  private j.a g;
+  boolean h;
+  
+  public f(Context paramContext, c.e paramE)
+  {
+    a = paramE;
+    e = new Random();
+    c = System.currentTimeMillis();
+    d = getResourcesgetDisplayMetricsheightPixels;
+  }
+  
+  public static int a(int paramInt, String paramString)
+  {
+    paramInt = GLES20.glCreateShader(paramInt);
+    GLES20.glShaderSource(paramInt, paramString);
+    GLES20.glCompileShader(paramInt);
+    return paramInt;
+  }
+  
+  public f a(j.a paramA)
+  {
+    g = paramA;
+    return this;
+  }
+  
+  public final void a(float[] paramArrayOfFloat1, float[] paramArrayOfFloat2)
+  {
+    if (b == null) {
+      return;
+    }
+    int i = 0;
+    for (;;)
+    {
+      i[] arrayOfI = b;
+      if (i >= arrayOfI.length) {
+        break;
+      }
+      if (arrayOfI[i] == null) {
+        return;
+      }
+      arrayOfI[i].a(paramArrayOfFloat1[i], paramArrayOfFloat2[i]);
+      i += 1;
+    }
+  }
+  
+  public void onDrawFrame(GL10 paramGL10)
+  {
+    boolean bool2 = h;
+    int k = 0;
+    if (bool2)
+    {
+      paramGL10 = a.h;
+      GLES20.glClearColor(paramGL10[0], paramGL10[1], paramGL10[2], paramGL10[3]);
+      h = false;
+    }
+    else
+    {
+      GLES20.glClear(16640);
+    }
+    long l1 = System.currentTimeMillis();
+    long l2 = c;
+    c = l1;
+    paramGL10 = b;
+    int m = paramGL10.length;
+    boolean bool1 = true;
+    int j = 0;
+    int i = 0;
+    while (i < m)
+    {
+      Object localObject = paramGL10[i];
+      localObject.a(l1 - l2, 0.015707964F * (1.0F - j * 1.0F / b.length * 0.8F), f);
+      bool1 &= localObject.b();
+      j += 1;
+      i += 1;
+    }
+    paramGL10 = b;
+    j = paramGL10.length;
+    i = k;
+    while (i < j)
+    {
+      paramGL10[i].a();
+      i += 1;
+    }
+    if (bool1)
+    {
+      paramGL10 = g;
+      if (paramGL10 != null) {
+        paramGL10.a();
+      }
+    }
+  }
+  
+  public void onSurfaceChanged(GL10 paramGL10, int paramInt1, int paramInt2)
+  {
+    GLES20.glViewport(0, 0, paramInt1, paramInt2);
+    f = (paramInt1 / paramInt2);
+  }
+  
+  public void onSurfaceCreated(GL10 paramGL10, EGLConfig paramEGLConfig)
+  {
+    paramGL10 = a.h;
+    GLES20.glClearColor(paramGL10[0], paramGL10[1], paramGL10[2], paramGL10[3]);
+    paramGL10 = a;
+    b = new i[b];
+    float f1 = f;
+    float f2 = e;
+    float f3 = d;
+    f1 = (f1 + f2) / f3;
+    f2 /= f3;
+    int i = 0;
+    for (;;)
+    {
+      paramGL10 = b;
+      if (i >= paramGL10.length) {
+        break;
+      }
+      f3 = -1.0F + (paramGL10.length - i - 1) * (f2 * 2.0F) * 2.0F;
+      paramEGLConfig = a;
+      paramGL10[i] = new i(paramEGLConfig, i[i], f3, f1 * 2.0F + f3, e);
+      i += 1;
+    }
+  }
+}

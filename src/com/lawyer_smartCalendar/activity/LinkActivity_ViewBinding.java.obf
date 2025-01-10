@@ -1,0 +1,15 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import butterknife.Unbinder;
+import butterknife.a.a;
+
+public class LinkActivity_ViewBinding
+  implements Unbinder
+{
+  public LinkActivity_ViewBinding(LinkActivity paramLinkActivity, View paramView)
+  {
+    mRecyclerView = ((RecyclerView)a.b(paramView, 2131296684, "field 'mRecyclerView'", RecyclerView.class));
+  }
+}

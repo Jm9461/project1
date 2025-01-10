@@ -1,0 +1,100 @@
+package com.mohamadamin.persianmaterialdatetimepicker.time;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.util.Log;
+import android.view.View;
+import com.mohamadamin.persianmaterialdatetimepicker.g;
+
+public class b
+  extends View
+{
+  private final Paint c = new Paint();
+  private boolean d;
+  private int e;
+  private int f;
+  private float g;
+  private float h;
+  private boolean i;
+  private boolean j;
+  private int k;
+  private int l;
+  private int m;
+  
+  public b(Context paramContext)
+  {
+    super(paramContext);
+    paramContext = paramContext.getResources();
+    e = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_circle_color);
+    f = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_numbers_text_color);
+    c.setAntiAlias(true);
+    i = false;
+  }
+  
+  public void a(Context paramContext, boolean paramBoolean)
+  {
+    if (i)
+    {
+      Log.e("CircleView", "CircleView may only be initialized once.");
+      return;
+    }
+    paramContext = paramContext.getResources();
+    d = paramBoolean;
+    if (paramBoolean)
+    {
+      g = Float.parseFloat(paramContext.getString(g.mdtp_circle_radius_multiplier_24HourMode));
+    }
+    else
+    {
+      g = Float.parseFloat(paramContext.getString(g.mdtp_circle_radius_multiplier));
+      h = Float.parseFloat(paramContext.getString(g.mdtp_ampm_circle_radius_multiplier));
+    }
+    i = true;
+  }
+  
+  void b(Context paramContext, boolean paramBoolean)
+  {
+    paramContext = paramContext.getResources();
+    if (paramBoolean)
+    {
+      e = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_circle_background_dark_theme);
+      f = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_white);
+      return;
+    }
+    e = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_circle_color);
+    f = paramContext.getColor(com.mohamadamin.persianmaterialdatetimepicker.b.mdtp_numbers_text_color);
+  }
+  
+  public void onDraw(Canvas paramCanvas)
+  {
+    if (getWidth() != 0)
+    {
+      if (!i) {
+        return;
+      }
+      if (!j)
+      {
+        k = (getWidth() / 2);
+        l = (getHeight() / 2);
+        m = ((int)(Math.min(k, l) * g));
+        if (!d)
+        {
+          int n = (int)(m * h);
+          double d1 = l;
+          double d2 = n;
+          Double.isNaN(d2);
+          Double.isNaN(d1);
+          l = ((int)(d1 - d2 * 0.75D));
+        }
+        j = true;
+      }
+      c.setColor(e);
+      paramCanvas.drawCircle(k, l, m, c);
+      c.setColor(f);
+      paramCanvas.drawCircle(k, l, 4.0F, c);
+      return;
+    }
+  }
+}

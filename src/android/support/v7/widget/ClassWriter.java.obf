@@ -1,0 +1,696 @@
+package android.support.v7.widget;
+
+import a.b.h.a.j;
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.RectF;
+import android.os.Build.VERSION;
+import android.text.Layout.Alignment;
+import android.text.StaticLayout;
+import android.text.StaticLayout.Builder;
+import android.text.TextDirectionHeuristic;
+import android.text.TextDirectionHeuristics;
+import android.text.TextPaint;
+import android.text.method.TransformationMethod;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
+import android.widget.TextView;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
+class x
+{
+  private static final RectF k = new RectF();
+  private static ConcurrentHashMap<String, Method> l = new ConcurrentHashMap();
+  private int a = 0;
+  private boolean b = false;
+  private float c = -1.0F;
+  private float d = -1.0F;
+  private float e = -1.0F;
+  private int[] f = new int[0];
+  private boolean g = false;
+  private TextPaint h;
+  private final TextView i;
+  private final Context j;
+  
+  x(TextView paramTextView)
+  {
+    i = paramTextView;
+    j = i.getContext();
+  }
+  
+  private int a(RectF paramRectF)
+  {
+    int i1 = f.length;
+    if (i1 != 0)
+    {
+      int n = 0;
+      int m = 0 + 1;
+      i1 -= 1;
+      while (m <= i1)
+      {
+        n = (m + i1) / 2;
+        if (a(f[n], paramRectF))
+        {
+          int i2 = n + 1;
+          n = m;
+          m = i2;
+        }
+        else
+        {
+          i1 = n - 1;
+          n = i1;
+        }
+      }
+      return f[n];
+    }
+    paramRectF = new IllegalStateException("No available text sizes to choose from.");
+    for (;;)
+    {
+      throw paramRectF;
+    }
+  }
+  
+  private StaticLayout a(CharSequence paramCharSequence, Layout.Alignment paramAlignment, int paramInt)
+  {
+    float f1;
+    float f2;
+    boolean bool;
+    if (Build.VERSION.SDK_INT >= 16)
+    {
+      f1 = i.getLineSpacingMultiplier();
+      f2 = i.getLineSpacingExtra();
+      bool = i.getIncludeFontPadding();
+    }
+    else
+    {
+      f1 = ((Float)a(i, "getLineSpacingMultiplier", Float.valueOf(1.0F))).floatValue();
+      f2 = ((Float)a(i, "getLineSpacingExtra", Float.valueOf(0.0F))).floatValue();
+      bool = ((Boolean)a(i, "getIncludeFontPadding", Boolean.valueOf(true))).booleanValue();
+    }
+    return new StaticLayout(paramCharSequence, h, paramInt, paramAlignment, f1, f2, bool);
+  }
+  
+  private StaticLayout a(CharSequence paramCharSequence, Layout.Alignment paramAlignment, int paramInt1, int paramInt2)
+  {
+    TextDirectionHeuristic localTextDirectionHeuristic = (TextDirectionHeuristic)a(i, "getTextDirectionHeuristic", TextDirectionHeuristics.FIRSTSTRONG_LTR);
+    paramCharSequence = StaticLayout.Builder.obtain(paramCharSequence, 0, paramCharSequence.length(), h, paramInt1).setAlignment(paramAlignment).setLineSpacing(i.getLineSpacingExtra(), i.getLineSpacingMultiplier()).setIncludePad(i.getIncludeFontPadding()).setBreakStrategy(i.getBreakStrategy()).setHyphenationFrequency(i.getHyphenationFrequency());
+    if (paramInt2 == -1) {
+      paramInt2 = Integer.MAX_VALUE;
+    }
+    return paramCharSequence.setMaxLines(paramInt2).setTextDirection(localTextDirectionHeuristic).build();
+  }
+  
+  /* Error */
+  private <T> T a(Object paramObject, String paramString, T paramT)
+  {
+    // Byte code:
+    //   0: aconst_null
+    //   1: astore 6
+    //   3: iconst_0
+    //   4: istore 4
+    //   6: aload_0
+    //   7: aload_2
+    //   8: invokespecial 191	android/support/v7/widget/x:a	(Ljava/lang/String;)Ljava/lang/reflect/Method;
+    //   11: aload_1
+    //   12: iconst_0
+    //   13: anewarray 4	java/lang/Object
+    //   16: invokevirtual 197	java/lang/reflect/Method:invoke	(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+    //   19: astore_1
+    //   20: aload_1
+    //   21: astore_2
+    //   22: aload_2
+    //   23: astore_1
+    //   24: aload_2
+    //   25: ifnonnull +100 -> 125
+    //   28: aload_2
+    //   29: astore_1
+    //   30: iconst_0
+    //   31: ifeq +94 -> 125
+    //   34: aload_3
+    //   35: areturn
+    //   36: astore_1
+    //   37: goto +90 -> 127
+    //   40: astore_1
+    //   41: iconst_1
+    //   42: istore 5
+    //   44: iload 5
+    //   46: istore 4
+    //   48: new 199	java/lang/StringBuilder
+    //   51: dup
+    //   52: invokespecial 200	java/lang/StringBuilder:<init>	()V
+    //   55: astore 7
+    //   57: iload 5
+    //   59: istore 4
+    //   61: aload 7
+    //   63: ldc -54
+    //   65: invokevirtual 206	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   68: pop
+    //   69: iload 5
+    //   71: istore 4
+    //   73: aload 7
+    //   75: aload_2
+    //   76: invokevirtual 206	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   79: pop
+    //   80: iload 5
+    //   82: istore 4
+    //   84: aload 7
+    //   86: ldc -48
+    //   88: invokevirtual 206	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   91: pop
+    //   92: iload 5
+    //   94: istore 4
+    //   96: ldc -46
+    //   98: aload 7
+    //   100: invokevirtual 214	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   103: aload_1
+    //   104: invokestatic 220	android/util/Log:w	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    //   107: pop
+    //   108: aload 6
+    //   110: astore_1
+    //   111: iconst_0
+    //   112: ifne +13 -> 125
+    //   115: aload 6
+    //   117: astore_1
+    //   118: iconst_1
+    //   119: ifeq +6 -> 125
+    //   122: goto -88 -> 34
+    //   125: aload_1
+    //   126: areturn
+    //   127: iconst_0
+    //   128: ifne +8 -> 136
+    //   131: iload 4
+    //   133: ifeq +3 -> 136
+    //   136: goto +5 -> 141
+    //   139: aload_1
+    //   140: athrow
+    //   141: goto -2 -> 139
+    // Local variable table:
+    //   start	length	slot	name	signature
+    //   0	144	0	this	x
+    //   0	144	1	paramObject	Object
+    //   0	144	2	paramString	String
+    //   0	144	3	paramT	T
+    //   4	128	4	m	int
+    //   42	51	5	n	int
+    //   1	115	6	localObject	Object
+    //   55	44	7	localStringBuilder	StringBuilder
+    // Exception table:
+    //   from	to	target	type
+    //   6	20	36	finally
+    //   48	57	36	finally
+    //   61	69	36	finally
+    //   73	80	36	finally
+    //   84	92	36	finally
+    //   96	108	36	finally
+    //   6	20	40	java/lang/Exception
+  }
+  
+  private Method a(String paramString)
+  {
+    try
+    {
+      localObject2 = (Method)l.get(paramString);
+      Object localObject1 = localObject2;
+      if (localObject2 == null)
+      {
+        localObject2 = TextView.class.getDeclaredMethod(paramString, new Class[0]);
+        localObject1 = localObject2;
+        if (localObject2 != null)
+        {
+          ((Method)localObject2).setAccessible(true);
+          l.put(paramString, localObject2);
+          localObject1 = localObject2;
+        }
+      }
+      return localObject1;
+    }
+    catch (Exception localException)
+    {
+      Object localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append("Failed to retrieve TextView#");
+      ((StringBuilder)localObject2).append(paramString);
+      ((StringBuilder)localObject2).append("() method");
+      Log.w("ACTVAutoSizeHelper", ((StringBuilder)localObject2).toString(), localException);
+    }
+    return null;
+  }
+  
+  private void a(float paramFloat)
+  {
+    if (paramFloat != i.getPaint().getTextSize())
+    {
+      i.getPaint().setTextSize(paramFloat);
+      boolean bool = false;
+      if (Build.VERSION.SDK_INT >= 18) {
+        bool = i.isInLayout();
+      }
+      if (i.getLayout() != null)
+      {
+        b = false;
+        try
+        {
+          Method localMethod = a("nullLayouts");
+          if (localMethod != null) {
+            localMethod.invoke(i, new Object[0]);
+          }
+        }
+        catch (Exception localException)
+        {
+          Log.w("ACTVAutoSizeHelper", "Failed to invoke TextView#nullLayouts() method", localException);
+        }
+        if (!bool) {
+          i.requestLayout();
+        } else {
+          i.forceLayout();
+        }
+        i.invalidate();
+      }
+    }
+  }
+  
+  private void a(float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    if (paramFloat1 > 0.0F)
+    {
+      if (paramFloat2 > paramFloat1)
+      {
+        if (paramFloat3 > 0.0F)
+        {
+          a = 1;
+          d = paramFloat1;
+          e = paramFloat2;
+          c = paramFloat3;
+          g = false;
+          return;
+        }
+        localStringBuilder = new StringBuilder();
+        localStringBuilder.append("The auto-size step granularity (");
+        localStringBuilder.append(paramFloat3);
+        localStringBuilder.append("px) is less or equal to (0px)");
+        throw new IllegalArgumentException(localStringBuilder.toString());
+      }
+      localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Maximum auto-size text size (");
+      localStringBuilder.append(paramFloat2);
+      localStringBuilder.append("px) is less or equal to minimum auto-size ");
+      localStringBuilder.append("text size (");
+      localStringBuilder.append(paramFloat1);
+      localStringBuilder.append("px)");
+      throw new IllegalArgumentException(localStringBuilder.toString());
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("Minimum auto-size text size (");
+    localStringBuilder.append(paramFloat1);
+    localStringBuilder.append("px) is less or equal to (0px)");
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  private void a(TypedArray paramTypedArray)
+  {
+    int n = paramTypedArray.length();
+    int[] arrayOfInt = new int[n];
+    if (n > 0)
+    {
+      int m = 0;
+      while (m < n)
+      {
+        arrayOfInt[m] = paramTypedArray.getDimensionPixelSize(m, -1);
+        m += 1;
+      }
+      f = a(arrayOfInt);
+      j();
+    }
+  }
+  
+  private boolean a(int paramInt, RectF paramRectF)
+  {
+    Object localObject2 = i.getText();
+    Object localObject3 = i.getTransformationMethod();
+    Object localObject1 = localObject2;
+    if (localObject3 != null)
+    {
+      localObject3 = ((TransformationMethod)localObject3).getTransformation((CharSequence)localObject2, i);
+      localObject1 = localObject2;
+      if (localObject3 != null) {
+        localObject1 = localObject3;
+      }
+    }
+    int m;
+    if (Build.VERSION.SDK_INT >= 16) {
+      m = i.getMaxLines();
+    } else {
+      m = -1;
+    }
+    localObject2 = h;
+    if (localObject2 == null) {
+      h = new TextPaint();
+    } else {
+      ((TextPaint)localObject2).reset();
+    }
+    h.set(i.getPaint());
+    h.setTextSize(paramInt);
+    localObject2 = (Layout.Alignment)a(i, "getLayoutAlignment", Layout.Alignment.ALIGN_NORMAL);
+    if (Build.VERSION.SDK_INT >= 23) {
+      localObject2 = a(localObject1, (Layout.Alignment)localObject2, Math.round(right), m);
+    } else {
+      localObject2 = a(localObject1, (Layout.Alignment)localObject2, Math.round(right));
+    }
+    if ((m != -1) && ((((StaticLayout)localObject2).getLineCount() > m) || (((StaticLayout)localObject2).getLineEnd(((StaticLayout)localObject2).getLineCount() - 1) != localObject1.length()))) {
+      return false;
+    }
+    return ((StaticLayout)localObject2).getHeight() <= bottom;
+  }
+  
+  private int[] a(int[] paramArrayOfInt)
+  {
+    int n = paramArrayOfInt.length;
+    if (n == 0) {
+      return paramArrayOfInt;
+    }
+    Arrays.sort(paramArrayOfInt);
+    ArrayList localArrayList = new ArrayList();
+    int m = 0;
+    while (m < n)
+    {
+      int i1 = paramArrayOfInt[m];
+      if ((i1 > 0) && (Collections.binarySearch(localArrayList, Integer.valueOf(i1)) < 0)) {
+        localArrayList.add(Integer.valueOf(i1));
+      }
+      m += 1;
+    }
+    if (n == localArrayList.size()) {
+      return paramArrayOfInt;
+    }
+    n = localArrayList.size();
+    paramArrayOfInt = new int[n];
+    m = 0;
+    while (m < n)
+    {
+      paramArrayOfInt[m] = ((Integer)localArrayList.get(m)).intValue();
+      m += 1;
+    }
+    return paramArrayOfInt;
+  }
+  
+  private void h()
+  {
+    a = 0;
+    d = -1.0F;
+    e = -1.0F;
+    c = -1.0F;
+    f = new int[0];
+    b = false;
+  }
+  
+  private boolean i()
+  {
+    if ((k()) && (a == 1))
+    {
+      if ((!g) || (f.length == 0))
+      {
+        int m = 1;
+        for (float f1 = Math.round(d); Math.round(c + f1) <= Math.round(e); f1 += c) {
+          m += 1;
+        }
+        int[] arrayOfInt = new int[m];
+        f1 = d;
+        int n = 0;
+        while (n < m)
+        {
+          arrayOfInt[n] = Math.round(f1);
+          f1 += c;
+          n += 1;
+        }
+        f = a(arrayOfInt);
+      }
+      b = true;
+    }
+    else
+    {
+      b = false;
+    }
+    return b;
+  }
+  
+  private boolean j()
+  {
+    int m = f.length;
+    boolean bool;
+    if (m > 0) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    g = bool;
+    if (g)
+    {
+      a = 1;
+      int[] arrayOfInt = f;
+      d = arrayOfInt[0];
+      e = arrayOfInt[(m - 1)];
+      c = -1.0F;
+    }
+    return g;
+  }
+  
+  private boolean k()
+  {
+    return i instanceof k ^ true;
+  }
+  
+  void a()
+  {
+    if (!g()) {
+      return;
+    }
+    if (b)
+    {
+      if (i.getMeasuredHeight() > 0)
+      {
+        if (i.getMeasuredWidth() <= 0) {
+          return;
+        }
+        int m;
+        if (((Boolean)a(i, "getHorizontallyScrolling", Boolean.valueOf(false))).booleanValue()) {
+          m = 1048576;
+        } else {
+          m = i.getMeasuredWidth() - i.getTotalPaddingLeft() - i.getTotalPaddingRight();
+        }
+        int n = i.getHeight() - i.getCompoundPaddingBottom() - i.getCompoundPaddingTop();
+        if (m > 0)
+        {
+          if (n <= 0) {
+            return;
+          }
+          synchronized (k)
+          {
+            k.setEmpty();
+            kright = m;
+            kbottom = n;
+            float f1 = a(k);
+            if (f1 != i.getTextSize()) {
+              a(0, f1);
+            }
+          }
+        }
+        return;
+      }
+      return;
+    }
+    b = true;
+  }
+  
+  void a(int paramInt)
+  {
+    if (k()) {
+      if (paramInt != 0)
+      {
+        Object localObject;
+        if (paramInt == 1)
+        {
+          localObject = j.getResources().getDisplayMetrics();
+          a(TypedValue.applyDimension(2, 12.0F, (DisplayMetrics)localObject), TypedValue.applyDimension(2, 112.0F, (DisplayMetrics)localObject), 1.0F);
+          if (i()) {
+            a();
+          }
+        }
+        else
+        {
+          localObject = new StringBuilder();
+          ((StringBuilder)localObject).append("Unknown auto-size text type: ");
+          ((StringBuilder)localObject).append(paramInt);
+          throw new IllegalArgumentException(((StringBuilder)localObject).toString());
+        }
+      }
+      else
+      {
+        h();
+      }
+    }
+  }
+  
+  void a(int paramInt, float paramFloat)
+  {
+    Object localObject = j;
+    if (localObject == null) {
+      localObject = Resources.getSystem();
+    } else {
+      localObject = ((Context)localObject).getResources();
+    }
+    a(TypedValue.applyDimension(paramInt, paramFloat, ((Resources)localObject).getDisplayMetrics()));
+  }
+  
+  void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+  {
+    if (k())
+    {
+      DisplayMetrics localDisplayMetrics = j.getResources().getDisplayMetrics();
+      a(TypedValue.applyDimension(paramInt4, paramInt1, localDisplayMetrics), TypedValue.applyDimension(paramInt4, paramInt2, localDisplayMetrics), TypedValue.applyDimension(paramInt4, paramInt3, localDisplayMetrics));
+      if (i()) {
+        a();
+      }
+    }
+  }
+  
+  void a(AttributeSet paramAttributeSet, int paramInt)
+  {
+    float f2 = -1.0F;
+    float f3 = -1.0F;
+    float f1 = -1.0F;
+    paramAttributeSet = j.obtainStyledAttributes(paramAttributeSet, j.AppCompatTextView, paramInt, 0);
+    if (paramAttributeSet.hasValue(j.AppCompatTextView_autoSizeTextType)) {
+      a = paramAttributeSet.getInt(j.AppCompatTextView_autoSizeTextType, 0);
+    }
+    if (paramAttributeSet.hasValue(j.AppCompatTextView_autoSizeStepGranularity)) {
+      f1 = paramAttributeSet.getDimension(j.AppCompatTextView_autoSizeStepGranularity, -1.0F);
+    }
+    if (paramAttributeSet.hasValue(j.AppCompatTextView_autoSizeMinTextSize)) {
+      f2 = paramAttributeSet.getDimension(j.AppCompatTextView_autoSizeMinTextSize, -1.0F);
+    }
+    if (paramAttributeSet.hasValue(j.AppCompatTextView_autoSizeMaxTextSize)) {
+      f3 = paramAttributeSet.getDimension(j.AppCompatTextView_autoSizeMaxTextSize, -1.0F);
+    }
+    if (paramAttributeSet.hasValue(j.AppCompatTextView_autoSizePresetSizes))
+    {
+      paramInt = paramAttributeSet.getResourceId(j.AppCompatTextView_autoSizePresetSizes, 0);
+      if (paramInt > 0)
+      {
+        TypedArray localTypedArray = paramAttributeSet.getResources().obtainTypedArray(paramInt);
+        a(localTypedArray);
+        localTypedArray.recycle();
+      }
+    }
+    paramAttributeSet.recycle();
+    if (k())
+    {
+      if (a == 1)
+      {
+        if (!g)
+        {
+          paramAttributeSet = j.getResources().getDisplayMetrics();
+          float f4 = f2;
+          if (f2 == -1.0F) {
+            f4 = TypedValue.applyDimension(2, 12.0F, paramAttributeSet);
+          }
+          f2 = f3;
+          if (f3 == -1.0F) {
+            f2 = TypedValue.applyDimension(2, 112.0F, paramAttributeSet);
+          }
+          f3 = f1;
+          if (f1 == -1.0F) {
+            f3 = 1.0F;
+          }
+          a(f4, f2, f3);
+        }
+        i();
+      }
+    }
+    else {
+      a = 0;
+    }
+  }
+  
+  void a(int[] paramArrayOfInt, int paramInt)
+  {
+    if (k())
+    {
+      int n = paramArrayOfInt.length;
+      if (n > 0)
+      {
+        int[] arrayOfInt = new int[n];
+        Object localObject;
+        if (paramInt == 0)
+        {
+          localObject = Arrays.copyOf(paramArrayOfInt, n);
+        }
+        else
+        {
+          DisplayMetrics localDisplayMetrics = j.getResources().getDisplayMetrics();
+          int m = 0;
+          for (;;)
+          {
+            localObject = arrayOfInt;
+            if (m >= n) {
+              break;
+            }
+            arrayOfInt[m] = Math.round(TypedValue.applyDimension(paramInt, paramArrayOfInt[m], localDisplayMetrics));
+            m += 1;
+          }
+        }
+        f = a((int[])localObject);
+        if (!j())
+        {
+          localObject = new StringBuilder();
+          ((StringBuilder)localObject).append("None of the preset sizes is valid: ");
+          ((StringBuilder)localObject).append(Arrays.toString(paramArrayOfInt));
+          throw new IllegalArgumentException(((StringBuilder)localObject).toString());
+        }
+      }
+      else
+      {
+        g = false;
+      }
+      if (i()) {
+        a();
+      }
+    }
+  }
+  
+  int b()
+  {
+    return Math.round(e);
+  }
+  
+  int c()
+  {
+    return Math.round(d);
+  }
+  
+  int d()
+  {
+    return Math.round(c);
+  }
+  
+  int[] e()
+  {
+    return f;
+  }
+  
+  int f()
+  {
+    return a;
+  }
+  
+  boolean g()
+  {
+    return (k()) && (a != 0);
+  }
+}

@@ -1,0 +1,65 @@
+package b.a.a;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.os.Build.VERSION;
+
+public enum e
+{
+  private static final boolean f;
+  
+  static
+  {
+    boolean bool = false;
+    c = new e("START", 0);
+    d = new e("CENTER", 1);
+    e = new e("END", 2);
+    g = new e[] { c, d, e };
+    if (Build.VERSION.SDK_INT >= 17) {
+      bool = true;
+    }
+    f = bool;
+  }
+  
+  private e() {}
+  
+  @SuppressLint({"RtlHardcoded"})
+  public int a()
+  {
+    int j = a.a[ordinal()];
+    int i = 3;
+    if (j != 1)
+    {
+      if (j != 2)
+      {
+        if (j == 3)
+        {
+          if (f) {
+            return 8388613;
+          }
+          return 5;
+        }
+        throw new IllegalStateException("Invalid gravity constant");
+      }
+      return 1;
+    }
+    if (f) {
+      i = 8388611;
+    }
+    return i;
+  }
+  
+  @TargetApi(17)
+  public int b()
+  {
+    int i = a.a[ordinal()];
+    if (i != 2)
+    {
+      if (i != 3) {
+        return 5;
+      }
+      return 6;
+    }
+    return 4;
+  }
+}

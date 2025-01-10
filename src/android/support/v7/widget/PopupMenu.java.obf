@@ -1,0 +1,104 @@
+package android.support.v7.widget;
+
+import a.b.h.a.a;
+import a.b.h.f.g;
+import android.content.Context;
+import android.support.v7.view.menu.h;
+import android.support.v7.view.menu.h.a;
+import android.support.v7.view.menu.o;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupWindow.OnDismissListener;
+
+public class u0
+{
+  private final Context a;
+  private final h b;
+  final o c;
+  d d;
+  c e;
+  
+  public u0(Context paramContext, View paramView)
+  {
+    this(paramContext, paramView, 0);
+  }
+  
+  public u0(Context paramContext, View paramView, int paramInt)
+  {
+    this(paramContext, paramView, paramInt, a.popupMenuStyle, 0);
+  }
+  
+  public u0(Context paramContext, View paramView, int paramInt1, int paramInt2, int paramInt3)
+  {
+    a = paramContext;
+    b = new h(paramContext);
+    b.a(new a());
+    c = new o(paramContext, b, paramView, false, paramInt2, paramInt3);
+    c.a(paramInt1);
+    c.a(new b());
+  }
+  
+  public Menu a()
+  {
+    return b;
+  }
+  
+  public void a(d paramD)
+  {
+    d = paramD;
+  }
+  
+  public MenuInflater b()
+  {
+    return new g(a);
+  }
+  
+  public void c()
+  {
+    c.e();
+  }
+  
+  class a
+    implements h.a
+  {
+    a() {}
+    
+    public void a(h paramH) {}
+    
+    public boolean a(h paramH, MenuItem paramMenuItem)
+    {
+      paramH = d;
+      if (paramH != null) {
+        return paramH.onMenuItemClick(paramMenuItem);
+      }
+      return false;
+    }
+  }
+  
+  class b
+    implements PopupWindow.OnDismissListener
+  {
+    b() {}
+    
+    public void onDismiss()
+    {
+      u0 localU0 = u0.this;
+      u0.c localC = e;
+      if (localC != null) {
+        localC.a(localU0);
+      }
+    }
+  }
+  
+  public static abstract interface c
+  {
+    public abstract void a(u0 paramU0);
+  }
+  
+  public static abstract interface d
+  {
+    public abstract boolean onMenuItemClick(MenuItem paramMenuItem);
+  }
+}

@@ -1,0 +1,769 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.g;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.g;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+import b.a.a.f.d;
+import b.a.a.f.j;
+import b.a.a.f.m;
+import butterknife.ButterKnife;
+import com.lawyer_smartCalendar.a.r;
+import com.lawyer_smartCalendar.a.s;
+import com.lawyer_smartCalendar.utils.h;
+import com.lawyer_smartCalendar.utils.i;
+import com.mohamadamin.persianmaterialdatetimepicker.date.b.d;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class AddDailyActivity
+  extends android.support.v7.app.e
+  implements View.OnClickListener, View.OnFocusChangeListener, b.d
+{
+  private static final String G;
+  private String A = "";
+  private String B = "";
+  private b.a.a.e C = b.a.a.e.e;
+  private b.k.a.a D;
+  private com.lawyer_smartCalendar.a.c E;
+  private ArrayList<File> F = new ArrayList();
+  public LinearLayout TextInputLayout_case;
+  public LinearLayout TextInputLayout_client;
+  public com.rey.material.widget.Button btn_add_audio;
+  public com.rey.material.widget.Button btn_add_note;
+  public EditText input_case;
+  public EditText input_client_name;
+  public EditText input_note_body;
+  public EditText input_note_date;
+  public EditText input_note_title;
+  public EditText input_note_type;
+  private String r = "";
+  public RecyclerView recyclerView;
+  private String s = "add";
+  private com.mohamadamin.persianmaterialdatetimepicker.j.b t;
+  private com.mohamadamin.persianmaterialdatetimepicker.date.b u;
+  public int v = -1;
+  public int w = -1;
+  private i x;
+  private android.support.design.widget.e y;
+  private android.support.design.widget.e z;
+  
+  static
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(Environment.getExternalStorageDirectory().getPath());
+    localStringBuilder.append("/recorded_audio.wav");
+    G = localStringBuilder.toString();
+  }
+  
+  public AddDailyActivity() {}
+  
+  private void a(File paramFile)
+  {
+    F.add(paramFile);
+    E.d();
+    recyclerView.h(F.size() - 1);
+  }
+  
+  public void a(com.mohamadamin.persianmaterialdatetimepicker.date.b paramB, int paramInt1, int paramInt2, int paramInt3)
+  {
+    paramB = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    paramB.a(paramInt1, paramInt2, paramInt3);
+    Object localObject = u.getTag();
+    if (((String)localObject).hashCode() == -707218514)
+    {
+      while (!((String)localObject).equals("input_date_note")) {}
+      paramInt1 = 0;
+    }
+    else
+    {
+      paramInt1 = -1;
+    }
+    if (paramInt1 != 0) {
+      return;
+    }
+    input_note_date.setText(paramB.c());
+    input_note_date.setTextColor(Color.parseColor("#E65100"));
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append(paramB.getTimeInMillis());
+    ((StringBuilder)localObject).append("");
+    B = ((StringBuilder)localObject).toString();
+  }
+  
+  protected void attachBaseContext(Context paramContext)
+  {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(paramContext));
+  }
+  
+  public void m()
+  {
+    cafe.adriel.androidaudiorecorder.a localA = cafe.adriel.androidaudiorecorder.a.a(this);
+    localA.a(G);
+    localA.a(Color.parseColor(com.lawyer_smartCalendar.utils.c.d()));
+    localA.b(200);
+    localA.a(cafe.adriel.androidaudiorecorder.j.c.c);
+    localA.a(cafe.adriel.androidaudiorecorder.j.a.c);
+    localA.a(cafe.adriel.androidaudiorecorder.j.b.c);
+    localA.a(false);
+    localA.b(true);
+    localA.a();
+  }
+  
+  protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
+  {
+    super.onActivityResult(paramInt1, paramInt2, paramIntent);
+    if (paramInt1 == 200)
+    {
+      if (paramInt2 == -1)
+      {
+        paramIntent = new StringBuilder();
+        paramIntent.append(D.a());
+        paramIntent.append("/");
+        paramIntent.append(getPackageName());
+        paramIntent.append("/audio/");
+        paramIntent = paramIntent.toString();
+        D.a(paramIntent);
+        com.mohamadamin.persianmaterialdatetimepicker.j.b localB = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append(paramIntent);
+        localStringBuilder.append("audio(");
+        localStringBuilder.append(localB.getTimeInMillis());
+        localStringBuilder.append(").wav");
+        paramIntent = localStringBuilder.toString();
+        D.a(G, paramIntent);
+        a(new File(Uri.decode(paramIntent)));
+        return;
+      }
+      if (paramInt2 == 0) {
+        Toast.makeText(this, "??? ??? ????? ???.", 0).show();
+      }
+    }
+  }
+  
+  public void onBackPressed()
+  {
+    if ((F.size() > 0) && (s.equals("add")))
+    {
+      int i = 0;
+      while (i < F.size())
+      {
+        D.b(((File)F.get(i)).getPath());
+        i += 1;
+      }
+    }
+    finish();
+  }
+  
+  public void onClick(View paramView)
+  {
+    Object localObject;
+    List localList;
+    switch (paramView.getId())
+    {
+    default: 
+      
+    case 2131296537: 
+      input_note_type.setError(null);
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(C);
+      paramView.b(C);
+      paramView.c(C);
+      paramView.j(2131099708);
+      paramView.b(C);
+      paramView.e("??? ???????");
+      paramView.a(2130903051);
+      paramView.a(-1, new g());
+      paramView.c();
+      return;
+    case 2131296535: 
+      input_note_date.setError(null);
+      t = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+      u = com.mohamadamin.persianmaterialdatetimepicker.date.b.b(this, t.h(), t.d(), t.b());
+      u.show(getFragmentManager(), "input_date_note");
+      return;
+    case 2131296504: 
+      input_client_name.setError(null);
+      paramView = getLayoutInflater().inflate(2131492934, null);
+      localObject = (RecyclerView)paramView.findViewById(2131296682);
+      ((RecyclerView)localObject).setLayoutManager(new LinearLayoutManager(this));
+      x.n();
+      localList = x.i();
+      x.close();
+      if (localList.size() > 0)
+      {
+        ((RecyclerView)localObject).setAdapter(new s(this, "AddNoteActivity", localList));
+        y = new android.support.design.widget.e(this);
+        y.setContentView(paramView);
+        y.show();
+        return;
+      }
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.b(C);
+      paramView.a(C);
+      paramView.j(2131099708);
+      paramView.a("??? ????? ??? ???? ???.???? ????? ??? ?????? ?? ???? ??? ????.");
+      paramView.f(2131099728);
+      paramView.b(2131099708);
+      paramView.d("???? ??");
+      paramView.b("??? ????");
+      paramView.c(new d());
+      paramView.a(new c());
+      paramView.c();
+      return;
+    case 2131296493: 
+      if (v == -1)
+      {
+        new h().a(this, "error", "????? ?? ???? ?????? ????.");
+        return;
+      }
+      input_case.setError(null);
+      paramView = getLayoutInflater().inflate(2131492933, null);
+      localObject = (RecyclerView)paramView.findViewById(2131296680);
+      ((RecyclerView)localObject).setLayoutManager(new LinearLayoutManager(this));
+      x.n();
+      localList = x.a(v);
+      x.close();
+      if (localList.size() > 0)
+      {
+        ((RecyclerView)localObject).setAdapter(new r(this, "AddNoteActivity", localList));
+        z = new android.support.design.widget.e(this);
+        z.setContentView(paramView);
+        z.show();
+        return;
+      }
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.b(C);
+      paramView.a(C);
+      paramView.j(2131099708);
+      paramView.a("??? ?????? ?? ???? ??? ???? ??? ???? ???.???? ????? ??? ?????? ?? ?????? ??? ????.");
+      paramView.f(2131099728);
+      paramView.b(2131099708);
+      paramView.d("???? ??");
+      paramView.b("??? ??????");
+      paramView.c(new f());
+      paramView.a(new e());
+      paramView.c();
+      return;
+    case 2131296346: 
+      int j = 0;
+      if (input_note_title.getText().toString().equals(""))
+      {
+        input_note_title.setError("????? ??????? ?? ???? ????.");
+        j = 1;
+      }
+      if (A.equals(""))
+      {
+        input_note_type.setError("??? ??????? ?? ?????? ????.");
+        j = 1;
+      }
+      int i = j;
+      if (v == -1)
+      {
+        i = j;
+        if (!A.equals("Other"))
+        {
+          input_client_name.setError("???? ?? ?????? ????.");
+          i = 1;
+        }
+      }
+      j = i;
+      if (w == -1)
+      {
+        j = i;
+        if (!A.equals("Other"))
+        {
+          input_case.setError("?????? ?? ?????? ????.");
+          j = 1;
+        }
+      }
+      if (B.equals(""))
+      {
+        input_note_date.setError("????? ??????? ?? ?????? ????.");
+        j = 1;
+      }
+      if (input_note_body.getText().toString().equals(""))
+      {
+        input_note_body.setError("??? ??????? ?? ???? ????.");
+        j = 1;
+      }
+      if (j == 0)
+      {
+        paramView = new com.lawyer_smartCalendar.d.f();
+        paramView.d(input_note_title.getText().toString());
+        paramView.c(A);
+        paramView.b(v);
+        paramView.a(w);
+        paramView.a(B);
+        paramView.b(input_note_body.getText().toString());
+        x.n();
+        if (s.equals("edit"))
+        {
+          x.a(paramView, r);
+          if (F.size() > 0)
+          {
+            x.a(r, com.lawyer_smartCalendar.utils.a.b);
+            paramView = new ArrayList();
+            i = 0;
+            while (i < F.size())
+            {
+              localObject = new com.lawyer_smartCalendar.d.e();
+              ((com.lawyer_smartCalendar.d.e)localObject).a(Integer.parseInt(r));
+              ((com.lawyer_smartCalendar.d.e)localObject).c("");
+              ((com.lawyer_smartCalendar.d.e)localObject).a(((File)F.get(i)).getPath());
+              ((com.lawyer_smartCalendar.d.e)localObject).b(com.lawyer_smartCalendar.utils.a.b);
+              paramView.add(localObject);
+              i += 1;
+            }
+            x.a(paramView);
+          }
+          if (F.size() == 0) {
+            x.a(r, com.lawyer_smartCalendar.utils.a.b);
+          }
+          new h().a(this, "success", "??????? ?? ?????? ?????? ??.");
+        }
+        else
+        {
+          long l = x.a(paramView);
+          if (F.size() > 0)
+          {
+            paramView = new ArrayList();
+            i = 0;
+            while (i < F.size())
+            {
+              localObject = new com.lawyer_smartCalendar.d.e();
+              ((com.lawyer_smartCalendar.d.e)localObject).a((int)l);
+              ((com.lawyer_smartCalendar.d.e)localObject).c("");
+              ((com.lawyer_smartCalendar.d.e)localObject).a(((File)F.get(i)).getPath());
+              ((com.lawyer_smartCalendar.d.e)localObject).b(com.lawyer_smartCalendar.utils.a.b);
+              paramView.add(localObject);
+              i += 1;
+            }
+            x.a(paramView);
+          }
+          new h().a(this, "success", "??????? ?? ?????? ??? ??.");
+        }
+        x.close();
+        setResult(-1);
+        finish();
+        return;
+      }
+      break;
+    case 2131296339: 
+      m();
+    }
+  }
+  
+  protected void onCreate(Bundle paramBundle)
+  {
+    setTheme(com.lawyer_smartCalendar.utils.c.b());
+    super.onCreate(paramBundle);
+    overridePendingTransition(17432576, 17432577);
+    setContentView(2131492901);
+    ButterKnife.a(this);
+    D = new b.k.a.a(getApplicationContext());
+    x = new i(this);
+    if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == 0) {
+      C = b.a.a.e.e;
+    } else {
+      C = b.a.a.e.c;
+    }
+    Object localObject1 = (Toolbar)findViewById(2131296838);
+    ((ViewGroup)localObject1).setPadding(0, 0, 0, 0);
+    ((Toolbar)localObject1).a(0, 0);
+    a((Toolbar)localObject1);
+    ((Toolbar)localObject1).setNavigationIcon(2131230856);
+    ((Toolbar)localObject1).setNavigationOnClickListener(new a());
+    btn_add_note.setOnClickListener(this);
+    btn_add_note.setVisibility(8);
+    btn_add_audio.setOnClickListener(this);
+    input_client_name.setOnClickListener(this);
+    input_client_name.setOnFocusChangeListener(this);
+    input_case.setOnClickListener(this);
+    input_case.setOnFocusChangeListener(this);
+    input_note_type.setOnClickListener(this);
+    input_note_type.setOnFocusChangeListener(this);
+    input_note_date.setOnClickListener(this);
+    input_note_date.setOnFocusChangeListener(this);
+    input_note_body.setOnClickListener(this);
+    input_note_body.setOnFocusChangeListener(this);
+    t = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    input_note_date.setText(t.c());
+    input_note_date.setTextColor(Color.parseColor("#E65100"));
+    localObject1 = new StringBuilder();
+    ((StringBuilder)localObject1).append(t.getTimeInMillis());
+    ((StringBuilder)localObject1).append("");
+    B = ((StringBuilder)localObject1).toString();
+    s = getIntent().getStringExtra("frmMode");
+    r = getIntent().getStringExtra("id");
+    if (s.equals("edit"))
+    {
+      localObject1 = null;
+      Object localObject2 = null;
+      x.n();
+      com.lawyer_smartCalendar.d.f localF = x.u(r);
+      if (localF.f().equals("ClientCase"))
+      {
+        localObject1 = x;
+        localObject2 = new StringBuilder();
+        ((StringBuilder)localObject2).append(localF.b());
+        ((StringBuilder)localObject2).append("");
+        localObject1 = ((i)localObject1).o(((StringBuilder)localObject2).toString());
+        localObject2 = x;
+        localObject3 = new StringBuilder();
+        ((StringBuilder)localObject3).append(localF.a());
+        ((StringBuilder)localObject3).append("");
+        localObject2 = ((i)localObject2).k(((StringBuilder)localObject3).toString());
+      }
+      Object localObject3 = x.b(r, com.lawyer_smartCalendar.utils.a.b);
+      x.close();
+      int i = 0;
+      Object localObject4;
+      while (i < ((List)localObject3).size())
+      {
+        localObject4 = new File(Uri.decode(((com.lawyer_smartCalendar.d.e)((List)localObject3).get(i)).a()));
+        F.add(localObject4);
+        i += 1;
+      }
+      if (localF.f().equals("ClientCase"))
+      {
+        input_client_name.setText(((com.lawyer_smartCalendar.d.c)localObject1).f());
+        v = ((com.lawyer_smartCalendar.d.c)localObject1).d();
+        localObject1 = "";
+        localObject3 = ((com.lawyer_smartCalendar.d.b)localObject2).o();
+        switch (((String)localObject3).hashCode())
+        {
+        }
+        for (;;)
+        {
+          break;
+          if (((String)localObject3).equals("Executive"))
+          {
+            i = 1;
+            break label721;
+            if (((String)localObject3).equals("Bank"))
+            {
+              i = 3;
+              break label721;
+              if (((String)localObject3).equals("Challenge"))
+              {
+                i = 2;
+                break label721;
+                if (((String)localObject3).equals("Normal"))
+                {
+                  i = 0;
+                  break label721;
+                }
+              }
+            }
+          }
+        }
+        i = -1;
+        label721:
+        if (i != 0)
+        {
+          if (i != 1)
+          {
+            if (i != 2)
+            {
+              if (i == 3) {
+                localObject1 = "?????";
+              }
+            }
+            else {
+              localObject1 = "???????/??????";
+            }
+          }
+          else {
+            localObject1 = "??????";
+          }
+        }
+        else {
+          localObject1 = "????";
+        }
+        localObject3 = new StringBuilder();
+        ((StringBuilder)localObject3).append("?????: ");
+        ((StringBuilder)localObject3).append(com.lawyer_smartCalendar.b.a.a(Long.valueOf(Long.parseLong(((com.lawyer_smartCalendar.d.b)localObject2).j()))));
+        localObject2 = ((StringBuilder)localObject3).toString();
+        localObject3 = input_case;
+        localObject4 = new StringBuilder();
+        ((StringBuilder)localObject4).append((String)localObject1);
+        ((StringBuilder)localObject4).append(" - ");
+        ((StringBuilder)localObject4).append((String)localObject2);
+        ((EditText)localObject3).setText(((StringBuilder)localObject4).toString());
+        input_case.setTextColor(Color.parseColor("#E65100"));
+        w = localF.a();
+      }
+      j().a("?????? ???????");
+      btn_add_note.setText("?????? ???????");
+      input_note_title.setText(localF.g());
+      localObject1 = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+      ((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject1).setTimeInMillis(Long.parseLong(localF.c()));
+      input_note_date.setText(((com.mohamadamin.persianmaterialdatetimepicker.j.b)localObject1).c());
+      input_note_date.setTextColor(Color.parseColor("#E65100"));
+      localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append(((GregorianCalendar)localObject1).getTimeInMillis());
+      ((StringBuilder)localObject2).append("");
+      B = ((StringBuilder)localObject2).toString();
+      A = localF.f();
+      localObject1 = localF.f();
+      i = ((String)localObject1).hashCode();
+      if (i != -1199578693)
+      {
+        break label1028;
+        if (i != 76517104) {
+          break label1061;
+        }
+      }
+      label1028:
+      while (!((String)localObject1).equals("ClientCase"))
+      {
+        while (!((String)localObject1).equals("Other")) {}
+        i = 1;
+        break;
+      }
+      i = 0;
+      break label1063;
+      label1061:
+      i = -1;
+      label1063:
+      if (i != 0)
+      {
+        if (i == 1)
+        {
+          input_note_type.setText("????");
+          TextInputLayout_client.setVisibility(8);
+          TextInputLayout_case.setVisibility(8);
+        }
+      }
+      else
+      {
+        input_note_type.setText("????/??????");
+        input_note_type.setEnabled(false);
+        input_client_name.setEnabled(false);
+        input_case.setEnabled(false);
+        TextInputLayout_client.setVisibility(0);
+        TextInputLayout_case.setVisibility(0);
+      }
+      input_note_body.setText(localF.d());
+      input_note_type.setEnabled(false);
+    }
+    if (paramBundle != null) {
+      F = ((ArrayList)paramBundle.getSerializable("audio_list"));
+    }
+    E = new com.lawyer_smartCalendar.a.c(this, D, F);
+    paramBundle = new LinearLayoutManager(this);
+    paramBundle.j(1);
+    recyclerView.setLayoutManager(paramBundle);
+    recyclerView.setAdapter(E);
+    paramBundle = b.c.a.a.a();
+    localObject1 = new b();
+    paramBundle.a(this, new String[] { "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO", "android.permission.WAKE_LOCK" }, (b.c.a.b)localObject1);
+  }
+  
+  public boolean onCreateOptionsMenu(Menu paramMenu)
+  {
+    getMenuInflater().inflate(2131558409, paramMenu);
+    return super.onCreateOptionsMenu(paramMenu);
+  }
+  
+  public void onFocusChange(View paramView, boolean paramBoolean)
+  {
+    switch (paramView.getId())
+    {
+    default: 
+      
+    case 2131296537: 
+      if (paramBoolean)
+      {
+        input_note_type.setError(null);
+        input_note_type.callOnClick();
+        return;
+      }
+      break;
+    case 2131296535: 
+      if (paramBoolean)
+      {
+        input_note_date.setError(null);
+        input_note_date.callOnClick();
+        return;
+      }
+      break;
+    case 2131296504: 
+      if (paramBoolean)
+      {
+        input_client_name.setError(null);
+        input_client_name.callOnClick();
+        return;
+      }
+      break;
+    case 2131296493: 
+      if (paramBoolean)
+      {
+        input_case.setError(null);
+        input_case.callOnClick();
+      }
+      break;
+    }
+  }
+  
+  public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+  {
+    if (paramMenuItem.getItemId() == 2131296278) {
+      btn_add_note.callOnClick();
+    }
+    return super.onOptionsItemSelected(paramMenuItem);
+  }
+  
+  protected void onPause()
+  {
+    super.onPause();
+    if (isFinishing()) {
+      overridePendingTransition(17432576, 17432577);
+    }
+  }
+  
+  public void onRequestPermissionsResult(int paramInt, String[] paramArrayOfString, int[] paramArrayOfInt)
+  {
+    b.c.a.a.a().a(paramArrayOfString, paramArrayOfInt);
+  }
+  
+  public void onSaveInstanceState(Bundle paramBundle)
+  {
+    super.onSaveInstanceState(paramBundle);
+    paramBundle.putSerializable("audio_list", F);
+  }
+  
+  class a
+    implements View.OnClickListener
+  {
+    a() {}
+    
+    public void onClick(View paramView)
+    {
+      onBackPressed();
+    }
+  }
+  
+  class b
+    extends b.c.a.b
+  {
+    b() {}
+    
+    public void a() {}
+    
+    public void a(String paramString)
+    {
+      Toast.makeText(AddDailyActivity.this, "???? ?????? ??? ???? ?? ?? ?????? ?????.", 0).show();
+      finish();
+    }
+  }
+  
+  class c
+    implements f.m
+  {
+    c() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+      paramF = new Intent(AddDailyActivity.this, AddClientActivity.class);
+      paramF.putExtra("frmMode", "add");
+      startActivity(paramF);
+    }
+  }
+  
+  class d
+    implements f.m
+  {
+    d() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+    }
+  }
+  
+  class e
+    implements f.m
+  {
+    e() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+      paramF = new Intent(AddDailyActivity.this, AddCaseActivity.class);
+      paramF.putExtra("frmMode", "add");
+      startActivity(paramF);
+    }
+  }
+  
+  class f
+    implements f.m
+  {
+    f() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+    }
+  }
+  
+  class g
+    implements f.j
+  {
+    g() {}
+    
+    public boolean a(b.a.a.f paramF, View paramView, int paramInt, CharSequence paramCharSequence)
+    {
+      input_note_type.setText(paramCharSequence);
+      if (paramInt != 0)
+      {
+        if (paramInt != 1) {
+          return true;
+        }
+        TextInputLayout_client.setVisibility(8);
+        TextInputLayout_case.setVisibility(8);
+        paramF = AddDailyActivity.this;
+        v = -1;
+        w = -1;
+        input_case.setText("");
+        input_client_name.setText("");
+        AddDailyActivity.a(AddDailyActivity.this, "Other");
+        return true;
+      }
+      TextInputLayout_client.setVisibility(0);
+      TextInputLayout_case.setVisibility(0);
+      AddDailyActivity.a(AddDailyActivity.this, "ClientCase");
+      return true;
+    }
+  }
+}

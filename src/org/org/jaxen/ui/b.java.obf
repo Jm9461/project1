@@ -1,0 +1,563 @@
+package a.b.g.e;
+
+import a.b.g.a.i;
+import a.b.g.g.g;
+import a.b.g.g.m;
+import a.b.g.g.n;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ProviderInfo;
+import android.content.pm.Signature;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.net.Uri.Builder;
+import android.os.Build.VERSION;
+import android.os.CancellationSignal;
+import android.os.Handler;
+import android.support.v4.content.e.f.a;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+public class b
+{
+  static final g<String, Typeface> a = new g(16);
+  private static final c b = new c("fonts", 10, 10000);
+  static final Object c = new Object();
+  static final n<String, ArrayList<c.d<g>>> d = new n();
+  private static final Comparator<byte[]> e = new d();
+  
+  public static e a(Context paramContext, CancellationSignal paramCancellationSignal, a paramA)
+  {
+    ProviderInfo localProviderInfo = a(paramContext.getPackageManager(), paramA, paramContext.getResources());
+    if (localProviderInfo == null) {
+      return new e(1, null);
+    }
+    return new e(0, a(paramContext, paramA, authority, paramCancellationSignal));
+  }
+  
+  static g a(Context paramContext, a paramA, int paramInt)
+  {
+    try
+    {
+      paramA = a(paramContext, null, paramA);
+      int j = paramA.b();
+      int i = -3;
+      if (j == 0)
+      {
+        paramContext = a.b.g.a.c.a(paramContext, null, paramA.a(), paramInt);
+        if (paramContext != null) {
+          i = 0;
+        }
+        return new g(paramContext, i);
+      }
+      if (paramA.b() == 1) {
+        i = -2;
+      }
+      return new g(null, i);
+    }
+    catch (PackageManager.NameNotFoundException paramContext) {}
+    return new g(null, -1);
+  }
+  
+  public static ProviderInfo a(PackageManager paramPackageManager, a paramA, Resources paramResources)
+  {
+    String str = paramA.d();
+    ProviderInfo localProviderInfo = paramPackageManager.resolveContentProvider(str, 0);
+    if (localProviderInfo != null)
+    {
+      if (packageName.equals(paramA.e()))
+      {
+        paramPackageManager = a(getPackageInfopackageName, 64).signatures);
+        Collections.sort(paramPackageManager, e);
+        paramA = a(paramA, paramResources);
+        int i = 0;
+        while (i < paramA.size())
+        {
+          paramResources = new ArrayList((Collection)paramA.get(i));
+          Collections.sort(paramResources, e);
+          if (a(paramPackageManager, paramResources)) {
+            return localProviderInfo;
+          }
+          i += 1;
+        }
+        return null;
+      }
+      paramPackageManager = new StringBuilder();
+      paramPackageManager.append("Found content provider ");
+      paramPackageManager.append(str);
+      paramPackageManager.append(", but package was not ");
+      paramPackageManager.append(paramA.e());
+      throw new PackageManager.NameNotFoundException(paramPackageManager.toString());
+    }
+    paramPackageManager = new StringBuilder();
+    paramPackageManager.append("No package found for authority: ");
+    paramPackageManager.append(str);
+    paramPackageManager = new PackageManager.NameNotFoundException(paramPackageManager.toString());
+    for (;;)
+    {
+      throw paramPackageManager;
+    }
+  }
+  
+  public static Typeface a(Context paramContext, final a paramA, f.a arg2, final Handler paramHandler, boolean paramBoolean, int paramInt1, final int paramInt2)
+  {
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append(paramA.c());
+    ((StringBuilder)localObject).append("-");
+    ((StringBuilder)localObject).append(paramInt2);
+    localObject = ((StringBuilder)localObject).toString();
+    Typeface localTypeface = (Typeface)a.b(localObject);
+    if (localTypeface != null)
+    {
+      if (??? != null) {
+        ???.a(localTypeface);
+      }
+      return localTypeface;
+    }
+    if ((paramBoolean) && (paramInt1 == -1))
+    {
+      paramContext = a(paramContext, paramA, paramInt2);
+      if (??? != null)
+      {
+        paramInt1 = b;
+        if (paramInt1 == 0) {
+          ???.a(a, paramHandler);
+        } else {
+          ???.a(paramInt1, paramHandler);
+        }
+      }
+      return a;
+    }
+    paramA = new a(paramContext, paramA, paramInt2, (String)localObject);
+    if (paramBoolean) {
+      try
+      {
+        paramContext = baa;
+        return paramContext;
+      }
+      catch (InterruptedException paramContext)
+      {
+        return null;
+      }
+    }
+    if (??? == null) {
+      paramContext = null;
+    } else {
+      paramContext = new b(???, paramHandler);
+    }
+    synchronized (c)
+    {
+      if (d.containsKey(localObject))
+      {
+        if (paramContext != null) {
+          ((ArrayList)d.get(localObject)).add(paramContext);
+        }
+        return null;
+      }
+      if (paramContext != null)
+      {
+        paramHandler = new ArrayList();
+        paramHandler.add(paramContext);
+        d.put(localObject, paramHandler);
+      }
+      b.a(paramA, new c((String)localObject));
+      return null;
+    }
+  }
+  
+  private static List<List<byte[]>> a(a paramA, Resources paramResources)
+  {
+    if (paramA.a() != null) {
+      return paramA.a();
+    }
+    return android.support.v4.content.e.c.a(paramResources, paramA.b());
+  }
+  
+  private static List<byte[]> a(Signature[] paramArrayOfSignature)
+  {
+    ArrayList localArrayList = new ArrayList();
+    int i = 0;
+    while (i < paramArrayOfSignature.length)
+    {
+      localArrayList.add(paramArrayOfSignature[i].toByteArray());
+      i += 1;
+    }
+    return localArrayList;
+  }
+  
+  public static Map<Uri, ByteBuffer> a(Context paramContext, f[] paramArrayOfF, CancellationSignal paramCancellationSignal)
+  {
+    HashMap localHashMap = new HashMap();
+    int j = paramArrayOfF.length;
+    int i = 0;
+    while (i < j)
+    {
+      Object localObject = paramArrayOfF[i];
+      if (((f)localObject).a() == 0)
+      {
+        localObject = ((f)localObject).c();
+        if (!localHashMap.containsKey(localObject)) {
+          localHashMap.put(localObject, i.a(paramContext, paramCancellationSignal, (Uri)localObject));
+        }
+      }
+      i += 1;
+    }
+    return Collections.unmodifiableMap(localHashMap);
+  }
+  
+  private static boolean a(List<byte[]> paramList1, List<byte[]> paramList2)
+  {
+    if (paramList1.size() != paramList2.size()) {
+      return false;
+    }
+    int i = 0;
+    while (i < paramList1.size())
+    {
+      if (!Arrays.equals((byte[])paramList1.get(i), (byte[])paramList2.get(i))) {
+        return false;
+      }
+      i += 1;
+    }
+    return true;
+  }
+  
+  static f[] a(Context paramContext, a paramA, String paramString, CancellationSignal paramCancellationSignal)
+  {
+    ArrayList localArrayList = new ArrayList();
+    Uri localUri1 = new Uri.Builder().scheme("content").authority(paramString).build();
+    Uri localUri2 = new Uri.Builder().scheme("content").authority(paramString).appendPath("file").build();
+    paramString = null;
+    Object localObject = null;
+    for (;;)
+    {
+      try
+      {
+        i = Build.VERSION.SDK_INT;
+        if (i > 16)
+        {
+          paramContext = paramContext.getContentResolver();
+          paramA = paramA.f();
+          paramString = localObject;
+        }
+        try
+        {
+          paramContext = paramContext.query(localUri1, new String[] { "_id", "file_id", "font_ttc_index", "font_variation_settings", "font_weight", "font_italic", "result_code" }, "query = ?", new String[] { paramA }, null, paramCancellationSignal);
+          continue;
+          paramString = localObject;
+          paramContext = paramContext.getContentResolver();
+          paramString = localObject;
+          paramA = paramA.f();
+          paramString = localObject;
+          paramContext = paramContext.query(localUri1, new String[] { "_id", "file_id", "font_ttc_index", "font_variation_settings", "font_weight", "font_italic", "result_code" }, "query = ?", new String[] { paramA }, null);
+          if (paramContext != null)
+          {
+            paramString = paramContext;
+            if (paramContext.getCount() > 0)
+            {
+              paramString = paramContext;
+              int m = paramContext.getColumnIndex("result_code");
+              paramString = paramContext;
+              paramCancellationSignal = new ArrayList();
+              try
+              {
+                int n = paramContext.getColumnIndex("_id");
+                int i1 = paramContext.getColumnIndex("file_id");
+                int i2 = paramContext.getColumnIndex("font_ttc_index");
+                int i3 = paramContext.getColumnIndex("font_weight");
+                int i4 = paramContext.getColumnIndex("font_italic");
+                paramA = paramCancellationSignal;
+                if (paramContext.moveToNext())
+                {
+                  if (m == -1) {
+                    break label548;
+                  }
+                  i = paramContext.getInt(m);
+                  if (i2 == -1) {
+                    break label554;
+                  }
+                  j = paramContext.getInt(i2);
+                  if (i1 == -1) {
+                    paramA = ContentUris.withAppendedId(localUri1, paramContext.getLong(n));
+                  } else {
+                    paramA = ContentUris.withAppendedId(localUri2, paramContext.getLong(i1));
+                  }
+                  if (i3 == -1) {
+                    break label560;
+                  }
+                  k = paramContext.getInt(i3);
+                  if ((i4 == -1) || (paramContext.getInt(i4) != 1)) {
+                    break label568;
+                  }
+                  bool = true;
+                  paramCancellationSignal.add(new f(paramA, j, k, bool, i));
+                  continue;
+                }
+              }
+              finally
+              {
+                break label530;
+              }
+            }
+          }
+          if (paramContext != null) {
+            paramContext.close();
+          }
+          return (f[])paramA.toArray(new f[0]);
+        }
+        finally
+        {
+          paramContext = paramString;
+        }
+        if (paramContext == null) {
+          break label540;
+        }
+      }
+      finally
+      {
+        paramContext = paramString;
+      }
+      label530:
+      paramContext.close();
+      for (;;)
+      {
+        label540:
+        throw paramA;
+      }
+      label548:
+      int i = 0;
+      continue;
+      label554:
+      int j = 0;
+      continue;
+      label560:
+      int k = 400;
+      continue;
+      label568:
+      boolean bool = false;
+    }
+  }
+  
+  static final class a
+    implements Callable<b.g>
+  {
+    a(Context paramContext, a paramA, int paramInt, String paramString) {}
+    
+    public b.g call()
+    {
+      b.g localG = b.a(a, paramA, paramInt2);
+      Typeface localTypeface = a;
+      if (localTypeface != null) {
+        b.a.a(d, localTypeface);
+      }
+      return localG;
+    }
+  }
+  
+  static final class b
+    implements c.d<b.g>
+  {
+    b(f.a paramA, Handler paramHandler) {}
+    
+    public void a(b.g paramG)
+    {
+      if (paramG == null)
+      {
+        a.a(1, paramHandler);
+        return;
+      }
+      int i = b;
+      if (i == 0)
+      {
+        a.a(a, paramHandler);
+        return;
+      }
+      a.a(i, paramHandler);
+    }
+  }
+  
+  static final class c
+    implements c.d<b.g>
+  {
+    c(String paramString) {}
+    
+    /* Error */
+    public void a(b.g paramG)
+    {
+      // Byte code:
+      //   0: getstatic 26	a/b/g/e/b:c	Ljava/lang/Object;
+      //   3: astore_3
+      //   4: aload_3
+      //   5: monitorenter
+      //   6: getstatic 30	a/b/g/e/b:d	La/b/g/g/n;
+      //   9: aload_0
+      //   10: getfield 17	a/b/g/e/b$c:a	Ljava/lang/String;
+      //   13: invokevirtual 36	a/b/g/g/n:get	(Ljava/lang/Object;)Ljava/lang/Object;
+      //   16: checkcast 38	java/util/ArrayList
+      //   19: astore 4
+      //   21: aload 4
+      //   23: ifnonnull +6 -> 29
+      //   26: aload_3
+      //   27: monitorexit
+      //   28: return
+      //   29: getstatic 30	a/b/g/e/b:d	La/b/g/g/n;
+      //   32: aload_0
+      //   33: getfield 17	a/b/g/e/b$c:a	Ljava/lang/String;
+      //   36: invokevirtual 41	a/b/g/g/n:remove	(Ljava/lang/Object;)Ljava/lang/Object;
+      //   39: pop
+      //   40: aload_3
+      //   41: monitorexit
+      //   42: iconst_0
+      //   43: istore_2
+      //   44: iload_2
+      //   45: aload 4
+      //   47: invokevirtual 45	java/util/ArrayList:size	()I
+      //   50: if_icmpge +25 -> 75
+      //   53: aload 4
+      //   55: iload_2
+      //   56: invokevirtual 48	java/util/ArrayList:get	(I)Ljava/lang/Object;
+      //   59: checkcast 7	a/b/g/e/c$d
+      //   62: aload_1
+      //   63: invokeinterface 51 2 0
+      //   68: iload_2
+      //   69: iconst_1
+      //   70: iadd
+      //   71: istore_2
+      //   72: goto -28 -> 44
+      //   75: return
+      //   76: astore_1
+      //   77: aload_3
+      //   78: monitorexit
+      //   79: aload_1
+      //   80: athrow
+      //   81: astore_1
+      //   82: goto -5 -> 77
+      // Local variable table:
+      //   start	length	slot	name	signature
+      //   0	85	0	this	c
+      //   0	85	1	paramG	b.g
+      //   43	29	2	i	int
+      //   3	75	3	localObject	Object
+      //   19	35	4	localArrayList	ArrayList
+      // Exception table:
+      //   from	to	target	type
+      //   6	21	76	finally
+      //   26	28	81	finally
+      //   29	42	81	finally
+      //   77	79	81	finally
+    }
+  }
+  
+  static final class d
+    implements Comparator<byte[]>
+  {
+    d() {}
+    
+    public int a(byte[] paramArrayOfByte1, byte[] paramArrayOfByte2)
+    {
+      if (paramArrayOfByte1.length != paramArrayOfByte2.length) {
+        return paramArrayOfByte1.length - paramArrayOfByte2.length;
+      }
+      int i = 0;
+      while (i < paramArrayOfByte1.length)
+      {
+        if (paramArrayOfByte1[i] != paramArrayOfByte2[i]) {
+          return paramArrayOfByte1[i] - paramArrayOfByte2[i];
+        }
+        i += 1;
+      }
+      return 0;
+    }
+  }
+  
+  public static class e
+  {
+    private final int a;
+    private final b.f[] b;
+    
+    public e(int paramInt, b.f[] paramArrayOfF)
+    {
+      a = paramInt;
+      b = paramArrayOfF;
+    }
+    
+    public b.f[] a()
+    {
+      return b;
+    }
+    
+    public int b()
+    {
+      return a;
+    }
+  }
+  
+  public static class f
+  {
+    private final Uri a;
+    private final int b;
+    private final int c;
+    private final boolean d;
+    private final int e;
+    
+    public f(Uri paramUri, int paramInt1, int paramInt2, boolean paramBoolean, int paramInt3)
+    {
+      m.a(paramUri);
+      a = ((Uri)paramUri);
+      b = paramInt1;
+      c = paramInt2;
+      d = paramBoolean;
+      e = paramInt3;
+    }
+    
+    public int a()
+    {
+      return e;
+    }
+    
+    public int b()
+    {
+      return b;
+    }
+    
+    public Uri c()
+    {
+      return a;
+    }
+    
+    public int d()
+    {
+      return c;
+    }
+    
+    public boolean e()
+    {
+      return d;
+    }
+  }
+  
+  private static final class g
+  {
+    final Typeface a;
+    final int b;
+    
+    g(Typeface paramTypeface, int paramInt)
+    {
+      a = paramTypeface;
+      b = paramInt;
+    }
+  }
+}

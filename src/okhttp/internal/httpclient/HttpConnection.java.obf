@@ -1,0 +1,144 @@
+package e.f0.g;
+
+import e.a0;
+import e.e;
+import e.i;
+import e.p;
+import e.t;
+import e.t.a;
+import e.y;
+import java.util.List;
+
+public final class g
+  implements t.a
+{
+  private final List<t> a;
+  private final e.f0.f.g b;
+  private final c c;
+  private final e.f0.f.c d;
+  private final int e;
+  private final y f;
+  private final e g;
+  private final p h;
+  private final int i;
+  private final int j;
+  private final int k;
+  private int l;
+  
+  public g(List<t> paramList, e.f0.f.g paramG, c paramC, e.f0.f.c paramC1, int paramInt1, y paramY, e paramE, p paramP, int paramInt2, int paramInt3, int paramInt4)
+  {
+    a = paramList;
+    d = paramC1;
+    b = paramG;
+    c = paramC;
+    e = paramInt1;
+    f = paramY;
+    g = paramE;
+    h = paramP;
+    i = paramInt2;
+    j = paramInt3;
+    k = paramInt4;
+  }
+  
+  public int a()
+  {
+    return k;
+  }
+  
+  public a0 a(y paramY)
+  {
+    return a(paramY, b, c, d);
+  }
+  
+  public a0 a(y paramY, e.f0.f.g paramG, c paramC, e.f0.f.c paramC1)
+  {
+    if (e < a.size())
+    {
+      l += 1;
+      if ((c != null) && (!d.a(paramY.g())))
+      {
+        paramY = new StringBuilder();
+        paramY.append("network interceptor ");
+        paramY.append(a.get(e - 1));
+        paramY.append(" must retain the same host and port");
+        throw new IllegalStateException(paramY.toString());
+      }
+      if ((c != null) && (l > 1))
+      {
+        paramY = new StringBuilder();
+        paramY.append("network interceptor ");
+        paramY.append(a.get(e - 1));
+        paramY.append(" must call proceed() exactly once");
+        throw new IllegalStateException(paramY.toString());
+      }
+      paramG = new g(a, paramG, paramC, paramC1, e + 1, paramY, g, h, i, j, k);
+      paramY = (t)a.get(e);
+      paramC1 = paramY.a(paramG);
+      if ((paramC != null) && (e + 1 < a.size()) && (l != 1))
+      {
+        paramG = new StringBuilder();
+        paramG.append("network interceptor ");
+        paramG.append(paramY);
+        paramG.append(" must call proceed() exactly once");
+        throw new IllegalStateException(paramG.toString());
+      }
+      if (paramC1 != null)
+      {
+        if (paramC1.l() != null) {
+          return paramC1;
+        }
+        paramG = new StringBuilder();
+        paramG.append("interceptor ");
+        paramG.append(paramY);
+        paramG.append(" returned a response with no body");
+        throw new IllegalStateException(paramG.toString());
+      }
+      paramG = new StringBuilder();
+      paramG.append("interceptor ");
+      paramG.append(paramY);
+      paramG.append(" returned null");
+      throw new NullPointerException(paramG.toString());
+    }
+    throw new AssertionError();
+  }
+  
+  public y b()
+  {
+    return f;
+  }
+  
+  public int c()
+  {
+    return i;
+  }
+  
+  public int d()
+  {
+    return j;
+  }
+  
+  public e e()
+  {
+    return g;
+  }
+  
+  public i f()
+  {
+    return d;
+  }
+  
+  public p g()
+  {
+    return h;
+  }
+  
+  public c h()
+  {
+    return c;
+  }
+  
+  public e.f0.f.g i()
+  {
+    return b;
+  }
+}

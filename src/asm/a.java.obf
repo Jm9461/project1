@@ -1,0 +1,59 @@
+package g;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+
+final class i
+  extends a
+{
+  private final RandomAccessFile d = a(paramFile);
+  
+  public i(e paramE, File paramFile)
+  {
+    super(paramE, paramFile);
+  }
+  
+  private RandomAccessFile a(File paramFile)
+  {
+    try
+    {
+      paramFile = new RandomAccessFile(paramFile, "rw");
+      return paramFile;
+    }
+    catch (FileNotFoundException paramFile)
+    {
+      throw new RuntimeException(paramFile);
+    }
+  }
+  
+  private void e()
+  {
+    long l = new FileInputStream(b).getChannel().size();
+    try
+    {
+      d.seek(0L);
+      d.write(new j(a.a(), l).a());
+      d.close();
+      return;
+    }
+    catch (IOException localIOException)
+    {
+      localIOException.printStackTrace();
+    }
+  }
+  
+  public void a()
+  {
+    super.a();
+    try
+    {
+      e();
+      return;
+    }
+    catch (IOException localIOException) {}
+  }
+}

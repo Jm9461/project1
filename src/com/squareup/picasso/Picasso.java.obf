@@ -1,0 +1,486 @@
+package com.squareup.picasso;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Process;
+import android.widget.ImageView;
+import java.io.File;
+import java.lang.ref.ReferenceQueue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.concurrent.ExecutorService;
+
+public class t
+{
+  static final Handler p = new a(Looper.getMainLooper());
+  @SuppressLint({"StaticFieldLeak"})
+  static volatile t q = null;
+  private final d a;
+  private final g b;
+  private final c c;
+  private final List<y> d;
+  final Context e;
+  final i f;
+  final d g;
+  final a0 h;
+  final Map<Object, a> i;
+  final Map<ImageView, h> j;
+  final ReferenceQueue<Object> k;
+  final Bitmap.Config l;
+  boolean m;
+  volatile boolean n;
+  boolean o;
+  
+  t(Context paramContext, i paramI, d paramD, d paramD1, g paramG, List<y> paramList, a0 paramA0, Bitmap.Config paramConfig, boolean paramBoolean1, boolean paramBoolean2)
+  {
+    e = paramContext;
+    f = paramI;
+    g = paramD;
+    a = paramD1;
+    b = paramG;
+    l = paramConfig;
+    int i1;
+    if (paramList != null) {
+      i1 = paramList.size();
+    } else {
+      i1 = 0;
+    }
+    paramD = new ArrayList(7 + i1);
+    paramD.add(new z(paramContext));
+    if (paramList != null) {
+      paramD.addAll(paramList);
+    }
+    paramD.add(new f(paramContext));
+    paramD.add(new o(paramContext));
+    paramD.add(new g(paramContext));
+    paramD.add(new b(paramContext));
+    paramD.add(new k(paramContext));
+    paramD.add(new r(d, paramA0));
+    d = Collections.unmodifiableList(paramD);
+    h = paramA0;
+    i = new WeakHashMap();
+    j = new WeakHashMap();
+    m = paramBoolean1;
+    n = paramBoolean2;
+    k = new ReferenceQueue();
+    c = new c(k, p);
+    c.start();
+  }
+  
+  private void a(Bitmap paramBitmap, e paramE, a paramA, Exception paramException)
+  {
+    if (paramA.j()) {
+      return;
+    }
+    if (!paramA.k()) {
+      i.remove(paramA.i());
+    }
+    if (paramBitmap != null)
+    {
+      if (paramE != null)
+      {
+        paramA.a(paramBitmap, paramE);
+        if (n)
+        {
+          paramBitmap = b.d();
+          paramA = new StringBuilder();
+          paramA.append("from ");
+          paramA.append(paramE);
+          d0.a("Main", "completed", paramBitmap, paramA.toString());
+        }
+      }
+      else
+      {
+        throw new AssertionError("LoadedFrom cannot be null.");
+      }
+    }
+    else
+    {
+      paramA.a(paramException);
+      if (n) {
+        d0.a("Main", "errored", b.d(), paramException.getMessage());
+      }
+    }
+  }
+  
+  public static t b()
+  {
+    if (q == null) {
+      try
+      {
+        if (q == null) {
+          if (PicassoProvider.c != null) {
+            q = new b(PicassoProvider.c).a();
+          } else {
+            throw new IllegalStateException("context == null");
+          }
+        }
+      }
+      finally {}
+    }
+    return q;
+  }
+  
+  Bitmap a(String paramString)
+  {
+    paramString = g.a(paramString);
+    if (paramString != null)
+    {
+      h.b();
+      return paramString;
+    }
+    h.c();
+    return paramString;
+  }
+  
+  w a(w paramW)
+  {
+    Object localObject = b.a(paramW);
+    if (localObject != null) {
+      return localObject;
+    }
+    localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("Request transformer ");
+    ((StringBuilder)localObject).append(b.getClass().getCanonicalName());
+    ((StringBuilder)localObject).append(" returned null for ");
+    ((StringBuilder)localObject).append(paramW);
+    throw new IllegalStateException(((StringBuilder)localObject).toString());
+  }
+  
+  public x a(Uri paramUri)
+  {
+    return new x(this, paramUri, 0);
+  }
+  
+  public x a(File paramFile)
+  {
+    if (paramFile == null) {
+      return new x(this, null, 0);
+    }
+    return a(Uri.fromFile(paramFile));
+  }
+  
+  List<y> a()
+  {
+    return d;
+  }
+  
+  public void a(ImageView paramImageView)
+  {
+    if (paramImageView != null)
+    {
+      a(paramImageView);
+      return;
+    }
+    throw new IllegalArgumentException("view cannot be null.");
+  }
+  
+  void a(ImageView paramImageView, h paramH)
+  {
+    if (j.containsKey(paramImageView)) {
+      a(paramImageView);
+    }
+    j.put(paramImageView, paramH);
+  }
+  
+  void a(a paramA)
+  {
+    Object localObject = paramA.i();
+    if ((localObject != null) && (i.get(localObject) != paramA))
+    {
+      a(localObject);
+      i.put(localObject, paramA);
+    }
+    c(paramA);
+  }
+  
+  void a(c paramC)
+  {
+    a localA = paramC.b();
+    List localList = paramC.c();
+    int i2 = 0;
+    int i1;
+    if ((localList != null) && (!localList.isEmpty())) {
+      i1 = 1;
+    } else {
+      i1 = 0;
+    }
+    if ((localA != null) || (i1 != 0)) {
+      i2 = 1;
+    }
+    if (i2 == 0) {
+      return;
+    }
+    Uri localUri = dd;
+    Exception localException = paramC.e();
+    Bitmap localBitmap = paramC.k();
+    paramC = paramC.g();
+    if (localA != null) {
+      a(localBitmap, paramC, localA, localException);
+    }
+    if (i1 != 0)
+    {
+      i1 = 0;
+      i2 = localList.size();
+      while (i1 < i2)
+      {
+        a(localBitmap, paramC, (a)localList.get(i1), localException);
+        i1 += 1;
+      }
+    }
+    paramC = a;
+    if ((paramC != null) && (localException != null)) {
+      paramC.a(this, localUri, localException);
+    }
+  }
+  
+  void a(Object paramObject)
+  {
+    d0.a();
+    a localA = (a)i.remove(paramObject);
+    if (localA != null)
+    {
+      localA.a();
+      f.a(localA);
+    }
+    if ((paramObject instanceof ImageView))
+    {
+      paramObject = (ImageView)paramObject;
+      paramObject = (h)j.remove(paramObject);
+      if (paramObject != null) {
+        paramObject.a();
+      }
+    }
+  }
+  
+  void b(a paramA)
+  {
+    Object localObject = null;
+    if (p.a(e)) {
+      localObject = a(paramA.b());
+    }
+    if (localObject != null)
+    {
+      a((Bitmap)localObject, e.d, paramA, null);
+      if (n)
+      {
+        paramA = b.d();
+        localObject = new StringBuilder();
+        ((StringBuilder)localObject).append("from ");
+        ((StringBuilder)localObject).append(e.d);
+        d0.a("Main", "completed", paramA, ((StringBuilder)localObject).toString());
+      }
+    }
+    else
+    {
+      a(paramA);
+      if (n) {
+        d0.a("Main", "resumed", b.d());
+      }
+    }
+  }
+  
+  void c(a paramA)
+  {
+    f.b(paramA);
+  }
+  
+  static final class a
+    extends Handler
+  {
+    a(Looper paramLooper)
+    {
+      super();
+    }
+    
+    public void handleMessage(Message paramMessage)
+    {
+      int i = what;
+      if (i != 3)
+      {
+        Object localObject;
+        if (i != 8)
+        {
+          if (i == 13)
+          {
+            paramMessage = (List)obj;
+            i = 0;
+            j = paramMessage.size();
+            while (i < j)
+            {
+              localObject = (a)paramMessage.get(i);
+              a.b((a)localObject);
+              i += 1;
+            }
+            return;
+          }
+          localObject = new StringBuilder();
+          ((StringBuilder)localObject).append("Unknown handler message received: ");
+          ((StringBuilder)localObject).append(what);
+          throw new AssertionError(((StringBuilder)localObject).toString());
+        }
+        paramMessage = (List)obj;
+        i = 0;
+        int j = paramMessage.size();
+        while (i < j)
+        {
+          localObject = (c)paramMessage.get(i);
+          d.a((c)localObject);
+          i += 1;
+        }
+        return;
+      }
+      paramMessage = (a)obj;
+      if (en) {
+        d0.a("Main", "canceled", b.d(), "target got garbage collected");
+      }
+      a.a(paramMessage.i());
+    }
+  }
+  
+  public static class b
+  {
+    private final Context a;
+    private j b;
+    private ExecutorService c;
+    private d d;
+    private t.d e;
+    private t.g f;
+    private List<y> g;
+    private Bitmap.Config h;
+    private boolean i;
+    private boolean j;
+    
+    public b(Context paramContext)
+    {
+      if (paramContext != null)
+      {
+        a = paramContext.getApplicationContext();
+        return;
+      }
+      throw new IllegalArgumentException("Context must not be null.");
+    }
+    
+    public t a()
+    {
+      Context localContext = a;
+      if (b == null) {
+        b = new s(localContext);
+      }
+      if (d == null) {
+        d = new m(localContext);
+      }
+      if (c == null) {
+        c = new v();
+      }
+      if (f == null) {
+        f = t.g.a;
+      }
+      a0 localA0 = new a0(d);
+      return new t(localContext, new i(localContext, c, t.p, b, d, localA0), d, e, f, g, localA0, h, i, j);
+    }
+  }
+  
+  private static class c
+    extends Thread
+  {
+    private final ReferenceQueue<Object> c;
+    private final Handler d;
+    
+    c(ReferenceQueue<Object> paramReferenceQueue, Handler paramHandler)
+    {
+      c = paramReferenceQueue;
+      d = paramHandler;
+      setDaemon(true);
+      setName("Picasso-refQueue");
+    }
+    
+    public void run()
+    {
+      Process.setThreadPriority(10);
+      try
+      {
+        for (;;)
+        {
+          a.a localA = (a.a)c.remove(1000L);
+          Message localMessage = d.obtainMessage();
+          if (localA != null)
+          {
+            what = 3;
+            obj = a;
+            d.sendMessage(localMessage);
+          }
+          else
+          {
+            localMessage.recycle();
+          }
+        }
+        return;
+      }
+      catch (Exception localException)
+      {
+        d.post(new a(localException));
+        return;
+      }
+      catch (InterruptedException localInterruptedException) {}
+    }
+    
+    class a
+      implements Runnable
+    {
+      a(Exception paramException) {}
+      
+      public void run()
+      {
+        throw new RuntimeException(localException);
+      }
+    }
+  }
+  
+  public static abstract interface d
+  {
+    public abstract void a(t paramT, Uri paramUri, Exception paramException);
+  }
+  
+  public static enum e
+  {
+    final int c;
+    
+    private e(int paramInt)
+    {
+      c = paramInt;
+    }
+  }
+  
+  public static enum f
+  {
+    private f() {}
+  }
+  
+  public static abstract interface g
+  {
+    public static final g a = new a();
+    
+    public abstract w a(w paramW);
+    
+    static final class a
+      implements t.g
+    {
+      a() {}
+      
+      public w a(w paramW)
+      {
+        return paramW;
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+package b.d.a;
+
+import android.content.Context;
+import android.media.MediaPlayer;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public abstract class b<TData>
+{
+  private int c;
+  private j d;
+  private float[] e;
+  private float[] f;
+  private float[] g;
+  private boolean h;
+  private Timer i;
+  
+  public b() {}
+  
+  private void g()
+  {
+    Timer localTimer = i;
+    if (localTimer != null)
+    {
+      localTimer.cancel();
+      i.purge();
+      i = null;
+    }
+  }
+  
+  protected final void a()
+  {
+    if (i == null)
+    {
+      i = new Timer("Stop Rendering Timer");
+      i.scheduleAtFixedRate(new a(), 16L, 16L);
+    }
+    d.a(new b());
+  }
+  
+  void a(j paramJ, int paramInt)
+  {
+    d = paramJ;
+    c = paramInt;
+    e = new float[paramInt];
+    f = new float[paramInt];
+    g = new float[paramInt];
+  }
+  
+  public final void a(TData paramTData)
+  {
+    if (h) {
+      return;
+    }
+    a(paramTData, c, e, f);
+    d.a(e, f);
+    e();
+  }
+  
+  protected abstract void a(TData paramTData, int paramInt, float[] paramArrayOfFloat1, float[] paramArrayOfFloat2);
+  
+  public void b() {}
+  
+  public void c() {}
+  
+  public void d()
+  {
+    h = true;
+    e = null;
+    f = null;
+    d = null;
+  }
+  
+  protected final void e()
+  {
+    g();
+    d.a();
+  }
+  
+  protected final void f()
+  {
+    g();
+    d.b();
+  }
+  
+  class a
+    extends TimerTask
+  {
+    a() {}
+    
+    public void run()
+    {
+      if (b.a(b.this) != null) {
+        b.a(b.this).a(b.b(b.this), b.b(b.this));
+      }
+    }
+  }
+  
+  class b
+    implements j.a
+  {
+    b() {}
+    
+    public void a()
+    {
+      f();
+    }
+  }
+  
+  public static class c
+  {
+    public static m a(Context paramContext, MediaPlayer paramMediaPlayer)
+    {
+      return new m(paramContext, paramMediaPlayer);
+    }
+  }
+}

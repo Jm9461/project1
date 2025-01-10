@@ -1,0 +1,83 @@
+package io.codetail.widget;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Path.Direction;
+import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.FrameLayout;
+import d.a.a.a;
+import d.a.a.a.d;
+
+public class RevealFrameLayout
+  extends FrameLayout
+  implements a
+{
+  private Path c = new Path();
+  private final Rect d = new Rect();
+  private a.d e;
+  private boolean f;
+  private float g;
+  
+  public RevealFrameLayout(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public RevealFrameLayout(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, 0);
+  }
+  
+  public RevealFrameLayout(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+  }
+  
+  public void a()
+  {
+    f = false;
+    invalidate(d);
+  }
+  
+  public void a(a.d paramD)
+  {
+    paramD.a().getHitRect(d);
+    e = paramD;
+  }
+  
+  public void b()
+  {
+    f = true;
+  }
+  
+  protected boolean drawChild(Canvas paramCanvas, View paramView, long paramLong)
+  {
+    if ((f) && (paramView == e.a()))
+    {
+      int i = paramCanvas.save();
+      c.reset();
+      Path localPath = c;
+      a.d localD = e;
+      localPath.addCircle(a, b, g, Path.Direction.CW);
+      paramCanvas.clipPath(c);
+      boolean bool = super.drawChild(paramCanvas, paramView, paramLong);
+      paramCanvas.restoreToCount(i);
+      return bool;
+    }
+    return super.drawChild(paramCanvas, paramView, paramLong);
+  }
+  
+  public float getRevealRadius()
+  {
+    return g;
+  }
+  
+  public void setRevealRadius(float paramFloat)
+  {
+    g = paramFloat;
+    invalidate(d);
+  }
+}

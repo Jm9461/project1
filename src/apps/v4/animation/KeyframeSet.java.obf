@@ -1,0 +1,77 @@
+package b.h.a;
+
+import android.view.animation.Interpolator;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+class h
+{
+  int a;
+  g b;
+  Interpolator c;
+  ArrayList<g> d;
+  l e;
+  
+  public h(g... paramVarArgs)
+  {
+    a = paramVarArgs.length;
+    d = new ArrayList();
+    d.addAll(Arrays.asList(paramVarArgs));
+    paramVarArgs = (g)d.get(0);
+    b = ((g)d.get(a - 1));
+    c = b.b();
+  }
+  
+  public static h a(float... paramVarArgs)
+  {
+    int j = paramVarArgs.length;
+    g.a[] arrayOfA = new g.a[Math.max(j, 2)];
+    if (j == 1)
+    {
+      arrayOfA[0] = ((g.a)g.a(0.0F));
+      arrayOfA[1] = ((g.a)g.a(1.0F, paramVarArgs[0]));
+    }
+    else
+    {
+      arrayOfA[0] = ((g.a)g.a(0.0F, paramVarArgs[0]));
+      int i = 1;
+      while (i < j)
+      {
+        arrayOfA[i] = ((g.a)g.a(i / (j - 1), paramVarArgs[i]));
+        i += 1;
+      }
+    }
+    return new e(arrayOfA);
+  }
+  
+  public Object a(float paramFloat)
+  {
+    throw null;
+  }
+  
+  public void a(l paramL)
+  {
+    e = paramL;
+  }
+  
+  public h clone()
+  {
+    throw null;
+  }
+  
+  public String toString()
+  {
+    String str = " ";
+    int i = 0;
+    while (i < a)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(str);
+      localStringBuilder.append(((g)d.get(i)).c());
+      localStringBuilder.append("  ");
+      str = localStringBuilder.toString();
+      i += 1;
+    }
+    return str;
+  }
+}

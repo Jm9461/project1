@@ -1,0 +1,66 @@
+package android.support.design.widget;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+
+class x<V extends View>
+  extends CoordinatorLayout.c<V>
+{
+  private y a;
+  private int b = 0;
+  private int c = 0;
+  
+  public x() {}
+  
+  public x(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+  }
+  
+  public boolean a(int paramInt)
+  {
+    y localY = a;
+    if (localY != null) {
+      return localY.b(paramInt);
+    }
+    b = paramInt;
+    return false;
+  }
+  
+  public boolean a(CoordinatorLayout paramCoordinatorLayout, V paramV, int paramInt)
+  {
+    b(paramCoordinatorLayout, paramV, paramInt);
+    if (a == null) {
+      a = new y(paramV);
+    }
+    a.b();
+    paramInt = b;
+    if (paramInt != 0)
+    {
+      a.b(paramInt);
+      b = 0;
+    }
+    paramInt = c;
+    if (paramInt != 0)
+    {
+      a.a(paramInt);
+      c = 0;
+    }
+    return true;
+  }
+  
+  public int b()
+  {
+    y localY = a;
+    if (localY != null) {
+      return localY.a();
+    }
+    return 0;
+  }
+  
+  protected void b(CoordinatorLayout paramCoordinatorLayout, V paramV, int paramInt)
+  {
+    paramCoordinatorLayout.c(paramV, paramInt);
+  }
+}

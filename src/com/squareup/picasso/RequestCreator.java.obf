@@ -1,0 +1,190 @@
+package com.squareup.picasso;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build.VERSION;
+import android.util.TypedValue;
+import android.widget.ImageView;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class x
+{
+  private static final AtomicInteger m = new AtomicInteger();
+  private final t a;
+  private final w.b b;
+  private boolean c;
+  private boolean d;
+  private boolean e = true;
+  private int f;
+  private int g;
+  private int h;
+  private int i;
+  private Drawable j;
+  private Drawable k;
+  private Object l;
+  
+  x(t paramT, Uri paramUri, int paramInt)
+  {
+    if (!o)
+    {
+      a = paramT;
+      b = new w.b(paramUri, paramInt, l);
+      return;
+    }
+    throw new IllegalStateException("Picasso instance already shut down. Cannot submit new requests.");
+  }
+  
+  private w a(long paramLong)
+  {
+    int n = m.getAndIncrement();
+    Object localObject = b.a();
+    a = n;
+    b = paramLong;
+    boolean bool = a.n;
+    if (bool) {
+      d0.a("Main", "created", ((w)localObject).g(), ((w)localObject).toString());
+    }
+    w localW = a.a((w)localObject);
+    if (localW != localObject)
+    {
+      a = n;
+      b = paramLong;
+      if (bool)
+      {
+        localObject = localW.d();
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append("into ");
+        localStringBuilder.append(localW);
+        d0.a("Main", "changed", (String)localObject, localStringBuilder.toString());
+      }
+    }
+    return localW;
+  }
+  
+  private Drawable e()
+  {
+    int n = f;
+    if (n != 0)
+    {
+      int i1 = Build.VERSION.SDK_INT;
+      if (i1 >= 21) {
+        return a.e.getDrawable(n);
+      }
+      if (i1 >= 16) {
+        return a.e.getResources().getDrawable(f);
+      }
+      TypedValue localTypedValue = new TypedValue();
+      a.e.getResources().getValue(f, localTypedValue, true);
+      return a.e.getResources().getDrawable(resourceId);
+    }
+    return j;
+  }
+  
+  public x a()
+  {
+    b.a(17);
+    return this;
+  }
+  
+  public x a(int paramInt1, int paramInt2)
+  {
+    b.a(paramInt1, paramInt2);
+    return this;
+  }
+  
+  public void a(ImageView paramImageView)
+  {
+    a(paramImageView, null);
+  }
+  
+  public void a(ImageView paramImageView, e paramE)
+  {
+    long l1 = System.nanoTime();
+    d0.a();
+    if (paramImageView != null)
+    {
+      if (!b.b())
+      {
+        a.a(paramImageView);
+        if (e) {
+          u.a(paramImageView, e());
+        }
+        return;
+      }
+      if (d) {
+        if (!b.c())
+        {
+          int n = paramImageView.getWidth();
+          int i1 = paramImageView.getHeight();
+          if ((n != 0) && (i1 != 0))
+          {
+            b.a(n, i1);
+          }
+          else
+          {
+            if (e) {
+              u.a(paramImageView, e());
+            }
+            a.a(paramImageView, new h(this, paramImageView, paramE));
+          }
+        }
+        else
+        {
+          throw new IllegalStateException("Fit cannot be used with resize.");
+        }
+      }
+      Object localObject1 = a(l1);
+      Object localObject2 = d0.a((w)localObject1);
+      if (p.a(h))
+      {
+        Bitmap localBitmap = a.a((String)localObject2);
+        if (localBitmap != null)
+        {
+          a.a(paramImageView);
+          localObject2 = a;
+          u.a(paramImageView, e, localBitmap, t.e.d, c, m);
+          if (a.n)
+          {
+            paramImageView = ((w)localObject1).g();
+            localObject1 = new StringBuilder();
+            ((StringBuilder)localObject1).append("from ");
+            ((StringBuilder)localObject1).append(t.e.d);
+            d0.a("Main", "completed", paramImageView, ((StringBuilder)localObject1).toString());
+          }
+          if (paramE != null) {
+            paramE.a();
+          }
+          return;
+        }
+      }
+      if (e) {
+        u.a(paramImageView, e());
+      }
+      paramImageView = new l(a, paramImageView, (w)localObject1, h, i, g, k, (String)localObject2, l, paramE, c);
+      a.a(paramImageView);
+      return;
+    }
+    throw new IllegalArgumentException("Target must not be null.");
+  }
+  
+  x b()
+  {
+    l = null;
+    return this;
+  }
+  
+  public x c()
+  {
+    d = true;
+    return this;
+  }
+  
+  x d()
+  {
+    d = false;
+    return this;
+  }
+}

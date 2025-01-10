@@ -1,0 +1,48 @@
+package f;
+
+import java.io.InputStream;
+import java.nio.channels.ReadableByteChannel;
+
+public abstract interface e
+  extends s, ReadableByteChannel
+{
+  public abstract long a(byte paramByte);
+  
+  public abstract c a();
+  
+  public abstract boolean a(long paramLong, f paramF);
+  
+  public abstract f b(long paramLong);
+  
+  public abstract String c(long paramLong);
+  
+  public abstract short c();
+  
+  public abstract void d(long paramLong);
+  
+  public abstract long e();
+  
+  public abstract String f();
+  
+  public abstract byte[] f(long paramLong);
+  
+  public abstract byte[] g();
+  
+  public abstract int h();
+  
+  public abstract boolean i();
+  
+  public abstract long j();
+  
+  public abstract InputStream k();
+  
+  public abstract byte readByte();
+  
+  public abstract void readFully(byte[] paramArrayOfByte);
+  
+  public abstract int readInt();
+  
+  public abstract short readShort();
+  
+  public abstract void skip(long paramLong);
+}

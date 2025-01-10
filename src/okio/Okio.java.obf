@@ -1,0 +1,306 @@
+package f;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InterruptedIOException;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public final class l
+{
+  static final Logger a = Logger.getLogger(l.class.getName());
+  
+  private l() {}
+  
+  public static d a(r paramR)
+  {
+    return new m(paramR);
+  }
+  
+  public static e a(s paramS)
+  {
+    return new n(paramS);
+  }
+  
+  public static r a()
+  {
+    return new c();
+  }
+  
+  public static r a(File paramFile)
+  {
+    if (paramFile != null) {
+      return a(new FileOutputStream(paramFile, true));
+    }
+    throw new IllegalArgumentException("file == null");
+  }
+  
+  public static r a(OutputStream paramOutputStream)
+  {
+    return a(paramOutputStream, new t());
+  }
+  
+  private static r a(final OutputStream paramOutputStream, t paramT)
+  {
+    if (paramOutputStream != null)
+    {
+      if (paramT != null) {
+        return new a(paramT, paramOutputStream);
+      }
+      throw new IllegalArgumentException("timeout == null");
+    }
+    throw new IllegalArgumentException("out == null");
+  }
+  
+  public static r a(Socket paramSocket)
+  {
+    if (paramSocket != null)
+    {
+      if (paramSocket.getOutputStream() != null)
+      {
+        a localA = c(paramSocket);
+        return localA.a(a(paramSocket.getOutputStream(), localA));
+      }
+      throw new IOException("socket's output stream == null");
+    }
+    throw new IllegalArgumentException("socket == null");
+  }
+  
+  public static s a(InputStream paramInputStream)
+  {
+    return a(paramInputStream, new t());
+  }
+  
+  private static s a(final InputStream paramInputStream, t paramT)
+  {
+    if (paramInputStream != null)
+    {
+      if (paramT != null) {
+        return new b(paramT, paramInputStream);
+      }
+      throw new IllegalArgumentException("timeout == null");
+    }
+    throw new IllegalArgumentException("in == null");
+  }
+  
+  static boolean a(AssertionError paramAssertionError)
+  {
+    return (paramAssertionError.getCause() != null) && (paramAssertionError.getMessage() != null) && (paramAssertionError.getMessage().contains("getsockname failed"));
+  }
+  
+  public static r b(File paramFile)
+  {
+    if (paramFile != null) {
+      return a(new FileOutputStream(paramFile));
+    }
+    throw new IllegalArgumentException("file == null");
+  }
+  
+  public static s b(Socket paramSocket)
+  {
+    if (paramSocket != null)
+    {
+      if (paramSocket.getInputStream() != null)
+      {
+        a localA = c(paramSocket);
+        return localA.a(a(paramSocket.getInputStream(), localA));
+      }
+      throw new IOException("socket's input stream == null");
+    }
+    throw new IllegalArgumentException("socket == null");
+  }
+  
+  private static a c(Socket paramSocket)
+  {
+    return new d();
+  }
+  
+  public static s c(File paramFile)
+  {
+    if (paramFile != null) {
+      return a(new FileInputStream(paramFile));
+    }
+    throw new IllegalArgumentException("file == null");
+  }
+  
+  final class a
+    implements r
+  {
+    a(OutputStream paramOutputStream) {}
+    
+    public void a(c paramC, long paramLong)
+    {
+      u.a(d, 0L, paramLong);
+      while (paramLong > 0L)
+      {
+        e();
+        o localO = c;
+        int i = (int)Math.min(paramLong, c - b);
+        paramOutputStream.write(a, b, i);
+        b += i;
+        paramLong -= i;
+        d -= i;
+        if (b == c)
+        {
+          c = localO.b();
+          p.a(localO);
+        }
+      }
+    }
+    
+    public t b()
+    {
+      return l.this;
+    }
+    
+    public void close()
+    {
+      paramOutputStream.close();
+    }
+    
+    public void flush()
+    {
+      paramOutputStream.flush();
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("sink(");
+      localStringBuilder.append(paramOutputStream);
+      localStringBuilder.append(")");
+      return localStringBuilder.toString();
+    }
+  }
+  
+  final class b
+    implements s
+  {
+    b(InputStream paramInputStream) {}
+    
+    public long b(c paramC, long paramLong)
+    {
+      if (paramLong >= 0L)
+      {
+        if (paramLong == 0L) {
+          return 0L;
+        }
+        try
+        {
+          e();
+          o localO = paramC.b(1);
+          int i = (int)Math.min(paramLong, 8192 - c);
+          i = paramInputStream.read(a, c, i);
+          if (i == -1) {
+            return -1L;
+          }
+          c += i;
+          d += i;
+          return i;
+        }
+        catch (AssertionError paramC)
+        {
+          if (l.a(paramC)) {
+            throw new IOException(paramC);
+          }
+          throw paramC;
+        }
+      }
+      paramC = new StringBuilder();
+      paramC.append("byteCount < 0: ");
+      paramC.append(paramLong);
+      throw new IllegalArgumentException(paramC.toString());
+    }
+    
+    public t b()
+    {
+      return l.this;
+    }
+    
+    public void close()
+    {
+      paramInputStream.close();
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("source(");
+      localStringBuilder.append(paramInputStream);
+      localStringBuilder.append(")");
+      return localStringBuilder.toString();
+    }
+  }
+  
+  final class c
+    implements r
+  {
+    c() {}
+    
+    public void a(c paramC, long paramLong)
+    {
+      paramC.skip(paramLong);
+    }
+    
+    public t b()
+    {
+      return t.d;
+    }
+    
+    public void close() {}
+    
+    public void flush() {}
+  }
+  
+  final class d
+    extends a
+  {
+    d() {}
+    
+    protected IOException b(IOException paramIOException)
+    {
+      SocketTimeoutException localSocketTimeoutException = new SocketTimeoutException("timeout");
+      if (paramIOException != null) {
+        localSocketTimeoutException.initCause(paramIOException);
+      }
+      return localSocketTimeoutException;
+    }
+    
+    protected void i()
+    {
+      try
+      {
+        close();
+      }
+      catch (AssertionError localAssertionError)
+      {
+        if (l.a(localAssertionError))
+        {
+          localLogger = l.a;
+          localLevel = Level.WARNING;
+          localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Failed to close timed out socket ");
+          localStringBuilder.append(l.this);
+          localLogger.log(localLevel, localStringBuilder.toString(), localAssertionError);
+          return;
+        }
+        throw localAssertionError;
+      }
+      catch (Exception localException)
+      {
+        Logger localLogger = l.a;
+        Level localLevel = Level.WARNING;
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append("Failed to close timed out socket ");
+        localStringBuilder.append(l.this);
+        localLogger.log(localLevel, localStringBuilder.toString(), localException);
+      }
+    }
+  }
+}

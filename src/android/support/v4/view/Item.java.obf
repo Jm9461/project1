@@ -1,0 +1,17 @@
+package android.support.v4.view;
+
+import a.b.a.c;
+import android.os.Build.VERSION;
+import android.view.ViewGroup;
+
+public final class w
+{
+  public static boolean a(ViewGroup paramViewGroup)
+  {
+    if (Build.VERSION.SDK_INT >= 21) {
+      return paramViewGroup.isTransitionGroup();
+    }
+    Boolean localBoolean = (Boolean)paramViewGroup.getTag(c.tag_transition_group);
+    return ((localBoolean != null) && (localBoolean.booleanValue())) || (paramViewGroup.getBackground() != null) || (u.q(paramViewGroup) != null);
+  }
+}

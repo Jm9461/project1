@@ -1,0 +1,314 @@
+package android.support.v4.content;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+public final class c
+{
+  private static final Object f = new Object();
+  private static c g;
+  private final Context a;
+  private final HashMap<BroadcastReceiver, ArrayList<c>> b = new HashMap();
+  private final HashMap<String, ArrayList<c>> c = new HashMap();
+  private final ArrayList<b> d = new ArrayList();
+  private final Handler e;
+  
+  private c(Context paramContext)
+  {
+    a = paramContext;
+    e = new a(paramContext.getMainLooper());
+  }
+  
+  public static c a(Context paramContext)
+  {
+    synchronized (f)
+    {
+      if (g == null) {
+        g = new c(paramContext.getApplicationContext());
+      }
+      paramContext = g;
+      return paramContext;
+    }
+  }
+  
+  void a()
+  {
+    int i;
+    b[] arrayOfB;
+    int k;
+    int j;
+    c localC;
+    synchronized (b)
+    {
+      i = d.size();
+      if (i <= 0) {
+        return;
+      }
+      arrayOfB = new b[i];
+    }
+    throw localObject1;
+  }
+  
+  public void a(BroadcastReceiver paramBroadcastReceiver)
+  {
+    int i;
+    int j;
+    int k;
+    label202:
+    label209:
+    synchronized (b)
+    {
+      ArrayList localArrayList1 = (ArrayList)b.remove(paramBroadcastReceiver);
+      if (localArrayList1 == null) {
+        return;
+      }
+      i = localArrayList1.size() - 1;
+      if (i >= 0)
+      {
+        c localC1 = (c)localArrayList1.get(i);
+        d = true;
+        j = 0;
+        if (j >= a.countActions()) {
+          break label209;
+        }
+        String str = a.getAction(j);
+        ArrayList localArrayList2 = (ArrayList)c.get(str);
+        if (localArrayList2 == null) {
+          break label202;
+        }
+        k = localArrayList2.size() - 1;
+        if (k >= 0)
+        {
+          c localC2 = (c)localArrayList2.get(k);
+          if (b == paramBroadcastReceiver)
+          {
+            d = true;
+            localArrayList2.remove(k);
+          }
+        }
+        else
+        {
+          if (localArrayList2.size() > 0) {
+            break label202;
+          }
+          c.remove(str);
+          break label202;
+        }
+      }
+      else
+      {
+        return;
+      }
+    }
+  }
+  
+  public void a(BroadcastReceiver paramBroadcastReceiver, IntentFilter paramIntentFilter)
+  {
+    synchronized (b)
+    {
+      c localC = new c(paramIntentFilter, paramBroadcastReceiver);
+      Object localObject2 = (ArrayList)b.get(paramBroadcastReceiver);
+      Object localObject1 = localObject2;
+      if (localObject2 == null)
+      {
+        localObject1 = new ArrayList(1);
+        b.put(paramBroadcastReceiver, localObject1);
+      }
+      ((ArrayList)localObject1).add(localC);
+      int i = 0;
+      while (i < paramIntentFilter.countActions())
+      {
+        localObject2 = paramIntentFilter.getAction(i);
+        localObject1 = (ArrayList)c.get(localObject2);
+        paramBroadcastReceiver = (BroadcastReceiver)localObject1;
+        if (localObject1 == null)
+        {
+          paramBroadcastReceiver = new ArrayList(1);
+          c.put(localObject2, paramBroadcastReceiver);
+        }
+        paramBroadcastReceiver.add(localC);
+        i += 1;
+      }
+      return;
+    }
+    for (;;)
+    {
+      throw paramBroadcastReceiver;
+    }
+  }
+  
+  public boolean a(Intent paramIntent)
+  {
+    int i;
+    Object localObject1;
+    int j;
+    Object localObject2;
+    int k;
+    label532:
+    label540:
+    label543:
+    label609:
+    label616:
+    label626:
+    synchronized (b)
+    {
+      String str2 = paramIntent.getAction();
+      String str1 = paramIntent.resolveTypeIfNeeded(a.getContentResolver());
+      Uri localUri = paramIntent.getData();
+      String str3 = paramIntent.getScheme();
+      Set localSet = paramIntent.getCategories();
+      if ((paramIntent.getFlags() & 0x8) != 0)
+      {
+        i = 1;
+        if (i != 0)
+        {
+          localObject1 = new StringBuilder();
+          ((StringBuilder)localObject1).append("Resolving type ");
+          ((StringBuilder)localObject1).append(str1);
+          ((StringBuilder)localObject1).append(" scheme ");
+          ((StringBuilder)localObject1).append(str3);
+          ((StringBuilder)localObject1).append(" of intent ");
+          ((StringBuilder)localObject1).append(paramIntent);
+          Log.v("LocalBroadcastManager", ((StringBuilder)localObject1).toString());
+        }
+        ArrayList localArrayList = (ArrayList)c.get(paramIntent.getAction());
+        if (localArrayList == null) {
+          break label626;
+        }
+        if (i == 0) {
+          break label532;
+        }
+        localObject1 = new StringBuilder();
+        ((StringBuilder)localObject1).append("Action list: ");
+        ((StringBuilder)localObject1).append(localArrayList);
+        Log.v("LocalBroadcastManager", ((StringBuilder)localObject1).toString());
+        break label532;
+        if (j >= localArrayList.size()) {
+          break label616;
+        }
+        c localC = (c)localArrayList.get(j);
+        if (i != 0)
+        {
+          localObject1 = new StringBuilder();
+          ((StringBuilder)localObject1).append("Matching against filter ");
+          ((StringBuilder)localObject1).append(a);
+          Log.v("LocalBroadcastManager", ((StringBuilder)localObject1).toString());
+        }
+        if (c)
+        {
+          if (i == 0) {
+            break label540;
+          }
+          Log.v("LocalBroadcastManager", "  Filter's target already added");
+          break label609;
+        }
+        localObject1 = a;
+        Object localObject3 = localObject2;
+        k = ((IntentFilter)localObject1).match(str2, str1, str3, localUri, localSet, "LocalBroadcastManager");
+        if (k < 0) {
+          break label543;
+        }
+        if (i != 0)
+        {
+          localObject1 = new StringBuilder();
+          ((StringBuilder)localObject1).append("  Filter matched!  match=0x");
+          ((StringBuilder)localObject1).append(Integer.toHexString(k));
+          Log.v("LocalBroadcastManager", ((StringBuilder)localObject1).toString());
+        }
+        localObject1 = localObject3;
+        if (localObject3 == null) {
+          localObject1 = new ArrayList();
+        }
+        ((ArrayList)localObject1).add(localC);
+        c = true;
+        localObject2 = localObject1;
+        break label609;
+        localObject3 = new StringBuilder();
+        ((StringBuilder)localObject3).append("  Filter did not match: ");
+        ((StringBuilder)localObject3).append((String)localObject1);
+        Log.v("LocalBroadcastManager", ((StringBuilder)localObject3).toString());
+        break label609;
+        while (i < localObject2.size())
+        {
+          getc = false;
+          i += 1;
+        }
+        d.add(new b(paramIntent, localObject2));
+        if (!e.hasMessages(1)) {
+          e.sendEmptyMessage(1);
+        }
+        return true;
+        return false;
+      }
+    }
+  }
+  
+  class a
+    extends Handler
+  {
+    a(Looper paramLooper)
+    {
+      super();
+    }
+    
+    public void handleMessage(Message paramMessage)
+    {
+      if (what != 1)
+      {
+        super.handleMessage(paramMessage);
+        return;
+      }
+      a();
+    }
+  }
+  
+  private static final class b
+  {
+    final Intent a;
+    final ArrayList<c.c> b;
+    
+    b(Intent paramIntent, ArrayList<c.c> paramArrayList)
+    {
+      a = paramIntent;
+      b = paramArrayList;
+    }
+  }
+  
+  private static final class c
+  {
+    final IntentFilter a;
+    final BroadcastReceiver b;
+    boolean c;
+    boolean d;
+    
+    c(IntentFilter paramIntentFilter, BroadcastReceiver paramBroadcastReceiver)
+    {
+      a = paramIntentFilter;
+      b = paramBroadcastReceiver;
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder(128);
+      localStringBuilder.append("Receiver{");
+      localStringBuilder.append(b);
+      localStringBuilder.append(" filter=");
+      localStringBuilder.append(a);
+      if (d) {
+        localStringBuilder.append(" DEAD");
+      }
+      localStringBuilder.append("}");
+      return localStringBuilder.toString();
+    }
+  }
+}

@@ -1,0 +1,524 @@
+package android.support.v7.widget;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+import android.support.v4.view.u;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+
+class j0
+  extends RecyclerView.n
+  implements RecyclerView.s
+{
+  private static final int[] D = { 16842919 };
+  private static final int[] E = new int[0];
+  int A = 0;
+  private final Runnable B = new a();
+  private final RecyclerView.t C = new b();
+  private final int a;
+  private final int b;
+  final StateListDrawable c;
+  final Drawable d;
+  private final int e;
+  private final int f;
+  private final StateListDrawable g;
+  private final Drawable h;
+  private final int i;
+  private final int j;
+  int k;
+  int l;
+  float m;
+  int n;
+  int o;
+  float p;
+  private int q = 0;
+  private int r = 0;
+  private RecyclerView s;
+  private boolean t = false;
+  private boolean u = false;
+  private int v = 0;
+  private int w = 0;
+  private final int[] x = new int[2];
+  private final int[] y = new int[2];
+  final ValueAnimator z = ValueAnimator.ofFloat(new float[] { 0.0F, 1.0F });
+  
+  j0(RecyclerView paramRecyclerView, StateListDrawable paramStateListDrawable1, Drawable paramDrawable1, StateListDrawable paramStateListDrawable2, Drawable paramDrawable2, int paramInt1, int paramInt2, int paramInt3)
+  {
+    c = paramStateListDrawable1;
+    d = paramDrawable1;
+    g = paramStateListDrawable2;
+    h = paramDrawable2;
+    e = Math.max(paramInt1, paramStateListDrawable1.getIntrinsicWidth());
+    f = Math.max(paramInt1, paramDrawable1.getIntrinsicWidth());
+    i = Math.max(paramInt1, paramStateListDrawable2.getIntrinsicWidth());
+    j = Math.max(paramInt1, paramDrawable2.getIntrinsicWidth());
+    a = paramInt2;
+    b = paramInt3;
+    c.setAlpha(255);
+    d.setAlpha(255);
+    z.addListener(new c());
+    z.addUpdateListener(new d());
+    a(paramRecyclerView);
+  }
+  
+  private int a(float paramFloat1, float paramFloat2, int[] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3)
+  {
+    int i1 = paramArrayOfInt[1] - paramArrayOfInt[0];
+    if (i1 == 0) {
+      return 0;
+    }
+    paramFloat1 = (paramFloat2 - paramFloat1) / i1;
+    paramInt1 -= paramInt3;
+    paramInt3 = (int)(paramInt1 * paramFloat1);
+    paramInt2 += paramInt3;
+    if ((paramInt2 < paramInt1) && (paramInt2 >= 0)) {
+      return paramInt3;
+    }
+    return 0;
+  }
+  
+  private void a(float paramFloat)
+  {
+    int[] arrayOfInt = e();
+    paramFloat = Math.max(arrayOfInt[0], Math.min(arrayOfInt[1], paramFloat));
+    if (Math.abs(o - paramFloat) < 2.0F) {
+      return;
+    }
+    int i1 = a(p, paramFloat, arrayOfInt, s.computeHorizontalScrollRange(), s.computeHorizontalScrollOffset(), q);
+    if (i1 != 0) {
+      s.scrollBy(i1, 0);
+    }
+    p = paramFloat;
+  }
+  
+  private void a(Canvas paramCanvas)
+  {
+    int i2 = r;
+    int i1 = i;
+    i2 -= i1;
+    int i4 = o;
+    int i3 = n;
+    i4 -= i3 / 2;
+    g.setBounds(0, 0, i3, i1);
+    h.setBounds(0, 0, q, j);
+    paramCanvas.translate(0.0F, i2);
+    h.draw(paramCanvas);
+    paramCanvas.translate(i4, 0.0F);
+    g.draw(paramCanvas);
+    paramCanvas.translate(-i4, -i2);
+  }
+  
+  private void b(float paramFloat)
+  {
+    int[] arrayOfInt = f();
+    paramFloat = Math.max(arrayOfInt[0], Math.min(arrayOfInt[1], paramFloat));
+    if (Math.abs(l - paramFloat) < 2.0F) {
+      return;
+    }
+    int i1 = a(m, paramFloat, arrayOfInt, s.computeVerticalScrollRange(), s.computeVerticalScrollOffset(), r);
+    if (i1 != 0) {
+      s.scrollBy(0, i1);
+    }
+    m = paramFloat;
+  }
+  
+  private void b(Canvas paramCanvas)
+  {
+    int i2 = q;
+    int i1 = e;
+    i2 -= i1;
+    int i4 = l;
+    int i3 = k;
+    i4 -= i3 / 2;
+    c.setBounds(0, 0, i1, i3);
+    d.setBounds(0, 0, f, r);
+    if (g())
+    {
+      d.draw(paramCanvas);
+      paramCanvas.translate(e, i4);
+      paramCanvas.scale(-1.0F, 1.0F);
+      c.draw(paramCanvas);
+      paramCanvas.scale(1.0F, 1.0F);
+      paramCanvas.translate(-e, -i4);
+      return;
+    }
+    paramCanvas.translate(i2, 0.0F);
+    d.draw(paramCanvas);
+    paramCanvas.translate(0.0F, i4);
+    c.draw(paramCanvas);
+    paramCanvas.translate(-i2, -i4);
+  }
+  
+  private void c()
+  {
+    s.removeCallbacks(B);
+  }
+  
+  private void c(int paramInt)
+  {
+    c();
+    s.postDelayed(B, paramInt);
+  }
+  
+  private void d()
+  {
+    s.b(this);
+    s.b(this);
+    s.b(C);
+    c();
+  }
+  
+  private int[] e()
+  {
+    int[] arrayOfInt = y;
+    int i1 = b;
+    arrayOfInt[0] = i1;
+    arrayOfInt[1] = (q - i1);
+    return arrayOfInt;
+  }
+  
+  private int[] f()
+  {
+    int[] arrayOfInt = x;
+    int i1 = b;
+    arrayOfInt[0] = i1;
+    arrayOfInt[1] = (r - i1);
+    return arrayOfInt;
+  }
+  
+  private boolean g()
+  {
+    return u.k(s) == 1;
+  }
+  
+  private void h()
+  {
+    s.a(this);
+    s.a(this);
+    s.a(C);
+  }
+  
+  void a()
+  {
+    s.invalidate();
+  }
+  
+  void a(int paramInt)
+  {
+    int i1 = A;
+    if (i1 != 1)
+    {
+      if (i1 == 2) {}
+    }
+    else {
+      z.cancel();
+    }
+    A = 3;
+    ValueAnimator localValueAnimator = z;
+    localValueAnimator.setFloatValues(new float[] { ((Float)localValueAnimator.getAnimatedValue()).floatValue(), 0.0F });
+    z.setDuration(paramInt);
+    z.start();
+  }
+  
+  void a(int paramInt1, int paramInt2)
+  {
+    int i1 = s.computeVerticalScrollRange();
+    int i2 = r;
+    boolean bool;
+    if ((i1 - i2 > 0) && (r >= a)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    t = bool;
+    int i3 = s.computeHorizontalScrollRange();
+    int i4 = q;
+    if ((i3 - i4 > 0) && (q >= a)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    u = bool;
+    if ((!t) && (!u))
+    {
+      if (v != 0) {
+        b(0);
+      }
+      return;
+    }
+    float f1;
+    float f2;
+    if (t)
+    {
+      f1 = paramInt2;
+      f2 = i2 / 2.0F;
+      l = ((int)(i2 * (f1 + f2) / i1));
+      k = Math.min(i2, i2 * i2 / i1);
+    }
+    if (u)
+    {
+      f1 = paramInt1;
+      f2 = i4 / 2.0F;
+      o = ((int)(i4 * (f1 + f2) / i3));
+      n = Math.min(i4, i4 * i4 / i3);
+    }
+    paramInt1 = v;
+    if ((paramInt1 == 0) || (paramInt1 == 1)) {
+      b(1);
+    }
+  }
+  
+  public void a(RecyclerView paramRecyclerView)
+  {
+    RecyclerView localRecyclerView = s;
+    if (localRecyclerView == paramRecyclerView) {
+      return;
+    }
+    if (localRecyclerView != null) {
+      d();
+    }
+    s = paramRecyclerView;
+    if (s != null) {
+      h();
+    }
+  }
+  
+  public void a(RecyclerView paramRecyclerView, MotionEvent paramMotionEvent)
+  {
+    if (v == 0) {
+      return;
+    }
+    if (paramMotionEvent.getAction() == 0)
+    {
+      boolean bool1 = b(paramMotionEvent.getX(), paramMotionEvent.getY());
+      boolean bool2 = a(paramMotionEvent.getX(), paramMotionEvent.getY());
+      if ((bool1) || (bool2))
+      {
+        if (bool2)
+        {
+          w = 1;
+          p = ((int)paramMotionEvent.getX());
+        }
+        else if (bool1)
+        {
+          w = 2;
+          m = ((int)paramMotionEvent.getY());
+        }
+        b(2);
+      }
+      return;
+    }
+    if ((paramMotionEvent.getAction() == 1) && (v == 2))
+    {
+      m = 0.0F;
+      p = 0.0F;
+      b(1);
+      w = 0;
+      return;
+    }
+    if ((paramMotionEvent.getAction() == 2) && (v == 2))
+    {
+      b();
+      if (w == 1) {
+        a(paramMotionEvent.getX());
+      }
+      if (w == 2) {
+        b(paramMotionEvent.getY());
+      }
+    }
+  }
+  
+  public void a(boolean paramBoolean) {}
+  
+  boolean a(float paramFloat1, float paramFloat2)
+  {
+    if (paramFloat2 >= r - i)
+    {
+      int i1 = o;
+      int i2 = n;
+      if ((paramFloat1 >= i1 - i2 / 2) && (paramFloat1 <= i1 + i2 / 2)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public void b()
+  {
+    int i1 = A;
+    if (i1 != 0)
+    {
+      if (i1 != 3) {
+        return;
+      }
+      z.cancel();
+    }
+    A = 1;
+    ValueAnimator localValueAnimator = z;
+    localValueAnimator.setFloatValues(new float[] { ((Float)localValueAnimator.getAnimatedValue()).floatValue(), 1.0F });
+    z.setDuration(500L);
+    z.setStartDelay(0L);
+    z.start();
+  }
+  
+  void b(int paramInt)
+  {
+    if ((paramInt == 2) && (v != 2))
+    {
+      c.setState(D);
+      c();
+    }
+    if (paramInt == 0) {
+      a();
+    } else {
+      b();
+    }
+    if ((v == 2) && (paramInt != 2))
+    {
+      c.setState(E);
+      c(1200);
+    }
+    else if (paramInt == 1)
+    {
+      c(1500);
+    }
+    v = paramInt;
+  }
+  
+  public void b(Canvas paramCanvas, RecyclerView paramRecyclerView, RecyclerView.a0 paramA0)
+  {
+    if ((q == s.getWidth()) && (r == s.getHeight()))
+    {
+      if (A != 0)
+      {
+        if (t) {
+          b(paramCanvas);
+        }
+        if (u) {
+          a(paramCanvas);
+        }
+      }
+      return;
+    }
+    q = s.getWidth();
+    r = s.getHeight();
+    b(0);
+  }
+  
+  boolean b(float paramFloat1, float paramFloat2)
+  {
+    if (g() ? paramFloat1 <= e / 2 : paramFloat1 >= q - e)
+    {
+      int i1 = l;
+      int i2 = k;
+      if ((paramFloat2 >= i1 - i2 / 2) && (paramFloat2 <= i1 + i2 / 2)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean b(RecyclerView paramRecyclerView, MotionEvent paramMotionEvent)
+  {
+    int i1 = v;
+    if (i1 == 1)
+    {
+      boolean bool1 = b(paramMotionEvent.getX(), paramMotionEvent.getY());
+      boolean bool2 = a(paramMotionEvent.getX(), paramMotionEvent.getY());
+      if ((paramMotionEvent.getAction() == 0) && ((bool1) || (bool2)))
+      {
+        if (bool2)
+        {
+          w = 1;
+          p = ((int)paramMotionEvent.getX());
+        }
+        else if (bool1)
+        {
+          w = 2;
+          m = ((int)paramMotionEvent.getY());
+        }
+        b(2);
+        bool1 = true;
+      }
+      else
+      {
+        bool1 = false;
+      }
+      return bool1;
+    }
+    return i1 == 2;
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      a(500);
+    }
+  }
+  
+  class b
+    extends RecyclerView.t
+  {
+    b() {}
+    
+    public void a(RecyclerView paramRecyclerView, int paramInt1, int paramInt2)
+    {
+      a(paramRecyclerView.computeHorizontalScrollOffset(), paramRecyclerView.computeVerticalScrollOffset());
+    }
+  }
+  
+  private class c
+    extends AnimatorListenerAdapter
+  {
+    private boolean a = false;
+    
+    c() {}
+    
+    public void onAnimationCancel(Animator paramAnimator)
+    {
+      a = true;
+    }
+    
+    public void onAnimationEnd(Animator paramAnimator)
+    {
+      if (a)
+      {
+        a = false;
+        return;
+      }
+      if (((Float)z.getAnimatedValue()).floatValue() == 0.0F)
+      {
+        paramAnimator = j0.this;
+        A = 0;
+        paramAnimator.b(0);
+        return;
+      }
+      paramAnimator = j0.this;
+      A = 2;
+      paramAnimator.a();
+    }
+  }
+  
+  private class d
+    implements ValueAnimator.AnimatorUpdateListener
+  {
+    d() {}
+    
+    public void onAnimationUpdate(ValueAnimator paramValueAnimator)
+    {
+      int i = (int)(((Float)paramValueAnimator.getAnimatedValue()).floatValue() * 255.0F);
+      c.setAlpha(i);
+      d.setAlpha(i);
+      a();
+    }
+  }
+}

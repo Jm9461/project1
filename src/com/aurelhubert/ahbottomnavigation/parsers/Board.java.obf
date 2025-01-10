@@ -1,0 +1,22 @@
+package com.aurelhubert.ahbottomnavigation.i;
+
+public final class b
+{
+  public static int a(a paramA, int paramInt)
+  {
+    int i = paramA.a();
+    if (i == 0) {
+      return paramInt;
+    }
+    return i;
+  }
+  
+  public static int b(a paramA, int paramInt)
+  {
+    int i = paramA.c();
+    if (i == 0) {
+      return paramInt;
+    }
+    return i;
+  }
+}

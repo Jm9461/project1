@@ -1,0 +1,131 @@
+package com.rey.material.widget;
+
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.o;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View.OnClickListener;
+import b.j.a.d.a;
+import b.j.a.d.a.b;
+import b.j.a.d.a.c;
+import b.j.a.e.c;
+import b.j.a.f.d;
+
+public class ImageView
+  extends o
+  implements a.c
+{
+  private e e;
+  protected int f;
+  protected int g = Integer.MIN_VALUE;
+  
+  public ImageView(Context paramContext)
+  {
+    super(paramContext);
+    b(paramContext, null, 0, 0);
+  }
+  
+  public ImageView(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    super(paramContext, paramAttributeSet);
+    b(paramContext, paramAttributeSet, 0, 0);
+  }
+  
+  public ImageView(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+    b(paramContext, paramAttributeSet, paramInt, 0);
+  }
+  
+  public void a(int paramInt)
+  {
+    d.a(this, paramInt);
+    a(getContext(), null, 0, paramInt);
+  }
+  
+  protected void a(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    getRippleManager().a(this, paramContext, paramAttributeSet, paramInt1, paramInt2);
+  }
+  
+  public void a(a.b paramB)
+  {
+    int i = a.a().a(f);
+    if (g != i)
+    {
+      g = i;
+      a(g);
+    }
+  }
+  
+  protected void b(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    a(paramContext, paramAttributeSet, paramInt1, paramInt2);
+    if (!isInEditMode()) {
+      f = a.a(paramContext, paramAttributeSet, paramInt1, paramInt2);
+    }
+  }
+  
+  protected e getRippleManager()
+  {
+    if (e == null) {
+      try
+      {
+        if (e == null) {
+          e = new e();
+        }
+      }
+      finally {}
+    }
+    return e;
+  }
+  
+  protected void onAttachedToWindow()
+  {
+    super.onAttachedToWindow();
+    if (f != 0)
+    {
+      a.a().a(this);
+      a(null);
+    }
+  }
+  
+  protected void onDetachedFromWindow()
+  {
+    super.onDetachedFromWindow();
+    e.a(this);
+    if (f != 0) {
+      a.a().b(this);
+    }
+  }
+  
+  public boolean onTouchEvent(MotionEvent paramMotionEvent)
+  {
+    boolean bool = super.onTouchEvent(paramMotionEvent);
+    return (getRippleManager().a(this, paramMotionEvent)) || (bool);
+  }
+  
+  public void setBackgroundDrawable(Drawable paramDrawable)
+  {
+    Drawable localDrawable = getBackground();
+    if (((localDrawable instanceof c)) && (!(paramDrawable instanceof c)))
+    {
+      ((c)localDrawable).a(paramDrawable);
+      return;
+    }
+    super.setBackgroundDrawable(paramDrawable);
+  }
+  
+  public void setOnClickListener(View.OnClickListener paramOnClickListener)
+  {
+    e localE = getRippleManager();
+    if (paramOnClickListener == localE)
+    {
+      super.setOnClickListener(paramOnClickListener);
+      return;
+    }
+    localE.a(paramOnClickListener);
+    setOnClickListener(localE);
+  }
+}

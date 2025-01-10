@@ -1,0 +1,83 @@
+package com.lawyer_smartCalendar.a;
+
+import android.content.Context;
+import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import com.lawyer_smartCalendar.activity.AddCityBankAccountActivity;
+import com.lawyer_smartCalendar.utils.f;
+
+public class b
+  extends RecyclerView.g<a>
+{
+  private Context c;
+  private String[][] d;
+  private Typeface e;
+  
+  public b(Context paramContext, String[][] paramArrayOfString)
+  {
+    a(true);
+    c = paramContext;
+    d = paramArrayOfString;
+    e = new f(c).a();
+  }
+  
+  public int a()
+  {
+    return d.length;
+  }
+  
+  public long a(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    v.setText(d[paramInt][1]);
+    v.setTypeface(e);
+  }
+  
+  public int b(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(paramViewGroup.getContext()).inflate(2131493049, paramViewGroup, false));
+  }
+  
+  public class a
+    extends RecyclerView.d0
+  {
+    TextView v;
+    
+    public a(View paramView)
+    {
+      super();
+      v = ((TextView)paramView.findViewById(2131296815));
+      paramView.setOnClickListener(new a(b.this));
+    }
+    
+    class a
+      implements View.OnClickListener
+    {
+      a(b paramB) {}
+      
+      public void onClick(View paramView)
+      {
+        paramView = b.a(b.this)[f()][1];
+        binput_select_type.setText(paramView);
+        bw = b.a(b.this)[f()][0];
+        ((AddCityBankAccountActivity)b.b(b.this)).a("type");
+      }
+    }
+  }
+}

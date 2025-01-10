@@ -1,0 +1,71 @@
+package a.a.a.a;
+
+import java.util.concurrent.Executor;
+
+public class a
+  extends c
+{
+  private static volatile a c;
+  private c a = b;
+  private c b = new b();
+  
+  static
+  {
+    new a();
+    new b();
+  }
+  
+  private a() {}
+  
+  public static a b()
+  {
+    if (c != null) {
+      return c;
+    }
+    try
+    {
+      if (c == null) {
+        c = new a();
+      }
+      return c;
+    }
+    finally {}
+  }
+  
+  public void a(Runnable paramRunnable)
+  {
+    a.a(paramRunnable);
+  }
+  
+  public boolean a()
+  {
+    return a.a();
+  }
+  
+  public void b(Runnable paramRunnable)
+  {
+    a.b(paramRunnable);
+  }
+  
+  static final class a
+    implements Executor
+  {
+    a() {}
+    
+    public void execute(Runnable paramRunnable)
+    {
+      a.b().b(paramRunnable);
+    }
+  }
+  
+  static final class b
+    implements Executor
+  {
+    b() {}
+    
+    public void execute(Runnable paramRunnable)
+    {
+      a.b().a(paramRunnable);
+    }
+  }
+}

@@ -1,0 +1,185 @@
+package android.support.v7.widget;
+
+import a.b.h.c.a.a;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build.VERSION;
+import android.support.v4.widget.k;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+public class n
+{
+  private final ImageView a;
+  private h1 b;
+  private h1 c;
+  private h1 d;
+  
+  public n(ImageView paramImageView)
+  {
+    a = paramImageView;
+  }
+  
+  private boolean a(Drawable paramDrawable)
+  {
+    if (d == null) {
+      d = new h1();
+    }
+    h1 localH1 = d;
+    localH1.a();
+    Object localObject = k.a(a);
+    if (localObject != null)
+    {
+      d = true;
+      a = ((ColorStateList)localObject);
+    }
+    localObject = k.b(a);
+    if (localObject != null)
+    {
+      c = true;
+      b = ((PorterDuff.Mode)localObject);
+    }
+    if ((!d) && (!c)) {
+      return false;
+    }
+    j.a(paramDrawable, localH1, a.getDrawableState());
+    return true;
+  }
+  
+  private boolean e()
+  {
+    int i = Build.VERSION.SDK_INT;
+    if (i > 21) {
+      return b != null;
+    }
+    return i == 21;
+  }
+  
+  void a()
+  {
+    Drawable localDrawable = a.getDrawable();
+    if (localDrawable != null) {
+      h0.b(localDrawable);
+    }
+    if (localDrawable != null)
+    {
+      if ((e()) && (a(localDrawable))) {
+        return;
+      }
+      h1 localH1 = c;
+      if (localH1 != null)
+      {
+        j.a(localDrawable, localH1, a.getDrawableState());
+        return;
+      }
+      localH1 = b;
+      if (localH1 != null) {
+        j.a(localDrawable, localH1, a.getDrawableState());
+      }
+    }
+  }
+  
+  public void a(int paramInt)
+  {
+    if (paramInt != 0)
+    {
+      Drawable localDrawable = a.c(a.getContext(), paramInt);
+      if (localDrawable != null) {
+        h0.b(localDrawable);
+      }
+      a.setImageDrawable(localDrawable);
+    }
+    else
+    {
+      a.setImageDrawable(null);
+    }
+    a();
+  }
+  
+  void a(ColorStateList paramColorStateList)
+  {
+    if (c == null) {
+      c = new h1();
+    }
+    h1 localH1 = c;
+    a = paramColorStateList;
+    d = true;
+    a();
+  }
+  
+  void a(PorterDuff.Mode paramMode)
+  {
+    if (c == null) {
+      c = new h1();
+    }
+    h1 localH1 = c;
+    b = paramMode;
+    c = true;
+    a();
+  }
+  
+  public void a(AttributeSet paramAttributeSet, int paramInt)
+  {
+    j1 localJ1 = j1.a(a.getContext(), paramAttributeSet, a.b.h.a.j.AppCompatImageView, paramInt, 0);
+    try
+    {
+      Drawable localDrawable = a.getDrawable();
+      paramAttributeSet = localDrawable;
+      if (localDrawable == null)
+      {
+        paramInt = localJ1.g(a.b.h.a.j.AppCompatImageView_srcCompat, -1);
+        paramAttributeSet = localDrawable;
+        if (paramInt != -1)
+        {
+          localDrawable = a.c(a.getContext(), paramInt);
+          paramAttributeSet = localDrawable;
+          if (localDrawable != null)
+          {
+            a.setImageDrawable(localDrawable);
+            paramAttributeSet = localDrawable;
+          }
+        }
+      }
+      if (paramAttributeSet != null) {
+        h0.b(paramAttributeSet);
+      }
+      if (localJ1.g(a.b.h.a.j.AppCompatImageView_tint)) {
+        k.a(a, localJ1.a(a.b.h.a.j.AppCompatImageView_tint));
+      }
+      if (localJ1.g(a.b.h.a.j.AppCompatImageView_tintMode)) {
+        k.a(a, h0.a(localJ1.d(a.b.h.a.j.AppCompatImageView_tintMode, -1), null));
+      }
+      return;
+    }
+    finally
+    {
+      localJ1.a();
+    }
+  }
+  
+  ColorStateList b()
+  {
+    h1 localH1 = c;
+    if (localH1 != null) {
+      return a;
+    }
+    return null;
+  }
+  
+  PorterDuff.Mode c()
+  {
+    h1 localH1 = c;
+    if (localH1 != null) {
+      return b;
+    }
+    return null;
+  }
+  
+  boolean d()
+  {
+    Drawable localDrawable = a.getBackground();
+    return (Build.VERSION.SDK_INT < 21) || (!(localDrawable instanceof RippleDrawable));
+  }
+}

@@ -1,0 +1,648 @@
+package android.support.v4.app;
+
+import a.b.g.g.o;
+import android.app.Activity;
+import android.arch.lifecycle.c;
+import android.arch.lifecycle.c.b;
+import android.arch.lifecycle.p;
+import android.arch.lifecycle.q;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.res.Configuration;
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager.LayoutParams;
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Iterator;
+
+public class g
+  extends e0
+  implements q, a.b, a.d
+{
+  final Handler d = new a();
+  final i e = i.a(new b());
+  private p f;
+  boolean g;
+  boolean h;
+  boolean i = true;
+  boolean j;
+  boolean k;
+  boolean l;
+  int m;
+  o<String> n;
+  
+  public g() {}
+  
+  private static boolean a(k paramK, c.b paramB)
+  {
+    boolean bool1 = false;
+    paramK = paramK.b().iterator();
+    while (paramK.hasNext())
+    {
+      Object localObject = (f)paramK.next();
+      if (localObject != null)
+      {
+        if (((f)localObject).a().a().a(c.b.f))
+        {
+          U.a(paramB);
+          bool1 = true;
+        }
+        localObject = ((f)localObject).S();
+        boolean bool2 = bool1;
+        if (localObject != null) {
+          bool2 = bool1 | a((k)localObject, paramB);
+        }
+        bool1 = bool2;
+      }
+    }
+    return bool1;
+  }
+  
+  private int b(f paramF)
+  {
+    if (n.b() < 65534)
+    {
+      while (n.c(m) >= 0) {
+        m = ((m + 1) % 65534);
+      }
+      int i1 = m;
+      n.c(i1, h);
+      m = ((m + 1) % 65534);
+      return i1;
+    }
+    paramF = new IllegalStateException("Too many pending Fragment activity results.");
+    for (;;)
+    {
+      throw paramF;
+    }
+  }
+  
+  static void b(int paramInt)
+  {
+    if ((0xFFFF0000 & paramInt) == 0) {
+      return;
+    }
+    throw new IllegalArgumentException("Can only use lower 16 bits for requestCode");
+  }
+  
+  private void i()
+  {
+    for (;;)
+    {
+      if (!a(e(), c.b.e)) {
+        return;
+      }
+    }
+  }
+  
+  public c a()
+  {
+    return super.a();
+  }
+  
+  final View a(View paramView, String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    return e.a(paramView, paramString, paramContext, paramAttributeSet);
+  }
+  
+  public final void a(int paramInt)
+  {
+    if ((!j) && (paramInt != -1)) {
+      b(paramInt);
+    }
+  }
+  
+  public void a(f paramF) {}
+  
+  public void a(f paramF, Intent paramIntent, int paramInt, Bundle paramBundle)
+  {
+    l = true;
+    if (paramInt == -1) {}
+    try
+    {
+      a.a(this, paramIntent, -1, paramBundle);
+      return;
+    }
+    finally
+    {
+      l = false;
+    }
+    b(paramInt);
+    a.a(this, paramIntent, (b(paramF) + 1 << 16) + (0xFFFF & paramInt), paramBundle);
+    l = false;
+  }
+  
+  protected boolean a(View paramView, Menu paramMenu)
+  {
+    return super.onPreparePanel(0, paramView, paramMenu);
+  }
+  
+  public p b()
+  {
+    if (getApplication() != null)
+    {
+      if (f == null)
+      {
+        c localC = (c)getLastNonConfigurationInstance();
+        if (localC != null) {
+          f = a;
+        }
+        if (f == null) {
+          f = new p();
+        }
+      }
+      return f;
+    }
+    throw new IllegalStateException("Your activity is not yet attached to the Application instance. You can't request ViewModel before onCreate call.");
+  }
+  
+  public void dump(String paramString, FileDescriptor paramFileDescriptor, PrintWriter paramPrintWriter, String[] paramArrayOfString)
+  {
+    super.dump(paramString, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+    paramPrintWriter.print(paramString);
+    paramPrintWriter.print("Local FragmentActivity ");
+    paramPrintWriter.print(Integer.toHexString(System.identityHashCode(this)));
+    paramPrintWriter.println(" State:");
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append(paramString);
+    ((StringBuilder)localObject).append("  ");
+    localObject = ((StringBuilder)localObject).toString();
+    paramPrintWriter.print((String)localObject);
+    paramPrintWriter.print("mCreated=");
+    paramPrintWriter.print(g);
+    paramPrintWriter.print(" mResumed=");
+    paramPrintWriter.print(h);
+    paramPrintWriter.print(" mStopped=");
+    paramPrintWriter.print(i);
+    if (getApplication() != null) {
+      u.a(this).a((String)localObject, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+    }
+    e.j().a(paramString, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+  }
+  
+  public k e()
+  {
+    return e.j();
+  }
+  
+  protected void f()
+  {
+    e.f();
+  }
+  
+  public Object g()
+  {
+    return null;
+  }
+  
+  @Deprecated
+  public void h()
+  {
+    invalidateOptionsMenu();
+  }
+  
+  protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
+  {
+    e.k();
+    int i1 = paramInt1 >> 16;
+    if (i1 != 0)
+    {
+      i1 -= 1;
+      localObject = (String)n.b(i1);
+      n.e(i1);
+      if (localObject == null)
+      {
+        Log.w("FragmentActivity", "Activity result delivered for unknown Fragment.");
+        return;
+      }
+      f localF = e.a((String)localObject);
+      if (localF == null)
+      {
+        paramIntent = new StringBuilder();
+        paramIntent.append("Activity result no fragment exists for who: ");
+        paramIntent.append((String)localObject);
+        Log.w("FragmentActivity", paramIntent.toString());
+        return;
+      }
+      localF.a(0xFFFF & paramInt1, paramInt2, paramIntent);
+      return;
+    }
+    Object localObject = a.a();
+    if ((localObject != null) && (((a.c)localObject).a(this, paramInt1, paramInt2, paramIntent))) {
+      return;
+    }
+    super.onActivityResult(paramInt1, paramInt2, paramIntent);
+  }
+  
+  public void onBackPressed()
+  {
+    k localK = e.j();
+    boolean bool = localK.c();
+    if ((bool) && (Build.VERSION.SDK_INT <= 25)) {
+      return;
+    }
+    if ((bool) || (!localK.d())) {
+      super.onBackPressed();
+    }
+  }
+  
+  public void onConfigurationChanged(Configuration paramConfiguration)
+  {
+    super.onConfigurationChanged(paramConfiguration);
+    e.k();
+    e.a(paramConfiguration);
+  }
+  
+  protected void onCreate(Bundle paramBundle)
+  {
+    Object localObject2 = e;
+    Object localObject1 = null;
+    ((i)localObject2).a(null);
+    super.onCreate(paramBundle);
+    localObject2 = (c)getLastNonConfigurationInstance();
+    Object localObject3;
+    if (localObject2 != null)
+    {
+      localObject3 = a;
+      if ((localObject3 != null) && (f == null)) {
+        f = ((p)localObject3);
+      }
+    }
+    if (paramBundle != null)
+    {
+      localObject3 = paramBundle.getParcelable("android:support:fragments");
+      i localI = e;
+      if (localObject2 != null) {
+        localObject1 = b;
+      }
+      localI.a((Parcelable)localObject3, (m)localObject1);
+      if (paramBundle.containsKey("android:support:next_request_index"))
+      {
+        m = paramBundle.getInt("android:support:next_request_index");
+        localObject1 = paramBundle.getIntArray("android:support:request_indicies");
+        paramBundle = paramBundle.getStringArray("android:support:request_fragment_who");
+        int i1;
+        if ((localObject1 != null) && (paramBundle != null) && (localObject1.length == paramBundle.length))
+        {
+          n = new o(localObject1.length);
+          i1 = 0;
+        }
+        while (i1 < localObject1.length)
+        {
+          n.c(localObject1[i1], paramBundle[i1]);
+          i1 += 1;
+          continue;
+          Log.w("FragmentActivity", "Invalid requestCode mapping in savedInstanceState.");
+        }
+      }
+    }
+    if (n == null)
+    {
+      n = new o();
+      m = 0;
+    }
+    e.b();
+  }
+  
+  public boolean onCreatePanelMenu(int paramInt, Menu paramMenu)
+  {
+    if (paramInt == 0) {
+      return super.onCreatePanelMenu(paramInt, paramMenu) | e.a(paramMenu, getMenuInflater());
+    }
+    return super.onCreatePanelMenu(paramInt, paramMenu);
+  }
+  
+  public View onCreateView(View paramView, String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    View localView = a(paramView, paramString, paramContext, paramAttributeSet);
+    if (localView == null) {
+      return super.onCreateView(paramView, paramString, paramContext, paramAttributeSet);
+    }
+    return localView;
+  }
+  
+  public View onCreateView(String paramString, Context paramContext, AttributeSet paramAttributeSet)
+  {
+    View localView = a(null, paramString, paramContext, paramAttributeSet);
+    if (localView == null) {
+      return super.onCreateView(paramString, paramContext, paramAttributeSet);
+    }
+    return localView;
+  }
+  
+  protected void onDestroy()
+  {
+    super.onDestroy();
+    if ((f != null) && (!isChangingConfigurations())) {
+      f.a();
+    }
+    e.c();
+  }
+  
+  public void onLowMemory()
+  {
+    super.onLowMemory();
+    e.d();
+  }
+  
+  public boolean onMenuItemSelected(int paramInt, MenuItem paramMenuItem)
+  {
+    if (super.onMenuItemSelected(paramInt, paramMenuItem)) {
+      return true;
+    }
+    if (paramInt != 0)
+    {
+      if (paramInt != 6) {
+        return false;
+      }
+      return e.a(paramMenuItem);
+    }
+    return e.b(paramMenuItem);
+  }
+  
+  public void onMultiWindowModeChanged(boolean paramBoolean)
+  {
+    e.a(paramBoolean);
+  }
+  
+  protected void onNewIntent(Intent paramIntent)
+  {
+    super.onNewIntent(paramIntent);
+    e.k();
+  }
+  
+  public void onPanelClosed(int paramInt, Menu paramMenu)
+  {
+    if (paramInt == 0) {
+      e.a(paramMenu);
+    }
+    super.onPanelClosed(paramInt, paramMenu);
+  }
+  
+  protected void onPause()
+  {
+    super.onPause();
+    h = false;
+    if (d.hasMessages(2))
+    {
+      d.removeMessages(2);
+      f();
+    }
+    e.e();
+  }
+  
+  public void onPictureInPictureModeChanged(boolean paramBoolean)
+  {
+    e.b(paramBoolean);
+  }
+  
+  protected void onPostResume()
+  {
+    super.onPostResume();
+    d.removeMessages(2);
+    f();
+    e.i();
+  }
+  
+  public boolean onPreparePanel(int paramInt, View paramView, Menu paramMenu)
+  {
+    if ((paramInt == 0) && (paramMenu != null)) {
+      return a(paramView, paramMenu) | e.b(paramMenu);
+    }
+    return super.onPreparePanel(paramInt, paramView, paramMenu);
+  }
+  
+  public void onRequestPermissionsResult(int paramInt, String[] paramArrayOfString, int[] paramArrayOfInt)
+  {
+    e.k();
+    int i1 = paramInt >> 16 & 0xFFFF;
+    if (i1 != 0)
+    {
+      i1 -= 1;
+      String str = (String)n.b(i1);
+      n.e(i1);
+      if (str == null)
+      {
+        Log.w("FragmentActivity", "Activity result delivered for unknown Fragment.");
+        return;
+      }
+      f localF = e.a(str);
+      if (localF == null)
+      {
+        paramArrayOfString = new StringBuilder();
+        paramArrayOfString.append("Activity result no fragment exists for who: ");
+        paramArrayOfString.append(str);
+        Log.w("FragmentActivity", paramArrayOfString.toString());
+        return;
+      }
+      localF.a(0xFFFF & paramInt, paramArrayOfString, paramArrayOfInt);
+    }
+  }
+  
+  protected void onResume()
+  {
+    super.onResume();
+    d.sendEmptyMessage(2);
+    h = true;
+    e.i();
+  }
+  
+  public final Object onRetainNonConfigurationInstance()
+  {
+    Object localObject = g();
+    m localM = e.l();
+    if ((localM == null) && (f == null) && (localObject == null)) {
+      return null;
+    }
+    localObject = new c();
+    a = f;
+    b = localM;
+    return localObject;
+  }
+  
+  protected void onSaveInstanceState(Bundle paramBundle)
+  {
+    super.onSaveInstanceState(paramBundle);
+    i();
+    Object localObject = e.m();
+    if (localObject != null) {
+      paramBundle.putParcelable("android:support:fragments", (Parcelable)localObject);
+    }
+    if (n.b() > 0)
+    {
+      paramBundle.putInt("android:support:next_request_index", m);
+      localObject = new int[n.b()];
+      String[] arrayOfString = new String[n.b()];
+      int i1 = 0;
+      while (i1 < n.b())
+      {
+        localObject[i1] = n.d(i1);
+        arrayOfString[i1] = ((String)n.f(i1));
+        i1 += 1;
+      }
+      paramBundle.putIntArray("android:support:request_indicies", (int[])localObject);
+      paramBundle.putStringArray("android:support:request_fragment_who", arrayOfString);
+    }
+  }
+  
+  protected void onStart()
+  {
+    super.onStart();
+    i = false;
+    if (!g)
+    {
+      g = true;
+      e.a();
+    }
+    e.k();
+    e.i();
+    e.g();
+  }
+  
+  public void onStateNotSaved()
+  {
+    e.k();
+  }
+  
+  protected void onStop()
+  {
+    super.onStop();
+    i = true;
+    i();
+    e.h();
+  }
+  
+  public void startActivityForResult(Intent paramIntent, int paramInt)
+  {
+    if ((!l) && (paramInt != -1)) {
+      b(paramInt);
+    }
+    super.startActivityForResult(paramIntent, paramInt);
+  }
+  
+  public void startActivityForResult(Intent paramIntent, int paramInt, Bundle paramBundle)
+  {
+    if ((!l) && (paramInt != -1)) {
+      b(paramInt);
+    }
+    super.startActivityForResult(paramIntent, paramInt, paramBundle);
+  }
+  
+  public void startIntentSenderForResult(IntentSender paramIntentSender, int paramInt1, Intent paramIntent, int paramInt2, int paramInt3, int paramInt4)
+  {
+    if ((!k) && (paramInt1 != -1)) {
+      b(paramInt1);
+    }
+    super.startIntentSenderForResult(paramIntentSender, paramInt1, paramIntent, paramInt2, paramInt3, paramInt4);
+  }
+  
+  public void startIntentSenderForResult(IntentSender paramIntentSender, int paramInt1, Intent paramIntent, int paramInt2, int paramInt3, int paramInt4, Bundle paramBundle)
+  {
+    if ((!k) && (paramInt1 != -1)) {
+      b(paramInt1);
+    }
+    super.startIntentSenderForResult(paramIntentSender, paramInt1, paramIntent, paramInt2, paramInt3, paramInt4, paramBundle);
+  }
+  
+  class a
+    extends Handler
+  {
+    a() {}
+    
+    public void handleMessage(Message paramMessage)
+    {
+      if (what != 2)
+      {
+        super.handleMessage(paramMessage);
+        return;
+      }
+      f();
+      e.i();
+    }
+  }
+  
+  class b
+    extends j<g>
+  {
+    public b()
+    {
+      super();
+    }
+    
+    public View a(int paramInt)
+    {
+      return findViewById(paramInt);
+    }
+    
+    public void a(f paramF)
+    {
+      g.this.a(paramF);
+    }
+    
+    public void a(f paramF, Intent paramIntent, int paramInt, Bundle paramBundle)
+    {
+      g.this.a(paramF, paramIntent, paramInt, paramBundle);
+    }
+    
+    public void a(String paramString, FileDescriptor paramFileDescriptor, PrintWriter paramPrintWriter, String[] paramArrayOfString)
+    {
+      dump(paramString, paramFileDescriptor, paramPrintWriter, paramArrayOfString);
+    }
+    
+    public boolean a()
+    {
+      Window localWindow = getWindow();
+      return (localWindow != null) && (localWindow.peekDecorView() != null);
+    }
+    
+    public boolean b(f paramF)
+    {
+      return isFinishing() ^ true;
+    }
+    
+    public LayoutInflater f()
+    {
+      return getLayoutInflater().cloneInContext(g.this);
+    }
+    
+    public int g()
+    {
+      Window localWindow = getWindow();
+      if (localWindow == null) {
+        return 0;
+      }
+      return getAttributeswindowAnimations;
+    }
+    
+    public boolean h()
+    {
+      return getWindow() != null;
+    }
+    
+    public void i()
+    {
+      h();
+    }
+  }
+  
+  static final class c
+  {
+    p a;
+    m b;
+    
+    c() {}
+  }
+}

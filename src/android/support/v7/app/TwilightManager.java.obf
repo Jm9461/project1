@@ -1,0 +1,148 @@
+package android.support.v7.app;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.content.d;
+import android.util.Log;
+import java.util.Calendar;
+
+class m
+{
+  private static m d;
+  private final Context a;
+  private final LocationManager b;
+  private final a c = new a();
+  
+  m(Context paramContext, LocationManager paramLocationManager)
+  {
+    a = paramContext;
+    b = paramLocationManager;
+  }
+  
+  private Location a(String paramString)
+  {
+    try
+    {
+      if (b.isProviderEnabled(paramString))
+      {
+        paramString = b.getLastKnownLocation(paramString);
+        return paramString;
+      }
+    }
+    catch (Exception paramString)
+    {
+      Log.d("TwilightManager", "Failed to get last known location", paramString);
+    }
+    return null;
+  }
+  
+  static m a(Context paramContext)
+  {
+    if (d == null)
+    {
+      paramContext = paramContext.getApplicationContext();
+      d = new m(paramContext, (LocationManager)paramContext.getSystemService("location"));
+    }
+    return d;
+  }
+  
+  private void a(Location paramLocation)
+  {
+    a localA = c;
+    long l1 = System.currentTimeMillis();
+    l localL = l.a();
+    localL.a(l1 - 86400000L, paramLocation.getLatitude(), paramLocation.getLongitude());
+    long l2 = a;
+    localL.a(l1, paramLocation.getLatitude(), paramLocation.getLongitude());
+    int i = c;
+    boolean bool = true;
+    if (i != 1) {
+      bool = false;
+    }
+    long l3 = b;
+    long l4 = a;
+    localL.a(86400000L + l1, paramLocation.getLatitude(), paramLocation.getLongitude());
+    long l5 = b;
+    if ((l3 != -1L) && (l4 != -1L))
+    {
+      if (l1 > l4) {
+        l1 = 0L + l5;
+      } else if (l1 > l3) {
+        l1 = 0L + l4;
+      } else {
+        l1 = 0L + l3;
+      }
+      l1 += 60000L;
+    }
+    else
+    {
+      l1 += 43200000L;
+    }
+    a = bool;
+    b = l2;
+    c = l3;
+    d = l4;
+    e = l5;
+    f = l1;
+  }
+  
+  @SuppressLint({"MissingPermission"})
+  private Location b()
+  {
+    Location localLocation1 = null;
+    Location localLocation2 = null;
+    if (d.a(a, "android.permission.ACCESS_COARSE_LOCATION") == 0) {
+      localLocation1 = a("network");
+    }
+    if (d.a(a, "android.permission.ACCESS_FINE_LOCATION") == 0) {
+      localLocation2 = a("gps");
+    }
+    if ((localLocation2 != null) && (localLocation1 != null))
+    {
+      if (localLocation2.getTime() > localLocation1.getTime()) {
+        return localLocation2;
+      }
+      return localLocation1;
+    }
+    if (localLocation2 != null) {
+      return localLocation2;
+    }
+    return localLocation1;
+  }
+  
+  private boolean c()
+  {
+    return c.f > System.currentTimeMillis();
+  }
+  
+  boolean a()
+  {
+    a localA = c;
+    if (c()) {
+      return a;
+    }
+    Location localLocation = b();
+    if (localLocation != null)
+    {
+      a(localLocation);
+      return a;
+    }
+    Log.i("TwilightManager", "Could not get last known location. This is probably because the app does not have any location permissions. Falling back to hardcoded sunrise/sunset values.");
+    int i = Calendar.getInstance().get(11);
+    return (i < 6) || (i >= 22);
+  }
+  
+  private static class a
+  {
+    boolean a;
+    long b;
+    long c;
+    long d;
+    long e;
+    long f;
+    
+    a() {}
+  }
+}

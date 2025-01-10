@@ -1,0 +1,118 @@
+package b.d.a;
+
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnPreparedListener;
+
+public class m
+  extends b<byte[]>
+  implements n.b, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener
+{
+  private final n j;
+  private float[] k;
+  private float[] l;
+  private MediaPlayer.OnPreparedListener m;
+  private MediaPlayer.OnCompletionListener n;
+  private final float[] o = { 0.001814059F, 0.007936508F, 0.05668934F, 0.22675736F };
+  
+  m(Context paramContext, int paramInt)
+  {
+    j = new n(paramContext, paramInt, this);
+  }
+  
+  m(Context paramContext, MediaPlayer paramMediaPlayer)
+  {
+    this(paramContext, paramMediaPlayer.getAudioSessionId());
+    paramMediaPlayer.setOnPreparedListener(this);
+    paramMediaPlayer.setOnCompletionListener(this);
+  }
+  
+  public void a(byte[] paramArrayOfByte)
+  {
+    a(paramArrayOfByte);
+  }
+  
+  protected void a(byte[] paramArrayOfByte, int paramInt, float[] paramArrayOfFloat1, float[] paramArrayOfFloat2)
+  {
+    int i1 = paramArrayOfByte.length / 2 - 1;
+    float[] arrayOfFloat = k;
+    if ((arrayOfFloat == null) || (arrayOfFloat.length != i1)) {
+      k = new float[i1];
+    }
+    arrayOfFloat = l;
+    if ((arrayOfFloat == null) || (arrayOfFloat.length != i1)) {
+      l = new float[i1];
+    }
+    int i = 0;
+    float f1;
+    float f2;
+    while (i < i1)
+    {
+      f1 = paramArrayOfByte[(i * 2)];
+      f2 = paramArrayOfByte[(i * 2 + 1)];
+      f2 = f1 * f1 + f2 * f2;
+      k[i] = l.a(f2);
+      f1 = 1.0F;
+      if ((i == 0) || (i == i1 - 1)) {
+        f1 = 2.0F;
+      }
+      arrayOfFloat = l;
+      double d1 = f1;
+      double d2 = Math.sqrt(f2);
+      Double.isNaN(d1);
+      double d3 = i1;
+      Double.isNaN(d3);
+      arrayOfFloat[i] = ((float)(d1 * d2 / d3));
+      i += 1;
+    }
+    i = 0;
+    while (i < paramInt)
+    {
+      i1 = (int)(o[i] * paramArrayOfByte.length);
+      f1 = k[i1];
+      f2 = l[i1];
+      paramArrayOfFloat1[i] = (f1 / 76.0F);
+      paramArrayOfFloat2[i] = f2;
+      i += 1;
+    }
+  }
+  
+  public void b()
+  {
+    j.a(false);
+    super.b();
+  }
+  
+  public void c()
+  {
+    super.c();
+    j.a(true);
+  }
+  
+  public void d()
+  {
+    super.d();
+    j.a();
+  }
+  
+  public void onCompletion(MediaPlayer paramMediaPlayer)
+  {
+    a();
+    j.a(false);
+    MediaPlayer.OnCompletionListener localOnCompletionListener = n;
+    if (localOnCompletionListener != null) {
+      localOnCompletionListener.onCompletion(paramMediaPlayer);
+    }
+  }
+  
+  public void onPrepared(MediaPlayer paramMediaPlayer)
+  {
+    e();
+    j.a(true);
+    MediaPlayer.OnPreparedListener localOnPreparedListener = m;
+    if (localOnPreparedListener != null) {
+      localOnPreparedListener.onPrepared(paramMediaPlayer);
+    }
+  }
+}

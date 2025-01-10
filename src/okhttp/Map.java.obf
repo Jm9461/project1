@@ -1,0 +1,12 @@
+package e;
+
+public abstract interface e
+  extends Cloneable
+{
+  public abstract a0 l();
+  
+  public static abstract interface a
+  {
+    public abstract e a(y paramY);
+  }
+}

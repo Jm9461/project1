@@ -1,0 +1,714 @@
+package com.miguelcatalan.materialsearchview;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
+import android.view.View.BaseSavedState;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filter.FilterListener;
+import android.widget.Filterable;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import com.miguelcatalan.materialsearchview.e.a.c;
+import java.lang.reflect.Field;
+import java.util.List;
+
+public class MaterialSearchView
+  extends FrameLayout
+  implements Filter.FilterListener
+{
+  private MenuItem c;
+  private boolean d = false;
+  private int e;
+  private boolean f;
+  private View g;
+  private View h;
+  private ListView i;
+  private EditText j;
+  private ImageButton k;
+  private ImageButton l;
+  private ImageButton m;
+  private RelativeLayout n;
+  private CharSequence o;
+  private CharSequence p;
+  private h q;
+  private j r;
+  private ListAdapter s;
+  private i t;
+  private boolean u = false;
+  private boolean v = false;
+  private boolean w;
+  private Drawable x;
+  private Context y;
+  private final View.OnClickListener z = new d();
+  
+  public MaterialSearchView(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public MaterialSearchView(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, 0);
+  }
+  
+  public MaterialSearchView(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet);
+    y = paramContext;
+    g();
+    a(paramAttributeSet, paramInt);
+  }
+  
+  private void a(AttributeSet paramAttributeSet, int paramInt)
+  {
+    paramAttributeSet = y.obtainStyledAttributes(paramAttributeSet, c.MaterialSearchView, paramInt, 0);
+    if (paramAttributeSet != null)
+    {
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_searchBackground)) {
+        setBackground(paramAttributeSet.getDrawable(c.MaterialSearchView_searchBackground));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_android_textColor)) {
+        setTextColor(paramAttributeSet.getColor(c.MaterialSearchView_android_textColor, 0));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_android_textColorHint)) {
+        setHintTextColor(paramAttributeSet.getColor(c.MaterialSearchView_android_textColorHint, 0));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_android_hint)) {
+        setHint(paramAttributeSet.getString(c.MaterialSearchView_android_hint));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_searchVoiceIcon)) {
+        setVoiceIcon(paramAttributeSet.getDrawable(c.MaterialSearchView_searchVoiceIcon));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_searchCloseIcon)) {
+        setCloseIcon(paramAttributeSet.getDrawable(c.MaterialSearchView_searchCloseIcon));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_searchBackIcon)) {
+        setBackIcon(paramAttributeSet.getDrawable(c.MaterialSearchView_searchBackIcon));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_searchSuggestionBackground)) {
+        setSuggestionBackground(paramAttributeSet.getDrawable(c.MaterialSearchView_searchSuggestionBackground));
+      }
+      if (paramAttributeSet.hasValue(c.MaterialSearchView_searchSuggestionIcon)) {
+        setSuggestionIcon(paramAttributeSet.getDrawable(c.MaterialSearchView_searchSuggestionIcon));
+      }
+      paramAttributeSet.recycle();
+    }
+  }
+  
+  private void a(CharSequence paramCharSequence)
+  {
+    Editable localEditable = j.getText();
+    p = localEditable;
+    if ((TextUtils.isEmpty(localEditable) ^ true))
+    {
+      m.setVisibility(0);
+      b(false);
+    }
+    else
+    {
+      m.setVisibility(8);
+      b(true);
+    }
+    if ((q != null) && (!TextUtils.equals(paramCharSequence, o))) {
+      q.a(paramCharSequence.toString());
+    }
+    o = paramCharSequence.toString();
+  }
+  
+  private void b(CharSequence paramCharSequence)
+  {
+    ListAdapter localListAdapter = s;
+    if ((localListAdapter != null) && ((localListAdapter instanceof Filterable))) {
+      ((Filterable)localListAdapter).getFilter().filter(paramCharSequence, this);
+    }
+  }
+  
+  private void f()
+  {
+    j.setOnEditorActionListener(new a());
+    j.addTextChangedListener(new b());
+    j.setOnFocusChangeListener(new c());
+  }
+  
+  private void g()
+  {
+    LayoutInflater.from(y).inflate(b.search_view, this, true);
+    g = findViewById(a.search_layout);
+    n = ((RelativeLayout)g.findViewById(a.search_top_bar));
+    i = ((ListView)g.findViewById(a.suggestion_list));
+    j = ((EditText)g.findViewById(a.searchTextView));
+    k = ((ImageButton)g.findViewById(a.action_up_btn));
+    l = ((ImageButton)g.findViewById(a.action_voice_btn));
+    m = ((ImageButton)g.findViewById(a.action_empty_btn));
+    h = g.findViewById(a.transparent_view);
+    j.setOnClickListener(z);
+    k.setOnClickListener(z);
+    l.setOnClickListener(z);
+    m.setOnClickListener(z);
+    h.setOnClickListener(z);
+    w = false;
+    b(true);
+    f();
+    i.setVisibility(8);
+    setAnimationDuration(com.miguelcatalan.materialsearchview.e.a.a);
+  }
+  
+  private boolean h()
+  {
+    if (isInEditMode()) {
+      return true;
+    }
+    return getContext().getPackageManager().queryIntentActivities(new Intent("android.speech.action.RECOGNIZE_SPEECH"), 0).size() == 0;
+  }
+  
+  private void i()
+  {
+    Editable localEditable = j.getText();
+    if ((localEditable != null) && (TextUtils.getTrimmedLength(localEditable) > 0))
+    {
+      h localH = q;
+      if ((localH == null) || (!localH.b(localEditable.toString())))
+      {
+        a();
+        j.setText(null);
+      }
+    }
+  }
+  
+  private void j()
+  {
+    Intent localIntent = new Intent("android.speech.action.RECOGNIZE_SPEECH");
+    localIntent.putExtra("android.speech.extra.LANGUAGE_MODEL", "web_search");
+    localIntent.putExtra("android.speech.extra.MAX_RESULTS", 1);
+    Context localContext = y;
+    if ((localContext instanceof Activity)) {
+      ((Activity)localContext).startActivityForResult(localIntent, 9999);
+    }
+  }
+  
+  private void k()
+  {
+    g localG = new g();
+    if (Build.VERSION.SDK_INT >= 21)
+    {
+      g.setVisibility(0);
+      com.miguelcatalan.materialsearchview.e.a.a(n, localG);
+      return;
+    }
+    com.miguelcatalan.materialsearchview.e.a.a(g, e, localG);
+  }
+  
+  public void a()
+  {
+    if (!c()) {
+      return;
+    }
+    j.setText(null);
+    b();
+    clearFocus();
+    g.setVisibility(8);
+    j localJ = r;
+    if (localJ != null) {
+      localJ.b();
+    }
+    d = false;
+  }
+  
+  public void a(View paramView)
+  {
+    ((InputMethodManager)paramView.getContext().getSystemService("input_method")).hideSoftInputFromWindow(paramView.getWindowToken(), 0);
+  }
+  
+  public void a(CharSequence paramCharSequence, boolean paramBoolean)
+  {
+    j.setText(paramCharSequence);
+    if (paramCharSequence != null)
+    {
+      EditText localEditText = j;
+      localEditText.setSelection(localEditText.length());
+      p = paramCharSequence;
+    }
+    if ((paramBoolean) && (!TextUtils.isEmpty(paramCharSequence))) {
+      i();
+    }
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    if (c()) {
+      return;
+    }
+    j.setText(null);
+    j.requestFocus();
+    if (paramBoolean)
+    {
+      k();
+    }
+    else
+    {
+      g.setVisibility(0);
+      j localJ = r;
+      if (localJ != null) {
+        localJ.a();
+      }
+    }
+    d = true;
+  }
+  
+  public void b()
+  {
+    if (i.getVisibility() == 0) {
+      i.setVisibility(8);
+    }
+  }
+  
+  public void b(View paramView)
+  {
+    if ((Build.VERSION.SDK_INT <= 10) && (paramView.hasFocus())) {
+      paramView.clearFocus();
+    }
+    paramView.requestFocus();
+    ((InputMethodManager)paramView.getContext().getSystemService("input_method")).showSoftInput(paramView, 0);
+  }
+  
+  public void b(boolean paramBoolean)
+  {
+    if ((paramBoolean) && (h()) && (w))
+    {
+      l.setVisibility(0);
+      return;
+    }
+    l.setVisibility(8);
+  }
+  
+  public boolean c()
+  {
+    return d;
+  }
+  
+  public void clearFocus()
+  {
+    f = true;
+    a(this);
+    super.clearFocus();
+    j.clearFocus();
+    f = false;
+  }
+  
+  public void d()
+  {
+    a(true);
+  }
+  
+  public void e()
+  {
+    ListAdapter localListAdapter = s;
+    if ((localListAdapter != null) && (localListAdapter.getCount() > 0) && (i.getVisibility() == 8)) {
+      i.setVisibility(0);
+    }
+  }
+  
+  public void onFilterComplete(int paramInt)
+  {
+    if (paramInt > 0)
+    {
+      e();
+      return;
+    }
+    b();
+  }
+  
+  public void onRestoreInstanceState(Parcelable paramParcelable)
+  {
+    if (!(paramParcelable instanceof i))
+    {
+      super.onRestoreInstanceState(paramParcelable);
+      return;
+    }
+    t = ((i)paramParcelable);
+    if (t.d)
+    {
+      a(false);
+      a(t.c, false);
+    }
+    super.onRestoreInstanceState(t.getSuperState());
+  }
+  
+  public Parcelable onSaveInstanceState()
+  {
+    t = new i(super.onSaveInstanceState());
+    i localI = t;
+    Object localObject = p;
+    if (localObject != null) {
+      localObject = ((CharSequence)localObject).toString();
+    } else {
+      localObject = null;
+    }
+    c = ((String)localObject);
+    localObject = t;
+    d = d;
+    return localObject;
+  }
+  
+  public boolean requestFocus(int paramInt, Rect paramRect)
+  {
+    if (f) {
+      return false;
+    }
+    if (!isFocusable()) {
+      return false;
+    }
+    return j.requestFocus(paramInt, paramRect);
+  }
+  
+  public void setAdapter(ListAdapter paramListAdapter)
+  {
+    s = paramListAdapter;
+    i.setAdapter(paramListAdapter);
+    b(j.getText());
+  }
+  
+  public void setAnimationDuration(int paramInt)
+  {
+    e = paramInt;
+  }
+  
+  public void setBackIcon(Drawable paramDrawable)
+  {
+    k.setImageDrawable(paramDrawable);
+  }
+  
+  public void setBackground(Drawable paramDrawable)
+  {
+    if (Build.VERSION.SDK_INT >= 16)
+    {
+      n.setBackground(paramDrawable);
+      return;
+    }
+    n.setBackgroundDrawable(paramDrawable);
+  }
+  
+  public void setBackgroundColor(int paramInt)
+  {
+    n.setBackgroundColor(paramInt);
+  }
+  
+  public void setCloseIcon(Drawable paramDrawable)
+  {
+    m.setImageDrawable(paramDrawable);
+  }
+  
+  public void setCursorDrawable(int paramInt)
+  {
+    try
+    {
+      Field localField = TextView.class.getDeclaredField("mCursorDrawableRes");
+      localField.setAccessible(true);
+      localField.set(j, Integer.valueOf(paramInt));
+      return;
+    }
+    catch (Exception localException)
+    {
+      Log.e("MaterialSearchView", localException.toString());
+    }
+  }
+  
+  public void setEllipsize(boolean paramBoolean)
+  {
+    v = paramBoolean;
+  }
+  
+  public void setHint(CharSequence paramCharSequence)
+  {
+    j.setHint(paramCharSequence);
+  }
+  
+  public void setHintTextColor(int paramInt)
+  {
+    j.setHintTextColor(paramInt);
+  }
+  
+  public void setMenuItem(MenuItem paramMenuItem)
+  {
+    c = paramMenuItem;
+    c.setOnMenuItemClickListener(new f());
+  }
+  
+  public void setOnItemClickListener(AdapterView.OnItemClickListener paramOnItemClickListener)
+  {
+    i.setOnItemClickListener(paramOnItemClickListener);
+  }
+  
+  public void setOnQueryTextListener(h paramH)
+  {
+    q = paramH;
+  }
+  
+  public void setOnSearchViewListener(j paramJ)
+  {
+    r = paramJ;
+  }
+  
+  public void setSubmitOnClick(boolean paramBoolean)
+  {
+    u = paramBoolean;
+  }
+  
+  public void setSuggestionBackground(Drawable paramDrawable)
+  {
+    if (Build.VERSION.SDK_INT >= 16)
+    {
+      i.setBackground(paramDrawable);
+      return;
+    }
+    i.setBackgroundDrawable(paramDrawable);
+  }
+  
+  public void setSuggestionIcon(Drawable paramDrawable)
+  {
+    x = paramDrawable;
+  }
+  
+  public void setSuggestions(final String[] paramArrayOfString)
+  {
+    if ((paramArrayOfString != null) && (paramArrayOfString.length > 0))
+    {
+      h.setVisibility(0);
+      paramArrayOfString = new d(y, paramArrayOfString, x, v);
+      setAdapter(paramArrayOfString);
+      setOnItemClickListener(new e(paramArrayOfString));
+      return;
+    }
+    h.setVisibility(8);
+  }
+  
+  public void setTextColor(int paramInt)
+  {
+    j.setTextColor(paramInt);
+  }
+  
+  public void setVoiceIcon(Drawable paramDrawable)
+  {
+    l.setImageDrawable(paramDrawable);
+  }
+  
+  public void setVoiceSearch(boolean paramBoolean)
+  {
+    w = paramBoolean;
+  }
+  
+  class a
+    implements TextView.OnEditorActionListener
+  {
+    a() {}
+    
+    public boolean onEditorAction(TextView paramTextView, int paramInt, KeyEvent paramKeyEvent)
+    {
+      MaterialSearchView.a(MaterialSearchView.this);
+      return true;
+    }
+  }
+  
+  class b
+    implements TextWatcher
+  {
+    b() {}
+    
+    public void afterTextChanged(Editable paramEditable) {}
+    
+    public void beforeTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3)
+    {
+      MaterialSearchView.a(MaterialSearchView.this, paramCharSequence);
+      MaterialSearchView.b(MaterialSearchView.this, paramCharSequence);
+      MaterialSearchView.c(MaterialSearchView.this, paramCharSequence);
+    }
+  }
+  
+  class c
+    implements View.OnFocusChangeListener
+  {
+    c() {}
+    
+    public void onFocusChange(View paramView, boolean paramBoolean)
+    {
+      if (paramBoolean)
+      {
+        paramView = MaterialSearchView.this;
+        paramView.b(MaterialSearchView.d(paramView));
+        e();
+      }
+    }
+  }
+  
+  class d
+    implements View.OnClickListener
+  {
+    d() {}
+    
+    public void onClick(View paramView)
+    {
+      if (paramView == MaterialSearchView.e(MaterialSearchView.this))
+      {
+        a();
+        return;
+      }
+      if (paramView == MaterialSearchView.f(MaterialSearchView.this))
+      {
+        MaterialSearchView.g(MaterialSearchView.this);
+        return;
+      }
+      if (paramView == MaterialSearchView.h(MaterialSearchView.this))
+      {
+        MaterialSearchView.d(MaterialSearchView.this).setText(null);
+        return;
+      }
+      if (paramView == MaterialSearchView.d(MaterialSearchView.this))
+      {
+        e();
+        return;
+      }
+      if (paramView == MaterialSearchView.i(MaterialSearchView.this)) {
+        a();
+      }
+    }
+  }
+  
+  class e
+    implements AdapterView.OnItemClickListener
+  {
+    e(d paramD) {}
+    
+    public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong)
+    {
+      a((String)paramArrayOfString.getItem(paramInt), MaterialSearchView.b(MaterialSearchView.this));
+    }
+  }
+  
+  class f
+    implements MenuItem.OnMenuItemClickListener
+  {
+    f() {}
+    
+    public boolean onMenuItemClick(MenuItem paramMenuItem)
+    {
+      d();
+      return true;
+    }
+  }
+  
+  class g
+    implements a.c
+  {
+    g() {}
+    
+    public boolean a(View paramView)
+    {
+      if (MaterialSearchView.c(MaterialSearchView.this) != null) {
+        MaterialSearchView.c(MaterialSearchView.this).a();
+      }
+      return false;
+    }
+    
+    public boolean b(View paramView)
+    {
+      return false;
+    }
+    
+    public boolean c(View paramView)
+    {
+      return false;
+    }
+  }
+  
+  public static abstract interface h
+  {
+    public abstract boolean a(String paramString);
+    
+    public abstract boolean b(String paramString);
+  }
+  
+  static class i
+    extends View.BaseSavedState
+  {
+    public static final Parcelable.Creator<i> CREATOR = new a();
+    String c;
+    boolean d;
+    
+    private i(Parcel paramParcel)
+    {
+      super();
+      c = paramParcel.readString();
+      int i = paramParcel.readInt();
+      boolean bool = true;
+      if (i != 1) {
+        bool = false;
+      }
+      d = bool;
+    }
+    
+    i(Parcelable paramParcelable)
+    {
+      super();
+    }
+    
+    public void writeToParcel(Parcel paramParcel, int paramInt)
+    {
+      throw new Runtime("d2j fail translate: java.lang.RuntimeException: can not merge I and Z\n\tat com.googlecode.dex2jar.ir.TypeClass.merge(TypeClass.java:100)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeRef.updateTypeClass(TypeTransformer.java:174)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.provideAs(TypeTransformer.java:780)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.e1expr(TypeTransformer.java:496)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:713)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:703)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.enexpr(TypeTransformer.java:698)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:719)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.exExpr(TypeTransformer.java:703)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.s1stmt(TypeTransformer.java:810)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.sxStmt(TypeTransformer.java:840)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer$TypeAnalyze.analyze(TypeTransformer.java:206)\n\tat com.googlecode.dex2jar.ir.ts.TypeTransformer.transform(TypeTransformer.java:44)\n\tat com.googlecode.d2j.dex.Dex2jar$2.optimize(Dex2jar.java:162)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertCode(Dex2Asm.java:414)\n\tat com.googlecode.d2j.dex.ExDex2Asm.convertCode(ExDex2Asm.java:42)\n\tat com.googlecode.d2j.dex.Dex2jar$2.convertCode(Dex2jar.java:128)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertMethod(Dex2Asm.java:509)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertClass(Dex2Asm.java:406)\n\tat com.googlecode.d2j.dex.Dex2Asm.convertDex(Dex2Asm.java:422)\n\tat com.googlecode.d2j.dex.Dex2jar.doTranslate(Dex2jar.java:172)\n\tat com.googlecode.d2j.dex.Dex2jar.to(Dex2jar.java:272)\n\tat com.googlecode.dex2jar.tools.Dex2jarCmd.doCommandLine(Dex2jarCmd.java:108)\n\tat com.googlecode.dex2jar.tools.BaseCmd.doMain(BaseCmd.java:288)\n\tat com.googlecode.dex2jar.tools.Dex2jarCmd.main(Dex2jarCmd.java:32)\n");
+    }
+    
+    static final class a
+      implements Parcelable.Creator<MaterialSearchView.i>
+    {
+      a() {}
+      
+      public MaterialSearchView.i createFromParcel(Parcel paramParcel)
+      {
+        return new MaterialSearchView.i(paramParcel, null);
+      }
+      
+      public MaterialSearchView.i[] newArray(int paramInt)
+      {
+        return new MaterialSearchView.i[paramInt];
+      }
+    }
+  }
+  
+  public static abstract interface j
+  {
+    public abstract void a();
+    
+    public abstract void b();
+  }
+}

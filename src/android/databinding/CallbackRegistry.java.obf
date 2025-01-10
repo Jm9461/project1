@@ -1,0 +1,15 @@
+package android.databinding;
+
+public class b<C, T, A>
+  implements Cloneable
+{
+  public void a(T paramT, int paramInt, A paramA)
+  {
+    throw null;
+  }
+  
+  public static abstract class a<C, T, A>
+  {
+    public a() {}
+  }
+}

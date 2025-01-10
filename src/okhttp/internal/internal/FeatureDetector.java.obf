@@ -1,0 +1,64 @@
+package e.f0.k;
+
+import e.w;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLSocket;
+
+final class c
+  extends f
+{
+  final Method c;
+  final Method d;
+  
+  c(Method paramMethod1, Method paramMethod2)
+  {
+    c = paramMethod1;
+    d = paramMethod2;
+  }
+  
+  public static c c()
+  {
+    try
+    {
+      c localC = new c(SSLParameters.class.getMethod("setApplicationProtocols", new Class[] { [Ljava.lang.String.class }), SSLSocket.class.getMethod("getApplicationProtocol", new Class[0]));
+      return localC;
+    }
+    catch (NoSuchMethodException localNoSuchMethodException) {}
+    return null;
+  }
+  
+  public void a(SSLSocket paramSSLSocket, String paramString, List<w> paramList)
+  {
+    try
+    {
+      paramString = paramSSLSocket.getSSLParameters();
+      paramList = f.a(paramList);
+      c.invoke(paramString, new Object[] { paramList.toArray(new String[paramList.size()]) });
+      paramSSLSocket.setSSLParameters(paramString);
+      return;
+    }
+    catch (InvocationTargetException paramSSLSocket) {}catch (IllegalAccessException paramSSLSocket) {}
+    throw e.f0.c.a("unable to set ssl parameters", paramSSLSocket);
+  }
+  
+  public String b(SSLSocket paramSSLSocket)
+  {
+    try
+    {
+      paramSSLSocket = (String)d.invoke(paramSSLSocket, new Object[0]);
+      if (paramSSLSocket != null)
+      {
+        boolean bool = paramSSLSocket.equals("");
+        if (!bool) {
+          return paramSSLSocket;
+        }
+      }
+      return null;
+    }
+    catch (InvocationTargetException paramSSLSocket) {}catch (IllegalAccessException paramSSLSocket) {}
+    throw e.f0.c.a("unable to get selected protocols", paramSSLSocket);
+  }
+}

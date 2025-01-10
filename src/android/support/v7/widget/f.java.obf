@@ -1,0 +1,861 @@
+package android.support.v7.widget;
+
+import a.b.g.g.j;
+import a.b.g.g.k;
+import java.util.ArrayList;
+import java.util.List;
+
+class d
+  implements s0.a
+{
+  private j<b> a = new k(30);
+  final ArrayList<b> b = new ArrayList();
+  final ArrayList<b> c = new ArrayList();
+  final a d;
+  Runnable e;
+  final boolean f;
+  final s0 g;
+  private int h = 0;
+  
+  d(a paramA)
+  {
+    this(paramA, false);
+  }
+  
+  d(a paramA, boolean paramBoolean)
+  {
+    d = paramA;
+    f = paramBoolean;
+    g = new s0(this);
+  }
+  
+  private int b(int paramInt1, int paramInt2)
+  {
+    int j = c.size() - 1;
+    b localB;
+    for (int i = paramInt1; j >= 0; i = paramInt1)
+    {
+      localB = (b)c.get(j);
+      int k = a;
+      if (k == 8)
+      {
+        if (b < d)
+        {
+          paramInt1 = b;
+          k = d;
+        }
+        else
+        {
+          paramInt1 = d;
+          k = b;
+        }
+        if ((i >= paramInt1) && (i <= k))
+        {
+          k = b;
+          if (paramInt1 == k)
+          {
+            if (paramInt2 == 1) {
+              d += 1;
+            } else if (paramInt2 == 2) {
+              d -= 1;
+            }
+            paramInt1 = i + 1;
+          }
+          else
+          {
+            if (paramInt2 == 1) {
+              b = (k + 1);
+            } else if (paramInt2 == 2) {
+              b = (k - 1);
+            }
+            paramInt1 = i - 1;
+          }
+        }
+        else
+        {
+          k = b;
+          paramInt1 = i;
+          if (i < k) {
+            if (paramInt2 == 1)
+            {
+              b = (k + 1);
+              d += 1;
+              paramInt1 = i;
+            }
+            else
+            {
+              paramInt1 = i;
+              if (paramInt2 == 2)
+              {
+                b = (k - 1);
+                d -= 1;
+                paramInt1 = i;
+              }
+            }
+          }
+        }
+      }
+      else
+      {
+        int m = b;
+        if (m <= i)
+        {
+          if (k == 1)
+          {
+            paramInt1 = i - d;
+          }
+          else
+          {
+            paramInt1 = i;
+            if (k == 2) {
+              paramInt1 = i + d;
+            }
+          }
+        }
+        else if (paramInt2 == 1)
+        {
+          b = (m + 1);
+          paramInt1 = i;
+        }
+        else
+        {
+          paramInt1 = i;
+          if (paramInt2 == 2)
+          {
+            b = (m - 1);
+            paramInt1 = i;
+          }
+        }
+      }
+      j -= 1;
+    }
+    paramInt1 = c.size() - 1;
+    while (paramInt1 >= 0)
+    {
+      localB = (b)c.get(paramInt1);
+      if (a == 8)
+      {
+        paramInt2 = d;
+        if ((paramInt2 == b) || (paramInt2 < 0))
+        {
+          c.remove(paramInt1);
+          a(localB);
+        }
+      }
+      else if (d <= 0)
+      {
+        c.remove(paramInt1);
+        a(localB);
+      }
+      paramInt1 -= 1;
+    }
+    return i;
+  }
+  
+  private void b(b paramB)
+  {
+    g(paramB);
+  }
+  
+  private void c(b paramB)
+  {
+    g(paramB);
+  }
+  
+  private void d(b paramB)
+  {
+    int i2 = b;
+    int n = 0;
+    int m = b + d;
+    int i1 = -1;
+    int k;
+    for (int i = b; i < m; i = k)
+    {
+      int j = 0;
+      k = 0;
+      if ((d.a(i) == null) && (!d(i)))
+      {
+        if (i1 == 1)
+        {
+          g(a(2, i2, n, null));
+          k = 1;
+        }
+        j = 0;
+      }
+      else
+      {
+        if (i1 == 0)
+        {
+          f(a(2, i2, n, null));
+          j = 1;
+        }
+        i1 = 1;
+        k = j;
+        j = i1;
+      }
+      if (k != 0)
+      {
+        k = i - n;
+        m -= n;
+        i = 1;
+      }
+      else
+      {
+        n += 1;
+        k = i;
+        i = n;
+      }
+      k += 1;
+      n = i;
+      i1 = j;
+    }
+    b localB = paramB;
+    if (n != d)
+    {
+      a(paramB);
+      localB = a(2, i2, n, null);
+    }
+    if (i1 == 0)
+    {
+      f(localB);
+      return;
+    }
+    g(localB);
+  }
+  
+  private boolean d(int paramInt)
+  {
+    int k = c.size();
+    int i = 0;
+    while (i < k)
+    {
+      b localB = (b)c.get(i);
+      int j = a;
+      if (j == 8)
+      {
+        if (a(d, i + 1) == paramInt) {
+          return true;
+        }
+      }
+      else if (j == 1)
+      {
+        int m = b;
+        int n = d;
+        j = b;
+        while (j < m + n)
+        {
+          if (a(j, i + 1) == paramInt) {
+            return true;
+          }
+          j += 1;
+        }
+      }
+      i += 1;
+    }
+    return false;
+  }
+  
+  private void e(b paramB)
+  {
+    int j = b;
+    int k = 0;
+    int i3 = b;
+    int i4 = d;
+    int i2 = -1;
+    int i = b;
+    while (i < i3 + i4)
+    {
+      int n;
+      int m;
+      int i1;
+      if ((d.a(i) == null) && (!d(i)))
+      {
+        n = j;
+        m = k;
+        if (i2 == 1)
+        {
+          g(a(4, j, k, c));
+          m = 0;
+          n = i;
+        }
+        k = 0;
+        j = n;
+        i1 = m;
+        m = k;
+      }
+      else
+      {
+        n = j;
+        i1 = k;
+        if (i2 == 0)
+        {
+          f(a(4, j, k, c));
+          i1 = 0;
+          n = i;
+        }
+        m = 1;
+        j = n;
+      }
+      k = i1 + 1;
+      i += 1;
+      i2 = m;
+    }
+    Object localObject = paramB;
+    if (k != d)
+    {
+      localObject = c;
+      a(paramB);
+      localObject = a(4, j, k, localObject);
+    }
+    if (i2 == 0)
+    {
+      f((b)localObject);
+      return;
+    }
+    g((b)localObject);
+  }
+  
+  private void f(b paramB)
+  {
+    int i = a;
+    if ((i != 1) && (i != 8))
+    {
+      int n = b(b, i);
+      int i1 = 1;
+      i = b;
+      int j = a;
+      int k;
+      if (j != 2)
+      {
+        if (j == 4)
+        {
+          k = 1;
+        }
+        else
+        {
+          localObject = new StringBuilder();
+          ((StringBuilder)localObject).append("op should be remove or update.");
+          ((StringBuilder)localObject).append(paramB);
+          throw new IllegalArgumentException(((StringBuilder)localObject).toString());
+        }
+      }
+      else {
+        k = 0;
+      }
+      int m = 1;
+      while (m < d)
+      {
+        int i2 = b(b + k * m, a);
+        j = 0;
+        int i5 = a;
+        int i4 = 0;
+        int i3 = 0;
+        if (i5 != 2)
+        {
+          if (i5 == 4)
+          {
+            j = i3;
+            if (i2 == n + 1) {
+              j = 1;
+            }
+          }
+        }
+        else
+        {
+          j = i4;
+          if (i2 == n) {
+            j = 1;
+          }
+        }
+        if (j != 0)
+        {
+          j = i1 + 1;
+        }
+        else
+        {
+          localObject = a(a, n, i1, c);
+          a((b)localObject, i);
+          a((b)localObject);
+          j = i;
+          if (a == 4) {
+            j = i + i1;
+          }
+          n = i2;
+          i1 = 1;
+          i = j;
+          j = i1;
+        }
+        m += 1;
+        i1 = j;
+      }
+      Object localObject = c;
+      a(paramB);
+      if (i1 > 0)
+      {
+        paramB = a(a, n, i1, localObject);
+        a(paramB, i);
+        a(paramB);
+      }
+      return;
+    }
+    paramB = new IllegalArgumentException("should not dispatch add or move for pre layout");
+    for (;;)
+    {
+      throw paramB;
+    }
+  }
+  
+  private void g(b paramB)
+  {
+    c.add(paramB);
+    int i = a;
+    if (i != 1)
+    {
+      if (i != 2)
+      {
+        if (i != 4)
+        {
+          if (i == 8)
+          {
+            d.a(b, d);
+            return;
+          }
+          StringBuilder localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Unknown update op type for ");
+          localStringBuilder.append(paramB);
+          throw new IllegalArgumentException(localStringBuilder.toString());
+        }
+        d.a(b, d, c);
+        return;
+      }
+      d.c(b, d);
+      return;
+    }
+    d.d(b, d);
+  }
+  
+  public int a(int paramInt)
+  {
+    int m = b.size();
+    int k = 0;
+    for (int i = paramInt; k < m; i = paramInt)
+    {
+      b localB = (b)b.get(k);
+      paramInt = a;
+      if (paramInt != 1)
+      {
+        int j;
+        if (paramInt != 2)
+        {
+          if (paramInt != 8)
+          {
+            paramInt = i;
+          }
+          else
+          {
+            paramInt = b;
+            if (paramInt == i)
+            {
+              paramInt = d;
+            }
+            else
+            {
+              j = i;
+              if (paramInt < i) {
+                j = i - 1;
+              }
+              paramInt = j;
+              if (d <= j) {
+                paramInt = j + 1;
+              }
+            }
+          }
+        }
+        else
+        {
+          j = b;
+          paramInt = i;
+          if (j <= i)
+          {
+            paramInt = d;
+            if (j + paramInt > i) {
+              return -1;
+            }
+            paramInt = i - paramInt;
+          }
+        }
+      }
+      else
+      {
+        paramInt = i;
+        if (b <= i) {
+          paramInt = i + d;
+        }
+      }
+      k += 1;
+    }
+    return i;
+  }
+  
+  int a(int paramInt1, int paramInt2)
+  {
+    int k = c.size();
+    int j = paramInt2;
+    for (paramInt2 = paramInt1; j < k; paramInt2 = paramInt1)
+    {
+      b localB = (b)c.get(j);
+      int m = a;
+      int i;
+      if (m == 8)
+      {
+        paramInt1 = b;
+        if (paramInt1 == paramInt2)
+        {
+          paramInt1 = d;
+        }
+        else
+        {
+          i = paramInt2;
+          if (paramInt1 < paramInt2) {
+            i = paramInt2 - 1;
+          }
+          paramInt1 = i;
+          if (d <= i) {
+            paramInt1 = i + 1;
+          }
+        }
+      }
+      else
+      {
+        i = b;
+        paramInt1 = paramInt2;
+        if (i <= paramInt2) {
+          if (m == 2)
+          {
+            paramInt1 = d;
+            if (paramInt2 < i + paramInt1) {
+              return -1;
+            }
+            paramInt1 = paramInt2 - paramInt1;
+          }
+          else
+          {
+            paramInt1 = paramInt2;
+            if (m == 1) {
+              paramInt1 = paramInt2 + d;
+            }
+          }
+        }
+      }
+      j += 1;
+    }
+    return paramInt2;
+  }
+  
+  public b a(int paramInt1, int paramInt2, int paramInt3, Object paramObject)
+  {
+    b localB = (b)a.a();
+    if (localB == null) {
+      return new b(paramInt1, paramInt2, paramInt3, paramObject);
+    }
+    a = paramInt1;
+    b = paramInt2;
+    d = paramInt3;
+    c = paramObject;
+    return localB;
+  }
+  
+  void a()
+  {
+    int j = c.size();
+    int i = 0;
+    while (i < j)
+    {
+      d.b((b)c.get(i));
+      i += 1;
+    }
+    a(c);
+    h = 0;
+  }
+  
+  public void a(b paramB)
+  {
+    if (!f)
+    {
+      c = null;
+      a.a(paramB);
+    }
+  }
+  
+  void a(b paramB, int paramInt)
+  {
+    d.a(paramB);
+    int i = a;
+    if (i != 2)
+    {
+      if (i == 4)
+      {
+        d.a(paramInt, d, c);
+        return;
+      }
+      throw new IllegalArgumentException("only remove and update ops can be dispatched in first pass");
+    }
+    d.b(paramInt, d);
+  }
+  
+  void a(List<b> paramList)
+  {
+    int j = paramList.size();
+    int i = 0;
+    while (i < j)
+    {
+      a((b)paramList.get(i));
+      i += 1;
+    }
+    paramList.clear();
+  }
+  
+  boolean a(int paramInt1, int paramInt2, Object paramObject)
+  {
+    boolean bool = false;
+    if (paramInt2 < 1) {
+      return false;
+    }
+    b.add(a(4, paramInt1, paramInt2, paramObject));
+    h |= 0x4;
+    if (b.size() == 1) {
+      bool = true;
+    }
+    return bool;
+  }
+  
+  int b(int paramInt)
+  {
+    return a(paramInt, 0);
+  }
+  
+  void b()
+  {
+    a();
+    int j = b.size();
+    int i = 0;
+    while (i < j)
+    {
+      Object localObject = (b)b.get(i);
+      int k = a;
+      if (k != 1)
+      {
+        if (k != 2)
+        {
+          if (k != 4)
+          {
+            if (k == 8)
+            {
+              d.b((b)localObject);
+              d.a(b, d);
+            }
+          }
+          else
+          {
+            d.b((b)localObject);
+            d.a(b, d, c);
+          }
+        }
+        else
+        {
+          d.b((b)localObject);
+          d.b(b, d);
+        }
+      }
+      else
+      {
+        d.b((b)localObject);
+        d.d(b, d);
+      }
+      localObject = e;
+      if (localObject != null) {
+        ((Runnable)localObject).run();
+      }
+      i += 1;
+    }
+    a(b);
+    h = 0;
+  }
+  
+  boolean c()
+  {
+    return b.size() > 0;
+  }
+  
+  boolean c(int paramInt)
+  {
+    return (h & paramInt) != 0;
+  }
+  
+  boolean d()
+  {
+    return (!c.isEmpty()) && (!b.isEmpty());
+  }
+  
+  void e()
+  {
+    g.a(b);
+    int j = b.size();
+    int i = 0;
+    while (i < j)
+    {
+      Object localObject = (b)b.get(i);
+      int k = a;
+      if (k != 1)
+      {
+        if (k != 2)
+        {
+          if (k != 4)
+          {
+            if (k == 8) {
+              c((b)localObject);
+            }
+          }
+          else {
+            e((b)localObject);
+          }
+        }
+        else {
+          d((b)localObject);
+        }
+      }
+      else {
+        b((b)localObject);
+      }
+      localObject = e;
+      if (localObject != null) {
+        ((Runnable)localObject).run();
+      }
+      i += 1;
+    }
+    b.clear();
+  }
+  
+  void f()
+  {
+    a(b);
+    a(c);
+    h = 0;
+  }
+  
+  static abstract interface a
+  {
+    public abstract RecyclerView.d0 a(int paramInt);
+    
+    public abstract void a(int paramInt1, int paramInt2);
+    
+    public abstract void a(int paramInt1, int paramInt2, Object paramObject);
+    
+    public abstract void a(d.b paramB);
+    
+    public abstract void b(int paramInt1, int paramInt2);
+    
+    public abstract void b(d.b paramB);
+    
+    public abstract void c(int paramInt1, int paramInt2);
+    
+    public abstract void d(int paramInt1, int paramInt2);
+  }
+  
+  static class b
+  {
+    int a;
+    int b;
+    Object c;
+    int d;
+    
+    b(int paramInt1, int paramInt2, int paramInt3, Object paramObject)
+    {
+      a = paramInt1;
+      b = paramInt2;
+      d = paramInt3;
+      c = paramObject;
+    }
+    
+    String a()
+    {
+      int i = a;
+      if (i != 1)
+      {
+        if (i != 2)
+        {
+          if (i != 4)
+          {
+            if (i != 8) {
+              return "??";
+            }
+            return "mv";
+          }
+          return "up";
+        }
+        return "rm";
+      }
+      return "add";
+    }
+    
+    public boolean equals(Object paramObject)
+    {
+      if (this == paramObject) {
+        return true;
+      }
+      if (paramObject != null)
+      {
+        if (getClass() != paramObject.getClass()) {
+          return false;
+        }
+        paramObject = (b)paramObject;
+        int i = a;
+        if (i != a) {
+          return false;
+        }
+        if ((i == 8) && (Math.abs(d - b) == 1) && (d == b) && (b == d)) {
+          return true;
+        }
+        if (d != d) {
+          return false;
+        }
+        if (b != b) {
+          return false;
+        }
+        Object localObject = c;
+        if (localObject != null)
+        {
+          if (!localObject.equals(c)) {
+            return false;
+          }
+        }
+        else if (c != null) {
+          return false;
+        }
+        return true;
+      }
+      return false;
+    }
+    
+    public int hashCode()
+    {
+      return (a * 31 + b) * 31 + d;
+    }
+    
+    public String toString()
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append(Integer.toHexString(System.identityHashCode(this)));
+      localStringBuilder.append("[");
+      localStringBuilder.append(a());
+      localStringBuilder.append(",s:");
+      localStringBuilder.append(b);
+      localStringBuilder.append("c:");
+      localStringBuilder.append(d);
+      localStringBuilder.append(",p:");
+      localStringBuilder.append(c);
+      localStringBuilder.append("]");
+      return localStringBuilder.toString();
+    }
+  }
+}

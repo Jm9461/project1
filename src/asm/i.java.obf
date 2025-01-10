@@ -1,0 +1,106 @@
+package g;
+
+import android.media.AudioRecord;
+import java.io.OutputStream;
+
+public abstract interface e
+{
+  public abstract c a();
+  
+  public abstract void a(OutputStream paramOutputStream);
+  
+  public abstract void stop();
+  
+  public static abstract class a
+    implements e
+  {
+    final c a;
+    final e.c b;
+    private final h c = new h();
+    
+    a(c paramC, e.c paramC1)
+    {
+      a = paramC;
+      b = paramC1;
+    }
+    
+    public c a()
+    {
+      return a;
+    }
+    
+    abstract void a(AudioRecord paramAudioRecord, int paramInt, OutputStream paramOutputStream);
+    
+    void a(final b paramB)
+    {
+      c.a(new a(paramB));
+    }
+    
+    public void a(OutputStream paramOutputStream)
+    {
+      a(b(), a.a(), paramOutputStream);
+    }
+    
+    AudioRecord b()
+    {
+      AudioRecord localAudioRecord = a.b();
+      localAudioRecord.startRecording();
+      a.a(true);
+      return localAudioRecord;
+    }
+    
+    public void stop()
+    {
+      a.a(false);
+      a.b().stop();
+    }
+    
+    class a
+      implements Runnable
+    {
+      a(b paramB) {}
+      
+      public void run()
+      {
+        b.a(paramB);
+      }
+    }
+  }
+  
+  public static final class b
+    extends e.a
+  {
+    private final k d;
+    
+    public b(c paramC, e.c paramC1)
+    {
+      this(paramC, paramC1, new k.a());
+    }
+    
+    public b(c paramC, e.c paramC1, k paramK)
+    {
+      super(paramC1);
+      d = paramK;
+    }
+    
+    void a(AudioRecord paramAudioRecord, int paramInt, OutputStream paramOutputStream)
+    {
+      while (a.d())
+      {
+        b.a localA = new b.a(new byte[paramInt]);
+        if (-3 != paramAudioRecord.read(localA.b(), 0, paramInt))
+        {
+          if (b != null) {
+            a(localA);
+          }
+          d.a(localA.b(), paramOutputStream);
+        }
+      }
+    }
+  }
+  
+  public static abstract interface c
+  {
+    public abstract void a(b paramB);
+  }
+}

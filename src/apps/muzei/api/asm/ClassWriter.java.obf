@@ -1,0 +1,115 @@
+package b.j.a.d;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.util.AttributeSet;
+import android.util.SparseArray;
+import b.j.a.c;
+
+public class a
+{
+  private static volatile a e;
+  private Context a;
+  private SparseArray<int[]> b = new SparseArray();
+  private int c;
+  private a d;
+  
+  public a() {}
+  
+  public static int a(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    paramContext = paramContext.obtainStyledAttributes(paramAttributeSet, c.ThemableView, paramInt1, paramInt2);
+    paramInt1 = paramContext.getResourceId(c.ThemableView_v_styleId, 0);
+    paramContext.recycle();
+    return paramInt1;
+  }
+  
+  public static a a()
+  {
+    if (e == null) {
+      try
+      {
+        if (e == null) {
+          e = new a();
+        }
+      }
+      finally {}
+    }
+    return e;
+  }
+  
+  private int[] a(Context paramContext, int paramInt)
+  {
+    if (paramContext == null) {
+      return null;
+    }
+    paramContext = paramContext.getResources().obtainTypedArray(paramInt);
+    int[] arrayOfInt = new int[paramContext.length()];
+    paramInt = 0;
+    while (paramInt < arrayOfInt.length)
+    {
+      arrayOfInt[paramInt] = paramContext.getResourceId(paramInt, 0);
+      paramInt += 1;
+    }
+    paramContext.recycle();
+    return arrayOfInt;
+  }
+  
+  private int[] b(int paramInt)
+  {
+    Object localObject = b;
+    if (localObject == null) {
+      return null;
+    }
+    int[] arrayOfInt = (int[])((SparseArray)localObject).get(paramInt);
+    localObject = arrayOfInt;
+    if (arrayOfInt == null)
+    {
+      localObject = a(a, paramInt);
+      b.put(paramInt, localObject);
+    }
+    return localObject;
+  }
+  
+  public int a(int paramInt)
+  {
+    return a(paramInt, c);
+  }
+  
+  public int a(int paramInt1, int paramInt2)
+  {
+    int[] arrayOfInt = b(paramInt1);
+    if (arrayOfInt == null) {
+      return 0;
+    }
+    return arrayOfInt[paramInt2];
+  }
+  
+  public void a(c paramC)
+  {
+    a localA = d;
+    if (localA != null) {
+      localA.b(paramC);
+    }
+  }
+  
+  public void b(c paramC)
+  {
+    a localA = d;
+    if (localA != null) {
+      localA.a(paramC);
+    }
+  }
+  
+  public static abstract interface a
+  {
+    public abstract void a(a.c paramC);
+    
+    public abstract void b(a.c paramC);
+  }
+  
+  public static class b {}
+  
+  public static abstract interface c {}
+}

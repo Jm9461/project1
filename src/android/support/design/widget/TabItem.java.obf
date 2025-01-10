@@ -1,0 +1,12 @@
+package android.support.design.widget;
+
+import android.graphics.drawable.Drawable;
+import android.view.View;
+
+public class v
+  extends View
+{
+  public final CharSequence c;
+  public final Drawable d;
+  public final int e;
+}

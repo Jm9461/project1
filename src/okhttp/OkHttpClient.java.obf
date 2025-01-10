@@ -1,0 +1,421 @@
+package e;
+
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.Socket;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import javax.net.SocketFactory;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
+public class v
+  implements Cloneable, e.a, e0
+{
+  static final List<w> D = e.f0.c.a(new w[] { w.g, w.e });
+  static final List<k> E = e.f0.c.a(new k[] { k.f, k.g });
+  final int A;
+  final int B;
+  final int C;
+  final n c;
+  final Proxy d;
+  final List<w> e;
+  final List<k> f;
+  final List<t> g;
+  final List<t> h;
+  final p.c i;
+  final ProxySelector j;
+  final m k;
+  final c l;
+  final e.f0.e.f m;
+  final SocketFactory n;
+  final SSLSocketFactory o;
+  final e.f0.l.c p;
+  final HostnameVerifier q;
+  final g r;
+  final b s;
+  final b t;
+  final j u;
+  final o v;
+  final boolean w;
+  final boolean x;
+  final boolean y;
+  final int z;
+  
+  static
+  {
+    e.f0.a.a = new a();
+  }
+  
+  public v()
+  {
+    this(new b());
+  }
+  
+  v(b paramB)
+  {
+    c = a;
+    d = b;
+    e = c;
+    f = d;
+    g = e.f0.c.a(e);
+    h = e.f0.c.a(f);
+    i = g;
+    j = h;
+    k = i;
+    l = j;
+    m = k;
+    n = l;
+    int i1 = 0;
+    Object localObject = f.iterator();
+    while (((Iterator)localObject).hasNext())
+    {
+      k localK = (k)((Iterator)localObject).next();
+      if ((i1 == 0) && (!localK.b())) {
+        i1 = 0;
+      } else {
+        i1 = 1;
+      }
+    }
+    if ((m == null) && (i1 != 0))
+    {
+      localObject = B();
+      o = a((X509TrustManager)localObject);
+      p = e.f0.l.c.a((X509TrustManager)localObject);
+    }
+    else
+    {
+      o = m;
+      p = n;
+    }
+    q = o;
+    r = p.a(p);
+    s = q;
+    t = r;
+    u = s;
+    v = t;
+    w = u;
+    x = v;
+    y = w;
+    z = x;
+    A = y;
+    B = z;
+    C = A;
+    if (!g.contains(null))
+    {
+      if (!h.contains(null)) {
+        return;
+      }
+      paramB = new StringBuilder();
+      paramB.append("Null network interceptor: ");
+      paramB.append(h);
+      throw new IllegalStateException(paramB.toString());
+    }
+    paramB = new StringBuilder();
+    paramB.append("Null interceptor: ");
+    paramB.append(g);
+    paramB = new IllegalStateException(paramB.toString());
+    for (;;)
+    {
+      throw paramB;
+    }
+  }
+  
+  private X509TrustManager B()
+  {
+    try
+    {
+      Object localObject = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+      ((TrustManagerFactory)localObject).init(null);
+      localObject = ((TrustManagerFactory)localObject).getTrustManagers();
+      if ((localObject.length == 1) && ((localObject[0] instanceof X509TrustManager))) {
+        return (X509TrustManager)localObject[0];
+      }
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("Unexpected default trust managers:");
+      localStringBuilder.append(Arrays.toString((Object[])localObject));
+      throw new IllegalStateException(localStringBuilder.toString());
+    }
+    catch (GeneralSecurityException localGeneralSecurityException)
+    {
+      throw e.f0.c.a("No System TLS", localGeneralSecurityException);
+    }
+  }
+  
+  private SSLSocketFactory a(X509TrustManager paramX509TrustManager)
+  {
+    try
+    {
+      SSLContext localSSLContext = e.f0.k.f.d().b();
+      localSSLContext.init(null, new TrustManager[] { paramX509TrustManager }, null);
+      paramX509TrustManager = localSSLContext.getSocketFactory();
+      return paramX509TrustManager;
+    }
+    catch (GeneralSecurityException paramX509TrustManager)
+    {
+      throw e.f0.c.a("No System TLS", paramX509TrustManager);
+    }
+  }
+  
+  public int A()
+  {
+    return B;
+  }
+  
+  public b a()
+  {
+    return t;
+  }
+  
+  public e a(y paramY)
+  {
+    return x.a(this, paramY, false);
+  }
+  
+  public c b()
+  {
+    return l;
+  }
+  
+  public g c()
+  {
+    return r;
+  }
+  
+  public int d()
+  {
+    return z;
+  }
+  
+  public j e()
+  {
+    return u;
+  }
+  
+  public List<k> f()
+  {
+    return f;
+  }
+  
+  public m g()
+  {
+    return k;
+  }
+  
+  public n h()
+  {
+    return c;
+  }
+  
+  public o i()
+  {
+    return v;
+  }
+  
+  public p.c j()
+  {
+    return i;
+  }
+  
+  public boolean k()
+  {
+    return x;
+  }
+  
+  public boolean m()
+  {
+    return w;
+  }
+  
+  public HostnameVerifier n()
+  {
+    return q;
+  }
+  
+  public List<t> o()
+  {
+    return g;
+  }
+  
+  e.f0.e.f p()
+  {
+    c localC = l;
+    if (localC != null) {
+      return c;
+    }
+    return m;
+  }
+  
+  public List<t> q()
+  {
+    return h;
+  }
+  
+  public int r()
+  {
+    return C;
+  }
+  
+  public List<w> s()
+  {
+    return e;
+  }
+  
+  public Proxy t()
+  {
+    return d;
+  }
+  
+  public b u()
+  {
+    return s;
+  }
+  
+  public ProxySelector v()
+  {
+    return j;
+  }
+  
+  public int w()
+  {
+    return A;
+  }
+  
+  public boolean x()
+  {
+    return y;
+  }
+  
+  public SocketFactory y()
+  {
+    return n;
+  }
+  
+  public SSLSocketFactory z()
+  {
+    return o;
+  }
+  
+  final class a
+    extends e.f0.a
+  {
+    a() {}
+    
+    public int a(a0.a paramA)
+    {
+      return c;
+    }
+    
+    public e.f0.f.c a(j paramJ, a paramA, e.f0.f.g paramG, c0 paramC0)
+    {
+      return paramJ.a(paramA, paramG, paramC0);
+    }
+    
+    public e.f0.f.d a(j paramJ)
+    {
+      return e;
+    }
+    
+    public Socket a(j paramJ, a paramA, e.f0.f.g paramG)
+    {
+      return paramJ.a(paramA, paramG);
+    }
+    
+    public void a(k paramK, SSLSocket paramSSLSocket, boolean paramBoolean)
+    {
+      paramK.a(paramSSLSocket, paramBoolean);
+    }
+    
+    public void a(r.a paramA, String paramString)
+    {
+      paramA.a(paramString);
+    }
+    
+    public void a(r.a paramA, String paramString1, String paramString2)
+    {
+      paramA.b(paramString1, paramString2);
+    }
+    
+    public boolean a(a paramA1, a paramA2)
+    {
+      return paramA1.a(paramA2);
+    }
+    
+    public boolean a(j paramJ, e.f0.f.c paramC)
+    {
+      return paramJ.a(paramC);
+    }
+    
+    public void b(j paramJ, e.f0.f.c paramC)
+    {
+      paramJ.b(paramC);
+    }
+  }
+  
+  public static final class b
+  {
+    int A;
+    n a = new n();
+    Proxy b;
+    List<w> c = v.D;
+    List<k> d = v.E;
+    final List<t> e = new ArrayList();
+    final List<t> f = new ArrayList();
+    p.c g = p.a(p.a);
+    ProxySelector h = ProxySelector.getDefault();
+    m i = m.a;
+    c j;
+    e.f0.e.f k;
+    SocketFactory l = SocketFactory.getDefault();
+    SSLSocketFactory m;
+    e.f0.l.c n;
+    HostnameVerifier o = e.f0.l.d.a;
+    g p = g.c;
+    b q;
+    b r;
+    j s;
+    o t;
+    boolean u;
+    boolean v;
+    boolean w;
+    int x;
+    int y;
+    int z;
+    
+    public b()
+    {
+      b localB = b.a;
+      q = localB;
+      r = localB;
+      s = new j();
+      t = o.a;
+      u = true;
+      v = true;
+      w = true;
+      x = 10000;
+      y = 10000;
+      z = 10000;
+      A = 0;
+    }
+    
+    public b a(c paramC)
+    {
+      j = paramC;
+      k = null;
+      return this;
+    }
+    
+    public v a()
+    {
+      return new v(this);
+    }
+  }
+}

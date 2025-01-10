@@ -1,0 +1,61 @@
+package d.a.a;
+
+import android.annotation.TargetApi;
+import android.os.Build.VERSION;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import b.h.a.i;
+import java.lang.ref.WeakReference;
+
+public class e
+{
+  private static final boolean a;
+  
+  static
+  {
+    boolean bool;
+    if (Build.VERSION.SDK_INT >= 21) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    a = bool;
+  }
+  
+  private static b.h.a.a.a a(a paramA)
+  {
+    int i = Build.VERSION.SDK_INT;
+    if (i >= 18) {
+      return new a.c(paramA);
+    }
+    if (i >= 14) {
+      return new a.b(paramA);
+    }
+    return new a.a(paramA);
+  }
+  
+  @TargetApi(21)
+  public static b a(View paramView, int paramInt1, int paramInt2, float paramFloat1, float paramFloat2)
+  {
+    if ((paramView.getParent() instanceof a))
+    {
+      a localA = (a)paramView.getParent();
+      localA.a(new a.d(paramInt1, paramInt2, paramFloat1, paramFloat2, new WeakReference(paramView)));
+      if (a) {
+        return new c(ViewAnimationUtils.createCircularReveal(paramView, paramInt1, paramInt2, paramFloat1, paramFloat2), localA);
+      }
+      paramView = i.a(localA, a.b, new float[] { paramFloat1, paramFloat2 });
+      paramView.a(a(localA));
+      return new d(paramView, localA);
+    }
+    throw new IllegalArgumentException("View must be inside RevealFrameLayout or RevealLinearLayout.");
+  }
+  
+  static class a
+    implements b.h.a.a.a
+  {
+    a() {}
+    
+    public void b(b.h.a.a paramA) {}
+  }
+}

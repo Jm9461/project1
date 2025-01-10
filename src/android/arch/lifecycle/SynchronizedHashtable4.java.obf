@@ -1,0 +1,42 @@
+package android.arch.lifecycle;
+
+public class o
+{
+  private final a a;
+  private final p b;
+  
+  public o(p paramP, a paramA)
+  {
+    a = paramA;
+    b = paramP;
+  }
+  
+  public <T extends n> T a(Class<T> paramClass)
+  {
+    String str = paramClass.getCanonicalName();
+    if (str != null)
+    {
+      StringBuilder localStringBuilder = new StringBuilder();
+      localStringBuilder.append("android.arch.lifecycle.ViewModelProvider.DefaultKey:");
+      localStringBuilder.append(str);
+      return a(localStringBuilder.toString(), paramClass);
+    }
+    throw new IllegalArgumentException("Local and anonymous classes can not be ViewModels");
+  }
+  
+  public <T extends n> T a(String paramString, Class<T> paramClass)
+  {
+    n localN = b.a(paramString);
+    if (paramClass.isInstance(localN)) {
+      return localN;
+    }
+    paramClass = a.a(paramClass);
+    b.a(paramString, paramClass);
+    return paramClass;
+  }
+  
+  public static abstract interface a
+  {
+    public abstract <T extends n> T a(Class<T> paramClass);
+  }
+}

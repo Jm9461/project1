@@ -1,0 +1,147 @@
+package b.f.a;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import b.f.a.e.c;
+
+public class b
+{
+  private ViewGroup a;
+  private ViewGroup.LayoutParams b;
+  private int c = -1;
+  private int d = -1;
+  private int e = -1;
+  private int f = -1;
+  private int g = -1;
+  private int h = -1;
+  private int i = -1;
+  private b.f.a.d.a j;
+  private String k;
+  
+  public b() {}
+  
+  private void b(String paramString)
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("You must provide ");
+    localStringBuilder.append(paramString);
+    localStringBuilder.append(" in order to draw the view properly.");
+    throw new IllegalArgumentException(localStringBuilder.toString());
+  }
+  
+  public a a()
+  {
+    Object localObject1 = a.getContext().getResources();
+    int n = c;
+    int m = n;
+    if (n == -1) {
+      m = ((Resources)localObject1).getColor(b.f.a.e.a.strokeColor);
+    }
+    c = m;
+    n = d;
+    m = n;
+    if (n == -1) {
+      m = ((Resources)localObject1).getColor(b.f.a.e.a.fillColor);
+    }
+    d = m;
+    n = e;
+    m = n;
+    if (n < 0) {
+      m = ((Resources)localObject1).getDimensionPixelSize(b.f.a.e.b.strokeWidth);
+    }
+    e = m;
+    n = h;
+    m = n;
+    if (n < 0) {
+      m = ((Resources)localObject1).getInteger(c.strokeDrawingDuration);
+    }
+    h = m;
+    n = i;
+    m = n;
+    if (n < 0) {
+      m = ((Resources)localObject1).getInteger(c.fillDuration);
+    }
+    i = m;
+    Object localObject2 = j;
+    localObject1 = localObject2;
+    if (localObject2 == null) {
+      localObject1 = new b.f.a.d.b();
+    }
+    j = ((b.f.a.d.a)localObject1);
+    localObject1 = b;
+    if (localObject1 != null)
+    {
+      localObject2 = k;
+      if (localObject2 != null) {
+        return new a(a, (ViewGroup.LayoutParams)localObject1, c, d, e, f, g, h, i, j, (String)localObject2);
+      }
+      b("an svg path");
+      throw null;
+    }
+    b("layout params");
+    throw null;
+  }
+  
+  public b a(int paramInt)
+  {
+    d = paramInt;
+    return this;
+  }
+  
+  public b a(int paramInt1, int paramInt2)
+  {
+    f = paramInt1;
+    g = paramInt2;
+    return this;
+  }
+  
+  public b a(ViewGroup.LayoutParams paramLayoutParams)
+  {
+    b = paramLayoutParams;
+    return this;
+  }
+  
+  public b a(ViewGroup paramViewGroup)
+  {
+    a = paramViewGroup;
+    return this;
+  }
+  
+  public b a(b.f.a.d.a paramA)
+  {
+    j = paramA;
+    return this;
+  }
+  
+  public b a(String paramString)
+  {
+    k = paramString;
+    return this;
+  }
+  
+  public b b(int paramInt)
+  {
+    i = paramInt;
+    return this;
+  }
+  
+  public b c(int paramInt)
+  {
+    c = paramInt;
+    return this;
+  }
+  
+  public b d(int paramInt)
+  {
+    h = paramInt;
+    return this;
+  }
+  
+  public b e(int paramInt)
+  {
+    e = paramInt;
+    return this;
+  }
+}

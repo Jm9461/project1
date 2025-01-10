@@ -1,0 +1,10 @@
+package com.squareup.picasso;
+
+import android.graphics.Bitmap;
+
+public abstract interface c0
+{
+  public abstract Bitmap a(Bitmap paramBitmap);
+  
+  public abstract String a();
+}

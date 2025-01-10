@@ -1,0 +1,391 @@
+package com.github.clans.fab;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Outline;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.Xfermode;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewOutlineProvider;
+import android.view.animation.Animation;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+public class a
+  extends TextView
+{
+  private static final Xfermode u = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+  private int c;
+  private int d;
+  private int e;
+  private int f;
+  private Drawable g;
+  private boolean h = true;
+  private int i;
+  private int j;
+  private int k;
+  private int l;
+  private int m;
+  private int n;
+  private FloatingActionButton o;
+  private Animation p;
+  private Animation q;
+  private boolean r;
+  private boolean s = true;
+  GestureDetector t = new GestureDetector(getContext(), new b());
+  
+  public a(Context paramContext)
+  {
+    super(paramContext);
+  }
+  
+  private Drawable a(int paramInt)
+  {
+    int i1 = n;
+    ShapeDrawable localShapeDrawable = new ShapeDrawable(new RoundRectShape(new float[] { i1, i1, i1, i1, i1, i1, i1, i1 }, null, null));
+    localShapeDrawable.getPaint().setColor(paramInt);
+    return localShapeDrawable;
+  }
+  
+  private int h()
+  {
+    if (j == 0) {
+      j = getMeasuredHeight();
+    }
+    return getMeasuredHeight() + a();
+  }
+  
+  private int i()
+  {
+    if (i == 0) {
+      i = getMeasuredWidth();
+    }
+    return getMeasuredWidth() + b();
+  }
+  
+  @TargetApi(21)
+  private Drawable j()
+  {
+    Object localObject1 = new StateListDrawable();
+    Object localObject2 = a(l);
+    ((StateListDrawable)localObject1).addState(new int[] { 16842919 }, (Drawable)localObject2);
+    localObject2 = a(k);
+    ((StateListDrawable)localObject1).addState(new int[0], (Drawable)localObject2);
+    if (g.b())
+    {
+      localObject2 = new int[0];
+      int i1 = m;
+      localObject1 = new RippleDrawable(new ColorStateList(new int[][] { localObject2 }, new int[] { i1 }), (Drawable)localObject1, null);
+      setOutlineProvider(new a());
+      setClipToOutline(true);
+      g = ((Drawable)localObject1);
+      return localObject1;
+    }
+    g = ((Drawable)localObject1);
+    return localObject1;
+  }
+  
+  private void k()
+  {
+    if (q != null)
+    {
+      p.cancel();
+      startAnimation(q);
+    }
+  }
+  
+  private void l()
+  {
+    if (p != null)
+    {
+      q.cancel();
+      startAnimation(p);
+    }
+  }
+  
+  @TargetApi(21)
+  private void setBackgroundCompat(Drawable paramDrawable)
+  {
+    if (g.a())
+    {
+      setBackground(paramDrawable);
+      return;
+    }
+    setBackgroundDrawable(paramDrawable);
+  }
+  
+  private void setShadow(FloatingActionButton paramFloatingActionButton)
+  {
+    f = paramFloatingActionButton.getShadowColor();
+    c = paramFloatingActionButton.getShadowRadius();
+    d = paramFloatingActionButton.getShadowXOffset();
+    e = paramFloatingActionButton.getShadowYOffset();
+    h = paramFloatingActionButton.c();
+  }
+  
+  int a()
+  {
+    if (h) {
+      return c + Math.abs(e);
+    }
+    return 0;
+  }
+  
+  void a(int paramInt1, int paramInt2, int paramInt3)
+  {
+    k = paramInt1;
+    l = paramInt2;
+    m = paramInt3;
+  }
+  
+  void a(boolean paramBoolean)
+  {
+    if (paramBoolean) {
+      k();
+    }
+    setVisibility(4);
+  }
+  
+  int b()
+  {
+    if (h) {
+      return c + Math.abs(d);
+    }
+    return 0;
+  }
+  
+  void b(boolean paramBoolean)
+  {
+    if (paramBoolean) {
+      l();
+    }
+    setVisibility(0);
+  }
+  
+  boolean c()
+  {
+    return s;
+  }
+  
+  @TargetApi(21)
+  void d()
+  {
+    if (r) {
+      g = getBackground();
+    }
+    Object localObject = g;
+    if ((localObject instanceof StateListDrawable))
+    {
+      ((StateListDrawable)localObject).setState(new int[] { 16842919 });
+    }
+    else if (g.b())
+    {
+      localObject = g;
+      if ((localObject instanceof RippleDrawable))
+      {
+        localObject = (RippleDrawable)localObject;
+        ((RippleDrawable)localObject).setState(new int[] { 16842910, 16842919 });
+        ((RippleDrawable)localObject).setHotspot(getMeasuredWidth() / 2, getMeasuredHeight() / 2);
+        ((RippleDrawable)localObject).setVisible(true, true);
+        return;
+      }
+    }
+  }
+  
+  @TargetApi(21)
+  void e()
+  {
+    if (r) {
+      g = getBackground();
+    }
+    Object localObject = g;
+    if ((localObject instanceof StateListDrawable))
+    {
+      ((StateListDrawable)localObject).setState(new int[0]);
+    }
+    else if (g.b())
+    {
+      localObject = g;
+      if ((localObject instanceof RippleDrawable))
+      {
+        localObject = (RippleDrawable)localObject;
+        ((RippleDrawable)localObject).setState(new int[0]);
+        ((RippleDrawable)localObject).setHotspot(getMeasuredWidth() / 2, getMeasuredHeight() / 2);
+        ((RippleDrawable)localObject).setVisible(true, true);
+        return;
+      }
+    }
+  }
+  
+  void f()
+  {
+    LayerDrawable localLayerDrawable;
+    if (h)
+    {
+      localLayerDrawable = new LayerDrawable(new Drawable[] { new c(null), j() });
+      localLayerDrawable.setLayerInset(1, c + Math.abs(d), c + Math.abs(e), c + Math.abs(d), c + Math.abs(e));
+    }
+    else
+    {
+      localLayerDrawable = new LayerDrawable(new Drawable[] { j() });
+    }
+    setBackgroundCompat(localLayerDrawable);
+  }
+  
+  protected void onMeasure(int paramInt1, int paramInt2)
+  {
+    super.onMeasure(paramInt1, paramInt2);
+    setMeasuredDimension(i(), h());
+  }
+  
+  public boolean onTouchEvent(MotionEvent paramMotionEvent)
+  {
+    FloatingActionButton localFloatingActionButton = o;
+    if ((localFloatingActionButton != null) && (localFloatingActionButton.getOnClickListener() != null) && (o.isEnabled()))
+    {
+      int i1 = paramMotionEvent.getAction();
+      if (i1 != 1)
+      {
+        if (i1 == 3)
+        {
+          e();
+          o.f();
+        }
+      }
+      else
+      {
+        e();
+        o.f();
+      }
+      t.onTouchEvent(paramMotionEvent);
+      return super.onTouchEvent(paramMotionEvent);
+    }
+    return super.onTouchEvent(paramMotionEvent);
+  }
+  
+  void setCornerRadius(int paramInt)
+  {
+    n = paramInt;
+  }
+  
+  void setFab(FloatingActionButton paramFloatingActionButton)
+  {
+    o = paramFloatingActionButton;
+    setShadow(paramFloatingActionButton);
+  }
+  
+  void setHandleVisibilityChanges(boolean paramBoolean)
+  {
+    s = paramBoolean;
+  }
+  
+  void setHideAnimation(Animation paramAnimation)
+  {
+    q = paramAnimation;
+  }
+  
+  void setShowAnimation(Animation paramAnimation)
+  {
+    p = paramAnimation;
+  }
+  
+  void setShowShadow(boolean paramBoolean)
+  {
+    h = paramBoolean;
+  }
+  
+  void setUsingStyle(boolean paramBoolean)
+  {
+    r = paramBoolean;
+  }
+  
+  class a
+    extends ViewOutlineProvider
+  {
+    a() {}
+    
+    public void getOutline(View paramView, Outline paramOutline)
+    {
+      paramOutline.setOval(0, 0, paramView.getWidth(), paramView.getHeight());
+    }
+  }
+  
+  class b
+    extends GestureDetector.SimpleOnGestureListener
+  {
+    b() {}
+    
+    public boolean onDown(MotionEvent paramMotionEvent)
+    {
+      d();
+      if (a.a(a.this) != null) {
+        a.a(a.this).e();
+      }
+      return super.onDown(paramMotionEvent);
+    }
+    
+    public boolean onSingleTapUp(MotionEvent paramMotionEvent)
+    {
+      e();
+      if (a.a(a.this) != null) {
+        a.a(a.this).f();
+      }
+      return super.onSingleTapUp(paramMotionEvent);
+    }
+  }
+  
+  private class c
+    extends Drawable
+  {
+    private Paint a = new Paint(1);
+    private Paint b = new Paint(1);
+    
+    private c()
+    {
+      a();
+    }
+    
+    private void a()
+    {
+      setLayerType(1, null);
+      a.setStyle(Paint.Style.FILL);
+      a.setColor(a.c(a.this));
+      b.setXfermode(a.g());
+      if (!isInEditMode()) {
+        a.setShadowLayer(a.d(a.this), a.e(a.this), a.f(a.this), a.g(a.this));
+      }
+    }
+    
+    public void draw(Canvas paramCanvas)
+    {
+      RectF localRectF = new RectF(a.d(a.this) + Math.abs(a.e(a.this)), a.d(a.this) + Math.abs(a.f(a.this)), a.h(a.this), a.i(a.this));
+      paramCanvas.drawRoundRect(localRectF, a.b(a.this), a.b(a.this), a);
+      paramCanvas.drawRoundRect(localRectF, a.b(a.this), a.b(a.this), b);
+    }
+    
+    public int getOpacity()
+    {
+      return 0;
+    }
+    
+    public void setAlpha(int paramInt) {}
+    
+    public void setColorFilter(ColorFilter paramColorFilter) {}
+  }
+}

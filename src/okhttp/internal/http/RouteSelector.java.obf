@@ -1,0 +1,246 @@
+package e.f0.f;
+
+import e.a;
+import e.c0;
+import e.e;
+import e.f0.c;
+import e.o;
+import e.p;
+import e.s;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Proxy.Type;
+import java.net.ProxySelector;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+public final class f
+{
+  private final a a;
+  private final d b;
+  private final e c;
+  private final p d;
+  private List<Proxy> e = Collections.emptyList();
+  private int f;
+  private List<InetSocketAddress> g = Collections.emptyList();
+  private final List<c0> h = new ArrayList();
+  
+  public f(a paramA, d paramD, e paramE, p paramP)
+  {
+    a = paramA;
+    b = paramD;
+    c = paramE;
+    d = paramP;
+    a(paramA.k(), paramA.f());
+  }
+  
+  static String a(InetSocketAddress paramInetSocketAddress)
+  {
+    InetAddress localInetAddress = paramInetSocketAddress.getAddress();
+    if (localInetAddress == null) {
+      return paramInetSocketAddress.getHostName();
+    }
+    return localInetAddress.getHostAddress();
+  }
+  
+  private void a(s paramS, Proxy paramProxy)
+  {
+    if (paramProxy != null)
+    {
+      e = Collections.singletonList(paramProxy);
+    }
+    else
+    {
+      paramS = a.h().select(paramS.n());
+      if ((paramS != null) && (!paramS.isEmpty())) {
+        paramS = c.a(paramS);
+      } else {
+        paramS = c.a(new Proxy[] { Proxy.NO_PROXY });
+      }
+      e = paramS;
+    }
+    f = 0;
+  }
+  
+  private void a(Proxy paramProxy)
+  {
+    g = new ArrayList();
+    Object localObject;
+    int i;
+    if ((paramProxy.type() != Proxy.Type.DIRECT) && (paramProxy.type() != Proxy.Type.SOCKS))
+    {
+      localObject = paramProxy.address();
+      if ((localObject instanceof InetSocketAddress))
+      {
+        InetSocketAddress localInetSocketAddress = (InetSocketAddress)localObject;
+        localObject = a(localInetSocketAddress);
+        i = localInetSocketAddress.getPort();
+      }
+      else
+      {
+        paramProxy = new StringBuilder();
+        paramProxy.append("Proxy.address() is not an InetSocketAddress: ");
+        paramProxy.append(localObject.getClass());
+        throw new IllegalArgumentException(paramProxy.toString());
+      }
+    }
+    else
+    {
+      localObject = a.k().g();
+      i = a.k().j();
+    }
+    if ((i >= 1) && (i <= 65535))
+    {
+      if (paramProxy.type() == Proxy.Type.SOCKS)
+      {
+        g.add(InetSocketAddress.createUnresolved((String)localObject, i));
+        return;
+      }
+      d.a(c, (String)localObject);
+      paramProxy = a.c().a((String)localObject);
+      if (!paramProxy.isEmpty())
+      {
+        d.a(c, (String)localObject, paramProxy);
+        int j = 0;
+        int k = paramProxy.size();
+        while (j < k)
+        {
+          localObject = (InetAddress)paramProxy.get(j);
+          g.add(new InetSocketAddress((InetAddress)localObject, i));
+          j += 1;
+        }
+        return;
+      }
+      paramProxy = new StringBuilder();
+      paramProxy.append(a.c());
+      paramProxy.append(" returned no addresses for ");
+      paramProxy.append((String)localObject);
+      throw new UnknownHostException(paramProxy.toString());
+    }
+    paramProxy = new StringBuilder();
+    paramProxy.append("No route to ");
+    paramProxy.append((String)localObject);
+    paramProxy.append(":");
+    paramProxy.append(i);
+    paramProxy.append("; port is out of range");
+    paramProxy = new SocketException(paramProxy.toString());
+    for (;;)
+    {
+      throw paramProxy;
+    }
+  }
+  
+  private boolean c()
+  {
+    return f < e.size();
+  }
+  
+  private Proxy d()
+  {
+    if (c())
+    {
+      localObject = e;
+      int i = f;
+      f = (i + 1);
+      localObject = (Proxy)((List)localObject).get(i);
+      a((Proxy)localObject);
+      return localObject;
+    }
+    Object localObject = new StringBuilder();
+    ((StringBuilder)localObject).append("No route to ");
+    ((StringBuilder)localObject).append(a.k().g());
+    ((StringBuilder)localObject).append("; exhausted proxy configurations: ");
+    ((StringBuilder)localObject).append(e);
+    throw new SocketException(((StringBuilder)localObject).toString());
+  }
+  
+  public void a(c0 paramC0, IOException paramIOException)
+  {
+    if ((paramC0.b().type() != Proxy.Type.DIRECT) && (a.h() != null)) {
+      a.h().connectFailed(a.k().n(), paramC0.b().address(), paramIOException);
+    }
+    b.b(paramC0);
+  }
+  
+  public boolean a()
+  {
+    return (c()) || (!h.isEmpty());
+  }
+  
+  public a b()
+  {
+    if (a())
+    {
+      localObject = new ArrayList();
+      while (c())
+      {
+        Proxy localProxy = d();
+        int i = 0;
+        int j = g.size();
+        while (i < j)
+        {
+          c0 localC0 = new c0(a, localProxy, (InetSocketAddress)g.get(i));
+          if (b.c(localC0)) {
+            h.add(localC0);
+          } else {
+            ((List)localObject).add(localC0);
+          }
+          i += 1;
+        }
+        if (!((List)localObject).isEmpty()) {
+          break;
+        }
+      }
+      if (((List)localObject).isEmpty())
+      {
+        ((List)localObject).addAll(h);
+        h.clear();
+      }
+      return new a((List)localObject);
+    }
+    Object localObject = new NoSuchElementException();
+    for (;;)
+    {
+      throw ((Throwable)localObject);
+    }
+  }
+  
+  public static final class a
+  {
+    private final List<c0> a;
+    private int b = 0;
+    
+    a(List<c0> paramList)
+    {
+      a = paramList;
+    }
+    
+    public List<c0> a()
+    {
+      return new ArrayList(a);
+    }
+    
+    public boolean b()
+    {
+      return b < a.size();
+    }
+    
+    public c0 c()
+    {
+      if (b())
+      {
+        List localList = a;
+        int i = b;
+        b = (i + 1);
+        return (c0)localList.get(i);
+      }
+      throw new NoSuchElementException();
+    }
+  }
+}

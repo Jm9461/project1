@@ -1,0 +1,1064 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.g;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import b.a.a.f;
+import b.a.a.f.d;
+import b.a.a.f.j;
+import b.a.a.f.m;
+import butterknife.ButterKnife;
+import com.lawyer_smartCalendar.a.j;
+import com.lawyer_smartCalendar.a.s;
+import com.lawyer_smartCalendar.utils.h;
+import com.lawyer_smartCalendar.utils.i;
+import com.mohamadamin.persianmaterialdatetimepicker.date.b.d;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class AddCaseActivity
+  extends android.support.v7.app.e
+  implements View.OnClickListener, View.OnFocusChangeListener, b.d
+{
+  private String A = "";
+  private String B = "";
+  private String C = "";
+  private String D = "";
+  private String E = "";
+  public String F = "";
+  private b.a.a.e G = b.a.a.e.e;
+  public com.rey.material.widget.Button btn_add_case;
+  public EditText input_archive_number;
+  public EditText input_attorney_letter_number;
+  public EditText input_case_date;
+  public EditText input_case_issue;
+  public EditText input_case_number;
+  public EditText input_case_process;
+  public EditText input_case_status;
+  public EditText input_case_title;
+  public EditText input_client_name;
+  public EditText input_client_title_type;
+  public EditText input_court_branch;
+  public EditText input_court_city;
+  public EditText input_court_type;
+  public EditText input_lawsuit_info;
+  private String r = "";
+  private String s = "add";
+  private android.support.design.widget.e t;
+  private com.mohamadamin.persianmaterialdatetimepicker.j.b u;
+  private com.mohamadamin.persianmaterialdatetimepicker.date.b v;
+  private i w;
+  private android.support.design.widget.e x;
+  public int y = -1;
+  private String z = "";
+  
+  public AddCaseActivity() {}
+  
+  public void a(com.mohamadamin.persianmaterialdatetimepicker.date.b paramB, int paramInt1, int paramInt2, int paramInt3)
+  {
+    paramB = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+    paramB.a(paramInt1, paramInt2, paramInt3);
+    input_case_date.setText(paramB.c());
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(paramB.getTimeInMillis());
+    localStringBuilder.append("");
+    E = localStringBuilder.toString();
+  }
+  
+  public void a(String paramString)
+  {
+    int i;
+    if (paramString.hashCode() == 3053931)
+    {
+      while (!paramString.equals("city")) {}
+      i = 0;
+    }
+    else
+    {
+      i = -1;
+    }
+    if (i != 0) {
+      return;
+    }
+    t.dismiss();
+  }
+  
+  protected void attachBaseContext(Context paramContext)
+  {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(paramContext));
+  }
+  
+  public void m()
+  {
+    x.dismiss();
+  }
+  
+  public void onClick(View paramView)
+  {
+    RecyclerView localRecyclerView;
+    Object localObject;
+    switch (paramView.getId())
+    {
+    default: 
+      return;
+    case 2131296511: 
+      input_court_type.setError(null);
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(G);
+      paramView.b(G);
+      paramView.c(G);
+      paramView.j(2131099707);
+      paramView.b(G);
+      paramView.e("???? ? ??? ??????");
+      paramView.a(2130903042);
+      paramView.a(-1, new e());
+      paramView.c();
+      return;
+    case 2131296510: 
+      paramView = getLayoutInflater().inflate(2131492930, null);
+      localRecyclerView = (RecyclerView)paramView.findViewById(2131296686);
+      localRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+      w.n();
+      localObject = w.g();
+      w.close();
+      localRecyclerView.setAdapter(new j(this, "AddCaseActivity", (String[][])localObject));
+      t = new android.support.design.widget.e(this);
+      t.setContentView(paramView);
+      t.show();
+      return;
+    case 2131296507: 
+      input_client_title_type.setError(null);
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(G);
+      paramView.b(G);
+      paramView.c(G);
+      paramView.j(2131099707);
+      paramView.b(G);
+      paramView.e("??? ????");
+      paramView.a(2130903048);
+      paramView.a(-1, new g());
+      paramView.c();
+      return;
+    case 2131296504: 
+      input_client_name.setError(null);
+      paramView = getLayoutInflater().inflate(2131492934, null);
+      localRecyclerView = (RecyclerView)paramView.findViewById(2131296682);
+      localRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+      w.n();
+      localObject = w.i();
+      w.close();
+      if (((List)localObject).size() > 0)
+      {
+        localRecyclerView.setAdapter(new s(this, "AddCaseActivity", (List)localObject));
+        x = new android.support.design.widget.e(this);
+        x.setContentView(paramView);
+        x.show();
+        return;
+      }
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.b(b.a.a.e.d);
+      paramView.a(G);
+      paramView.j(2131099707);
+      paramView.a("??? ????? ??? ???? ???.???? ????? ??? ?????? ?? ???? ??? ????.");
+      paramView.f(2131099728);
+      paramView.b(2131099708);
+      paramView.d("???? ??");
+      paramView.b("??? ????");
+      paramView.c(new a());
+      paramView.a(new j());
+      paramView.c();
+      return;
+    case 2131296499: 
+      input_case_title.setError(null);
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(G);
+      paramView.b(G);
+      paramView.c(G);
+      paramView.j(2131099708);
+      paramView.b(G);
+      paramView.e("??????");
+      paramView.a(2130903045);
+      paramView.a(-1, new f());
+      paramView.c();
+      return;
+    case 2131296498: 
+      input_case_issue.setError(null);
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(G);
+      paramView.b(G);
+      paramView.c(G);
+      paramView.j(2131099707);
+      paramView.b(G);
+      paramView.e("????? ??????");
+      paramView.a(2130903043);
+      paramView.a(-1, new h());
+      paramView.c();
+      return;
+    case 2131296497: 
+      input_case_process.setError(null);
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(G);
+      paramView.b(G);
+      paramView.c(G);
+      paramView.j(2131099708);
+      paramView.b(G);
+      paramView.e("???? ??????");
+      paramView.a(2130903044);
+      paramView.a(-1, new i());
+      paramView.c();
+      return;
+    case 2131296494: 
+      input_case_date.setError(null);
+      u = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+      v = com.mohamadamin.persianmaterialdatetimepicker.date.b.b(this, u.h(), u.d(), u.b());
+      v.show(getFragmentManager(), "DatePickerDialog");
+      return;
+    }
+    w.n();
+    int i = w.f().size();
+    w.close();
+    if ((i == 200) && (!b.i.a.a.a.a("app_version", "limited").equals("full")))
+    {
+      paramView = new f.d(this);
+      paramView.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+      paramView.d(b.a.a.e.d);
+      paramView.b(b.a.a.e.d);
+      paramView.a(G);
+      paramView.i(Color.parseColor(com.lawyer_smartCalendar.utils.c.d()));
+      paramView.e("");
+      paramView.f(2131099728);
+      paramView.d(Color.parseColor(com.lawyer_smartCalendar.utils.c.d()));
+      paramView.a("??????? ?????? ????? ????? ????????? ????");
+      paramView.d("???? ??");
+      paramView.c("??????? ?????? ????? ????? ????????? ????");
+      paramView.c(new d());
+      paramView.b(new c());
+      paramView.c();
+      return;
+    }
+    i = 0;
+    if (C.equals(""))
+    {
+      input_case_title.setError("????? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (E.equals(""))
+    {
+      input_case_date.setError("????? ????? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (y == -1)
+    {
+      input_client_name.setError("?? ???? ?????? ????.");
+      i = 1;
+    }
+    if (D.equals(""))
+    {
+      input_client_title_type.setError("??? ???? ?? ?????? ????.");
+      i = 1;
+    }
+    if (input_case_issue.getText().toString().equals(""))
+    {
+      input_case_issue.setError("????? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (A.equals(""))
+    {
+      input_case_status.setError("????? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (z.equals(""))
+    {
+      input_case_process.setError("???? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (B.equals(""))
+    {
+      input_court_type.setError("???? ? ??? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (input_archive_number.getText().toString().equals(""))
+    {
+      input_archive_number.setError("????? ??????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (F.equals(""))
+    {
+      input_court_city.setError("???????? ??????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (input_court_branch.getText().toString().equals(""))
+    {
+      input_court_branch.setError("???? ?????? ?? ?????? ????.");
+      i = 1;
+    }
+    if (i == 0)
+    {
+      paramView = new com.lawyer_smartCalendar.d.b();
+      paramView.a(y);
+      paramView.l(C);
+      paramView.h(E);
+      paramView.f(D);
+      paramView.k(input_case_issue.getText().toString());
+      paramView.g(B);
+      paramView.b(Integer.parseInt(F));
+      paramView.c(input_court_branch.getText().toString());
+      paramView.d(input_case_number.getText().toString());
+      paramView.a(input_archive_number.getText().toString());
+      paramView.b(input_attorney_letter_number.getText().toString());
+      paramView.i(input_lawsuit_info.getText().toString());
+      paramView.j(z);
+      paramView.e(A);
+      w.n();
+      if (s.equals("edit"))
+      {
+        w.a(paramView, r);
+        new h().a(this, "success", getResources().getString(2131755199));
+      }
+      else
+      {
+        w.a(paramView);
+        new h().a(this, "success", getResources().getString(2131755200));
+      }
+      w.close();
+      try
+      {
+        com.lawyer_smartCalendar.utils.e.c.d0();
+        com.lawyer_smartCalendar.utils.e.d.d0();
+      }
+      catch (Exception paramView) {}
+      setResult(-1);
+      finish();
+    }
+  }
+  
+  protected void onCreate(Bundle paramBundle)
+  {
+    setTheme(com.lawyer_smartCalendar.utils.c.b());
+    super.onCreate(paramBundle);
+    overridePendingTransition(17432576, 17432577);
+    setContentView(2131492896);
+    ButterKnife.a(this);
+    if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == 0) {
+      G = b.a.a.e.e;
+    } else {
+      G = b.a.a.e.c;
+    }
+    if (!b.i.a.a.a.a("app_version", "limited").equals("full")) {
+      new h().a(this, "info", "??????? ?????? ????? ????? ????????? ????");
+    }
+    w = new i(this);
+    paramBundle = (Toolbar)findViewById(2131296838);
+    paramBundle.setPadding(0, 0, 0, 0);
+    paramBundle.a(0, 0);
+    a(paramBundle);
+    paramBundle.setNavigationIcon(2131230872);
+    paramBundle.setNavigationOnClickListener(new b());
+    btn_add_case.setOnClickListener(this);
+    btn_add_case.setVisibility(8);
+    input_client_name.setOnClickListener(this);
+    input_client_name.setOnFocusChangeListener(this);
+    input_case_issue.setOnClickListener(this);
+    input_case_issue.setOnFocusChangeListener(this);
+    input_case_status.setOnClickListener(this);
+    input_case_status.setOnFocusChangeListener(this);
+    input_court_type.setOnClickListener(this);
+    input_court_type.setOnFocusChangeListener(this);
+    input_case_title.setOnClickListener(this);
+    input_case_title.setOnFocusChangeListener(this);
+    input_case_date.setOnClickListener(this);
+    input_case_date.setOnFocusChangeListener(this);
+    input_client_title_type.setOnClickListener(this);
+    input_client_title_type.setOnFocusChangeListener(this);
+    input_court_city.setOnClickListener(this);
+    input_court_city.setOnFocusChangeListener(this);
+    input_case_process.setOnClickListener(this);
+    input_case_process.setOnFocusChangeListener(this);
+    s = getIntent().getStringExtra("frmMode");
+    Object localObject1;
+    int i;
+    if (s.equals("edit"))
+    {
+      r = getIntent().getStringExtra("id");
+      w.n();
+      localObject1 = w.k(r);
+      paramBundle = w;
+      Object localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append(((com.lawyer_smartCalendar.d.b)localObject1).g());
+      ((StringBuilder)localObject2).append("");
+      Object localObject3 = paramBundle.o(((StringBuilder)localObject2).toString());
+      paramBundle = w;
+      localObject2 = new StringBuilder();
+      ((StringBuilder)localObject2).append(((com.lawyer_smartCalendar.d.b)localObject1).h());
+      ((StringBuilder)localObject2).append("");
+      localObject2 = paramBundle.l(((StringBuilder)localObject2).toString());
+      paramBundle = new StringBuilder();
+      paramBundle.append(((com.lawyer_smartCalendar.d.b)localObject1).h());
+      paramBundle.append("");
+      F = paramBundle.toString();
+      w.close();
+      j().a("?????? ??????");
+      paramBundle = "";
+      String str = ((com.lawyer_smartCalendar.d.b)localObject1).o();
+      switch (str.hashCode())
+      {
+      }
+      for (;;)
+      {
+        break;
+        if (str.equals("Executive"))
+        {
+          i = 1;
+          break label637;
+          if (str.equals("Bank"))
+          {
+            i = 3;
+            break label637;
+            if (str.equals("Challenge"))
+            {
+              i = 2;
+              break label637;
+              if (str.equals("Normal"))
+              {
+                i = 0;
+                break label637;
+              }
+            }
+          }
+        }
+      }
+      i = -1;
+      label637:
+      if (i != 0)
+      {
+        if (i != 1)
+        {
+          if (i != 2)
+          {
+            if (i == 3) {
+              paramBundle = "?????";
+            }
+          }
+          else {
+            paramBundle = "???????/??????";
+          }
+        }
+        else {
+          paramBundle = "??????";
+        }
+      }
+      else {
+        paramBundle = "????";
+      }
+      C = ((com.lawyer_smartCalendar.d.b)localObject1).o();
+      input_case_title.setText(paramBundle);
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).j().equals(""))
+      {
+        E = ((com.lawyer_smartCalendar.d.b)localObject1).j();
+        paramBundle = new com.mohamadamin.persianmaterialdatetimepicker.j.b();
+        paramBundle.setTimeInMillis(Long.parseLong(((com.lawyer_smartCalendar.d.b)localObject1).j()));
+        input_case_date.setText(paramBundle.c());
+        input_case_date.setTextColor(Color.parseColor("#E65100"));
+      }
+      y = ((com.lawyer_smartCalendar.d.c)localObject3).d();
+      input_client_name.setText(((com.lawyer_smartCalendar.d.c)localObject3).f());
+      D = ((com.lawyer_smartCalendar.d.b)localObject1).f();
+      paramBundle = "";
+      localObject3 = ((com.lawyer_smartCalendar.d.b)localObject1).f();
+      switch (((String)localObject3).hashCode())
+      {
+      }
+      for (;;)
+      {
+        break;
+        if (((String)localObject3).equals("Accused"))
+        {
+          i = 3;
+          break label965;
+          if (((String)localObject3).equals("Reconsidered"))
+          {
+            i = 5;
+            break label965;
+            if (((String)localObject3).equals("Read"))
+            {
+              i = 1;
+              break label965;
+              if (((String)localObject3).equals("Applicant"))
+              {
+                i = 0;
+                break label965;
+                if (((String)localObject3).equals("Plaintiff"))
+                {
+                  i = 2;
+                  break label965;
+                  if (((String)localObject3).equals("Revisionist"))
+                  {
+                    i = 4;
+                    break label965;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      i = -1;
+      label965:
+      if (i != 0)
+      {
+        if (i != 1)
+        {
+          if (i != 2)
+          {
+            if (i != 3)
+            {
+              if (i != 4)
+              {
+                if (i == 5) {
+                  paramBundle = "????? ??????";
+                }
+              }
+              else {
+                paramBundle = "???????? ????";
+              }
+            }
+            else {
+              paramBundle = "????";
+            }
+          }
+          else {
+            paramBundle = "????";
+          }
+        }
+        else {
+          paramBundle = "??????";
+        }
+      }
+      else {
+        paramBundle = "??????";
+      }
+      input_client_title_type.setText(paramBundle);
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).n().equals("")) {
+        input_case_issue.setText(((com.lawyer_smartCalendar.d.b)localObject1).n());
+      }
+      A = ((com.lawyer_smartCalendar.d.b)localObject1).e();
+      paramBundle = "";
+      localObject3 = ((com.lawyer_smartCalendar.d.b)localObject1).e();
+      i = ((String)localObject3).hashCode();
+      if (i != -1851041679) {
+        if (i != 73298585)
+        {
+          break label1111;
+          break label1111;
+          if (i != 2010341507) {
+            break label1162;
+          }
+        }
+      }
+      label1111:
+      while (!((String)localObject3).equals("Record"))
+      {
+        do
+        {
+          while (!((String)localObject3).equals("Criminal")) {}
+          i = 1;
+          break;
+        } while (!((String)localObject3).equals("Legal"));
+        i = 0;
+        break;
+      }
+      i = 2;
+      break label1164;
+      label1162:
+      i = -1;
+      label1164:
+      if (i != 0)
+      {
+        if (i != 1)
+        {
+          if (i == 2) {
+            paramBundle = "????";
+          }
+        }
+        else {
+          paramBundle = "?????";
+        }
+      }
+      else {
+        paramBundle = "?????";
+      }
+      input_case_status.setText(paramBundle);
+      z = ((com.lawyer_smartCalendar.d.b)localObject1).m();
+      paramBundle = ((com.lawyer_smartCalendar.d.b)localObject1).m();
+      i = paramBundle.hashCode();
+      if (i != -1808122976)
+      {
+        break label1239;
+        if (i != -609016686) {
+          break label1272;
+        }
+      }
+      label1239:
+      while (!paramBundle.equals("Stream"))
+      {
+        while (!paramBundle.equals("Finished")) {}
+        i = 1;
+        break;
+      }
+      i = 0;
+      break label1274;
+      label1272:
+      i = -1;
+      label1274:
+      if (i != 0)
+      {
+        if (i == 1)
+        {
+          input_case_process.setTextColor(Color.parseColor("#757575"));
+          input_case_process.setText("??????");
+        }
+      }
+      else
+      {
+        input_case_process.setTextColor(Color.parseColor("#E65100"));
+        input_case_process.setText("??????");
+      }
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).d().equals("")) {
+        input_case_number.setText(((com.lawyer_smartCalendar.d.b)localObject1).d());
+      }
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).a().equals("")) {
+        input_archive_number.setText(((com.lawyer_smartCalendar.d.b)localObject1).a());
+      }
+      input_court_city.setText((CharSequence)localObject2);
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).c().equals("")) {
+        input_court_branch.setText(((com.lawyer_smartCalendar.d.b)localObject1).c());
+      }
+      B = ((com.lawyer_smartCalendar.d.b)localObject1).i();
+      paramBundle = ((com.lawyer_smartCalendar.d.b)localObject1).i();
+      switch (paramBundle.hashCode())
+      {
+      }
+      for (;;)
+      {
+        break;
+        if (paramBundle.equals("8"))
+        {
+          i = 7;
+          break label1603;
+          if (paramBundle.equals("7"))
+          {
+            i = 6;
+            break label1603;
+            if (paramBundle.equals("6"))
+            {
+              i = 5;
+              break label1603;
+              if (paramBundle.equals("5"))
+              {
+                i = 4;
+                break label1603;
+                if (paramBundle.equals("4"))
+                {
+                  i = 3;
+                  break label1603;
+                  if (paramBundle.equals("3"))
+                  {
+                    i = 2;
+                    break label1603;
+                    if (paramBundle.equals("2"))
+                    {
+                      i = 1;
+                      break label1603;
+                      if (paramBundle.equals("1"))
+                      {
+                        i = 0;
+                        break label1603;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      i = -1;
+      switch (i)
+      {
+      default: 
+        break;
+      case 7: 
+        input_court_type.setText("????? ????? ?????");
+        break;
+      case 6: 
+        input_court_type.setText("????? ???? ????");
+        break;
+      case 5: 
+        input_court_type.setText("????? ?????");
+        break;
+      case 4: 
+        input_court_type.setText("??????");
+        break;
+      case 3: 
+        input_court_type.setText("?? ??????");
+        break;
+      case 2: 
+        input_court_type.setText("??????");
+        break;
+      case 1: 
+        input_court_type.setText("????? ???");
+        break;
+      case 0: 
+        label1603:
+        input_court_type.setText("????");
+      }
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).l().equals("")) {
+        input_lawsuit_info.setText(((com.lawyer_smartCalendar.d.b)localObject1).l());
+      }
+      if (!((com.lawyer_smartCalendar.d.b)localObject1).b().equals("")) {
+        input_attorney_letter_number.setText(((com.lawyer_smartCalendar.d.b)localObject1).b());
+      }
+    }
+    label1905:
+    do
+    {
+      try
+      {
+        paramBundle = getIntent().getStringExtra("frmStarter");
+        localObject1 = getIntent().getStringExtra("id");
+        if ((paramBundle.hashCode() != -1357712437) || (!paramBundle.equals("client"))) {
+          break label1905;
+        }
+        i = 0;
+      }
+      catch (Exception paramBundle)
+      {
+        return;
+      }
+      w.n();
+      paramBundle = w.o((String)localObject1);
+      w.close();
+      input_client_name.setText(paramBundle.f());
+      input_client_name.setEnabled(false);
+      y = paramBundle.d();
+      return;
+      i = -1;
+    } while (i == 0);
+  }
+  
+  public boolean onCreateOptionsMenu(Menu paramMenu)
+  {
+    getMenuInflater().inflate(2131558409, paramMenu);
+    return super.onCreateOptionsMenu(paramMenu);
+  }
+  
+  public void onFocusChange(View paramView, boolean paramBoolean)
+  {
+    switch (paramView.getId())
+    {
+    default: 
+      
+    case 2131296511: 
+      if (paramBoolean)
+      {
+        input_court_type.callOnClick();
+        return;
+      }
+      break;
+    case 2131296510: 
+      if (paramBoolean)
+      {
+        input_court_city.callOnClick();
+        return;
+      }
+      break;
+    case 2131296507: 
+      if (paramBoolean)
+      {
+        input_client_title_type.callOnClick();
+        return;
+      }
+      break;
+    case 2131296504: 
+      if (paramBoolean)
+      {
+        input_client_name.callOnClick();
+        return;
+      }
+      break;
+    case 2131296499: 
+      if (paramBoolean)
+      {
+        input_case_title.callOnClick();
+        return;
+      }
+      break;
+    case 2131296498: 
+      if (paramBoolean)
+      {
+        input_case_status.callOnClick();
+        return;
+      }
+      break;
+    case 2131296497: 
+      if (paramBoolean)
+      {
+        input_case_process.callOnClick();
+        return;
+      }
+      break;
+    case 2131296495: 
+      if (paramBoolean)
+      {
+        input_case_issue.callOnClick();
+        return;
+      }
+      break;
+    case 2131296494: 
+      if (paramBoolean) {
+        input_case_date.callOnClick();
+      }
+      break;
+    }
+  }
+  
+  public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+  {
+    if (paramMenuItem.getItemId() == 2131296278) {
+      btn_add_case.callOnClick();
+    }
+    return super.onOptionsItemSelected(paramMenuItem);
+  }
+  
+  protected void onPause()
+  {
+    super.onPause();
+    if (isFinishing()) {
+      overridePendingTransition(17432576, 17432577);
+    }
+  }
+  
+  class a
+    implements f.m
+  {
+    a() {}
+    
+    public void a(f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+    }
+  }
+  
+  class b
+    implements View.OnClickListener
+  {
+    b() {}
+    
+    public void onClick(View paramView)
+    {
+      finish();
+    }
+  }
+  
+  class c
+    implements f.m
+  {
+    c() {}
+    
+    public void a(f paramF, b.a.a.b paramB)
+    {
+      paramF = AddCaseActivity.this;
+      paramF.startActivity(new Intent(paramF, PayActivity.class));
+    }
+  }
+  
+  class d
+    implements f.m
+  {
+    d() {}
+    
+    public void a(f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+    }
+  }
+  
+  class e
+    implements f.j
+  {
+    e() {}
+    
+    public boolean a(f paramF, View paramView, int paramInt, CharSequence paramCharSequence)
+    {
+      input_court_type.setText(paramCharSequence);
+      paramF = AddCaseActivity.this;
+      paramView = new StringBuilder();
+      paramView.append(paramInt + 1);
+      paramView.append("");
+      AddCaseActivity.a(paramF, paramView.toString());
+      return true;
+    }
+  }
+  
+  class f
+    implements f.j
+  {
+    f() {}
+    
+    public boolean a(f paramF, View paramView, int paramInt, CharSequence paramCharSequence)
+    {
+      input_case_title.setText(paramCharSequence);
+      if (paramInt != 0)
+      {
+        if (paramInt != 1)
+        {
+          if (paramInt != 2)
+          {
+            if (paramInt != 3) {
+              return true;
+            }
+            AddCaseActivity.b(AddCaseActivity.this, "Bank");
+            return true;
+          }
+          AddCaseActivity.b(AddCaseActivity.this, "Challenge");
+          return true;
+        }
+        AddCaseActivity.b(AddCaseActivity.this, "Executive");
+        return true;
+      }
+      AddCaseActivity.b(AddCaseActivity.this, "Normal");
+      return true;
+    }
+  }
+  
+  class g
+    implements f.j
+  {
+    g() {}
+    
+    public boolean a(f paramF, View paramView, int paramInt, CharSequence paramCharSequence)
+    {
+      input_client_title_type.setText(paramCharSequence);
+      if (paramInt != 0)
+      {
+        if (paramInt != 1)
+        {
+          if (paramInt != 2)
+          {
+            if (paramInt != 3)
+            {
+              if (paramInt != 4)
+              {
+                if (paramInt != 5) {
+                  return true;
+                }
+                AddCaseActivity.c(AddCaseActivity.this, "Reconsidered");
+                return true;
+              }
+              AddCaseActivity.c(AddCaseActivity.this, "Revisionist");
+              return true;
+            }
+            AddCaseActivity.c(AddCaseActivity.this, "Accused");
+            return true;
+          }
+          AddCaseActivity.c(AddCaseActivity.this, "Plaintiff");
+          return true;
+        }
+        AddCaseActivity.c(AddCaseActivity.this, "Read");
+        return true;
+      }
+      AddCaseActivity.c(AddCaseActivity.this, "Applicant");
+      return true;
+    }
+  }
+  
+  class h
+    implements f.j
+  {
+    h() {}
+    
+    public boolean a(f paramF, View paramView, int paramInt, CharSequence paramCharSequence)
+    {
+      input_case_status.setText(paramCharSequence);
+      if (paramInt != 0)
+      {
+        if (paramInt != 1)
+        {
+          if (paramInt != 2) {
+            return true;
+          }
+          AddCaseActivity.d(AddCaseActivity.this, "Record");
+          return true;
+        }
+        AddCaseActivity.d(AddCaseActivity.this, "Criminal");
+        return true;
+      }
+      AddCaseActivity.d(AddCaseActivity.this, "Legal");
+      return true;
+    }
+  }
+  
+  class i
+    implements f.j
+  {
+    i() {}
+    
+    public boolean a(f paramF, View paramView, int paramInt, CharSequence paramCharSequence)
+    {
+      input_case_process.setText(paramCharSequence);
+      if (paramInt != 0)
+      {
+        if (paramInt != 1) {
+          return true;
+        }
+        AddCaseActivity.e(AddCaseActivity.this, "Finished");
+        input_case_process.setTextColor(Color.parseColor("#757575"));
+        return true;
+      }
+      AddCaseActivity.e(AddCaseActivity.this, "Stream");
+      input_case_process.setTextColor(Color.parseColor("#E65100"));
+      return true;
+    }
+  }
+  
+  class j
+    implements f.m
+  {
+    j() {}
+    
+    public void a(f paramF, b.a.a.b paramB)
+    {
+      paramF.dismiss();
+      paramF = new Intent(AddCaseActivity.this, AddClientActivity.class);
+      paramF.putExtra("frmMode", "add");
+      startActivity(paramF);
+    }
+  }
+}

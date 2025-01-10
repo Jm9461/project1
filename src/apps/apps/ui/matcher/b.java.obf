@@ -1,0 +1,287 @@
+package b.f.a.g;
+
+import android.graphics.Path;
+import android.graphics.Path.FillType;
+import android.graphics.PointF;
+import java.text.ParseException;
+
+public class b
+{
+  private int a;
+  private PointF b = new PointF();
+  private int c;
+  private int d;
+  private String e;
+  
+  public b() {}
+  
+  private int a()
+  {
+    for (;;)
+    {
+      int i = d;
+      if (i >= c) {
+        break label107;
+      }
+      i = e.charAt(i);
+      if ((97 <= i) && (i <= 122))
+      {
+        a = 2;
+        return 2;
+      }
+      if ((65 <= i) && (i <= 90))
+      {
+        a = 1;
+        return 1;
+      }
+      if (((48 <= i) && (i <= 57)) || (i == 46) || (i == 45)) {
+        break;
+      }
+      d += 1;
+    }
+    a = 3;
+    return 3;
+    label107:
+    a = 4;
+    return 4;
+  }
+  
+  private void a(PointF paramPointF, boolean paramBoolean)
+  {
+    x = a(c());
+    y = b(c());
+    if (paramBoolean)
+    {
+      float f = x;
+      PointF localPointF = b;
+      x = (f + x);
+      y += y;
+    }
+  }
+  
+  private char b()
+  {
+    a();
+    int i = a;
+    if ((i != 2) && (i != 1)) {
+      throw new ParseException("Expected command", d);
+    }
+    String str = e;
+    i = d;
+    d = (i + 1);
+    return str.charAt(i);
+  }
+  
+  private float c()
+  {
+    a();
+    if (a == 3)
+    {
+      int j = 1;
+      int k = 0;
+      int i = d;
+      while (i < c)
+      {
+        int m = e.charAt(i);
+        if (((48 > m) || (m > 57)) && ((m != 46) || (k != 0)) && ((m != 45) || (j == 0))) {
+          break;
+        }
+        if (m == 46) {
+          k = 1;
+        }
+        j = 0;
+        i += 1;
+      }
+      j = d;
+      if (i != j)
+      {
+        localObject = e.substring(j, i);
+        try
+        {
+          float f = Float.parseFloat((String)localObject);
+          d = i;
+          return f;
+        }
+        catch (NumberFormatException localNumberFormatException)
+        {
+          StringBuilder localStringBuilder = new StringBuilder();
+          localStringBuilder.append("Invalid float value '");
+          localStringBuilder.append((String)localObject);
+          localStringBuilder.append("'.");
+          throw new ParseException(localStringBuilder.toString(), d);
+        }
+      }
+      throw new ParseException("Expected value", j);
+    }
+    Object localObject = new ParseException("Expected value", d);
+    for (;;)
+    {
+      throw ((Throwable)localObject);
+    }
+  }
+  
+  protected float a(float paramFloat)
+  {
+    throw null;
+  }
+  
+  public Path a(String paramString)
+  {
+    b.set(NaN.0F, NaN.0F);
+    e = paramString;
+    d = 0;
+    c = e.length();
+    paramString = new PointF();
+    PointF localPointF1 = new PointF();
+    PointF localPointF2 = new PointF();
+    Path localPath = new Path();
+    localPath.setFillType(Path.FillType.WINDING);
+    int i = 1;
+    while (d < c)
+    {
+      int j = b();
+      boolean bool1;
+      if (a == 2) {
+        bool1 = true;
+      } else {
+        bool1 = false;
+      }
+      if (j != 67)
+      {
+        label396:
+        float f2;
+        float f1;
+        if (j != 72)
+        {
+          if (j != 86)
+          {
+            if (j != 90)
+            {
+              if (j == 99) {
+                break label572;
+              }
+              if (j == 104) {
+                break label484;
+              }
+              if (j == 118) {
+                break label396;
+              }
+              if (j != 122)
+              {
+                if (j != 76) {
+                  if (j != 77)
+                  {
+                    if (j != 108) {
+                      if (j != 109) {
+                        break label661;
+                      }
+                    }
+                  }
+                  else
+                  {
+                    j = 1;
+                    while (a() == 3)
+                    {
+                      boolean bool2;
+                      if ((bool1) && (b.x != NaN.0F)) {
+                        bool2 = true;
+                      } else {
+                        bool2 = false;
+                      }
+                      a(paramString, bool2);
+                      if (j != 0)
+                      {
+                        localPath.moveTo(x, y);
+                        int k = 0;
+                        j = k;
+                        if (i != 0)
+                        {
+                          b.set(paramString);
+                          i = 0;
+                          j = k;
+                        }
+                      }
+                      else
+                      {
+                        localPath.lineTo(x, y);
+                      }
+                    }
+                    b.set(paramString);
+                    break label661;
+                  }
+                }
+                if (b.x != NaN.0F)
+                {
+                  while (a() == 3)
+                  {
+                    a(paramString, bool1);
+                    localPath.lineTo(x, y);
+                  }
+                  b.set(paramString);
+                  break label661;
+                }
+                throw new ParseException("Relative commands require current point", d);
+              }
+            }
+            localPath.close();
+            break label661;
+          }
+          if (b.x != NaN.0F)
+          {
+            while (a() == 3)
+            {
+              f2 = b(c());
+              f1 = f2;
+              if (bool1) {
+                f1 = f2 + b.y;
+              }
+              localPath.lineTo(b.x, f1);
+            }
+            b.set(paramString);
+            break label661;
+          }
+          throw new ParseException("Relative commands require current point", d);
+        }
+        label484:
+        if (b.x != NaN.0F)
+        {
+          while (a() == 3)
+          {
+            f2 = a(c());
+            f1 = f2;
+            if (bool1) {
+              f1 = f2 + b.x;
+            }
+            localPath.lineTo(f1, b.y);
+          }
+          b.set(paramString);
+          break label661;
+        }
+        throw new ParseException("Relative commands require current point", d);
+      }
+      label572:
+      if (b.x != NaN.0F)
+      {
+        while (a() == 3)
+        {
+          a(paramString, bool1);
+          a(localPointF1, bool1);
+          a(localPointF2, bool1);
+          localPath.cubicTo(x, y, x, y, x, y);
+        }
+        b.set(localPointF2);
+      }
+      else
+      {
+        label661:
+        throw new ParseException("Relative commands require current point", d);
+      }
+    }
+    return localPath;
+  }
+  
+  protected float b(float paramFloat)
+  {
+    throw null;
+  }
+}

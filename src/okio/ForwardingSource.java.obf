@@ -1,0 +1,47 @@
+package f;
+
+public abstract class h
+  implements s
+{
+  private final s c;
+  
+  public h(s paramS)
+  {
+    if (paramS != null)
+    {
+      c = paramS;
+      return;
+    }
+    throw new IllegalArgumentException("delegate == null");
+  }
+  
+  public long b(c paramC, long paramLong)
+  {
+    return c.b(paramC, paramLong);
+  }
+  
+  public t b()
+  {
+    return c.b();
+  }
+  
+  public void close()
+  {
+    c.close();
+  }
+  
+  public final s d()
+  {
+    return c;
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(getClass().getSimpleName());
+    localStringBuilder.append("(");
+    localStringBuilder.append(c.toString());
+    localStringBuilder.append(")");
+    return localStringBuilder.toString();
+  }
+}

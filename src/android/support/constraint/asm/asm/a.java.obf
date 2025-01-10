@@ -1,0 +1,324 @@
+package android.support.constraint.i.j;
+
+import android.support.constraint.i.i;
+import java.util.ArrayList;
+
+public class a
+  extends h
+{
+  private int g0 = 0;
+  private ArrayList<k> h0 = new ArrayList(4);
+  private boolean i0 = true;
+  
+  public a() {}
+  
+  public void D()
+  {
+    super.D();
+    h0.clear();
+  }
+  
+  public void E()
+  {
+    float f1 = 0.0F;
+    int i = g0;
+    k localK1;
+    if (i != 0)
+    {
+      if (i != 1)
+      {
+        if (i != 2)
+        {
+          if (i != 3) {
+            return;
+          }
+          localK1 = u.d();
+        }
+        else
+        {
+          localK1 = s.d();
+          f1 = Float.MAX_VALUE;
+        }
+      }
+      else {
+        localK1 = t.d();
+      }
+    }
+    else
+    {
+      localK1 = r.d();
+      f1 = Float.MAX_VALUE;
+    }
+    int j = h0.size();
+    k localK2 = null;
+    i = 0;
+    Object localObject;
+    for (float f2 = f1; i < j; f2 = f1)
+    {
+      localObject = (k)h0.get(i);
+      if (b != 1) {
+        return;
+      }
+      int k = g0;
+      if ((k != 0) && (k != 2))
+      {
+        f1 = f2;
+        if (g > f2)
+        {
+          f1 = g;
+          localK2 = f;
+        }
+      }
+      else
+      {
+        f1 = f2;
+        if (g < f2)
+        {
+          f1 = g;
+          localK2 = f;
+        }
+      }
+      i += 1;
+    }
+    if (android.support.constraint.i.e.h() != null)
+    {
+      localObject = android.support.constraint.i.e.h();
+      y += 1L;
+    }
+    f = localK2;
+    g = f2;
+    localK1.a();
+    i = g0;
+    if (i != 0)
+    {
+      if (i != 1)
+      {
+        if (i != 2)
+        {
+          if (i != 3) {
+            return;
+          }
+          s.d().a(localK2, f2);
+          return;
+        }
+        u.d().a(localK2, f2);
+        return;
+      }
+      r.d().a(localK2, f2);
+      return;
+    }
+    t.d().a(localK2, f2);
+  }
+  
+  public void a(int paramInt)
+  {
+    Object localObject = C;
+    if (localObject == null) {
+      return;
+    }
+    if (!((f)localObject).p(2)) {
+      return;
+    }
+    paramInt = g0;
+    k localK;
+    if (paramInt != 0)
+    {
+      if (paramInt != 1)
+      {
+        if (paramInt != 2)
+        {
+          if (paramInt != 3) {
+            return;
+          }
+          localK = u.d();
+        }
+        else
+        {
+          localK = s.d();
+        }
+      }
+      else {
+        localK = t.d();
+      }
+    }
+    else {
+      localK = r.d();
+    }
+    localK.b(5);
+    paramInt = g0;
+    if ((paramInt != 0) && (paramInt != 1))
+    {
+      r.d().a(null, 0.0F);
+      t.d().a(null, 0.0F);
+    }
+    else
+    {
+      s.d().a(null, 0.0F);
+      u.d().a(null, 0.0F);
+    }
+    h0.clear();
+    paramInt = 0;
+    while (paramInt < f0)
+    {
+      e localE = e0[paramInt];
+      if ((i0) || (localE.a()))
+      {
+        localObject = null;
+        int i = g0;
+        if (i != 0)
+        {
+          if (i != 1)
+          {
+            if (i != 2)
+            {
+              if (i == 3) {
+                localObject = u.d();
+              }
+            }
+            else {
+              localObject = s.d();
+            }
+          }
+          else {
+            localObject = t.d();
+          }
+        }
+        else {
+          localObject = r.d();
+        }
+        if (localObject != null)
+        {
+          h0.add(localObject);
+          ((m)localObject).a(localK);
+        }
+      }
+      paramInt += 1;
+    }
+  }
+  
+  public void a(android.support.constraint.i.e paramE)
+  {
+    Object localObject1 = z;
+    localObject1[0] = r;
+    localObject1[2] = s;
+    localObject1[1] = t;
+    localObject1[3] = u;
+    int i = 0;
+    for (;;)
+    {
+      localObject1 = z;
+      if (i >= localObject1.length) {
+        break;
+      }
+      i = paramE.a(localObject1[i]);
+      i += 1;
+    }
+    i = g0;
+    if ((i >= 0) && (i < 4))
+    {
+      localObject1 = localObject1[i];
+      boolean bool2 = false;
+      i = 0;
+      boolean bool1;
+      Object localObject2;
+      int j;
+      for (;;)
+      {
+        bool1 = bool2;
+        if (i >= f0) {
+          break;
+        }
+        localObject2 = e0[i];
+        if ((i0) || (((e)localObject2).a()))
+        {
+          j = g0;
+          if (((j == 0) || (j == 1)) && (((e)localObject2).k() == e.b.e))
+          {
+            bool1 = true;
+            break;
+          }
+          j = g0;
+          if (((j == 2) || (j == 3)) && (((e)localObject2).r() == e.b.e))
+          {
+            bool1 = true;
+            break;
+          }
+        }
+        i += 1;
+      }
+      i = g0;
+      if ((i != 0) && (i != 1))
+      {
+        if (l().r() == e.b.d) {
+          bool1 = false;
+        }
+      }
+      else if (l().k() == e.b.d) {
+        bool1 = false;
+      }
+      i = 0;
+      while (i < f0)
+      {
+        Object localObject3 = e0[i];
+        if ((i0) || (((e)localObject3).a()))
+        {
+          localObject2 = paramE.a(z[g0]);
+          localObject3 = z;
+          j = g0;
+          i = ((i)localObject2);
+          if ((j != 0) && (j != 2)) {
+            paramE.a(i, (i)localObject2, bool1);
+          } else {
+            paramE.b(i, (i)localObject2, bool1);
+          }
+        }
+        i += 1;
+      }
+      i = g0;
+      if (i == 0)
+      {
+        paramE.a(t.i, r.i, 0, 6);
+        if (!bool1) {
+          paramE.a(r.i, C.t.i, 0, 5);
+        }
+      }
+      else if (i == 1)
+      {
+        paramE.a(r.i, t.i, 0, 6);
+        if (!bool1) {
+          paramE.a(r.i, C.r.i, 0, 5);
+        }
+      }
+      else if (i == 2)
+      {
+        paramE.a(u.i, s.i, 0, 6);
+        if (!bool1) {
+          paramE.a(s.i, C.u.i, 0, 5);
+        }
+      }
+      else if (i == 3)
+      {
+        paramE.a(s.i, u.i, 0, 6);
+        if (!bool1) {
+          paramE.a(s.i, C.s.i, 0, 5);
+        }
+      }
+      return;
+    }
+  }
+  
+  public boolean a()
+  {
+    return true;
+  }
+  
+  public void c(boolean paramBoolean)
+  {
+    i0 = paramBoolean;
+  }
+  
+  public void p(int paramInt)
+  {
+    g0 = paramInt;
+  }
+}

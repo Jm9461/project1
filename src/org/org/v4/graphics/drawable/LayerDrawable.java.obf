@@ -1,0 +1,174 @@
+package a.b.h.d.a;
+
+import android.content.res.Resources;
+import android.content.res.Resources.Theme;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.util.StateSet;
+
+class e
+  extends b
+{
+  private a o;
+  private boolean p;
+  
+  e(a paramA)
+  {
+    if (paramA != null) {
+      a(paramA);
+    }
+  }
+  
+  e(a paramA, Resources paramResources)
+  {
+    a(new a(paramA, this, paramResources));
+    onStateChange(getState());
+  }
+  
+  a a()
+  {
+    return new a(o, this, null);
+  }
+  
+  protected void a(b.c paramC)
+  {
+    super.a(paramC);
+    if ((paramC instanceof a)) {
+      o = ((a)paramC);
+    }
+  }
+  
+  int[] a(AttributeSet paramAttributeSet)
+  {
+    int j = 0;
+    int m = paramAttributeSet.getAttributeCount();
+    int[] arrayOfInt = new int[m];
+    int i = 0;
+    while (i < m)
+    {
+      int k = paramAttributeSet.getAttributeNameResource(i);
+      if (k != 0) {
+        if ((k != 16842960) && (k != 16843161))
+        {
+          if (!paramAttributeSet.getAttributeBooleanValue(i, false)) {
+            k = -k;
+          }
+          arrayOfInt[j] = k;
+          j += 1;
+        }
+        else {}
+      }
+      i += 1;
+    }
+    return StateSet.trimStateSet(arrayOfInt, j);
+  }
+  
+  public void applyTheme(Resources.Theme paramTheme)
+  {
+    super.applyTheme(paramTheme);
+    onStateChange(getState());
+  }
+  
+  public boolean isStateful()
+  {
+    return true;
+  }
+  
+  public Drawable mutate()
+  {
+    if (!p)
+    {
+      super.mutate();
+      o.m();
+      p = true;
+    }
+    return this;
+  }
+  
+  protected boolean onStateChange(int[] paramArrayOfInt)
+  {
+    boolean bool = super.onStateChange(paramArrayOfInt);
+    int j = o.a(paramArrayOfInt);
+    int i = j;
+    if (j < 0) {
+      i = o.a(StateSet.WILD_CARD);
+    }
+    return (a(i)) || (bool);
+  }
+  
+  static class a
+    extends b.c
+  {
+    int[][] J;
+    
+    a(a paramA, e paramE, Resources paramResources)
+    {
+      super(paramE, paramResources);
+      if (paramA != null)
+      {
+        J = J;
+        return;
+      }
+      J = new int[c()][];
+    }
+    
+    int a(int[] paramArrayOfInt)
+    {
+      int[][] arrayOfInt = J;
+      int j = d();
+      int i = 0;
+      while (i < j)
+      {
+        if (StateSet.stateSetMatches(arrayOfInt[i], paramArrayOfInt)) {
+          return i;
+        }
+        i += 1;
+      }
+      return -1;
+    }
+    
+    int a(int[] paramArrayOfInt, Drawable paramDrawable)
+    {
+      int i = a(paramDrawable);
+      J[i] = paramArrayOfInt;
+      return i;
+    }
+    
+    public void a(int paramInt1, int paramInt2)
+    {
+      super.a(paramInt1, paramInt2);
+      int[][] arrayOfInt = new int[paramInt2][];
+      System.arraycopy(J, 0, arrayOfInt, 0, paramInt1);
+      J = arrayOfInt;
+    }
+    
+    void m()
+    {
+      Object localObject = J;
+      int[][] arrayOfInt = new int[localObject.length][];
+      int i = localObject.length - 1;
+      while (i >= 0)
+      {
+        localObject = J;
+        if (localObject[i] != null) {
+          localObject = (int[])localObject[i].clone();
+        } else {
+          localObject = null;
+        }
+        arrayOfInt[i] = localObject;
+        i -= 1;
+      }
+      J = arrayOfInt;
+    }
+    
+    public Drawable newDrawable()
+    {
+      return new e(this, null);
+    }
+    
+    public Drawable newDrawable(Resources paramResources)
+    {
+      return new e(this, paramResources);
+    }
+  }
+}

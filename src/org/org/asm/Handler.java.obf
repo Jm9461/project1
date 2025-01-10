@@ -1,0 +1,165 @@
+package a.b.f;
+
+import a.b.g.g.a;
+import android.support.v4.view.u;
+import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnPreDrawListener;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class o
+{
+  private static m a = new b();
+  private static ThreadLocal<WeakReference<a<ViewGroup, ArrayList<m>>>> b = new ThreadLocal();
+  static ArrayList<ViewGroup> c = new ArrayList();
+  
+  static a<ViewGroup, ArrayList<m>> a()
+  {
+    Object localObject = (WeakReference)b.get();
+    if (localObject != null)
+    {
+      localObject = (a)((WeakReference)localObject).get();
+      if (localObject != null) {
+        return localObject;
+      }
+    }
+    localObject = new a();
+    WeakReference localWeakReference = new WeakReference(localObject);
+    b.set(localWeakReference);
+    return localObject;
+  }
+  
+  public static void a(ViewGroup paramViewGroup, m paramM)
+  {
+    if ((!c.contains(paramViewGroup)) && (u.y(paramViewGroup)))
+    {
+      c.add(paramViewGroup);
+      m localM = paramM;
+      if (paramM == null) {
+        localM = a;
+      }
+      paramM = localM.clone();
+      c(paramViewGroup, paramM);
+      l.a(paramViewGroup, null);
+      b(paramViewGroup, paramM);
+    }
+  }
+  
+  private static void b(ViewGroup paramViewGroup, m paramM)
+  {
+    if ((paramM != null) && (paramViewGroup != null))
+    {
+      paramM = new a(paramM, paramViewGroup);
+      paramViewGroup.addOnAttachStateChangeListener(paramM);
+      paramViewGroup.getViewTreeObserver().addOnPreDrawListener(paramM);
+    }
+  }
+  
+  private static void c(ViewGroup paramViewGroup, m paramM)
+  {
+    Object localObject = (ArrayList)a().get(paramViewGroup);
+    if ((localObject != null) && (((ArrayList)localObject).size() > 0))
+    {
+      localObject = ((ArrayList)localObject).iterator();
+      while (((Iterator)localObject).hasNext()) {
+        ((m)((Iterator)localObject).next()).c(paramViewGroup);
+      }
+    }
+    if (paramM != null) {
+      paramM.a(paramViewGroup, true);
+    }
+    paramViewGroup = l.a(paramViewGroup);
+    if (paramViewGroup != null) {
+      paramViewGroup.a();
+    }
+  }
+  
+  private static class a
+    implements ViewTreeObserver.OnPreDrawListener, View.OnAttachStateChangeListener
+  {
+    m c;
+    ViewGroup d;
+    
+    a(m paramM, ViewGroup paramViewGroup)
+    {
+      c = paramM;
+      d = paramViewGroup;
+    }
+    
+    private void a()
+    {
+      d.getViewTreeObserver().removeOnPreDrawListener(this);
+      d.removeOnAttachStateChangeListener(this);
+    }
+    
+    public boolean onPreDraw()
+    {
+      a();
+      if (!o.c.remove(d)) {
+        return true;
+      }
+      final a localA = o.a();
+      ArrayList localArrayList2 = (ArrayList)localA.get(d);
+      ArrayList localArrayList1 = null;
+      Object localObject;
+      if (localArrayList2 == null)
+      {
+        localObject = new ArrayList();
+        localA.put(d, localObject);
+      }
+      else
+      {
+        localObject = localArrayList2;
+        if (localArrayList2.size() > 0)
+        {
+          localArrayList1 = new ArrayList(localArrayList2);
+          localObject = localArrayList2;
+        }
+      }
+      ((ArrayList)localObject).add(c);
+      c.a(new a(localA));
+      c.a(d, false);
+      if (localArrayList1 != null)
+      {
+        localObject = localArrayList1.iterator();
+        while (((Iterator)localObject).hasNext()) {
+          ((m)((Iterator)localObject).next()).e(d);
+        }
+      }
+      c.a(d);
+      return true;
+    }
+    
+    public void onViewAttachedToWindow(View paramView) {}
+    
+    public void onViewDetachedFromWindow(View paramView)
+    {
+      a();
+      o.c.remove(d);
+      paramView = (ArrayList)o.a().get(d);
+      if ((paramView != null) && (paramView.size() > 0))
+      {
+        paramView = paramView.iterator();
+        while (paramView.hasNext()) {
+          ((m)paramView.next()).e(d);
+        }
+      }
+      c.a(true);
+    }
+    
+    class a
+      extends n
+    {
+      a(a paramA) {}
+      
+      public void b(m paramM)
+      {
+        ((ArrayList)localA.get(d)).remove(paramM);
+      }
+    }
+  }
+}

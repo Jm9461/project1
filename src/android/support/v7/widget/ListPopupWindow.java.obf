@@ -1,0 +1,756 @@
+package android.support.v7.widget;
+
+import a.b.h.a.j;
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.database.DataSetObserver;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.support.v4.view.u;
+import android.support.v4.widget.n;
+import android.support.v7.view.menu.t;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
+import java.lang.reflect.Method;
+
+public class p0
+  implements t
+{
+  private static Method H;
+  private static Method I;
+  private static Method J;
+  private final e A = new e();
+  private final c B = new c();
+  final Handler C;
+  private final Rect D = new Rect();
+  private Rect E;
+  private boolean F;
+  PopupWindow G;
+  private Context c;
+  private ListAdapter d;
+  i0 e;
+  private int f = -2;
+  private int g = -2;
+  private int h;
+  private int i;
+  private int j = 1002;
+  private boolean k;
+  private boolean l;
+  private boolean m;
+  private int n = 0;
+  private boolean o = false;
+  private boolean p = false;
+  int q = Integer.MAX_VALUE;
+  private View r;
+  private int s = 0;
+  private DataSetObserver t;
+  private View u;
+  private Drawable v;
+  private AdapterView.OnItemClickListener w;
+  private AdapterView.OnItemSelectedListener x;
+  final g y = new g();
+  private final f z = new f();
+  
+  static
+  {
+    try
+    {
+      H = PopupWindow.class.getDeclaredMethod("setClipToScreenEnabled", new Class[] { Boolean.TYPE });
+    }
+    catch (NoSuchMethodException localNoSuchMethodException1)
+    {
+      Log.i("ListPopupWindow", "Could not find method setClipToScreenEnabled() on PopupWindow. Oh well.");
+    }
+    try
+    {
+      Class localClass1 = Integer.TYPE;
+      Class localClass2 = Boolean.TYPE;
+      I = PopupWindow.class.getDeclaredMethod("getMaxAvailableHeight", new Class[] { View.class, localClass1, localClass2 });
+    }
+    catch (NoSuchMethodException localNoSuchMethodException2)
+    {
+      Log.i("ListPopupWindow", "Could not find method getMaxAvailableHeight(View, int, boolean) on PopupWindow. Oh well.");
+    }
+    try
+    {
+      J = PopupWindow.class.getDeclaredMethod("setEpicenterBounds", new Class[] { Rect.class });
+      return;
+    }
+    catch (NoSuchMethodException localNoSuchMethodException3)
+    {
+      Log.i("ListPopupWindow", "Could not find method setEpicenterBounds(Rect) on PopupWindow. Oh well.");
+    }
+  }
+  
+  public p0(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    this(paramContext, paramAttributeSet, paramInt, 0);
+  }
+  
+  public p0(Context paramContext, AttributeSet paramAttributeSet, int paramInt1, int paramInt2)
+  {
+    c = paramContext;
+    C = new Handler(paramContext.getMainLooper());
+    TypedArray localTypedArray = paramContext.obtainStyledAttributes(paramAttributeSet, j.ListPopupWindow, paramInt1, paramInt2);
+    h = localTypedArray.getDimensionPixelOffset(j.ListPopupWindow_android_dropDownHorizontalOffset, 0);
+    i = localTypedArray.getDimensionPixelOffset(j.ListPopupWindow_android_dropDownVerticalOffset, 0);
+    if (i != 0) {
+      k = true;
+    }
+    localTypedArray.recycle();
+    G = new q(paramContext, paramAttributeSet, paramInt1, paramInt2);
+    G.setInputMethodMode(1);
+  }
+  
+  private int a(View paramView, int paramInt, boolean paramBoolean)
+  {
+    Method localMethod = I;
+    if (localMethod != null) {
+      try
+      {
+        int i1 = ((Integer)localMethod.invoke(G, new Object[] { paramView, Integer.valueOf(paramInt), Boolean.valueOf(paramBoolean) })).intValue();
+        return i1;
+      }
+      catch (Exception localException)
+      {
+        Log.i("ListPopupWindow", "Could not call getMaxAvailableHeightMethod(View, int, boolean) on PopupWindow. Using the public version.");
+      }
+    }
+    return G.getMaxAvailableHeight(paramView, paramInt);
+  }
+  
+  private void c(boolean paramBoolean)
+  {
+    Method localMethod = H;
+    if (localMethod != null) {
+      try
+      {
+        localMethod.invoke(G, new Object[] { Boolean.valueOf(paramBoolean) });
+        return;
+      }
+      catch (Exception localException)
+      {
+        Log.i("ListPopupWindow", "Could not call setClipToScreenEnabled() on PopupWindow. Oh well.");
+      }
+    }
+  }
+  
+  private int l()
+  {
+    int i2 = 0;
+    int i1 = 0;
+    Object localObject1 = e;
+    boolean bool = false;
+    Object localObject2;
+    int i3;
+    if (localObject1 == null)
+    {
+      Object localObject3 = c;
+      new a();
+      e = a((Context)localObject3, F ^ true);
+      localObject1 = v;
+      if (localObject1 != null) {
+        e.setSelector((Drawable)localObject1);
+      }
+      e.setAdapter(d);
+      e.setOnItemClickListener(w);
+      e.setFocusable(true);
+      e.setFocusableInTouchMode(true);
+      e.setOnItemSelectedListener(new b());
+      e.setOnScrollListener(A);
+      localObject1 = x;
+      if (localObject1 != null) {
+        e.setOnItemSelectedListener((AdapterView.OnItemSelectedListener)localObject1);
+      }
+      localObject2 = e;
+      View localView = r;
+      localObject1 = localObject2;
+      if (localView != null)
+      {
+        localObject1 = new LinearLayout((Context)localObject3);
+        ((LinearLayout)localObject1).setOrientation(1);
+        localObject3 = new LinearLayout.LayoutParams(-1, 0, 1.0F);
+        i1 = s;
+        if (i1 != 0)
+        {
+          if (i1 != 1)
+          {
+            localObject2 = new StringBuilder();
+            ((StringBuilder)localObject2).append("Invalid hint position ");
+            ((StringBuilder)localObject2).append(s);
+            Log.e("ListPopupWindow", ((StringBuilder)localObject2).toString());
+          }
+          else
+          {
+            ((LinearLayout)localObject1).addView((View)localObject2, (ViewGroup.LayoutParams)localObject3);
+            ((LinearLayout)localObject1).addView(localView);
+          }
+        }
+        else
+        {
+          ((LinearLayout)localObject1).addView(localView);
+          ((LinearLayout)localObject1).addView((View)localObject2, (ViewGroup.LayoutParams)localObject3);
+        }
+        if (g >= 0)
+        {
+          i1 = Integer.MIN_VALUE;
+          i2 = g;
+        }
+        else
+        {
+          i1 = 0;
+          i2 = 0;
+        }
+        localView.measure(View.MeasureSpec.makeMeasureSpec(i2, i1), 0);
+        localObject2 = (LinearLayout.LayoutParams)localView.getLayoutParams();
+        i1 = localView.getMeasuredHeight();
+        i2 = topMargin;
+        i3 = bottomMargin;
+        i1 = i1 + i2 + i3;
+      }
+      G.setContentView((View)localObject1);
+    }
+    else
+    {
+      localObject1 = (ViewGroup)G.getContentView();
+      localObject1 = r;
+      i1 = i2;
+      if (localObject1 != null)
+      {
+        localObject2 = (LinearLayout.LayoutParams)((View)localObject1).getLayoutParams();
+        i1 = ((View)localObject1).getMeasuredHeight() + topMargin + bottomMargin;
+      }
+    }
+    localObject1 = G.getBackground();
+    if (localObject1 != null)
+    {
+      ((Drawable)localObject1).getPadding(D);
+      localObject1 = D;
+      i4 = top;
+      i2 = bottom + i4;
+      i3 = i2;
+      if (!k)
+      {
+        i = (-i4);
+        i3 = i2;
+      }
+    }
+    else
+    {
+      D.setEmpty();
+      i3 = 0;
+    }
+    if (G.getInputMethodMode() == 2) {
+      bool = true;
+    }
+    int i4 = a(b(), i, bool);
+    if ((!o) && (f != -1))
+    {
+      i2 = g;
+      if (i2 != -2)
+      {
+        if (i2 != -1)
+        {
+          i2 = View.MeasureSpec.makeMeasureSpec(i2, 1073741824);
+        }
+        else
+        {
+          i2 = c.getResources().getDisplayMetrics().widthPixels;
+          localObject1 = D;
+          i2 = View.MeasureSpec.makeMeasureSpec(i2 - (left + right), 1073741824);
+        }
+      }
+      else
+      {
+        i2 = c.getResources().getDisplayMetrics().widthPixels;
+        localObject1 = D;
+        i2 = View.MeasureSpec.makeMeasureSpec(i2 - (left + right), Integer.MIN_VALUE);
+      }
+      i4 = e.a(i2, 0, -1, i4 - i1, -1);
+      i2 = i1;
+      if (i4 > 0) {
+        i2 = i1 + (i3 + (e.getPaddingTop() + e.getPaddingBottom()));
+      }
+      return i4 + i2;
+    }
+    return i4 + i3;
+  }
+  
+  private void m()
+  {
+    Object localObject = r;
+    if (localObject != null)
+    {
+      localObject = ((View)localObject).getParent();
+      if ((localObject instanceof ViewGroup)) {
+        ((ViewGroup)localObject).removeView(r);
+      }
+    }
+  }
+  
+  i0 a(Context paramContext, boolean paramBoolean)
+  {
+    return new i0(paramContext, paramBoolean);
+  }
+  
+  public void a()
+  {
+    i0 localI0 = e;
+    if (localI0 != null)
+    {
+      localI0.setListSelectionHidden(true);
+      localI0.requestLayout();
+    }
+  }
+  
+  public void a(int paramInt)
+  {
+    G.setAnimationStyle(paramInt);
+  }
+  
+  public void a(Rect paramRect)
+  {
+    E = paramRect;
+  }
+  
+  public void a(Drawable paramDrawable)
+  {
+    G.setBackgroundDrawable(paramDrawable);
+  }
+  
+  public void a(View paramView)
+  {
+    u = paramView;
+  }
+  
+  public void a(AdapterView.OnItemClickListener paramOnItemClickListener)
+  {
+    w = paramOnItemClickListener;
+  }
+  
+  public void a(ListAdapter paramListAdapter)
+  {
+    DataSetObserver localDataSetObserver = t;
+    if (localDataSetObserver == null)
+    {
+      t = new d();
+    }
+    else
+    {
+      ListAdapter localListAdapter = d;
+      if (localListAdapter != null) {
+        localListAdapter.unregisterDataSetObserver(localDataSetObserver);
+      }
+    }
+    d = paramListAdapter;
+    if (paramListAdapter != null) {
+      paramListAdapter.registerDataSetObserver(t);
+    }
+    paramListAdapter = e;
+    if (paramListAdapter != null) {
+      paramListAdapter.setAdapter(d);
+    }
+  }
+  
+  public void a(PopupWindow.OnDismissListener paramOnDismissListener)
+  {
+    G.setOnDismissListener(paramOnDismissListener);
+  }
+  
+  public void a(boolean paramBoolean)
+  {
+    F = paramBoolean;
+    G.setFocusable(paramBoolean);
+  }
+  
+  public View b()
+  {
+    return u;
+  }
+  
+  public void b(int paramInt)
+  {
+    Object localObject = G.getBackground();
+    if (localObject != null)
+    {
+      ((Drawable)localObject).getPadding(D);
+      localObject = D;
+      g = (left + right + paramInt);
+      return;
+    }
+    i(paramInt);
+  }
+  
+  public void b(boolean paramBoolean)
+  {
+    m = true;
+    l = paramBoolean;
+  }
+  
+  public Drawable c()
+  {
+    return G.getBackground();
+  }
+  
+  public void c(int paramInt)
+  {
+    n = paramInt;
+  }
+  
+  public void d()
+  {
+    int i2 = l();
+    boolean bool2 = j();
+    n.a(G, j);
+    boolean bool3 = G.isShowing();
+    boolean bool1 = true;
+    if (bool3)
+    {
+      if (!u.x(b())) {
+        return;
+      }
+      i1 = g;
+      if (i1 == -1) {
+        i1 = -1;
+      } else if (i1 == -2) {
+        i1 = b().getWidth();
+      } else {
+        i1 = g;
+      }
+      i3 = f;
+      if (i3 == -1)
+      {
+        if (!bool2) {
+          i2 = -1;
+        }
+        if (bool2)
+        {
+          localObject = G;
+          if (g == -1) {
+            i3 = -1;
+          } else {
+            i3 = 0;
+          }
+          ((PopupWindow)localObject).setWidth(i3);
+          G.setHeight(0);
+        }
+        else
+        {
+          localObject = G;
+          if (g == -1) {
+            i3 = -1;
+          } else {
+            i3 = 0;
+          }
+          ((PopupWindow)localObject).setWidth(i3);
+          G.setHeight(-1);
+        }
+      }
+      else if (i3 != -2)
+      {
+        i2 = f;
+      }
+      localObject = G;
+      if ((p) || (o)) {
+        bool1 = false;
+      }
+      ((PopupWindow)localObject).setOutsideTouchable(bool1);
+      localObject = G;
+      View localView = b();
+      i3 = h;
+      int i4 = i;
+      if (i1 < 0) {
+        i1 = -1;
+      }
+      if (i2 < 0) {
+        i2 = -1;
+      }
+      ((PopupWindow)localObject).update(localView, i3, i4, i1, i2);
+      return;
+    }
+    int i1 = g;
+    if (i1 == -1) {
+      i1 = -1;
+    } else if (i1 == -2) {
+      i1 = b().getWidth();
+    } else {
+      i1 = g;
+    }
+    int i3 = f;
+    if (i3 == -1) {
+      i2 = -1;
+    } else if (i3 != -2) {
+      i2 = f;
+    }
+    G.setWidth(i1);
+    G.setHeight(i2);
+    c(true);
+    Object localObject = G;
+    if ((!p) && (!o)) {
+      bool1 = true;
+    } else {
+      bool1 = false;
+    }
+    ((PopupWindow)localObject).setOutsideTouchable(bool1);
+    G.setTouchInterceptor(z);
+    if (m) {
+      n.a(G, l);
+    }
+    localObject = J;
+    if (localObject != null) {
+      try
+      {
+        ((Method)localObject).invoke(G, new Object[] { E });
+      }
+      catch (Exception localException)
+      {
+        Log.e("ListPopupWindow", "Could not invoke setEpicenterBounds on PopupWindow", localException);
+      }
+    }
+    n.a(G, b(), h, i, n);
+    e.setSelection(-1);
+    if ((!F) || (e.isInTouchMode())) {
+      a();
+    }
+    if (!F) {
+      C.post(B);
+    }
+  }
+  
+  public void d(int paramInt)
+  {
+    h = paramInt;
+  }
+  
+  public void dismiss()
+  {
+    G.dismiss();
+    m();
+    G.setContentView(null);
+    e = null;
+    C.removeCallbacks(y);
+  }
+  
+  public void e(int paramInt)
+  {
+    G.setInputMethodMode(paramInt);
+  }
+  
+  public boolean e()
+  {
+    return G.isShowing();
+  }
+  
+  public ListView f()
+  {
+    return e;
+  }
+  
+  public void f(int paramInt)
+  {
+    s = paramInt;
+  }
+  
+  public int g()
+  {
+    return h;
+  }
+  
+  public void g(int paramInt)
+  {
+    i0 localI0 = e;
+    if ((e()) && (localI0 != null))
+    {
+      localI0.setListSelectionHidden(false);
+      localI0.setSelection(paramInt);
+      if (localI0.getChoiceMode() != 0) {
+        localI0.setItemChecked(paramInt, true);
+      }
+    }
+  }
+  
+  public int h()
+  {
+    if (!k) {
+      return 0;
+    }
+    return i;
+  }
+  
+  public void h(int paramInt)
+  {
+    i = paramInt;
+    k = true;
+  }
+  
+  public int i()
+  {
+    return g;
+  }
+  
+  public void i(int paramInt)
+  {
+    g = paramInt;
+  }
+  
+  public boolean j()
+  {
+    return G.getInputMethodMode() == 2;
+  }
+  
+  public boolean k()
+  {
+    return F;
+  }
+  
+  class a
+    implements Runnable
+  {
+    a() {}
+    
+    public void run()
+    {
+      View localView = b();
+      if ((localView != null) && (localView.getWindowToken() != null)) {
+        d();
+      }
+    }
+  }
+  
+  class b
+    implements AdapterView.OnItemSelectedListener
+  {
+    b() {}
+    
+    public void onItemSelected(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong)
+    {
+      if (paramInt != -1)
+      {
+        paramAdapterView = e;
+        if (paramAdapterView != null) {
+          paramAdapterView.setListSelectionHidden(false);
+        }
+      }
+    }
+    
+    public void onNothingSelected(AdapterView<?> paramAdapterView) {}
+  }
+  
+  private class c
+    implements Runnable
+  {
+    c() {}
+    
+    public void run()
+    {
+      a();
+    }
+  }
+  
+  private class d
+    extends DataSetObserver
+  {
+    d() {}
+    
+    public void onChanged()
+    {
+      if (e()) {
+        d();
+      }
+    }
+    
+    public void onInvalidated()
+    {
+      dismiss();
+    }
+  }
+  
+  private class e
+    implements AbsListView.OnScrollListener
+  {
+    e() {}
+    
+    public void onScroll(AbsListView paramAbsListView, int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onScrollStateChanged(AbsListView paramAbsListView, int paramInt)
+    {
+      if ((paramInt == 1) && (!j()) && (G.getContentView() != null))
+      {
+        paramAbsListView = p0.this;
+        C.removeCallbacks(y);
+        y.run();
+      }
+    }
+  }
+  
+  private class f
+    implements View.OnTouchListener
+  {
+    f() {}
+    
+    public boolean onTouch(View paramView, MotionEvent paramMotionEvent)
+    {
+      int i = paramMotionEvent.getAction();
+      int j = (int)paramMotionEvent.getX();
+      int k = (int)paramMotionEvent.getY();
+      if (i == 0)
+      {
+        paramView = G;
+        if ((paramView != null) && (paramView.isShowing()) && (j >= 0) && (j < G.getWidth()) && (k >= 0) && (k < G.getHeight()))
+        {
+          paramView = p0.this;
+          C.postDelayed(y, 250L);
+          break label126;
+        }
+      }
+      if (i == 1)
+      {
+        paramView = p0.this;
+        C.removeCallbacks(y);
+      }
+      label126:
+      return false;
+    }
+  }
+  
+  private class g
+    implements Runnable
+  {
+    g() {}
+    
+    public void run()
+    {
+      Object localObject = e;
+      if ((localObject != null) && (u.x((View)localObject)) && (e.getCount() > e.getChildCount()))
+      {
+        int i = e.getChildCount();
+        localObject = p0.this;
+        if (i <= q)
+        {
+          G.setInputMethodMode(2);
+          d();
+        }
+      }
+    }
+  }
+}

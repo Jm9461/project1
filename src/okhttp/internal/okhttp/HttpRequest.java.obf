@@ -1,0 +1,10 @@
+package e.f0.e;
+
+import f.r;
+
+public abstract interface b
+{
+  public abstract void a();
+  
+  public abstract r b();
+}

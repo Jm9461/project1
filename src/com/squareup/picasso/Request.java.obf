@@ -1,0 +1,265 @@
+package com.squareup.picasso;
+
+import android.graphics.Bitmap.Config;
+import android.net.Uri;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public final class w
+{
+  private static final long u = TimeUnit.SECONDS.toNanos(5L);
+  int a;
+  long b;
+  int c;
+  public final Uri d;
+  public final int e;
+  public final String f;
+  public final List<c0> g;
+  public final int h;
+  public final int i;
+  public final boolean j;
+  public final int k;
+  public final boolean l;
+  public final boolean m;
+  public final float n;
+  public final float o;
+  public final float p;
+  public final boolean q;
+  public final boolean r;
+  public final Bitmap.Config s;
+  public final t.f t;
+  
+  private w(Uri paramUri, int paramInt1, String paramString, List<c0> paramList, int paramInt2, int paramInt3, boolean paramBoolean1, boolean paramBoolean2, int paramInt4, boolean paramBoolean3, float paramFloat1, float paramFloat2, float paramFloat3, boolean paramBoolean4, boolean paramBoolean5, Bitmap.Config paramConfig, t.f paramF)
+  {
+    d = paramUri;
+    e = paramInt1;
+    f = paramString;
+    if (paramList == null) {
+      g = null;
+    } else {
+      g = Collections.unmodifiableList(paramList);
+    }
+    h = paramInt2;
+    i = paramInt3;
+    j = paramBoolean1;
+    l = paramBoolean2;
+    k = paramInt4;
+    m = paramBoolean3;
+    n = paramFloat1;
+    o = paramFloat2;
+    p = paramFloat3;
+    q = paramBoolean4;
+    r = paramBoolean5;
+    s = paramConfig;
+    t = paramF;
+  }
+  
+  String a()
+  {
+    Uri localUri = d;
+    if (localUri != null) {
+      return String.valueOf(localUri.getPath());
+    }
+    return Integer.toHexString(e);
+  }
+  
+  boolean b()
+  {
+    return g != null;
+  }
+  
+  public boolean c()
+  {
+    return (h != 0) || (i != 0);
+  }
+  
+  String d()
+  {
+    long l1 = System.nanoTime() - b;
+    if (l1 > u)
+    {
+      localStringBuilder = new StringBuilder();
+      localStringBuilder.append(g());
+      localStringBuilder.append('+');
+      localStringBuilder.append(TimeUnit.NANOSECONDS.toSeconds(l1));
+      localStringBuilder.append('s');
+      return localStringBuilder.toString();
+    }
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(g());
+    localStringBuilder.append('+');
+    localStringBuilder.append(TimeUnit.NANOSECONDS.toMillis(l1));
+    localStringBuilder.append("ms");
+    return localStringBuilder.toString();
+  }
+  
+  boolean e()
+  {
+    return (c()) || (n != 0.0F);
+  }
+  
+  boolean f()
+  {
+    return (e()) || (b());
+  }
+  
+  String g()
+  {
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append("[R");
+    localStringBuilder.append(a);
+    localStringBuilder.append(']');
+    return localStringBuilder.toString();
+  }
+  
+  public String toString()
+  {
+    StringBuilder localStringBuilder = new StringBuilder("Request{");
+    int i1 = e;
+    if (i1 > 0) {
+      localStringBuilder.append(i1);
+    } else {
+      localStringBuilder.append(d);
+    }
+    Object localObject = g;
+    if ((localObject != null) && (!((List)localObject).isEmpty()))
+    {
+      localObject = g.iterator();
+      while (((Iterator)localObject).hasNext())
+      {
+        c0 localC0 = (c0)((Iterator)localObject).next();
+        localStringBuilder.append(' ');
+        localStringBuilder.append(localC0.a());
+      }
+    }
+    if (f != null)
+    {
+      localStringBuilder.append(" stableKey(");
+      localStringBuilder.append(f);
+      localStringBuilder.append(')');
+    }
+    if (h > 0)
+    {
+      localStringBuilder.append(" resize(");
+      localStringBuilder.append(h);
+      localStringBuilder.append(',');
+      localStringBuilder.append(i);
+      localStringBuilder.append(')');
+    }
+    if (j) {
+      localStringBuilder.append(" centerCrop");
+    }
+    if (l) {
+      localStringBuilder.append(" centerInside");
+    }
+    if (n != 0.0F)
+    {
+      localStringBuilder.append(" rotation(");
+      localStringBuilder.append(n);
+      if (q)
+      {
+        localStringBuilder.append(" @ ");
+        localStringBuilder.append(o);
+        localStringBuilder.append(',');
+        localStringBuilder.append(p);
+      }
+      localStringBuilder.append(')');
+    }
+    if (r) {
+      localStringBuilder.append(" purgeable");
+    }
+    if (s != null)
+    {
+      localStringBuilder.append(' ');
+      localStringBuilder.append(s);
+    }
+    localStringBuilder.append('}');
+    return localStringBuilder.toString();
+  }
+  
+  public static final class b
+  {
+    private Uri a;
+    private int b;
+    private String c;
+    private int d;
+    private int e;
+    private boolean f;
+    private int g;
+    private boolean h;
+    private boolean i;
+    private float j;
+    private float k;
+    private float l;
+    private boolean m;
+    private boolean n;
+    private List<c0> o;
+    private Bitmap.Config p;
+    private t.f q;
+    
+    b(Uri paramUri, int paramInt, Bitmap.Config paramConfig)
+    {
+      a = paramUri;
+      b = paramInt;
+      p = paramConfig;
+    }
+    
+    public b a(int paramInt)
+    {
+      if (!h)
+      {
+        f = true;
+        g = paramInt;
+        return this;
+      }
+      throw new IllegalStateException("Center crop can not be used after calling centerInside");
+    }
+    
+    public b a(int paramInt1, int paramInt2)
+    {
+      if (paramInt1 >= 0)
+      {
+        if (paramInt2 >= 0)
+        {
+          if ((paramInt2 == 0) && (paramInt1 == 0)) {
+            throw new IllegalArgumentException("At least one dimension has to be positive number.");
+          }
+          d = paramInt1;
+          e = paramInt2;
+          return this;
+        }
+        throw new IllegalArgumentException("Height must be positive number or 0.");
+      }
+      throw new IllegalArgumentException("Width must be positive number or 0.");
+    }
+    
+    public w a()
+    {
+      if ((h) && (f)) {
+        throw new IllegalStateException("Center crop and center inside can not be used together.");
+      }
+      if ((f) && (d == 0) && (e == 0)) {
+        throw new IllegalStateException("Center crop requires calling resize with positive width and height.");
+      }
+      if ((h) && (d == 0) && (e == 0)) {
+        throw new IllegalStateException("Center inside requires calling resize with positive width and height.");
+      }
+      if (q == null) {
+        q = t.f.d;
+      }
+      return new w(a, b, c, o, d, e, f, h, g, i, j, k, l, m, n, p, q, null);
+    }
+    
+    boolean b()
+    {
+      return (a != null) || (b != 0);
+    }
+    
+    boolean c()
+    {
+      return (d != 0) || (e != 0);
+    }
+  }
+}

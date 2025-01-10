@@ -1,0 +1,19 @@
+package android.arch.lifecycle;
+
+class ReflectiveGenericLifecycleObserver
+  implements GenericLifecycleObserver
+{
+  private final Object a;
+  private final a.a b;
+  
+  ReflectiveGenericLifecycleObserver(Object paramObject)
+  {
+    a = paramObject;
+    b = a.c.a(a.getClass());
+  }
+  
+  public void a(e paramE, c.a paramA)
+  {
+    b.a(paramE, paramA, a);
+  }
+}

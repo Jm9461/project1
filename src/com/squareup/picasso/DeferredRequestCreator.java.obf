@@ -1,0 +1,82 @@
+package com.squareup.picasso;
+
+import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.widget.ImageView;
+import java.lang.ref.WeakReference;
+
+class h
+  implements ViewTreeObserver.OnPreDrawListener, View.OnAttachStateChangeListener
+{
+  private final x c;
+  final WeakReference<ImageView> d;
+  e e;
+  
+  h(x paramX, ImageView paramImageView, e paramE)
+  {
+    c = paramX;
+    d = new WeakReference(paramImageView);
+    e = paramE;
+    paramImageView.addOnAttachStateChangeListener(this);
+    if (paramImageView.getWindowToken() != null) {
+      onViewAttachedToWindow(paramImageView);
+    }
+  }
+  
+  void a()
+  {
+    c.b();
+    e = null;
+    Object localObject = (ImageView)d.get();
+    if (localObject == null) {
+      return;
+    }
+    d.clear();
+    ((ImageView)localObject).removeOnAttachStateChangeListener(this);
+    localObject = ((ImageView)localObject).getViewTreeObserver();
+    if (((ViewTreeObserver)localObject).isAlive()) {
+      ((ViewTreeObserver)localObject).removeOnPreDrawListener(this);
+    }
+  }
+  
+  public boolean onPreDraw()
+  {
+    ImageView localImageView = (ImageView)d.get();
+    if (localImageView == null) {
+      return true;
+    }
+    Object localObject = localImageView.getViewTreeObserver();
+    if (!((ViewTreeObserver)localObject).isAlive()) {
+      return true;
+    }
+    int i = localImageView.getWidth();
+    int j = localImageView.getHeight();
+    if (i > 0)
+    {
+      if (j <= 0) {
+        return true;
+      }
+      localImageView.removeOnAttachStateChangeListener(this);
+      ((ViewTreeObserver)localObject).removeOnPreDrawListener(this);
+      d.clear();
+      localObject = c;
+      ((x)localObject).d();
+      ((x)localObject).a(i, j);
+      ((x)localObject).a(localImageView, e);
+      return true;
+    }
+    return true;
+  }
+  
+  public void onViewAttachedToWindow(View paramView)
+  {
+    paramView.getViewTreeObserver().addOnPreDrawListener(this);
+  }
+  
+  public void onViewDetachedFromWindow(View paramView)
+  {
+    paramView.getViewTreeObserver().removeOnPreDrawListener(this);
+  }
+}

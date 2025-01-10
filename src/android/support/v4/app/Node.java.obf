@@ -1,0 +1,21 @@
+package android.support.v4.app;
+
+import android.arch.lifecycle.e;
+import android.arch.lifecycle.q;
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+
+public abstract class u
+{
+  public u() {}
+  
+  public static <T extends e,  extends q> u a(T paramT)
+  {
+    return new LoaderManagerImpl(paramT, ((q)paramT).b());
+  }
+  
+  public abstract void a();
+  
+  @Deprecated
+  public abstract void a(String paramString, FileDescriptor paramFileDescriptor, PrintWriter paramPrintWriter, String[] paramArrayOfString);
+}

@@ -1,0 +1,44 @@
+package android.support.design.widget;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.ImageButton;
+
+public class a0
+  extends ImageButton
+{
+  private int c = getVisibility();
+  
+  public a0(Context paramContext)
+  {
+    this(paramContext, null);
+  }
+  
+  public a0(Context paramContext, AttributeSet paramAttributeSet)
+  {
+    this(paramContext, paramAttributeSet, 0);
+  }
+  
+  public a0(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
+  {
+    super(paramContext, paramAttributeSet, paramInt);
+  }
+  
+  public final void a(int paramInt, boolean paramBoolean)
+  {
+    super.setVisibility(paramInt);
+    if (paramBoolean) {
+      c = paramInt;
+    }
+  }
+  
+  public final int getUserSetVisibility()
+  {
+    return c;
+  }
+  
+  public void setVisibility(int paramInt)
+  {
+    a(paramInt, true);
+  }
+}

@@ -1,0 +1,243 @@
+package com.lawyer_smartCalendar.a;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.support.v7.widget.u0;
+import android.support.v7.widget.u0.d;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import b.a.a.b;
+import b.a.a.e;
+import b.a.a.f.d;
+import b.a.a.f.m;
+import com.lawyer_smartCalendar.activity.AddTaxActivity;
+import com.lawyer_smartCalendar.c.s;
+import com.lawyer_smartCalendar.d.j;
+import com.lawyer_smartCalendar.utils.c;
+import com.lawyer_smartCalendar.utils.i;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
+public class f0
+  extends RecyclerView.g<a>
+{
+  public Context c;
+  public List<j> d;
+  public s e;
+  private i f;
+  private e g;
+  
+  public f0(Context paramContext, s paramS, List<j> paramList)
+  {
+    new HashMap();
+    g = e.e;
+    c = paramContext;
+    d = paramList;
+    e = paramS;
+    new com.lawyer_smartCalendar.utils.f(c);
+    Calendar.getInstance();
+    f = new i(c);
+    if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == 0)
+    {
+      g = e.e;
+      return;
+    }
+    g = e.c;
+  }
+  
+  public int a()
+  {
+    return d.size();
+  }
+  
+  public long a(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    Object localObject = new DecimalFormat("#,###,###,###,###,###,###");
+    w.setTypeface(new com.lawyer_smartCalendar.utils.f(c).b());
+    w.setTextColor(Color.parseColor(c.d()));
+    x.setTypeface(new com.lawyer_smartCalendar.utils.f(c).a());
+    TextView localTextView = x;
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(((j)d.get(paramInt)).f());
+    localStringBuilder.append("");
+    localTextView.setText(localStringBuilder.toString());
+    y.setTextColor(Color.parseColor(c.d()));
+    y.setTypeface(new com.lawyer_smartCalendar.utils.f(c).b());
+    localTextView = z;
+    localStringBuilder = new StringBuilder();
+    localStringBuilder.append(((DecimalFormat)localObject).format(((j)d.get(paramInt)).b()));
+    localStringBuilder.append(" ?????");
+    localTextView.setText(localStringBuilder.toString());
+    A.setTypeface(new com.lawyer_smartCalendar.utils.f(c).b());
+    A.setTextColor(Color.parseColor(c.d()));
+    localTextView = B;
+    localStringBuilder = new StringBuilder();
+    localStringBuilder.append(((DecimalFormat)localObject).format(((j)d.get(paramInt)).c()));
+    localStringBuilder.append(" ?????");
+    localTextView.setText(localStringBuilder.toString());
+    C.setTypeface(new com.lawyer_smartCalendar.utils.f(c).b());
+    C.setTextColor(Color.parseColor(c.d()));
+    localTextView = D;
+    localStringBuilder = new StringBuilder();
+    localStringBuilder.append(((DecimalFormat)localObject).format(((j)d.get(paramInt)).e()));
+    localStringBuilder.append(" ?????");
+    localTextView.setText(localStringBuilder.toString());
+    if (!((j)d.get(paramInt)).d().equals(""))
+    {
+      paramA = E;
+      localObject = new StringBuilder();
+      ((StringBuilder)localObject).append(((j)d.get(paramInt)).d());
+      ((StringBuilder)localObject).append("");
+      paramA.setText(((StringBuilder)localObject).toString());
+      return;
+    }
+    E.setVisibility(8);
+  }
+  
+  public int b(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(paramViewGroup.getContext()).inflate(2131493046, paramViewGroup, false));
+  }
+  
+  public class a
+    extends RecyclerView.d0
+  {
+    TextView A;
+    TextView B;
+    TextView C;
+    TextView D;
+    TextView E;
+    ImageView v;
+    TextView w;
+    TextView x;
+    TextView y;
+    TextView z;
+    
+    public a(View paramView)
+    {
+      super();
+      w = ((TextView)paramView.findViewById(2131296817));
+      x = ((TextView)paramView.findViewById(2131296818));
+      y = ((TextView)paramView.findViewById(2131296795));
+      z = ((TextView)paramView.findViewById(2131296796));
+      A = ((TextView)paramView.findViewById(2131296812));
+      B = ((TextView)paramView.findViewById(2131296813));
+      C = ((TextView)paramView.findViewById(2131296810));
+      D = ((TextView)paramView.findViewById(2131296811));
+      E = ((TextView)paramView.findViewById(2131296802));
+      v = ((ImageView)paramView.findViewById(2131296479));
+      v.setOnClickListener(new a(f0.this));
+    }
+    
+    class a
+      implements View.OnClickListener
+    {
+      a(f0 paramF0) {}
+      
+      public void onClick(View paramView)
+      {
+        paramView = f0.a.this;
+        paramView = new u0(F.c, v);
+        paramView.b().inflate(2131558401, paramView.a());
+        paramView.a(new a());
+        paramView.c();
+      }
+      
+      class a
+        implements u0.d
+      {
+        a() {}
+        
+        public boolean onMenuItemClick(MenuItem paramMenuItem)
+        {
+          int i = paramMenuItem.getItemId();
+          if (i != 2131296407)
+          {
+            if (i == 2131296424)
+            {
+              paramMenuItem = new Intent(c, AddTaxActivity.class);
+              StringBuilder localStringBuilder = new StringBuilder();
+              f0.a localA = f0.a.this;
+              localStringBuilder.append(((j)F.d.get(localA.f())).a());
+              localStringBuilder.append("");
+              paramMenuItem.putExtra("id", localStringBuilder.toString());
+              paramMenuItem.putExtra("frmMode", "edit");
+              e.b(paramMenuItem);
+            }
+          }
+          else
+          {
+            paramMenuItem = new f.d(c);
+            paramMenuItem.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+            paramMenuItem.d(f0.b(f0.this));
+            paramMenuItem.b(f0.b(f0.this));
+            paramMenuItem.a(f0.b(f0.this));
+            paramMenuItem.j(2131099708);
+            paramMenuItem.a("??? ???? ??? ??? ???? ??????? ??????");
+            paramMenuItem.f(2131099728);
+            paramMenuItem.b(2131099730);
+            paramMenuItem.d("??????");
+            paramMenuItem.b("???");
+            paramMenuItem.c(new b());
+            paramMenuItem.a(new a());
+            paramMenuItem.c();
+          }
+          return true;
+        }
+        
+        class a
+          implements f.m
+        {
+          a() {}
+          
+          public void a(b.a.a.f paramF, b paramB)
+          {
+            f0.a(f0.this).n();
+            paramF = f0.a(f0.this);
+            paramB = new StringBuilder();
+            f0.a localA = f0.a.this;
+            paramB.append(((j)F.d.get(localA.f())).a());
+            paramB.append("");
+            paramF.g(paramB.toString());
+            f0.a(f0.this).close();
+            e.d0();
+          }
+        }
+        
+        class b
+          implements f.m
+        {
+          b() {}
+          
+          public void a(b.a.a.f paramF, b paramB)
+          {
+            paramF.dismiss();
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+package e.f0.l;
+
+import e.f0.k.f;
+import java.security.cert.Certificate;
+import java.util.List;
+import javax.net.ssl.X509TrustManager;
+
+public abstract class c
+{
+  public c() {}
+  
+  public static c a(X509TrustManager paramX509TrustManager)
+  {
+    return f.d().a(paramX509TrustManager);
+  }
+  
+  public abstract List<Certificate> a(List<Certificate> paramList, String paramString);
+}

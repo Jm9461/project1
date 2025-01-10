@@ -1,0 +1,203 @@
+package ir.mirrajabi.persiancalendar.f.c;
+
+import android.content.Context;
+import android.os.Build.VERSION;
+import android.support.v7.widget.RecyclerView.d0;
+import android.support.v7.widget.RecyclerView.g;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import ir.mirrajabi.persiancalendar.c;
+import ir.mirrajabi.persiancalendar.f.g.d;
+import java.util.List;
+
+public class b
+  extends RecyclerView.g<a>
+{
+  private Context c;
+  private ir.mirrajabi.persiancalendar.f.e.b d;
+  private List<d> e;
+  private int f = -1;
+  private ir.mirrajabi.persiancalendar.f.b g;
+  private final int h;
+  private final int i;
+  
+  public b(Context paramContext, ir.mirrajabi.persiancalendar.f.e.b paramB, List<d> paramList)
+  {
+    h = ((d)paramList.get(0)).a();
+    i = paramList.size();
+    d = paramB;
+    c = paramContext;
+    e = paramList;
+    g = ir.mirrajabi.persiancalendar.f.b.a(paramContext);
+  }
+  
+  private boolean e(int paramInt)
+  {
+    return paramInt < 7;
+  }
+  
+  public int a()
+  {
+    return 49;
+  }
+  
+  public void a(a paramA, int paramInt)
+  {
+    w.setBackgroundResource(g.p());
+    x.setBackgroundResource(g.n());
+    y.setBackgroundColor(g.c());
+    paramInt += 6 - paramInt % 7 * 2;
+    if (i < paramInt - 6 - h) {
+      return;
+    }
+    if (!e(paramInt))
+    {
+      if (paramInt - 7 - h >= 0)
+      {
+        Object localObject = v;
+        List localList = e;
+        ((TextView)localObject).setText(((d)localList.get(paramInt - 7 - ((d)localList.get(0)).a())).b());
+        v.setVisibility(0);
+        v.setTextSize(0, g.h());
+        if (((d)e.get(paramInt - 7 - h)).e()) {
+          v.setTextColor(g.d());
+        } else {
+          v.setTextColor(g.f());
+        }
+        localObject = (d)e.get(paramInt - 7 - h);
+        if (((d)localObject).d())
+        {
+          if ((((d)localObject).f()) && (g.q())) {
+            y.setVisibility(0);
+          } else if ((!((d)localObject).f()) && (g.r())) {
+            y.setVisibility(0);
+          } else {
+            y.setVisibility(8);
+          }
+        }
+        else {
+          y.setVisibility(8);
+        }
+        if (((d)e.get(paramInt - 7 - h)).g()) {
+          w.setVisibility(0);
+        } else {
+          w.setVisibility(8);
+        }
+        if (paramInt == f)
+        {
+          x.setVisibility(0);
+          if (((d)e.get(paramInt - 7 - h)).e()) {
+            v.setTextColor(g.e());
+          } else {
+            v.setTextColor(g.g());
+          }
+        }
+        else
+        {
+          x.setVisibility(8);
+        }
+      }
+      else
+      {
+        w.setVisibility(8);
+        x.setVisibility(8);
+        v.setVisibility(8);
+        y.setVisibility(8);
+      }
+      g.b(v);
+      return;
+    }
+    v.setText(ir.mirrajabi.persiancalendar.f.a.a[paramInt]);
+    v.setTextColor(g.b());
+    v.setTextSize(0, g.i());
+    v.setTypeface(g.j());
+    w.setVisibility(8);
+    x.setVisibility(8);
+    y.setVisibility(8);
+    v.setVisibility(0);
+    g.a(v);
+  }
+  
+  public int b(int paramInt)
+  {
+    if (e(paramInt)) {
+      return 0;
+    }
+    return 1;
+  }
+  
+  public a b(ViewGroup paramViewGroup, int paramInt)
+  {
+    return new a(LayoutInflater.from(c).inflate(c.item_day, paramViewGroup, false));
+  }
+  
+  public void d(int paramInt)
+  {
+    f = (paramInt + 6 + h);
+    d();
+  }
+  
+  public void e()
+  {
+    f = -1;
+    d();
+  }
+  
+  public class a
+    extends RecyclerView.d0
+    implements View.OnClickListener, View.OnLongClickListener
+  {
+    TextView v;
+    View w;
+    View x;
+    View y;
+    
+    public a(View paramView)
+    {
+      super();
+      v = ((TextView)paramView.findViewById(ir.mirrajabi.persiancalendar.b.num));
+      w = paramView.findViewById(ir.mirrajabi.persiancalendar.b.today);
+      x = paramView.findViewById(ir.mirrajabi.persiancalendar.b.select_day);
+      y = paramView.findViewById(ir.mirrajabi.persiancalendar.b.event);
+      paramView.setOnClickListener(this);
+      paramView.setOnLongClickListener(this);
+    }
+    
+    public void onClick(View paramView)
+    {
+      int i = f();
+      i += 6 - i % 7 * 2;
+      if (b.a(b.this) < i - 6 - b.b(b.this)) {
+        return;
+      }
+      if (i - 7 - b.b(b.this) >= 0)
+      {
+        b.d(b.this).a(((d)b.c(b.this).get(i - 7 - b.b(b.this))).c());
+        b.a(b.this, i);
+        d();
+      }
+    }
+    
+    public boolean onLongClick(View paramView)
+    {
+      int i = f();
+      i += 6 - i % 7 * 2;
+      if (b.a(b.this) < i - 6 - b.b(b.this)) {
+        return false;
+      }
+      if (Build.VERSION.SDK_INT >= 14) {
+        try
+        {
+          b.d(b.this).b(((d)b.c(b.this).get(i - 7 - b.b(b.this))).c());
+          return false;
+        }
+        catch (Exception paramView) {}
+      }
+      return false;
+    }
+  }
+}

@@ -1,0 +1,228 @@
+package com.lawyer_smartCalendar.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.d;
+import android.support.design.widget.TabLayout.g;
+import android.support.design.widget.TabLayout.h;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import b.a.a.b;
+import b.a.a.f.d;
+import b.a.a.f.m;
+import com.lawyer_smartCalendar.a.b0;
+import com.lawyer_smartCalendar.utils.c;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class ScheduleDetailActivity
+  extends android.support.v7.app.e
+{
+  private boolean r = false;
+  public String s = "";
+  private com.lawyer_smartCalendar.utils.i t;
+  private com.lawyer_smartCalendar.d.i u;
+  private int v = 150;
+  private TabLayout w;
+  private ViewPager x;
+  
+  public ScheduleDetailActivity() {}
+  
+  protected void attachBaseContext(Context paramContext)
+  {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(paramContext));
+  }
+  
+  public void m()
+  {
+    x = ((ViewPager)findViewById(2131296660));
+    b0 localB0 = new b0(e(), w.getTabCount());
+    x.setOffscreenPageLimit(2);
+    x.setAdapter(localB0);
+    x.a(new TabLayout.h(w));
+    x.setCurrentItem(1);
+    w.setOnTabSelectedListener(new d());
+  }
+  
+  protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
+  {
+    if ((paramInt1 == v) && (paramInt2 == -1))
+    {
+      m();
+      r = true;
+    }
+  }
+  
+  public void onBackPressed()
+  {
+    if (r)
+    {
+      com.lawyer_smartCalendar.utils.e.b.d0();
+      setResult(-1);
+    }
+    finish();
+  }
+  
+  protected void onCreate(Bundle paramBundle)
+  {
+    setTheme(c.b());
+    super.onCreate(paramBundle);
+    overridePendingTransition(17432576, 17432577);
+    setContentView(2131492921);
+    t = new com.lawyer_smartCalendar.utils.i(this);
+    paramBundle = (Toolbar)findViewById(2131296838);
+    int i = 0;
+    paramBundle.setPadding(0, 0, 0, 0);
+    paramBundle.a(0, 0);
+    a(paramBundle);
+    paramBundle.setNavigationIcon(2131230872);
+    s = getIntent().getStringExtra("id");
+    t.n();
+    u = t.B(s);
+    t.close();
+    com.lawyer_smartCalendar.utils.g.a(this, Integer.parseInt(s));
+    Object localObject = u.g();
+    int j = ((String)localObject).hashCode();
+    if (j != -1688280549)
+    {
+      break label155;
+      if (j != 1705285671) {
+        break label186;
+      }
+    }
+    label155:
+    while (!((String)localObject).equals("Meeting"))
+    {
+      while (!((String)localObject).equals("ProceedingsTimes")) {}
+      break;
+    }
+    i = 1;
+    break label188;
+    label186:
+    i = -1;
+    label188:
+    if (i != 0)
+    {
+      if (i == 1) {
+        j().a("?????? ??????");
+      }
+    }
+    else {
+      j().a("?????? ??????");
+    }
+    paramBundle.setNavigationOnClickListener(new c());
+    w = ((TabLayout)findViewById(2131296766));
+    paramBundle = w;
+    localObject = paramBundle.b();
+    ((TabLayout.g)localObject).b("?????? ??????");
+    paramBundle.a((TabLayout.g)localObject);
+    paramBundle = w;
+    localObject = paramBundle.b();
+    ((TabLayout.g)localObject).b("???????");
+    paramBundle.a((TabLayout.g)localObject);
+    new com.lawyer_smartCalendar.utils.f(this).a(this, w);
+    m();
+  }
+  
+  public boolean onCreateOptionsMenu(Menu paramMenu)
+  {
+    getMenuInflater().inflate(2131558413, paramMenu);
+    return super.onCreateOptionsMenu(paramMenu);
+  }
+  
+  public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+  {
+    if (paramMenuItem.getItemId() != 2131296288) {
+      return super.onOptionsItemSelected(paramMenuItem);
+    }
+    paramMenuItem = new f.d(this);
+    paramMenuItem.a("IRANSansMobile.ttf", "IRANSansMobile.ttf");
+    paramMenuItem.b(b.a.a.e.d);
+    paramMenuItem.a(b.a.a.e.e);
+    paramMenuItem.j(2131099708);
+    paramMenuItem.a("??? ???? ??? ??? ???? ??????? ??????");
+    paramMenuItem.f(2131099728);
+    paramMenuItem.b(2131099730);
+    paramMenuItem.d("??????");
+    paramMenuItem.b("???");
+    paramMenuItem.c(new b());
+    paramMenuItem.a(new a());
+    paramMenuItem.c();
+    return true;
+  }
+  
+  protected void onPause()
+  {
+    super.onPause();
+    if (isFinishing()) {
+      overridePendingTransition(17432576, 17432577);
+    }
+  }
+  
+  class a
+    implements f.m
+  {
+    a() {}
+    
+    public void a(b.a.a.f paramF, b paramB)
+    {
+      ScheduleDetailActivity.a(ScheduleDetailActivity.this).n();
+      paramF = ScheduleDetailActivity.a(ScheduleDetailActivity.this);
+      paramB = ScheduleDetailActivity.this;
+      paramF.c(paramB, s);
+      ScheduleDetailActivity.a(ScheduleDetailActivity.this).close();
+      try
+      {
+        setResult(-1);
+        com.lawyer_smartCalendar.utils.e.b.d0();
+      }
+      catch (Exception paramF) {}
+      finish();
+    }
+  }
+  
+  class b
+    implements f.m
+  {
+    b() {}
+    
+    public void a(b.a.a.f paramF, b paramB)
+    {
+      paramF.dismiss();
+    }
+  }
+  
+  class c
+    implements View.OnClickListener
+  {
+    c() {}
+    
+    public void onClick(View paramView)
+    {
+      onBackPressed();
+    }
+  }
+  
+  class d
+    implements TabLayout.d
+  {
+    d() {}
+    
+    public void a(TabLayout.g paramG)
+    {
+      ScheduleDetailActivity.b(ScheduleDetailActivity.this).setCurrentItem(paramG.c());
+    }
+    
+    public void b(TabLayout.g paramG) {}
+    
+    public void c(TabLayout.g paramG) {}
+  }
+}

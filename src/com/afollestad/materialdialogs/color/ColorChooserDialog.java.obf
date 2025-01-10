@@ -1,0 +1,848 @@
+package com.afollestad.materialdialogs.color;
+
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.support.v4.app.g;
+import android.support.v4.app.k;
+import android.support.v4.app.q;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputFilter.LengthFilter;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
+import android.widget.AbsListView.LayoutParams;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.GridView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import b.a.a.f.d;
+import b.a.a.f.m;
+import b.a.a.p;
+import b.a.a.q.d;
+import java.io.Serializable;
+import java.util.Locale;
+
+public class b
+  extends android.support.v4.app.e
+  implements View.OnClickListener, View.OnLongClickListener
+{
+  private SeekBar.OnSeekBarChangeListener A0;
+  private int B0;
+  private int[] j0;
+  private int[][] k0;
+  private int l0;
+  private h m0;
+  private GridView n0;
+  private View o0;
+  private EditText p0;
+  private View q0;
+  private TextWatcher r0;
+  private SeekBar s0;
+  private TextView t0;
+  private SeekBar u0;
+  private TextView v0;
+  private SeekBar w0;
+  private TextView x0;
+  private SeekBar y0;
+  private TextView z0;
+  
+  public b() {}
+  
+  private void a(b.a.a.f paramF)
+  {
+    b.a.a.f localF = paramF;
+    if (paramF == null) {
+      localF = (b.a.a.f)e0();
+    }
+    if (n0.getVisibility() == 0)
+    {
+      localF.setTitle(i0k);
+      localF.a(b.a.a.b.d, i0l);
+      localF.a(b.a.a.b.e, i0j);
+      n0.setVisibility(4);
+      o0.setVisibility(0);
+      r0 = new e();
+      p0.addTextChangedListener(r0);
+      A0 = new f();
+      u0.setOnSeekBarChangeListener(A0);
+      w0.setOnSeekBarChangeListener(A0);
+      y0.setOnSeekBarChangeListener(A0);
+      if (s0.getVisibility() == 0)
+      {
+        s0.setOnSeekBarChangeListener(A0);
+        p0.setText(String.format("%08X", new Object[] { Integer.valueOf(B0) }));
+        return;
+      }
+      p0.setText(String.format("%06X", new Object[] { Integer.valueOf(0xFFFFFF & B0) }));
+      return;
+    }
+    localF.setTitle(i0e);
+    localF.a(b.a.a.b.d, i0k);
+    if (m0()) {
+      localF.a(b.a.a.b.e, i0i);
+    } else {
+      localF.a(b.a.a.b.e, i0j);
+    }
+    n0.setVisibility(0);
+    o0.setVisibility(8);
+    p0.removeTextChangedListener(r0);
+    r0 = null;
+    u0.setOnSeekBarChangeListener(null);
+    w0.setOnSeekBarChangeListener(null);
+    y0.setOnSeekBarChangeListener(null);
+    A0 = null;
+  }
+  
+  private void b(int paramInt1, int paramInt2)
+  {
+    Object localObject = k0;
+    if (localObject != null)
+    {
+      if (localObject.length - 1 < paramInt1) {
+        return;
+      }
+      localObject = localObject[paramInt1];
+      paramInt1 = 0;
+      while (paramInt1 < localObject.length)
+      {
+        if (localObject[paramInt1] == paramInt2)
+        {
+          e(paramInt1);
+          return;
+        }
+        paramInt1 += 1;
+      }
+      return;
+    }
+  }
+  
+  private void b(k paramK, String paramString)
+  {
+    paramString = paramK.a(paramString);
+    if (paramString != null)
+    {
+      ((android.support.v4.app.e)paramString).d0();
+      paramK = paramK.a();
+      paramK.a(paramString);
+      paramK.a();
+    }
+  }
+  
+  private void e(int paramInt)
+  {
+    if (k0 == null) {
+      return;
+    }
+    i().putInt("sub_index", paramInt);
+  }
+  
+  private void f(int paramInt)
+  {
+    if (paramInt > -1) {
+      b(paramInt, j0[paramInt]);
+    }
+    i().putInt("top_index", paramInt);
+  }
+  
+  private void h0()
+  {
+    g localG = i0();
+    int[] arrayOfInt = m;
+    if (arrayOfInt != null)
+    {
+      j0 = arrayOfInt;
+      k0 = n;
+      return;
+    }
+    if (p)
+    {
+      j0 = c.c;
+      k0 = c.d;
+      return;
+    }
+    j0 = c.a;
+    k0 = c.b;
+  }
+  
+  private g i0()
+  {
+    if ((i() != null) && (i().containsKey("builder"))) {
+      return (g)i().getSerializable("builder");
+    }
+    return null;
+  }
+  
+  private void j(boolean paramBoolean)
+  {
+    i().putBoolean("in_sub", paramBoolean);
+  }
+  
+  private int j0()
+  {
+    View localView = o0;
+    if ((localView != null) && (localView.getVisibility() == 0)) {
+      return B0;
+    }
+    int i = 0;
+    if (n0() > -1) {
+      i = k0[o0()][n0()];
+    } else if (o0() > -1) {
+      i = j0[o0()];
+    }
+    int j = i;
+    if (i == 0)
+    {
+      i = 0;
+      if (Build.VERSION.SDK_INT >= 21) {
+        i = b.a.a.r.a.e(d(), 16843829);
+      }
+      j = b.a.a.r.a.a(d(), b.a.a.q.a.colorAccent, i);
+    }
+    return j;
+  }
+  
+  private void k0()
+  {
+    if (n0.getAdapter() == null)
+    {
+      n0.setAdapter(new i());
+      n0.setSelector(android.support.v4.content.e.f.a(v(), b.a.a.q.c.md_transparent, null));
+    }
+    else
+    {
+      ((BaseAdapter)n0.getAdapter()).notifyDataSetChanged();
+    }
+    if (e0() != null) {
+      e0().setTitle(g0());
+    }
+  }
+  
+  private void l0()
+  {
+    b.a.a.f localF = (b.a.a.f)e0();
+    if (localF == null) {
+      return;
+    }
+    if (i0q)
+    {
+      int j = j0();
+      int i;
+      if (Color.alpha(j) >= 64)
+      {
+        i = j;
+        if (Color.red(j) > 247)
+        {
+          i = j;
+          if (Color.green(j) > 247)
+          {
+            i = j;
+            if (Color.blue(j) <= 247) {}
+          }
+        }
+      }
+      else
+      {
+        i = Color.parseColor("#DEDEDE");
+      }
+      if (i0q)
+      {
+        localF.a(b.a.a.b.c).setTextColor(i);
+        localF.a(b.a.a.b.e).setTextColor(i);
+        localF.a(b.a.a.b.d).setTextColor(i);
+      }
+      if (u0 != null)
+      {
+        if (s0.getVisibility() == 0) {
+          com.afollestad.materialdialogs.internal.c.a(s0, i);
+        }
+        com.afollestad.materialdialogs.internal.c.a(u0, i);
+        com.afollestad.materialdialogs.internal.c.a(w0, i);
+        com.afollestad.materialdialogs.internal.c.a(y0, i);
+      }
+    }
+  }
+  
+  private boolean m0()
+  {
+    return i().getBoolean("in_sub", false);
+  }
+  
+  private int n0()
+  {
+    if (k0 == null) {
+      return -1;
+    }
+    return i().getInt("sub_index", -1);
+  }
+  
+  private int o0()
+  {
+    return i().getInt("top_index", -1);
+  }
+  
+  public b a(k paramK)
+  {
+    g localG = i0();
+    if ((m == null) && (!p)) {}
+    b(paramK, "[MD_COLOR_CHOOSER]");
+    a(paramK, "[MD_COLOR_CHOOSER]");
+    return this;
+  }
+  
+  public void a(Context paramContext)
+  {
+    super.a(paramContext);
+    if ((d() instanceof h))
+    {
+      m0 = ((h)d());
+      return;
+    }
+    if ((t() instanceof h))
+    {
+      m0 = ((h)t());
+      return;
+    }
+    throw new IllegalStateException("ColorChooserDialog needs to be shown from an Activity/Fragment implementing ColorCallback.");
+  }
+  
+  public void e(Bundle paramBundle)
+  {
+    super.e(paramBundle);
+    paramBundle.putInt("top_index", o0());
+    paramBundle.putBoolean("in_sub", m0());
+    paramBundle.putInt("sub_index", n0());
+    View localView = o0;
+    boolean bool;
+    if ((localView != null) && (localView.getVisibility() == 0)) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    paramBundle.putBoolean("in_custom", bool);
+  }
+  
+  public int g0()
+  {
+    g localG = i0();
+    int i;
+    if (m0()) {
+      i = f;
+    } else {
+      i = e;
+    }
+    int j = i;
+    if (i == 0) {
+      j = e;
+    }
+    return j;
+  }
+  
+  public Dialog n(Bundle paramBundle)
+  {
+    if ((i() != null) && (i().containsKey("builder")))
+    {
+      h0();
+      int i = 0;
+      int m = 0;
+      int j;
+      int k;
+      if (paramBundle != null)
+      {
+        i = paramBundle.getBoolean("in_custom", false) ^ true;
+        j = j0();
+      }
+      else if (i0t)
+      {
+        int n = i0g;
+        j = n;
+        if (n != 0)
+        {
+          k = 0;
+          for (i = m;; i = m)
+          {
+            paramBundle = j0;
+            j = i;
+            if (k >= paramBundle.length) {
+              break;
+            }
+            if (paramBundle[k] == n)
+            {
+              j = 1;
+              f(k);
+              if (i0p)
+              {
+                e(2);
+                break;
+              }
+              if (k0 != null)
+              {
+                b(k, n);
+                break;
+              }
+              e(5);
+              break;
+            }
+            m = i;
+            if (k0 != null)
+            {
+              m = 0;
+              for (;;)
+              {
+                paramBundle = k0;
+                j = i;
+                if (m >= paramBundle[k].length) {
+                  break;
+                }
+                if (paramBundle[k][m] == n)
+                {
+                  j = 1;
+                  f(k);
+                  e(m);
+                  break;
+                }
+                m += 1;
+              }
+              m = j;
+              if (j != 0) {
+                break;
+              }
+            }
+            k += 1;
+          }
+          i = j;
+          j = n;
+        }
+      }
+      else
+      {
+        j = -16777216;
+        i = 1;
+      }
+      l0 = v().getDimensionPixelSize(b.a.a.q.b.md_colorchooser_circlesize);
+      paramBundle = i0();
+      Object localObject1 = new f.d(d());
+      ((f.d)localObject1).h(g0());
+      ((f.d)localObject1).a(false);
+      ((f.d)localObject1).a(b.a.a.q.e.md_dialog_colorchooser, false);
+      ((f.d)localObject1).c(j);
+      ((f.d)localObject1).g(h);
+      if (r) {
+        k = k;
+      } else {
+        k = 0;
+      }
+      ((f.d)localObject1).e(k);
+      ((f.d)localObject1).a(c, d);
+      ((f.d)localObject1).c(new d());
+      ((f.d)localObject1).a(new c());
+      ((f.d)localObject1).b(new b());
+      localObject1 = ((f.d)localObject1).a(new a());
+      Object localObject2 = o;
+      if (localObject2 != null) {
+        ((f.d)localObject1).a((p)localObject2);
+      }
+      localObject1 = ((f.d)localObject1).a();
+      localObject2 = ((b.a.a.f)localObject1).d();
+      n0 = ((GridView)((View)localObject2).findViewById(d.md_grid));
+      if (r)
+      {
+        B0 = j;
+        o0 = ((View)localObject2).findViewById(d.md_colorChooserCustomFrame);
+        p0 = ((EditText)((View)localObject2).findViewById(d.md_hexInput));
+        q0 = ((View)localObject2).findViewById(d.md_colorIndicator);
+        s0 = ((SeekBar)((View)localObject2).findViewById(d.md_colorA));
+        t0 = ((TextView)((View)localObject2).findViewById(d.md_colorAValue));
+        u0 = ((SeekBar)((View)localObject2).findViewById(d.md_colorR));
+        v0 = ((TextView)((View)localObject2).findViewById(d.md_colorRValue));
+        w0 = ((SeekBar)((View)localObject2).findViewById(d.md_colorG));
+        x0 = ((TextView)((View)localObject2).findViewById(d.md_colorGValue));
+        y0 = ((SeekBar)((View)localObject2).findViewById(d.md_colorB));
+        z0 = ((TextView)((View)localObject2).findViewById(d.md_colorBValue));
+        if (!s)
+        {
+          ((View)localObject2).findViewById(d.md_colorALabel).setVisibility(8);
+          s0.setVisibility(8);
+          t0.setVisibility(8);
+          p0.setHint("2196F3");
+          p0.setFilters(new InputFilter[] { new InputFilter.LengthFilter(6) });
+        }
+        else
+        {
+          p0.setHint("FF2196F3");
+          p0.setFilters(new InputFilter[] { new InputFilter.LengthFilter(8) });
+        }
+        if (i == 0) {
+          a((b.a.a.f)localObject1);
+        }
+      }
+      k0();
+      return localObject1;
+    }
+    paramBundle = new IllegalStateException("ColorChooserDialog should be created using its Builder interface.");
+    for (;;)
+    {
+      throw paramBundle;
+    }
+  }
+  
+  public void onClick(View paramView)
+  {
+    if (paramView.getTag() != null)
+    {
+      int i = Integer.parseInt(((String)paramView.getTag()).split(":")[0]);
+      paramView = (b.a.a.f)e0();
+      g localG = i0();
+      if (m0())
+      {
+        e(i);
+      }
+      else
+      {
+        f(i);
+        int[][] arrayOfInt = k0;
+        if ((arrayOfInt != null) && (i < arrayOfInt.length))
+        {
+          paramView.a(b.a.a.b.e, i);
+          j(true);
+        }
+      }
+      if (r) {
+        B0 = j0();
+      }
+      l0();
+      k0();
+    }
+  }
+  
+  public void onDismiss(DialogInterface paramDialogInterface)
+  {
+    super.onDismiss(paramDialogInterface);
+    paramDialogInterface = m0;
+    if (paramDialogInterface != null) {
+      paramDialogInterface.a(this);
+    }
+  }
+  
+  public boolean onLongClick(View paramView)
+  {
+    if (paramView.getTag() != null)
+    {
+      int i = Integer.parseInt(((String)paramView.getTag()).split(":")[1]);
+      ((a)paramView).a(i);
+      return true;
+    }
+    return false;
+  }
+  
+  class a
+    implements DialogInterface.OnShowListener
+  {
+    a() {}
+    
+    public void onShow(DialogInterface paramDialogInterface)
+    {
+      b.a(b.this);
+    }
+  }
+  
+  class b
+    implements f.m
+  {
+    b() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      b.a(b.this, paramF);
+    }
+  }
+  
+  class c
+    implements f.m
+  {
+    c() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      if (b.k(b.this))
+      {
+        paramF.a(b.a.a.b.e, rj);
+        b.a(b.this, false);
+        b.b(b.this, -1);
+        b.s(b.this);
+        return;
+      }
+      paramF.cancel();
+    }
+  }
+  
+  class d
+    implements f.m
+  {
+    d() {}
+    
+    public void a(b.a.a.f paramF, b.a.a.b paramB)
+    {
+      paramF = b.u(b.this);
+      paramB = b.this;
+      paramF.a(paramB, b.t(paramB));
+      d0();
+    }
+  }
+  
+  class e
+    implements TextWatcher
+  {
+    e() {}
+    
+    public void afterTextChanged(Editable paramEditable) {}
+    
+    public void beforeTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {}
+    
+    public void onTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3)
+    {
+      try
+      {
+        b localB = b.this;
+        StringBuilder localStringBuilder = new StringBuilder();
+        localStringBuilder.append("#");
+        localStringBuilder.append(paramCharSequence.toString());
+        b.c(localB, Color.parseColor(localStringBuilder.toString()));
+      }
+      catch (IllegalArgumentException paramCharSequence)
+      {
+        b.c(b.this, -16777216);
+      }
+      b.b(b.this).setBackgroundColor(b.v(b.this));
+      if (b.c(b.this).getVisibility() == 0)
+      {
+        paramInt1 = Color.alpha(b.v(b.this));
+        b.c(b.this).setProgress(paramInt1);
+        b.d(b.this).setText(String.format(Locale.US, "%d", new Object[] { Integer.valueOf(paramInt1) }));
+      }
+      paramInt1 = Color.red(b.v(b.this));
+      b.e(b.this).setProgress(paramInt1);
+      paramInt1 = Color.green(b.v(b.this));
+      b.f(b.this).setProgress(paramInt1);
+      paramInt1 = Color.blue(b.v(b.this));
+      b.g(b.this).setProgress(paramInt1);
+      b.a(b.this, false);
+      b.a(b.this, -1);
+      b.b(b.this, -1);
+      b.a(b.this);
+    }
+  }
+  
+  class f
+    implements SeekBar.OnSeekBarChangeListener
+  {
+    f() {}
+    
+    @SuppressLint({"DefaultLocale"})
+    public void onProgressChanged(SeekBar paramSeekBar, int paramInt, boolean paramBoolean)
+    {
+      if (paramBoolean) {
+        if (rs)
+        {
+          paramInt = Color.argb(b.c(b.this).getProgress(), b.e(b.this).getProgress(), b.f(b.this).getProgress(), b.g(b.this).getProgress());
+          b.h(b.this).setText(String.format("%08X", new Object[] { Integer.valueOf(paramInt) }));
+        }
+        else
+        {
+          paramInt = Color.rgb(b.e(b.this).getProgress(), b.f(b.this).getProgress(), b.g(b.this).getProgress());
+          b.h(b.this).setText(String.format("%06X", new Object[] { Integer.valueOf(0xFFFFFF & paramInt) }));
+        }
+      }
+      b.d(b.this).setText(String.format("%d", new Object[] { Integer.valueOf(b.c(b.this).getProgress()) }));
+      b.i(b.this).setText(String.format("%d", new Object[] { Integer.valueOf(b.e(b.this).getProgress()) }));
+      b.j(b.this).setText(String.format("%d", new Object[] { Integer.valueOf(b.f(b.this).getProgress()) }));
+      b.l(b.this).setText(String.format("%d", new Object[] { Integer.valueOf(b.g(b.this).getProgress()) }));
+    }
+    
+    public void onStartTrackingTouch(SeekBar paramSeekBar) {}
+    
+    public void onStopTrackingTouch(SeekBar paramSeekBar) {}
+  }
+  
+  public static class g
+    implements Serializable
+  {
+    String c;
+    String d;
+    final int e;
+    int f;
+    int g;
+    int h = b.a.a.q.f.md_done_label;
+    int i = b.a.a.q.f.md_back_label;
+    int j = b.a.a.q.f.md_cancel_label;
+    int k = b.a.a.q.f.md_custom_label;
+    int l = b.a.a.q.f.md_presets_label;
+    int[] m;
+    int[][] n;
+    p o;
+    boolean p = false;
+    boolean q = true;
+    boolean r = true;
+    boolean s = true;
+    boolean t = false;
+    
+    public g(Context paramContext, int paramInt)
+    {
+      e = paramInt;
+    }
+    
+    public g a(int paramInt)
+    {
+      j = paramInt;
+      return this;
+    }
+    
+    public g a(String paramString1, String paramString2)
+    {
+      c = paramString1;
+      d = paramString2;
+      return this;
+    }
+    
+    public g a(boolean paramBoolean)
+    {
+      r = paramBoolean;
+      return this;
+    }
+    
+    public g a(int[] paramArrayOfInt, int[][] paramArrayOfInt1)
+    {
+      m = paramArrayOfInt;
+      n = paramArrayOfInt1;
+      return this;
+    }
+    
+    public b a()
+    {
+      b localB = new b();
+      Bundle localBundle = new Bundle();
+      localBundle.putSerializable("builder", this);
+      localB.m(localBundle);
+      return localB;
+    }
+    
+    public b a(g paramG)
+    {
+      return a(paramG.e());
+    }
+    
+    public b a(k paramK)
+    {
+      b localB = a();
+      localB.a(paramK);
+      return localB;
+    }
+    
+    public g b(int paramInt)
+    {
+      h = paramInt;
+      return this;
+    }
+    
+    public g b(boolean paramBoolean)
+    {
+      s = paramBoolean;
+      return this;
+    }
+    
+    public g c(int paramInt)
+    {
+      g = paramInt;
+      t = true;
+      return this;
+    }
+  }
+  
+  public static abstract interface h
+  {
+    public abstract void a(b paramB);
+    
+    public abstract void a(b paramB, int paramInt);
+  }
+  
+  private class i
+    extends BaseAdapter
+  {
+    i() {}
+    
+    public int getCount()
+    {
+      if (b.k(b.this)) {
+        return b.m(b.this)[b.n(b.this)].length;
+      }
+      return b.o(b.this).length;
+    }
+    
+    public Object getItem(int paramInt)
+    {
+      if (b.k(b.this)) {
+        return Integer.valueOf(b.m(b.this)[b.n(b.this)][paramInt]);
+      }
+      return Integer.valueOf(b.o(b.this)[paramInt]);
+    }
+    
+    public long getItemId(int paramInt)
+    {
+      return paramInt;
+    }
+    
+    @SuppressLint({"DefaultLocale"})
+    public View getView(int paramInt, View paramView, ViewGroup paramViewGroup)
+    {
+      paramViewGroup = paramView;
+      if (paramView == null)
+      {
+        paramViewGroup = new a(k());
+        paramViewGroup.setLayoutParams(new AbsListView.LayoutParams(b.p(b.this), b.p(b.this)));
+      }
+      paramView = (a)paramViewGroup;
+      int i;
+      if (b.k(b.this)) {
+        i = b.m(b.this)[b.n(b.this)][paramInt];
+      } else {
+        i = b.o(b.this)[paramInt];
+      }
+      paramView.setBackgroundColor(i);
+      boolean bool;
+      if (b.k(b.this))
+      {
+        if (b.q(b.this) == paramInt) {
+          bool = true;
+        } else {
+          bool = false;
+        }
+        paramView.setSelected(bool);
+      }
+      else
+      {
+        if (b.n(b.this) == paramInt) {
+          bool = true;
+        } else {
+          bool = false;
+        }
+        paramView.setSelected(bool);
+      }
+      paramView.setTag(String.format("%d:%d", new Object[] { Integer.valueOf(paramInt), Integer.valueOf(i) }));
+      paramView.setOnClickListener(b.this);
+      paramView.setOnLongClickListener(b.this);
+      return paramViewGroup;
+    }
+  }
+}

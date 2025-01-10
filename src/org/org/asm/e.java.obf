@@ -1,0 +1,26 @@
+package a.b.f;
+
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewOverlay;
+
+class b0
+  implements c0
+{
+  private final ViewOverlay a;
+  
+  b0(View paramView)
+  {
+    a = paramView.getOverlay();
+  }
+  
+  public void a(Drawable paramDrawable)
+  {
+    a.add(paramDrawable);
+  }
+  
+  public void b(Drawable paramDrawable)
+  {
+    a.remove(paramDrawable);
+  }
+}

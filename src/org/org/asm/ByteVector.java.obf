@@ -1,0 +1,12 @@
+package a.b.f;
+
+import android.view.ViewGroup;
+
+public abstract class p
+{
+  public abstract long a(ViewGroup paramViewGroup, m paramM, s paramS1, s paramS2);
+  
+  public abstract void a(s paramS);
+  
+  public abstract String[] a();
+}

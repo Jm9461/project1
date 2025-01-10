@@ -1,0 +1,135 @@
+package h.a.a;
+
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.webkit.MimeTypeMap;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
+
+class c
+{
+  public static String a = "EasyImage";
+  public static String b = "Temp";
+  
+  public static File a(Context paramContext)
+  {
+    File localFile = paramContext.getCacheDir();
+    if (a()) {
+      localFile = paramContext.getExternalCacheDir();
+    }
+    paramContext = new File(localFile, a);
+    if (!paramContext.exists()) {
+      paramContext.mkdirs();
+    }
+    return File.createTempFile(UUID.randomUUID().toString(), ".jpg", paramContext);
+  }
+  
+  public static String a(Context paramContext, Uri paramUri)
+  {
+    if (paramUri.getScheme().equals("content")) {
+      return MimeTypeMap.getSingleton().getExtensionFromMimeType(paramContext.getContentResolver().getType(paramUri));
+    }
+    return MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(paramUri.getPath())).toString());
+  }
+  
+  public static void a(InputStream paramInputStream, File paramFile)
+  {
+    try
+    {
+      paramFile = new FileOutputStream(paramFile);
+      byte[] arrayOfByte = new byte['?'];
+      for (;;)
+      {
+        int i = paramInputStream.read(arrayOfByte);
+        if (i <= 0) {
+          break;
+        }
+        paramFile.write(arrayOfByte, 0, i);
+      }
+      paramFile.close();
+      paramInputStream.close();
+      return;
+    }
+    catch (Exception paramInputStream)
+    {
+      paramInputStream.printStackTrace();
+    }
+  }
+  
+  private static boolean a()
+  {
+    return "mounted".equals(Environment.getExternalStorageState());
+  }
+  
+  public static File b(Context paramContext, Uri paramUri)
+  {
+    InputStream localInputStream = paramContext.getContentResolver().openInputStream(paramUri);
+    File localFile = g(paramContext);
+    StringBuilder localStringBuilder = new StringBuilder();
+    localStringBuilder.append(UUID.randomUUID().toString());
+    localStringBuilder.append(".");
+    localStringBuilder.append(a(paramContext, paramUri));
+    paramContext = new File(localFile, localStringBuilder.toString());
+    paramContext.createNewFile();
+    a(localInputStream, paramContext);
+    return paramContext;
+  }
+  
+  public static String b(Context paramContext)
+  {
+    File localFile = e(paramContext);
+    String str = null;
+    if (localFile != null) {
+      str = localFile.getPath();
+    }
+    return PreferenceManager.getDefaultSharedPreferences(paramContext).getString("pl.aprilapps.folder_location", str);
+  }
+  
+  public static String c(Context paramContext)
+  {
+    return PreferenceManager.getDefaultSharedPreferences(paramContext).getString("pl.aprilapps.folder_name", a);
+  }
+  
+  private static File d(Context paramContext)
+  {
+    paramContext = new File(paramContext.getApplicationContext().getCacheDir(), c(paramContext));
+    if (!paramContext.exists()) {
+      paramContext.mkdirs();
+    }
+    return paramContext;
+  }
+  
+  public static File e(Context paramContext)
+  {
+    return paramContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+  }
+  
+  public static File f(Context paramContext)
+  {
+    paramContext = new File(new File(b(paramContext), c(paramContext)), b);
+    if (!paramContext.exists()) {
+      paramContext.mkdirs();
+    }
+    return paramContext;
+  }
+  
+  public static File g(Context paramContext)
+  {
+    if (PreferenceManager.getDefaultSharedPreferences(paramContext).getBoolean("pl.aprilapps.public_temp", false)) {
+      paramContext = f(paramContext);
+    } else {
+      paramContext = d(paramContext);
+    }
+    if (!paramContext.exists()) {
+      paramContext.mkdirs();
+    }
+    return paramContext;
+  }
+}

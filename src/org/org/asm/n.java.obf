@@ -1,0 +1,25 @@
+package a.b.f;
+
+import android.os.Build.VERSION;
+import android.view.ViewGroup;
+
+class x
+{
+  static w a(ViewGroup paramViewGroup)
+  {
+    if (Build.VERSION.SDK_INT >= 18) {
+      return new v(paramViewGroup);
+    }
+    return u.a(paramViewGroup);
+  }
+  
+  static void a(ViewGroup paramViewGroup, boolean paramBoolean)
+  {
+    if (Build.VERSION.SDK_INT >= 18)
+    {
+      z.a(paramViewGroup, paramBoolean);
+      return;
+    }
+    y.a(paramViewGroup, paramBoolean);
+  }
+}

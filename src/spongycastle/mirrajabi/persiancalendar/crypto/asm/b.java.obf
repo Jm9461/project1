@@ -1,0 +1,30 @@
+package ir.mirrajabi.persiancalendar.f.g;
+
+public class b
+{
+  private f a;
+  private String b;
+  private boolean c;
+  
+  public b(f paramF, String paramString, boolean paramBoolean)
+  {
+    a = paramF;
+    b = paramString;
+    c = paramBoolean;
+  }
+  
+  public f a()
+  {
+    return a;
+  }
+  
+  public String b()
+  {
+    return b;
+  }
+  
+  public boolean c()
+  {
+    return c;
+  }
+}

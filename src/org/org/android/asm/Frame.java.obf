@@ -1,0 +1,39 @@
+package a.b.c.l;
+
+import a.b.c.f;
+import android.util.Property;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class d
+  extends Property<ViewGroup, Float>
+{
+  public static final Property<ViewGroup, Float> a = new d("childrenAlpha");
+  
+  private d(String paramString)
+  {
+    super(Float.class, paramString);
+  }
+  
+  public Float a(ViewGroup paramViewGroup)
+  {
+    paramViewGroup = (Float)paramViewGroup.getTag(f.mtrl_internal_children_alpha_tag);
+    if (paramViewGroup != null) {
+      return paramViewGroup;
+    }
+    return Float.valueOf(1.0F);
+  }
+  
+  public void a(ViewGroup paramViewGroup, Float paramFloat)
+  {
+    float f = paramFloat.floatValue();
+    paramViewGroup.setTag(f.mtrl_internal_children_alpha_tag, Float.valueOf(f));
+    int i = 0;
+    int j = paramViewGroup.getChildCount();
+    while (i < j)
+    {
+      paramViewGroup.getChildAt(i).setAlpha(f);
+      i += 1;
+    }
+  }
+}

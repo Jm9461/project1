@@ -1,0 +1,195 @@
+package android.support.design.widget;
+
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.AnimatorSet.Builder;
+import android.animation.ObjectAnimator;
+import android.animation.StateListAnimator;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build.VERSION;
+import android.view.View;
+import android.widget.ImageButton;
+import java.util.ArrayList;
+import java.util.List;
+
+class m
+  extends l
+{
+  private InsetDrawable I;
+  
+  m(a0 paramA0, s paramS)
+  {
+    super(paramA0, paramS);
+  }
+  
+  private Animator a(float paramFloat1, float paramFloat2)
+  {
+    AnimatorSet localAnimatorSet = new AnimatorSet();
+    localAnimatorSet.play(ObjectAnimator.ofFloat(u, "elevation", new float[] { paramFloat1 }).setDuration(0L)).with(ObjectAnimator.ofFloat(u, View.TRANSLATION_Z, new float[] { paramFloat2 }).setDuration(100L));
+    localAnimatorSet.setInterpolator(l.B);
+    return localAnimatorSet;
+  }
+  
+  void a(float paramFloat1, float paramFloat2, float paramFloat3)
+  {
+    if (Build.VERSION.SDK_INT == 21)
+    {
+      u.refreshDrawableState();
+    }
+    else
+    {
+      StateListAnimator localStateListAnimator = new StateListAnimator();
+      localStateListAnimator.addState(l.C, a(paramFloat1, paramFloat3));
+      localStateListAnimator.addState(l.D, a(paramFloat1, paramFloat2));
+      localStateListAnimator.addState(l.E, a(paramFloat1, paramFloat2));
+      localStateListAnimator.addState(l.F, a(paramFloat1, paramFloat2));
+      AnimatorSet localAnimatorSet = new AnimatorSet();
+      ArrayList localArrayList = new ArrayList();
+      localArrayList.add(ObjectAnimator.ofFloat(u, "elevation", new float[] { paramFloat1 }).setDuration(0L));
+      int i = Build.VERSION.SDK_INT;
+      if ((i >= 22) && (i <= 24))
+      {
+        a0 localA0 = u;
+        localArrayList.add(ObjectAnimator.ofFloat(localA0, View.TRANSLATION_Z, new float[] { localA0.getTranslationZ() }).setDuration(100L));
+      }
+      localArrayList.add(ObjectAnimator.ofFloat(u, View.TRANSLATION_Z, new float[] { 0.0F }).setDuration(100L));
+      localAnimatorSet.playSequentially((Animator[])localArrayList.toArray(new Animator[0]));
+      localAnimatorSet.setInterpolator(l.B);
+      localStateListAnimator.addState(l.G, localAnimatorSet);
+      localStateListAnimator.addState(l.H, a(0.0F, 0.0F));
+      u.setStateListAnimator(localStateListAnimator);
+    }
+    if (v.b()) {
+      s();
+    }
+  }
+  
+  void a(ColorStateList paramColorStateList1, PorterDuff.Mode paramMode, ColorStateList paramColorStateList2, int paramInt)
+  {
+    j = android.support.v4.graphics.drawable.a.h(a());
+    android.support.v4.graphics.drawable.a.a(j, paramColorStateList1);
+    if (paramMode != null) {
+      android.support.v4.graphics.drawable.a.a(j, paramMode);
+    }
+    if (paramInt > 0)
+    {
+      l = a(paramInt, paramColorStateList1);
+      paramColorStateList1 = new LayerDrawable(new Drawable[] { l, j });
+    }
+    else
+    {
+      l = null;
+      paramColorStateList1 = j;
+    }
+    k = new RippleDrawable(a.b.c.q.a.a(paramColorStateList2), paramColorStateList1, null);
+    paramColorStateList1 = k;
+    m = paramColorStateList1;
+    v.a(paramColorStateList1);
+  }
+  
+  void a(Rect paramRect)
+  {
+    if (v.b())
+    {
+      float f1 = v.a();
+      float f2 = c() + p;
+      int i = (int)Math.ceil(r.a(f2, f1, false));
+      int j = (int)Math.ceil(r.b(f2, f1, false));
+      paramRect.set(i, j, i, j);
+      return;
+    }
+    paramRect.set(0, 0, 0, 0);
+  }
+  
+  void a(int[] paramArrayOfInt)
+  {
+    if (Build.VERSION.SDK_INT == 21)
+    {
+      if (u.isEnabled())
+      {
+        u.setElevation(n);
+        if (u.isPressed())
+        {
+          u.setTranslationZ(p);
+          return;
+        }
+        if ((!u.isFocused()) && (!u.isHovered()))
+        {
+          u.setTranslationZ(0.0F);
+          return;
+        }
+        u.setTranslationZ(o);
+        return;
+      }
+      u.setElevation(0.0F);
+      u.setTranslationZ(0.0F);
+    }
+  }
+  
+  void b(ColorStateList paramColorStateList)
+  {
+    Drawable localDrawable = k;
+    if ((localDrawable instanceof RippleDrawable))
+    {
+      ((RippleDrawable)localDrawable).setColor(a.b.c.q.a.a(paramColorStateList));
+      return;
+    }
+    super.b(paramColorStateList);
+  }
+  
+  void b(Rect paramRect)
+  {
+    if (v.b())
+    {
+      I = new InsetDrawable(k, left, top, right, bottom);
+      v.a(I);
+      return;
+    }
+    v.a(k);
+  }
+  
+  public float c()
+  {
+    return u.getElevation();
+  }
+  
+  void j() {}
+  
+  f k()
+  {
+    return new g();
+  }
+  
+  GradientDrawable l()
+  {
+    return new a();
+  }
+  
+  void n()
+  {
+    s();
+  }
+  
+  boolean q()
+  {
+    return false;
+  }
+  
+  static class a
+    extends GradientDrawable
+  {
+    a() {}
+    
+    public boolean isStateful()
+    {
+      return true;
+    }
+  }
+}

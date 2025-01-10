@@ -1,0 +1,136 @@
+package com.miguelcatalan.materialsearchview;
+
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filter.FilterResults;
+import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
+
+public class d
+  extends BaseAdapter
+  implements Filterable
+{
+  private ArrayList<String> c;
+  private String[] d;
+  private Drawable e;
+  private LayoutInflater f;
+  private boolean g;
+  
+  public d(Context paramContext, String[] paramArrayOfString, Drawable paramDrawable, boolean paramBoolean)
+  {
+    f = LayoutInflater.from(paramContext);
+    c = new ArrayList();
+    d = paramArrayOfString;
+    e = paramDrawable;
+    g = paramBoolean;
+  }
+  
+  public int getCount()
+  {
+    return c.size();
+  }
+  
+  public Filter getFilter()
+  {
+    return new a();
+  }
+  
+  public Object getItem(int paramInt)
+  {
+    return c.get(paramInt);
+  }
+  
+  public long getItemId(int paramInt)
+  {
+    return paramInt;
+  }
+  
+  public View getView(int paramInt, View paramView, ViewGroup paramViewGroup)
+  {
+    if (paramView == null)
+    {
+      paramViewGroup = f.inflate(b.suggest_item, paramViewGroup, false);
+      paramView = new b(paramViewGroup);
+      paramViewGroup.setTag(paramView);
+    }
+    else
+    {
+      localObject = (b)paramView.getTag();
+      paramViewGroup = paramView;
+      paramView = (View)localObject;
+    }
+    Object localObject = (String)getItem(paramInt);
+    a.setText((CharSequence)localObject);
+    if (g)
+    {
+      a.setSingleLine();
+      a.setEllipsize(TextUtils.TruncateAt.END);
+    }
+    return paramViewGroup;
+  }
+  
+  class a
+    extends Filter
+  {
+    a() {}
+    
+    protected Filter.FilterResults performFiltering(CharSequence paramCharSequence)
+    {
+      Filter.FilterResults localFilterResults = new Filter.FilterResults();
+      if (!TextUtils.isEmpty(paramCharSequence))
+      {
+        ArrayList localArrayList = new ArrayList();
+        String[] arrayOfString = d.a(d.this);
+        int j = arrayOfString.length;
+        int i = 0;
+        while (i < j)
+        {
+          String str = arrayOfString[i];
+          if (str.toLowerCase().startsWith(paramCharSequence.toString().toLowerCase())) {
+            localArrayList.add(str);
+          }
+          i += 1;
+        }
+        values = localArrayList;
+        count = localArrayList.size();
+      }
+      return localFilterResults;
+    }
+    
+    protected void publishResults(CharSequence paramCharSequence, Filter.FilterResults paramFilterResults)
+    {
+      paramCharSequence = values;
+      if (paramCharSequence != null)
+      {
+        d.a(d.this, (ArrayList)paramCharSequence);
+        notifyDataSetChanged();
+      }
+    }
+  }
+  
+  private class b
+  {
+    TextView a;
+    ImageView b;
+    
+    public b(View paramView)
+    {
+      a = ((TextView)paramView.findViewById(a.suggestion_text));
+      if (d.b(this$1) != null)
+      {
+        b = ((ImageView)paramView.findViewById(a.suggestion_icon));
+        b.setImageDrawable(d.b(this$1));
+      }
+    }
+  }
+}

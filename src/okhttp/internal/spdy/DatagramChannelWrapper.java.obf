@@ -1,0 +1,15 @@
+package e.f0.i;
+
+import java.io.IOException;
+
+public final class n
+  extends IOException
+{
+  public final b c;
+  
+  public n(b paramB)
+  {
+    super(localStringBuilder.toString());
+    c = paramB;
+  }
+}
