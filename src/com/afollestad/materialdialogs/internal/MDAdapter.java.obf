@@ -1,8 +1,0 @@
-package com.afollestad.materialdialogs.internal;
-
-import b.a.a.f;
-
-public abstract interface b
-{
-  public abstract void a(f paramF);
-}

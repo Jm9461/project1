@@ -1,6 +1,0 @@
-package android.arch.lifecycle;
-
-public abstract interface b
-{
-  public abstract void a(e paramE, c.a paramA, boolean paramBoolean, i paramI);
-}

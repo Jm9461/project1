@@ -1,8 +1,0 @@
-package ir.mirrajabi.persiancalendar.f.f;
-
-import ir.mirrajabi.persiancalendar.f.g.f;
-
-public abstract interface d
-{
-  public abstract void a(f paramF);
-}

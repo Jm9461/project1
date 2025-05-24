@@ -1,6 +1,0 @@
-package b.h.a;
-
-public abstract interface l<T>
-{
-  public abstract T evaluate(float paramFloat, T paramT1, T paramT2);
-}

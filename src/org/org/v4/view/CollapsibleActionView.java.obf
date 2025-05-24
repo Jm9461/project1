@@ -1,8 +1,0 @@
-package a.b.h.f;
-
-public abstract interface c
-{
-  public abstract void b();
-  
-  public abstract void c();
-}

@@ -1,6 +1,0 @@
-package a.b.c.o;
-
-public abstract interface b
-{
-  public abstract boolean a();
-}

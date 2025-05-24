@@ -1,8 +1,0 @@
-package com.squareup.picasso;
-
-public abstract interface e
-{
-  public abstract void a();
-  
-  public abstract void a(Exception paramException);
-}

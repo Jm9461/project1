@@ -1,6 +1,0 @@
-package b.a.a;
-
-public enum b
-{
-  private b() {}
-}

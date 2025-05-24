@@ -1,7 +1,0 @@
-package com.lawyer_smartCalendar.utils;
-
-public class a
-{
-  public static String a = "jpg";
-  public static String b = "wav";
-}

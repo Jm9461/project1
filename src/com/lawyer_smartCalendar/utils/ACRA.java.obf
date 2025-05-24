@@ -1,6 +1,0 @@
-package com.lawyer_smartCalendar.utils;
-
-public class j
-{
-  public static String a = "bazaar";
-}

@@ -1,8 +1,0 @@
-package android.support.v4.view;
-
-import android.view.View;
-
-public abstract interface p
-{
-  public abstract c0 a(View paramView, c0 paramC0);
-}
