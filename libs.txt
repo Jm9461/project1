@@ -1,3 +1,0 @@
-Android Support v4
-Android Support v7
-Material Dialogs
